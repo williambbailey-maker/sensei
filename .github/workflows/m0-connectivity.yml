@@ -1,0 +1,37 @@
+name: M0 Connectivity Test
+
+# Milestone 0 — HARD GATE.
+# Proves whether a GitHub Actions runner can reach Dutchie's embedded product JSON
+# before any of the real pipeline gets built.
+#
+# Strategy:
+#   1. Plain `requests` GET with realistic browser headers.
+#   2. If that looks blocked, retry with Playwright headless Chromium.
+#   3. Report METHOD_THAT_WORKED = requests | playwright | BLOCKED in the job summary,
+#      and dump the first 2KB of HTML either way.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  connectivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TARGET_URL: "https://dutchie.com/dispensary/conbud-les/products/flower"
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "requests>=2.31" "playwright>=1.44"
+          # Chromium is only used for the fallback, but install it up front so the
+          # fallback path can't fail on a missing browser.
+          python -m playwright install --with-deps chromium
+
+      - name: Probe Dutchie connectivity
+        run: python .github/scripts/m0_connectivity.py
