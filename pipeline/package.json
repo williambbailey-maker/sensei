@@ -1,0 +1,13 @@
+{
+  "name": "sensei-pipeline",
+  "private": true,
+  "type": "module",
+  "description": "Local Dutchie scraper — run on your own computer (residential IP).",
+  "scripts": {
+    "scrape": "node scrape.mjs",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.47.2"
+  }
+}
