@@ -21,6 +21,7 @@ const ANON =
 const SERVICE = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim()
 const HEADLESS = /^(1|true|yes)$/i.test(process.env.HEADLESS || '')
 const STORE_LIMIT = parseInt(process.env.STORE_LIMIT || '0', 10)
+const STORE = (process.env.STORE || '').trim() // scrape/debug a single slug
 const CATEGORIES = ['edibles', 'flower', 'pre-rolls', 'vaporizers']
 const PRODUCT_SEL = '[data-testid*="product"], .product-card, [class*="Product"]'
 // SLOW=1 restores the original cautious pacing if a run gets flaky/blocked.
@@ -272,6 +273,58 @@ async function scrapeStore(page, slug) {
   return raw
 }
 
+// Recursively find arrays of product-like objects in a GraphQL JSON response.
+function findProductArrays(node, out, depth = 0) {
+  if (!node || depth > 14) return
+  if (Array.isArray(node)) {
+    if (
+      node.length > 0 &&
+      node.every(
+        (x) =>
+          x &&
+          typeof x === 'object' &&
+          ('Prices' in x || 'Options' in x || x.__typename === 'Product'),
+      )
+    ) {
+      out.push(node)
+    }
+    for (const v of node) findProductArrays(v, out, depth + 1)
+  } else if (typeof node === 'object') {
+    for (const k of Object.keys(node)) findProductArrays(node[k], out, depth + 1)
+  }
+}
+
+async function debugApi(page, store) {
+  const responses = []
+  page.on('response', async (r) => {
+    if (!/graphql/i.test(r.url())) return
+    try {
+      responses.push(await r.json())
+    } catch {
+      /* not json */
+    }
+  })
+  const url = `https://dutchie.com/dispensary/${store.slug}/products/flower`
+  console.log(`Loading ${url} …`)
+  await page.goto(url, { waitUntil: 'domcontentloaded' }).catch(() => {})
+  await sleep(8000)
+  console.log(`Captured ${responses.length} graphql responses.`)
+
+  const arrays = []
+  for (const j of responses) findProductArrays(j, arrays)
+  if (!arrays.length) {
+    console.log('No product arrays found in the graphql responses.')
+    return
+  }
+  arrays.sort((a, b) => b.length - a.length)
+  const products = arrays[0]
+  const p = products[0]
+  console.log(`\nLargest product array: ${products.length} items`)
+  console.log('PRODUCT KEYS:', Object.keys(p).join(', '))
+  console.log('\nSAMPLE PRODUCT (first ~2KB):')
+  console.log(JSON.stringify(p, null, 1).slice(0, 2000))
+}
+
 async function main() {
   if (!SERVICE) {
     console.error(
@@ -283,6 +336,7 @@ async function main() {
   }
   const runStart = new Date().toISOString()
   let stores = await sb('stores?active=eq.true&select=id,slug')
+  if (STORE) stores = stores.filter((s) => s.slug === STORE)
   if (STORE_LIMIT) stores = stores.slice(0, STORE_LIMIT)
   console.log(`Active stores: ${stores.length}${HEADLESS ? ' (headless)' : ''}`)
 
@@ -290,6 +344,15 @@ async function main() {
   const browser = await chromium.launch({ headless: HEADLESS })
   const page = await browser.newPage()
   page.setDefaultTimeout(60000)
+
+  // DEBUG_API=1: capture the structured product feed the page loads (Dutchie's
+  // own API) for the first store and dump its shape, so the parser can read
+  // exact prices/variants from JSON instead of fragile per-store HTML.
+  if (process.env.DEBUG_API) {
+    await debugApi(page, stores[0])
+    await browser.close()
+    return
+  }
 
   let ok = 0
   let failed = 0
