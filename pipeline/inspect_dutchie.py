@@ -1,10 +1,10 @@
-"""Diagnostic v4: confirm the corrected Dutchie FilteredProducts query.
+"""Diagnostic v5: introspect Dutchie's GraphQL schema to end the guessing.
 
-Schema learned from v3's GraphQL errors: argument is `filter:`, input type is
-`ProductFilterInput`, product type is `Products`. The GraphQL endpoint is behind
-Cloudflare and challenges intermittently, so retry on 403. Dumps a full product
-so the real field formats (Options/Prices/THCContent/Image) are visible before
-the adapter is rebuilt. Throwaway.
+`filter:` is confirmed the right argument on filteredProducts; both input-type
+guesses were wrong and suggestions are hidden. So ask the schema directly:
+1) introspect Query.filteredProducts args -> resolve the `filter` input type name,
+2) introspect that input type's fields and the product type's fields.
+If introspection is disabled we'll see errors and pivot. Throwaway.
 """
 
 from __future__ import annotations
@@ -15,22 +15,9 @@ import time
 
 import requests
 
-DISPENSARY_ID = os.environ.get("INSPECT_DISP_ID", "6430f42042cf3c004e37f0f8")
-CATEGORY = os.environ.get("INSPECT_CATEGORY", "Flower")
 ENDPOINT = "https://app.scrapingbee.com/api/v1/"
 GRAPHQL = "https://dutchie.com/graphql"
 KEY = os.environ["SCRAPINGBEE_KEY"]
-
-PRODUCT_FIELDS = (
-    "id cName brandName brand { name } Name Options Prices type strainType "
-    "THCContent { unit range } CBDContent { unit range } Image effects"
-)
-
-QUERY = (
-    "query FilteredProducts($productsFilter: ProductFilterInput!, $page: Int!, $perPage: Int!) { "
-    "filteredProducts(filter: $productsFilter, page: $page, perPage: $perPage) { "
-    "products { __FIELDS__ } queryInfo { totalCount totalPages } } }"
-).replace("__FIELDS__", PRODUCT_FIELDS)
 
 
 def emit(line: str = "") -> None:
@@ -41,77 +28,89 @@ def emit(line: str = "") -> None:
             fh.write(line + "\n")
 
 
-def graphql(body: dict, tries: int = 6) -> requests.Response:
+def gql(query: str, tries: int = 6) -> dict | None:
     params = {
-        "api_key": KEY,
-        "url": GRAPHQL,
-        "render_js": "false",
-        "country_code": "us",
-        "transparent_status_code": "true",
+        "api_key": KEY, "url": GRAPHQL, "render_js": "false",
+        "country_code": "us", "transparent_status_code": "true",
     }
-    last = None
     for i in range(tries):
-        r = requests.post(
-            ENDPOINT, params=params, json=body,
-            headers={"Content-Type": "application/json"}, timeout=90,
-        )
-        last = r
-        if r.status_code != 403:  # 403 = intermittent Cloudflare challenge; retry
-            return r
-        time.sleep(2 + i)
-    return last
+        r = requests.post(ENDPOINT, params=params, json={"query": query},
+                          headers={"Content-Type": "application/json"}, timeout=90)
+        if r.status_code == 403:  # intermittent Cloudflare
+            time.sleep(2 + i)
+            continue
+        try:
+            return json.loads(r.text)
+        except json.JSONDecodeError:
+            emit(f"- non-JSON HTTP {r.status_code}: {r.text[:200]}")
+            return None
+    emit("- gave up after Cloudflare 403s")
+    return None
+
+
+def unwrap(t: dict) -> str:
+    while t and t.get("ofType"):
+        if t.get("name"):
+            return t["name"]
+        t = t["ofType"]
+    return t.get("name") if t else None
 
 
 def main() -> int:
-    emit("# Dutchie FilteredProducts confirm (v4)")
-    emit(f"dispensaryId `{DISPENSARY_ID}` · category `{CATEGORY}`")
+    emit("# Dutchie GraphQL introspection (v5)")
     emit()
-    body = {
-        "operationName": "FilteredProducts",
-        "variables": {
-            "productsFilter": {
-                "dispensaryId": DISPENSARY_ID,
-                "Status": "Active",
-                "types": [CATEGORY],
-                "sortDirection": 1,
-                "isDefaultSort": True,
-                "bypassOnlineThresholds": False,
-            },
-            "page": 0,
-            "perPage": 30,
-        },
-        "query": QUERY,
-    }
-    r = graphql(body)
-    emit(f"- HTTP {r.status_code}, {len(r.text)} bytes")
-    try:
-        data = json.loads(r.text)
-    except json.JSONDecodeError:
-        emit("- non-JSON (likely Cloudflare); first 600 bytes:")
-        emit("```")
-        emit(r.text[:600])
+
+    # 1) filteredProducts args
+    q1 = ('query { __type(name: "Query") { fields { name '
+          'args { name type { kind name ofType { kind name ofType { kind name } } } } } } }')
+    d1 = gql(q1)
+    if not d1:
+        return 0
+    if "errors" in d1:
+        emit("- introspection disabled or errored:")
+        emit("```json")
+        emit(json.dumps(d1["errors"], indent=2)[:800])
         emit("```")
         return 0
 
-    if "errors" in data:
-        emit("- GraphQL errors:")
-        emit("```json")
-        emit(json.dumps(data["errors"], indent=2)[:1500])
-        emit("```")
+    fields = (((d1.get("data") or {}).get("__type") or {}).get("fields")) or []
+    fp = next((f for f in fields if f["name"] == "filteredProducts"), None)
+    if not fp:
+        emit("- filteredProducts not found on Query. Sample fields: "
+             + ", ".join(f["name"] for f in fields[:40]))
         return 0
+    emit("## filteredProducts args")
+    input_type_name = None
+    for a in fp["args"]:
+        tn = unwrap(a["type"])
+        emit(f"- `{a['name']}`: {tn}")
+        if a["name"] == "filter":
+            input_type_name = tn
+    emit()
 
-    fp = (data.get("data") or {}).get("filteredProducts") or {}
-    prods = fp.get("products") or []
-    emit(f"- ✅ queryInfo={fp.get('queryInfo')}; products in page: {len(prods)}")
-    if prods:
-        emit("- first product (real field shapes):")
-        emit("```json")
-        emit(json.dumps(prods[0], indent=2)[:1800])
-        emit("```")
-        emit("- second product Options/Prices:")
-        if len(prods) > 1:
-            p = prods[1]
-            emit(f"  Options={p.get('Options')} Prices={p.get('Prices')} THCContent={p.get('THCContent')}")
+    # 2) the filter input type's fields + the product type's fields
+    def dump_type(name: str) -> None:
+        q = ('query { __type(name: "%s") { name kind '
+             'inputFields { name type { kind name ofType { kind name } } } '
+             'fields { name type { kind name ofType { kind name } } } } }') % name
+        d = gql(q)
+        if not d or "errors" in (d or {}):
+            emit(f"- could not introspect `{name}`: {json.dumps((d or {}).get('errors'))[:300]}")
+            return
+        t = (d.get("data") or {}).get("__type") or {}
+        emit(f"## type `{name}` (kind {t.get('kind')})")
+        for kind_key in ("inputFields", "fields"):
+            items = t.get(kind_key) or []
+            if items:
+                emit(f"- {kind_key}:")
+                emit("```")
+                for it in items:
+                    emit(f"  {it['name']}: {unwrap(it['type'])}")
+                emit("```")
+
+    if input_type_name:
+        dump_type(input_type_name)
+    dump_type("Products")
     return 0
 
 
