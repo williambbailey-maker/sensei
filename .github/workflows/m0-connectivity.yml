@@ -1,7 +1,7 @@
 name: M0 Connectivity Test
 
 # Milestone 0 — HARD GATE.
-# Proves whether a GitHub Actions runner can reach Dutchie's embedded product JSON
+# Proves whether a given runner can reach Dutchie's embedded product JSON
 # before any of the real pipeline gets built.
 #
 # Strategy:
@@ -9,13 +9,26 @@ name: M0 Connectivity Test
 #   2. If that looks blocked, retry with Playwright headless Chromium.
 #   3. Report METHOD_THAT_WORKED = requests | playwright | BLOCKED in the job summary,
 #      and dump the first 2KB of HTML either way.
+#
+# Runner choice (the `runner_label` input):
+#   GitHub's hosted runners (ubuntu-latest) run on datacenter IPs that Cloudflare
+#   blocks at Dutchie — the first M0 run came back BLOCKED (HTTP 403, "Just a
+#   moment..." challenge) on both requests and Playwright. To test a NON-datacenter
+#   path, register a self-hosted runner on a residential/home IP and dispatch this
+#   workflow with runner_label set to that runner's label (e.g. "self-hosted").
+#   See .github/scripts/README-selfhosted-runner.md for setup.
 
 on:
   workflow_dispatch:
+    inputs:
+      runner_label:
+        description: "Runner to test from (hosted 'ubuntu-latest', or a self-hosted runner label like 'self-hosted')"
+        required: true
+        default: "ubuntu-latest"
 
 jobs:
   connectivity:
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.inputs.runner_label }}
     timeout-minutes: 15
     env:
       TARGET_URL: "https://dutchie.com/dispensary/conbud-les/products/flower"
