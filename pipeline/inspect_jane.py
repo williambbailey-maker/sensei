@@ -1,25 +1,24 @@
-"""Diagnostic v2: confirm Jane free path end-to-end.
+"""Diagnostic v3: query Jane's Algolia products index directly.
 
-v1 proved iheartjane.com/api/v1/stores is free-reachable and extracted the public
-Algolia creds. Now: pull the store directory, count NY stores, and query Algolia
-for one NY store's products to confirm coverage + product shape. All free, no
-unblocker. Throwaway.
+The /api/v1/stores list is sparse. Better: Jane's `menu-products-production`
+Algolia index carries store info on each product, so we can query NY products
+directly and enumerate NY stores from facets. This confirms the free
+comprehensive path and reveals the real field names. Throwaway.
 """
 
 from __future__ import annotations
 
 import json
 import os
+from urllib.parse import urlencode
 
 import requests
 
-UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
-H = {"User-Agent": UA, "Accept": "application/json,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.9"}
-
-ALGOLIA_APP = "VFM4X0N23A"
-ALGOLIA_KEY = "edc5435c65d771cecbd98bbd488aa8d3"
+APP = "VFM4X0N23A"
+KEY = "edc5435c65d771cecbd98bbd488aa8d3"
 INDEX = "menu-products-production"
+URL = f"https://{APP}-dsn.algolia.net/1/indexes/{INDEX}/query"
+HEAD = {"X-Algolia-Application-Id": APP, "X-Algolia-API-Key": KEY, "Content-Type": "application/json"}
 
 
 def emit(line: str = "") -> None:
@@ -30,76 +29,58 @@ def emit(line: str = "") -> None:
             fh.write(line + "\n")
 
 
+def query(params: dict) -> dict:
+    r = requests.post(URL, headers=HEAD, json={"params": urlencode(params)}, timeout=30)
+    emit(f"  (HTTP {r.status_code})")
+    return r.json()
+
+
 def main() -> int:
-    emit("# Jane free-path confirmation (v2)")
+    emit("# Jane Algolia products probe (v3)")
     emit()
 
-    # 1. Store directory
-    r = requests.get("https://www.iheartjane.com/api/v1/stores", headers=H, timeout=60)
-    stores = r.json().get("stores", [])
-    emit(f"## store directory: HTTP {r.status_code}, {len(stores)} stores total")
-    if stores:
-        emit(f"- store record keys: {sorted(stores[0].keys())}")
-
-    def is_ny(s: dict) -> bool:
-        blob = json.dumps(s).lower()
-        st = (s.get("state") or "").upper()
-        return st == "NY" or st == "NEW YORK" or '"state": "ny"' in blob
-
-    ny = [s for s in stores if is_ny(s)]
-    emit(f"- NY stores: {len(ny)}")
-    emit()
-    emit("- first 8 NY stores (id · name · city):")
-    for s in ny[:8]:
-        emit(f"  - {s.get('id')} · {s.get('name')} · {s.get('city')}, {s.get('state')}")
-    emit()
-
-    # cities breakdown for NY
-    from collections import Counter
-    cities = Counter((s.get("city") or "?") for s in ny)
-    emit(f"- NY city counts (top 15): {dict(cities.most_common(15))}")
-    emit()
-
-    if not ny:
-        emit("No NY stores found; dumping a sample store record:")
-        emit("```json")
-        emit(json.dumps(stores[0], indent=2)[:1200] if stores else "(none)")
-        emit("```")
-        return 0
-
-    # 2. Algolia products for the first NY store
-    store = ny[0]
-    sid = store.get("id")
-    emit(f"## products for store {sid} ({store.get('name')}) via Algolia")
-    url = f"https://{ALGOLIA_APP}-dsn.algolia.net/1/indexes/{INDEX}/query"
-    headers = {
-        "X-Algolia-Application-Id": ALGOLIA_APP,
-        "X-Algolia-API-Key": ALGOLIA_KEY,
-        "Content-Type": "application/json",
-    }
-    body = {"params": f"filters=store_id={sid}&hitsPerPage=3"}
-    ar = requests.post(url, headers=headers, json=body, timeout=30)
-    emit(f"- Algolia HTTP {ar.status_code}")
-    try:
-        aj = ar.json()
-    except Exception:  # noqa: BLE001
-        emit("```")
-        emit(ar.text[:500])
-        emit("```")
-        return 0
-    hits = aj.get("hits", [])
-    emit(f"- nbHits={aj.get('nbHits')}, returned={len(hits)}")
+    # 1. Unfiltered: total index size, one product's full shape, facetable fields.
+    emit("## 1. index overview")
+    d = query({"hitsPerPage": 1, "facets": '["*"]'})
+    emit(f"- total products in index (network-wide): nbHits={d.get('nbHits')}")
+    facets = d.get("facets") or {}
+    emit(f"- facetable fields: {sorted(facets.keys())}")
+    hits = d.get("hits") or []
     if hits:
-        emit(f"- product keys: {sorted(hits[0].keys())}")
-        emit("- first product:")
+        emit(f"- product field keys: {sorted(hits[0].keys())}")
+        emit("- sample product:")
         emit("```json")
-        emit(json.dumps(hits[0], indent=2)[:1800])
+        emit(json.dumps(hits[0], indent=2)[:2000])
         emit("```")
-    else:
-        emit("- no hits; raw (first 600):")
-        emit("```json")
-        emit(json.dumps(aj, indent=2)[:600])
-        emit("```")
+    emit()
+
+    # 2. Figure out the state facet field + NY value, then count NY + enumerate stores.
+    state_field = None
+    for cand in ("state", "store_state", "root_types", "state_code"):
+        if cand in facets:
+            state_field = cand
+            emit(f"- state facet `{cand}` values (sample): {dict(list(facets[cand].items())[:8])}")
+    emit()
+
+    emit("## 2. NY coverage")
+    for val in ("NY", "New York", "new york"):
+        if not state_field:
+            break
+        d2 = query({
+            "hitsPerPage": 1,
+            "facetFilters": json.dumps([[f"{state_field}:{val}"]]),
+            "facets": '["store_id","store_name","store_city","city"]',
+            "maxValuesPerFacet": 1000,
+        })
+        nb = d2.get("nbHits")
+        emit(f"- filter `{state_field}={val}` -> nbHits={nb}")
+        if nb:
+            f2 = d2.get("facets") or {}
+            store_names = f2.get("store_name") or {}
+            store_ids = f2.get("store_id") or {}
+            emit(f"  - distinct NY stores: by store_name={len(store_names)}, by store_id={len(store_ids)}")
+            emit(f"  - sample store_name facet: {dict(list(store_names.items())[:12])}")
+            break
     return 0
 
 
