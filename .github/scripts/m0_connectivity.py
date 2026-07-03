@@ -136,6 +136,58 @@ def try_playwright() -> tuple[str, int | None, str]:
     return classify(status, html), status, html
 
 
+def try_unblocker() -> tuple[str, int | None, str, str | None]:
+    """Route the fetch through a Cloudflare-unblocker API.
+
+    Auto-detects a ScraperAPI or ScrapingBee key from the environment (set via a
+    GitHub secret). The service solves Cloudflare server-side and returns the
+    target page's HTML directly, so the same classify() applies.
+
+    Returns (verdict, status, html, provider). verdict 'SKIP' means no key is
+    configured — the gate just moves on to Playwright.
+    """
+    import requests
+
+    scraperapi = os.environ.get("SCRAPERAPI_KEY", "").strip()
+    scrapingbee = os.environ.get("SCRAPINGBEE_KEY", "").strip()
+
+    if scraperapi:
+        provider = "scraperapi"
+        endpoint = "https://api.scraperapi.com/"
+        params = {
+            "api_key": scraperapi,
+            "url": TARGET_URL,
+            "render": "true",
+            "country_code": "us",
+        }
+    elif scrapingbee:
+        provider = "scrapingbee"
+        endpoint = "https://app.scrapingbee.com/api/v1/"
+        params = {
+            "api_key": scrapingbee,
+            "url": TARGET_URL,
+            "render_js": "true",
+            "country_code": "us",
+        }
+    else:
+        return "SKIP", None, "no unblocker key configured", None
+
+    try:
+        # Unblocker calls are slow (they solve the challenge), so allow generous time.
+        resp = requests.get(endpoint, params=params, timeout=120)
+    except Exception as exc:  # noqa: BLE001
+        return "ERROR", None, f"unblocker ({provider}) raised: {exc!r}", provider
+
+    verdict = classify(resp.status_code, resp.text)
+    # A non-200 from the unblocker itself usually means a key/quota/plan problem,
+    # not a Dutchie block — flag it so the summary isn't misread.
+    if resp.status_code != 200 and not any(
+        m.lower() in resp.text.lower() for m in SUCCESS_MARKERS
+    ):
+        verdict = "API_ERROR"
+    return verdict, resp.status_code, resp.text, provider
+
+
 def emit(line: str = "") -> None:
     """Print to the job log and append to the step summary."""
     print(line)
@@ -151,53 +203,65 @@ def main() -> int:
     emit(f"**Target URL:** `{TARGET_URL}`")
     emit()
 
+    # Each row: (label, verdict, status). Built as attempts run, printed at the end.
+    attempts: list[tuple[str, str, int | None]] = []
+
+    method = None
+    used_html = ""
+    used_status = None
+    used_label = "requests"
+
     # --- Attempt 1: plain requests ---------------------------------------
     req_verdict, req_status, req_html = try_requests()
     print(f"[requests] verdict={req_verdict} status={req_status}")
-
-    method = None
-    used_html = req_html
-    used_status = req_status
-    used_label = "requests"
+    attempts.append(("requests", req_verdict, req_status))
+    used_html, used_status, used_label = req_html, req_status, "requests"
 
     if req_verdict == "OK":
         method = "requests"
-    else:
-        # --- Attempt 2: Playwright fallback ------------------------------
-        print("[requests] not usable — falling back to Playwright")
+
+    # --- Attempt 2: unblocker API (only if a key is configured) ----------
+    if method is None:
+        ub_verdict, ub_status, ub_html, ub_provider = try_unblocker()
+        if ub_verdict == "SKIP":
+            print("[unblocker] no key configured — skipping")
+        else:
+            print(f"[unblocker:{ub_provider}] verdict={ub_verdict} status={ub_status}")
+            attempts.append((f"unblocker ({ub_provider})", ub_verdict, ub_status))
+            used_html, used_status, used_label = ub_html, ub_status, f"unblocker:{ub_provider}"
+            if ub_verdict == "OK":
+                method = "unblocker"
+
+    # --- Attempt 3: Playwright fallback ----------------------------------
+    if method is None:
+        print("[requests/unblocker] not usable — falling back to Playwright")
         pw_verdict, pw_status, pw_html = try_playwright()
         print(f"[playwright] verdict={pw_verdict} status={pw_status}")
-
-        if pw_verdict == "OK":
-            method = "playwright"
-        else:
-            method = "BLOCKED"
-
-        # Report the fallback attempt's HTML — it's the more informative one.
-        used_html = pw_html
-        used_status = pw_status
-        used_label = "playwright"
+        attempts.append(("playwright", pw_verdict, pw_status))
+        used_html, used_status, used_label = pw_html, pw_status, "playwright"
+        method = "playwright" if pw_verdict == "OK" else "BLOCKED"
 
     # --- Report ----------------------------------------------------------
     emit(f"## METHOD_THAT_WORKED = {method}")
     emit()
     emit("| Attempt | Verdict | HTTP status |")
     emit("| --- | --- | --- |")
-    emit(f"| requests | {req_verdict} | {req_status} |")
-    if method != "requests":
-        # pw_* exist in this branch
-        emit(f"| playwright | {pw_verdict} | {pw_status} |")
+    for label, verdict, status in attempts:
+        emit(f"| {label} | {verdict} | {status} |")
     emit()
 
     if method == "requests":
         emit("✅ **`requests` works** — best case. The pipeline can be fast and simple.")
+    elif method == "unblocker":
+        emit("✅ **Unblocker API works** — keeps hosted GitHub Actions; watch the request quota.")
     elif method == "playwright":
         emit("🟡 **Only `playwright` works** — fine, jobs will be slightly slower.")
     else:
         emit(
-            "🛑 **BLOCKED** — both methods failed. STOP. Do not build the pipeline on "
-            "an unverified foundation. Options to discuss with William: rotating "
-            "residential proxy (~$5–10/mo via a proxy env secret), or a different runner."
+            "🛑 **BLOCKED** — every attempted method failed. STOP. Do not build the "
+            "pipeline on an unverified foundation. If the unblocker attempt shows "
+            "`API_ERROR`, check the key/quota/plan first. Otherwise the remaining "
+            "options are a rotating residential proxy or a different (residential) runner."
         )
     emit()
 
