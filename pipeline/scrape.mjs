@@ -101,8 +101,17 @@ async function extract(el, category) {
   if (m) thc = m[1]
   m = allText.match(/CBD[:\s]*([\d.]+)\s*%?/i)
   if (m) cbd = m[1]
-  m = allText.match(/\$(\d+\.?\d*)/)
-  if (m) price = `$${m[1]}`
+  // Price: pull from the card's active-price element (accurate — this is the
+  // current/sale price). Fall back to the first $ in the text only if missing.
+  const priceEl = await el.$('[class*="ActivePrice"], [class*="card-price"]')
+  if (priceEl) {
+    const pm = (await priceEl.innerText()).match(/([\d,]+\.?\d*)/)
+    if (pm) price = `$${pm[1].replace(/,/g, '')}`
+  }
+  if (!price) {
+    m = allText.match(/\$(\d+\.?\d*)/)
+    if (m) price = `$${m[1]}`
+  }
 
   let found = false
   for (const pat of QTY_PATTERNS) {
@@ -176,7 +185,7 @@ async function extract(el, category) {
 // --- Map a scraped card to a Supabase products row --------------------------
 const num = (x) => {
   if (!x) return null
-  const m = String(x).match(/[\d.]+/)
+  const m = String(x).replace(/,/g, '').match(/[\d.]+/)
   return m ? parseFloat(m[0]) : null
 }
 
