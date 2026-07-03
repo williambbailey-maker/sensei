@@ -26,10 +26,22 @@ Supabase dashboard → your project → **Project Settings → API** → copy th
 **`service_role`** key (the secret one, not `anon`). This lets the scraper write
 products. Keep it private — never commit it.
 
+## Set the key once (recommended)
+
+```bash
+cp .env.example .env
+```
+
+Then open `.env` and paste your `service_role` key after `SUPABASE_SERVICE_ROLE_KEY=`.
+`.env` is git-ignored, so the key stays on your machine. Now every run picks it up
+automatically — no need to `export` it each time.
+
+(Alternatively, a one-off: `export SUPABASE_SERVICE_ROLE_KEY="the-key"` in the
+current Terminal window.)
+
 ## Run
 
 ```bash
-export SUPABASE_SERVICE_ROLE_KEY="paste-the-service-role-key"
 npm run scrape
 ```
 
