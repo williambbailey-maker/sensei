@@ -1,0 +1,34 @@
+name: Inspect Dutchie Page
+
+# Throwaway diagnostic: dumps where a Dutchie category page keeps its product
+# data (render_js off vs on). Used to settle the parser; safe to delete after.
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Dutchie category URL to inspect"
+        default: "https://dutchie.com/dispensary/conbud-les/products/flower"
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SCRAPINGBEE_KEY: ${{ secrets.SCRAPINGBEE_KEY }}
+      INSPECT_URL: ${{ github.event.inputs.url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r pipeline/requirements.txt
+
+      - name: Inspect
+        working-directory: pipeline
+        run: python inspect_dutchie.py
