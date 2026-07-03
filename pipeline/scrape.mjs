@@ -22,6 +22,12 @@ const SERVICE = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim()
 const HEADLESS = /^(1|true|yes)$/i.test(process.env.HEADLESS || '')
 const STORE_LIMIT = parseInt(process.env.STORE_LIMIT || '0', 10)
 const CATEGORIES = ['edibles', 'flower', 'pre-rolls', 'vaporizers']
+const PRODUCT_SEL = '[data-testid*="product"], .product-card, [class*="Product"]'
+// SLOW=1 restores the original cautious pacing if a run gets flaky/blocked.
+const SLOW = /^(1|true|yes)$/i.test(process.env.SLOW || '')
+const T = SLOW
+  ? { load: 5000, scrollWait: 2000, scrolls: 5, betweenPages: 3000 }
+  : { load: 2200, scrollWait: 800, scrolls: 8, betweenPages: 1000 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -204,12 +210,18 @@ async function scrapeStore(page, slug) {
       const url = pageNum === 1 ? `${base}/${category}` : `${base}/${category}?page=${pageNum}`
       try {
         await page.goto(url, { waitUntil: 'domcontentloaded' })
-        await sleep(5000)
-        for (let i = 0; i < 5; i++) {
+        await sleep(T.load)
+        // Scroll to trigger lazy-loading, but stop as soon as the count stops
+        // growing — much faster than a fixed number of scrolls.
+        let prev = -1
+        for (let i = 0; i < T.scrolls; i++) {
+          const c = await page.$$eval(PRODUCT_SEL, (els) => els.length).catch(() => 0)
+          if (c === prev) break
+          prev = c
           await page.evaluate('window.scrollTo(0, document.body.scrollHeight)')
-          await sleep(2000)
+          await sleep(T.scrollWait)
         }
-        const els = await page.$$('[data-testid*="product"], .product-card, [class*="Product"]')
+        const els = await page.$$(PRODUCT_SEL)
         if (els.length === 0) break
         let count = 0
         for (const el of els) {
@@ -222,7 +234,7 @@ async function scrapeStore(page, slug) {
         console.log(`    ${category} p${pageNum}: ${count}`)
         if (count < 10) break
         pageNum++
-        await sleep(3000)
+        await sleep(T.betweenPages)
       } catch (err) {
         console.log(`    error ${url}: ${err.message}`)
         break
