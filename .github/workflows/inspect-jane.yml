@@ -1,0 +1,27 @@
+name: Inspect Jane
+
+# Throwaway diagnostic: is I Heart Jane free-reachable from the runner (no
+# unblocker) and what product data does it expose? Deleted once decided.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r pipeline/requirements.txt
+
+      - name: Inspect Jane
+        working-directory: pipeline
+        run: python inspect_jane.py
