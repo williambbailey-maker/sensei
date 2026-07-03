@@ -43,8 +43,11 @@ async function sb(path, { method = 'GET', headers = {}, body, service = false } 
     },
     body: body ? JSON.stringify(body) : undefined,
   })
-  if (!res.ok) throw new Error(`${method} ${path} -> ${res.status} ${await res.text()}`)
-  return res.status === 204 ? null : res.json()
+  // Writes (POST/PATCH) come back with an empty body, so parse only when there
+  // is text — parsing "" as JSON was throwing "Unexpected end of JSON input".
+  const text = await res.text()
+  if (!res.ok) throw new Error(`${method} ${path} -> ${res.status} ${text.slice(0, 300)}`)
+  return text ? JSON.parse(text) : null
 }
 
 // --- Extraction: faithful port of the proven Python DOM scrape --------------
@@ -223,6 +226,22 @@ async function scrapeStore(page, slug) {
         }
         const els = await page.$$(PRODUCT_SEL)
         if (els.length === 0) break
+        // DEBUG_CARD=1: dump how the first few cards lay out price/text so the
+        // price parser can target the right element. Prints once, then exits.
+        if (process.env.DEBUG_CARD) {
+          for (const el of els.slice(0, 3)) {
+            console.log('\n===== CARD innerText =====')
+            console.log((await el.innerText()).slice(0, 400))
+            const priceLeaves = await el.$$eval('*', (nodes) =>
+              nodes
+                .filter((n) => n.children.length === 0 && /\$\s?\d/.test(n.textContent || ''))
+                .slice(0, 8)
+                .map((n) => `[${n.tagName} .${String(n.className).slice(0, 40)}] ${n.textContent.trim().slice(0, 24)}`),
+            )
+            console.log('  $-leaves:', JSON.stringify(priceLeaves, null, 0))
+          }
+          process.exit(0)
+        }
         let count = 0
         for (const el of els) {
           const data = await extract(el, category)
@@ -282,7 +301,7 @@ async function main() {
         await sb('products?on_conflict=store_id,external_id', {
           method: 'POST',
           service: true,
-          headers: { Prefer: 'resolution=merge-duplicates' },
+          headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
           body: list,
         })
       }
