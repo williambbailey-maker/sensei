@@ -1,9 +1,13 @@
-"""Diagnostic: where does a Dutchie category page keep its product data?
+"""Diagnostic v2: locate Dutchie's product data source.
 
-Fetches one page via ScrapingBee with render_js off AND on, and reports for each:
-status, HTML length, presence of __NEXT_DATA__ / __APOLLO_STATE__, the counts of
-each __typename value, and a snippet around the first product-ish node. Output
-goes to the job summary. Throwaway once the parser is settled.
+The embedded-JSON approach is dead (products aren't in __NEXT_DATA__ or an Apollo
+cache in the HTML). This probe figures out where they DO come from:
+  1. Render the page and report which data-source fingerprints appear
+     (self.__next_f RSC chunks, graphql/api.dutchie references, a dispensary id).
+  2. Try Dutchie's consumer GraphQL directly through ScrapingBee — dispensary
+     lookup by cName, then FilteredProducts — dumping raw responses (GraphQL
+     errors are informative about the real schema).
+Throwaway.
 """
 
 from __future__ import annotations
@@ -11,18 +15,15 @@ from __future__ import annotations
 import json
 import os
 import re
-from collections import Counter
 
 import requests
 
-URL = os.environ.get(
-    "INSPECT_URL", "https://dutchie.com/dispensary/conbud-les/products/flower"
-)
+SLUG = os.environ.get("INSPECT_SLUG", "conbud-les")
+CATEGORY = os.environ.get("INSPECT_CATEGORY", "Flower")
+URL = f"https://dutchie.com/dispensary/{SLUG}/products/{CATEGORY.lower()}"
+GRAPHQL = "https://dutchie.com/graphql"
 ENDPOINT = "https://app.scrapingbee.com/api/v1/"
 KEY = os.environ["SCRAPINGBEE_KEY"]
-
-NEXT_RE = re.compile(r'<script[^>]*id="__NEXT_DATA__"[^>]*>(.*?)</script>', re.DOTALL)
-APOLLO_RE = re.compile(r'window\.__APOLLO_STATE__\s*=\s*(\{.*?\});?</script>', re.DOTALL)
 
 
 def emit(line: str = "") -> None:
@@ -33,68 +34,96 @@ def emit(line: str = "") -> None:
             fh.write(line + "\n")
 
 
-def typename_counts(html: str) -> Counter:
-    return Counter(re.findall(r'"__typename"\s*:\s*"([^"]+)"', html))
-
-
-def fetch(render: bool):
-    params = {"api_key": KEY, "url": URL, "render_js": "true" if render else "false", "country_code": "us"}
+def bee_get(url: str, render: bool, premium: bool = False) -> requests.Response:
+    params = {"api_key": KEY, "url": url, "render_js": "true" if render else "false", "country_code": "us"}
     if render:
-        # Wait for client-side product queries to resolve.
-        params["wait"] = "5000"
-    r = requests.get(ENDPOINT, params=params, timeout=120)
-    return r
+        params["wait"] = "6000"
+    if premium:
+        params["premium_proxy"] = "true"
+    return requests.get(ENDPOINT, params=params, timeout=120)
 
 
-def report(render: bool):
-    label = f"render_js={'true' if render else 'false'}"
-    emit(f"## {label}")
-    try:
-        r = fetch(render)
-    except Exception as exc:  # noqa: BLE001
-        emit(f"- fetch error: `{exc!r}`")
-        emit()
-        return
-    html = r.text
-    emit(f"- HTTP {r.status_code}, length {len(html):,}")
-    emit(f"- `__NEXT_DATA__` present: {bool(NEXT_RE.search(html))}")
-    emit(f"- `window.__APOLLO_STATE__` present: {bool(APOLLO_RE.search(html))}")
+def bee_post(url: str, body: dict, premium: bool = False) -> requests.Response:
+    params = {"api_key": KEY, "url": url, "render_js": "false", "country_code": "us"}
+    if premium:
+        params["premium_proxy"] = "true"
+    # ScrapingBee forwards the POST body + content-type to the target.
+    return requests.post(
+        ENDPOINT, params=params, json=body,
+        headers={"Content-Type": "application/json"}, timeout=120,
+    )
 
-    tn = typename_counts(html)
-    emit(f"- distinct __typename count: {len(tn)}; Product nodes: {tn.get('Product', 0)}")
-    if tn:
-        top = ", ".join(f"{k}={v}" for k, v in tn.most_common(15))
-        emit(f"- top __typename: {top}")
 
-    # If NEXT_DATA parses, show its top-level shape and whether products live in it.
-    m = NEXT_RE.search(html)
-    if m:
-        try:
-            nd = json.loads(m.group(1))
-            pp = nd.get("props", {}).get("pageProps", {})
-            emit(f"- __NEXT_DATA__ props.pageProps keys: {list(pp.keys())[:25]}")
-            emit(f"- Product nodes inside __NEXT_DATA__: {typename_counts(json.dumps(nd)).get('Product', 0)}")
-        except Exception as exc:  # noqa: BLE001
-            emit(f"- __NEXT_DATA__ JSON parse error: `{exc!r}`")
+def fingerprints(html: str) -> None:
+    emit(f"- length {len(html):,}")
+    needles = [
+        "self.__next_f", "__APOLLO_STATE__", "apolloState", "dispensaryId",
+        "/graphql", "api.dutchie.com", "operationName", "persistedQuery",
+        "productsFilter", "filteredProducts", "retailerId", "cName",
+    ]
+    hits = {n: html.count(n) for n in needles}
+    emit("- fingerprint counts: " + ", ".join(f"`{k}`={v}" for k, v in hits.items() if v))
 
-    # Snippet around the first Product node, if any.
-    idx = html.find('"__typename":"Product"')
-    if idx == -1:
-        idx = html.find('"__typename": "Product"')
-    if idx != -1:
-        emit("- snippet around first Product node:")
-        emit("```json")
-        emit(html[max(0, idx - 200): idx + 900])
-        emit("```")
-    emit()
+    # Any dispensary id near the word "dispensary"/"retailer"?
+    for pat in (r'"dispensaryId"\s*:\s*"?([A-Za-z0-9]{6,})"?',
+                r'"retailerId"\s*:\s*"?([A-Za-z0-9-]{6,})"?',
+                r'"id"\s*:\s*"([0-9a-f]{24})"'):
+        m = re.search(pat, html)
+        if m:
+            emit(f"- id via `{pat}` -> `{m.group(1)}`")
+
+    for needle in ("self.__next_f", '"graphql', "operationName", "dispensaryId"):
+        i = html.find(needle)
+        if i != -1:
+            emit(f"- snippet @ `{needle}`:")
+            emit("```")
+            emit(html[i: i + 500].replace("```", "``"))
+            emit("```")
+
+
+def try_graphql() -> None:
+    emit("## GraphQL probes")
+
+    # Candidate dispensary lookups — dump whatever comes back.
+    dispensary_queries = [
+        {
+            "operationName": "ConsumerDispensary",
+            "variables": {"dispensaryFilter": {"cNameOrID": SLUG}},
+            "query": "query ConsumerDispensary($dispensaryFilter: DispensaryFilter) { filteredDispensaries(dispensaryFilter: $dispensaryFilter) { id cName name } }",
+        },
+        {
+            "operationName": "DispensaryByCNAME",
+            "variables": {"cName": SLUG},
+            "query": "query DispensaryByCNAME($cName: String!) { dispensaryByCNAME(cName: $cName) { id name cName } }",
+        },
+    ]
+    for i, q in enumerate(dispensary_queries):
+        for premium in (False, True):
+            tag = f"dispensary#{i} premium={premium}"
+            try:
+                r = bee_post(GRAPHQL, q, premium=premium)
+                emit(f"- {tag}: HTTP {r.status_code}, {len(r.text)} bytes")
+                emit("```")
+                emit(r.text[:700].replace("```", "``"))
+                emit("```")
+                if r.status_code == 200 and '"data"' in r.text and "null" not in r.text[:60]:
+                    return  # got something useful; stop burning credits
+            except Exception as exc:  # noqa: BLE001
+                emit(f"- {tag}: error `{exc!r}`")
 
 
 def main() -> int:
-    emit("# Dutchie page structure inspection")
-    emit(f"URL: `{URL}`")
+    emit("# Dutchie data-source inspection v2")
+    emit(f"URL: `{URL}`  ·  slug: `{SLUG}`  ·  category: `{CATEGORY}`")
     emit()
-    report(render=False)
-    report(render=True)
+    emit("## rendered page fingerprints")
+    try:
+        r = bee_get(URL, render=True)
+        fingerprints(r.text)
+    except Exception as exc:  # noqa: BLE001
+        emit(f"- render fetch error: `{exc!r}`")
+    emit()
+    try_graphql()
     return 0
 
 
