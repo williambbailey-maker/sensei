@@ -1,22 +1,23 @@
-"""Diagnostic v5: introspect Dutchie's GraphQL schema to end the guessing.
+"""Diagnostic v6: capture Dutchie's real product API call via ScrapingBee XHR.
 
-`filter:` is confirmed the right argument on filteredProducts; both input-type
-guesses were wrong and suggestions are hidden. So ask the schema directly:
-1) introspect Query.filteredProducts args -> resolve the `filter` input type name,
-2) introspect that input type's fields and the product type's fields.
-If introspection is disabled we'll see errors and pivot. Throwaway.
+Introspection is off and type suggestions are hidden, so stop guessing: render
+the category page with json_response=true and inspect the captured XHR/fetch
+calls. The GraphQL request Dutchie's own frontend makes contains the exact
+operation, input type, and variables; its response contains the product JSON.
+Dump both. Throwaway.
 """
 
 from __future__ import annotations
 
 import json
 import os
-import time
 
 import requests
 
+SLUG = os.environ.get("INSPECT_SLUG", "conbud-les")
+CATEGORY = os.environ.get("INSPECT_CATEGORY", "flower")
+URL = f"https://dutchie.com/dispensary/{SLUG}/products/{CATEGORY}"
 ENDPOINT = "https://app.scrapingbee.com/api/v1/"
-GRAPHQL = "https://dutchie.com/graphql"
 KEY = os.environ["SCRAPINGBEE_KEY"]
 
 
@@ -28,89 +29,59 @@ def emit(line: str = "") -> None:
             fh.write(line + "\n")
 
 
-def gql(query: str, tries: int = 6) -> dict | None:
-    params = {
-        "api_key": KEY, "url": GRAPHQL, "render_js": "false",
-        "country_code": "us", "transparent_status_code": "true",
-    }
-    for i in range(tries):
-        r = requests.post(ENDPOINT, params=params, json={"query": query},
-                          headers={"Content-Type": "application/json"}, timeout=90)
-        if r.status_code == 403:  # intermittent Cloudflare
-            time.sleep(2 + i)
-            continue
-        try:
-            return json.loads(r.text)
-        except json.JSONDecodeError:
-            emit(f"- non-JSON HTTP {r.status_code}: {r.text[:200]}")
-            return None
-    emit("- gave up after Cloudflare 403s")
-    return None
-
-
-def unwrap(t: dict) -> str:
-    while t and t.get("ofType"):
-        if t.get("name"):
-            return t["name"]
-        t = t["ofType"]
-    return t.get("name") if t else None
-
-
 def main() -> int:
-    emit("# Dutchie GraphQL introspection (v5)")
+    emit("# Dutchie XHR capture (v6)")
+    emit(f"URL `{URL}`")
     emit()
-
-    # 1) filteredProducts args
-    q1 = ('query { __type(name: "Query") { fields { name '
-          'args { name type { kind name ofType { kind name ofType { kind name } } } } } } }')
-    d1 = gql(q1)
-    if not d1:
-        return 0
-    if "errors" in d1:
-        emit("- introspection disabled or errored:")
-        emit("```json")
-        emit(json.dumps(d1["errors"], indent=2)[:800])
+    params = {
+        "api_key": KEY,
+        "url": URL,
+        "render_js": "true",
+        "json_response": "true",
+        "country_code": "us",
+        "wait": "8000",
+    }
+    r = requests.get(ENDPOINT, params=params, timeout=180)
+    emit(f"- HTTP {r.status_code}, {len(r.text):,} bytes")
+    try:
+        data = json.loads(r.text)
+    except json.JSONDecodeError:
+        emit("- not JSON; first 500 bytes:")
+        emit("```")
+        emit(r.text[:500])
         emit("```")
         return 0
 
-    fields = (((d1.get("data") or {}).get("__type") or {}).get("fields")) or []
-    fp = next((f for f in fields if f["name"] == "filteredProducts"), None)
-    if not fp:
-        emit("- filteredProducts not found on Query. Sample fields: "
-             + ", ".join(f["name"] for f in fields[:40]))
-        return 0
-    emit("## filteredProducts args")
-    input_type_name = None
-    for a in fp["args"]:
-        tn = unwrap(a["type"])
-        emit(f"- `{a['name']}`: {tn}")
-        if a["name"] == "filter":
-            input_type_name = tn
-    emit()
+    emit(f"- json_response keys: {list(data.keys())}")
+    xhr = data.get("xhr") or []
+    emit(f"- captured xhr calls: {len(xhr)}")
 
-    # 2) the filter input type's fields + the product type's fields
-    def dump_type(name: str) -> None:
-        q = ('query { __type(name: "%s") { name kind '
-             'inputFields { name type { kind name ofType { kind name } } } '
-             'fields { name type { kind name ofType { kind name } } } } }') % name
-        d = gql(q)
-        if not d or "errors" in (d or {}):
-            emit(f"- could not introspect `{name}`: {json.dumps((d or {}).get('errors'))[:300]}")
-            return
-        t = (d.get("data") or {}).get("__type") or {}
-        emit(f"## type `{name}` (kind {t.get('kind')})")
-        for kind_key in ("inputFields", "fields"):
-            items = t.get(kind_key) or []
-            if items:
-                emit(f"- {kind_key}:")
-                emit("```")
-                for it in items:
-                    emit(f"  {it['name']}: {unwrap(it['type'])}")
-                emit("```")
+    gql_calls = [x for x in xhr if "graphql" in (x.get("url") or "").lower()]
+    emit(f"- graphql xhr calls: {len(gql_calls)}")
 
-    if input_type_name:
-        dump_type(input_type_name)
-    dump_type("Products")
+    for i, x in enumerate(gql_calls[:6]):
+        emit(f"### graphql xhr #{i}: {x.get('method')} status={x.get('status')}")
+        # Request payload — the exact query + variables + input type.
+        for key in ("post_data", "postData", "body_sent", "request_body"):
+            if x.get(key):
+                emit(f"- request `{key}` (first 900 chars):")
+                emit("```json")
+                emit(str(x[key])[:900])
+                emit("```")
+                break
+        # Response body — product JSON.
+        body = x.get("body") or x.get("response_body") or ""
+        if body:
+            has_products = '"products"' in body or '"Products"' in body
+            emit(f"- response {len(body)} bytes, has products: {has_products}")
+            emit("```json")
+            emit(body[:900])
+            emit("```")
+
+    if not gql_calls and xhr:
+        emit("- xhr URLs seen (first 20):")
+        for x in xhr[:20]:
+            emit(f"  - {x.get('method')} {x.get('status')} {(x.get('url') or '')[:120]}")
     return 0
 
 
