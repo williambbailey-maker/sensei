@@ -4,19 +4,22 @@ name: M0 Connectivity Test
 # Proves whether a given runner can reach Dutchie's embedded product JSON
 # before any of the real pipeline gets built.
 #
-# Strategy:
+# Strategy (first method that returns embedded product JSON wins):
 #   1. Plain `requests` GET with realistic browser headers.
-#   2. If that looks blocked, retry with Playwright headless Chromium.
-#   3. Report METHOD_THAT_WORKED = requests | playwright | BLOCKED in the job summary,
-#      and dump the first 2KB of HTML either way.
+#   2. Unblocker API — only if a ScraperAPI/ScrapingBee key secret is set. The
+#      service solves Cloudflare server-side; keeps hosted Actions + phone-only.
+#   3. Playwright headless Chromium.
+#   Report METHOD_THAT_WORKED = requests | unblocker | playwright | BLOCKED in the
+#   job summary, and dump the first 2KB of HTML either way.
 #
-# Runner choice (the `runner_label` input):
+# Getting past Cloudflare:
 #   GitHub's hosted runners (ubuntu-latest) run on datacenter IPs that Cloudflare
 #   blocks at Dutchie — the first M0 run came back BLOCKED (HTTP 403, "Just a
-#   moment..." challenge) on both requests and Playwright. To test a NON-datacenter
-#   path, register a self-hosted runner on a residential/home IP and dispatch this
-#   workflow with runner_label set to that runner's label (e.g. "self-hosted").
-#   See .github/scripts/README-selfhosted-runner.md for setup.
+#   moment..." challenge) on both requests and Playwright. Two ways to unblock:
+#     - Unblocker API: add secret SCRAPERAPI_KEY *or* SCRAPINGBEE_KEY, keep
+#       runner_label = ubuntu-latest. See .github/scripts/README-unblocker.md.
+#     - Different runner: register a self-hosted runner on a residential IP and
+#       set runner_label to its label. See .github/scripts/README-selfhosted-runner.md.
 
 on:
   workflow_dispatch:
@@ -32,6 +35,10 @@ jobs:
     timeout-minutes: 15
     env:
       TARGET_URL: "https://dutchie.com/dispensary/conbud-les/products/flower"
+      # Optional — set either one as a repo secret to enable the unblocker method.
+      # If neither is set, the gate simply skips that attempt.
+      SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
+      SCRAPINGBEE_KEY: ${{ secrets.SCRAPINGBEE_KEY }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
