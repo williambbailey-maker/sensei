@@ -1,28 +1,25 @@
-"""Diagnostic: is I Heart Jane free-reachable from GitHub Actions, and what
-product data does it expose?
+"""Diagnostic v2: confirm Jane free path end-to-end.
 
-Jane menus are backed by Algolia (a CDN search API), which is not Cloudflare-
-walled — so a datacenter runner should reach it directly with plain requests,
-no unblocker, $0. This probe:
-  1. tests reachability of iheartjane.com from the Actions runner,
-  2. hits candidate Jane store-discovery endpoints (find NYC stores + ids),
-  3. extracts the public Algolia app id + search key from a store page,
-  4. queries Algolia for one store's products and dumps the shape.
-Throwaway.
+v1 proved iheartjane.com/api/v1/stores is free-reachable and extracted the public
+Algolia creds. Now: pull the store directory, count NY stores, and query Algolia
+for one NY store's products to confirm coverage + product shape. All free, no
+unblocker. Throwaway.
 """
 
 from __future__ import annotations
 
 import json
 import os
-import re
 
 import requests
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
-H = {"User-Agent": UA, "Accept": "application/json, text/html;q=0.9,*/*;q=0.8",
-     "Accept-Language": "en-US,en;q=0.9"}
+H = {"User-Agent": UA, "Accept": "application/json,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.9"}
+
+ALGOLIA_APP = "VFM4X0N23A"
+ALGOLIA_KEY = "edc5435c65d771cecbd98bbd488aa8d3"
+INDEX = "menu-products-production"
 
 
 def emit(line: str = "") -> None:
@@ -33,80 +30,76 @@ def emit(line: str = "") -> None:
             fh.write(line + "\n")
 
 
-def get(url, **kw):
-    try:
-        r = requests.get(url, headers=H, timeout=30, **kw)
-        return r
-    except Exception as exc:  # noqa: BLE001
-        return exc
-
-
-def show(label, r, n=400):
-    if isinstance(r, Exception):
-        emit(f"- {label}: ERROR `{r!r}`")
-        return None
-    ctype = r.headers.get("content-type", "")
-    emit(f"- {label}: HTTP {r.status_code} · {ctype} · {len(r.text)} bytes")
-    body = r.text[:n].replace("```", "``")
-    emit("```")
-    emit(body)
-    emit("```")
-    return r
-
-
 def main() -> int:
-    emit("# I Heart Jane reachability + data probe")
+    emit("# Jane free-path confirmation (v2)")
     emit()
 
-    emit("## 1. reachability (direct, no unblocker)")
-    show("GET iheartjane.com", get("https://www.iheartjane.com/"), n=200)
+    # 1. Store directory
+    r = requests.get("https://www.iheartjane.com/api/v1/stores", headers=H, timeout=60)
+    stores = r.json().get("stores", [])
+    emit(f"## store directory: HTTP {r.status_code}, {len(stores)} stores total")
+    if stores:
+        emit(f"- store record keys: {sorted(stores[0].keys())}")
+
+    def is_ny(s: dict) -> bool:
+        blob = json.dumps(s).lower()
+        st = (s.get("state") or "").upper()
+        return st == "NY" or st == "NEW YORK" or '"state": "ny"' in blob
+
+    ny = [s for s in stores if is_ny(s)]
+    emit(f"- NY stores: {len(ny)}")
+    emit()
+    emit("- first 8 NY stores (id · name · city):")
+    for s in ny[:8]:
+        emit(f"  - {s.get('id')} · {s.get('name')} · {s.get('city')}, {s.get('state')}")
     emit()
 
-    emit("## 2. store discovery candidates")
-    candidates = [
-        "https://www.iheartjane.com/api/v1/stores?per_page=3",
-        "https://api.iheartjane.com/v1/stores?per_page=3",
-        "https://www.iheartjane.com/api/v1/stores/search?query=New%20York&per_page=3",
-        "https://www.iheartjane.com/api/v2/stores?per_page=3",
-    ]
-    reachable_store = None
-    for u in candidates:
-        r = show(u.replace("https://", ""), get(u), n=500)
-        if isinstance(r, requests.Response) and r.status_code == 200 and "json" in r.headers.get("content-type", ""):
-            try:
-                j = r.json()
-                # try to pull a store id
-                for path in (("stores", 0, "id"), ("data", 0, "id"), (0, "id")):
-                    cur = j
-                    ok = True
-                    for k in path:
-                        cur = cur[k] if (isinstance(cur, list) or isinstance(cur, dict)) else None
-                        if cur is None:
-                            ok = False
-                            break
-                    if ok:
-                        reachable_store = cur
-                        emit(f"  -> found store id: {cur}")
-                        break
-            except Exception:  # noqa: BLE001
-                pass
-        emit()
-
-    emit("## 3. algolia credentials from a store page")
-    # Try the storefront to extract Algolia app id + search key + index.
-    page = get("https://www.iheartjane.com/stores")
-    if isinstance(page, requests.Response):
-        emit(f"- /stores: HTTP {page.status_code}, {len(page.text)} bytes")
-        for pat, name in [
-            (r'"?algoliaAppId"?\s*[:=]\s*"([A-Z0-9]{6,})"', "algoliaAppId"),
-            (r'"?algoliaApiKey"?\s*[:=]\s*"([a-z0-9]{16,})"', "algoliaApiKey"),
-            (r'application[_-]?id["\']?\s*[:=]\s*["\']([A-Z0-9]{6,})', "appId(alt)"),
-            (r'(menu-products-production|menu-products)', "index"),
-            (r'algolianet\.com', "algolia-host-ref"),
-        ]:
-            m = re.search(pat, page.text)
-            emit(f"  - {name}: {m.group(1) if m else '—'}")
+    # cities breakdown for NY
+    from collections import Counter
+    cities = Counter((s.get("city") or "?") for s in ny)
+    emit(f"- NY city counts (top 15): {dict(cities.most_common(15))}")
     emit()
+
+    if not ny:
+        emit("No NY stores found; dumping a sample store record:")
+        emit("```json")
+        emit(json.dumps(stores[0], indent=2)[:1200] if stores else "(none)")
+        emit("```")
+        return 0
+
+    # 2. Algolia products for the first NY store
+    store = ny[0]
+    sid = store.get("id")
+    emit(f"## products for store {sid} ({store.get('name')}) via Algolia")
+    url = f"https://{ALGOLIA_APP}-dsn.algolia.net/1/indexes/{INDEX}/query"
+    headers = {
+        "X-Algolia-Application-Id": ALGOLIA_APP,
+        "X-Algolia-API-Key": ALGOLIA_KEY,
+        "Content-Type": "application/json",
+    }
+    body = {"params": f"filters=store_id={sid}&hitsPerPage=3"}
+    ar = requests.post(url, headers=headers, json=body, timeout=30)
+    emit(f"- Algolia HTTP {ar.status_code}")
+    try:
+        aj = ar.json()
+    except Exception:  # noqa: BLE001
+        emit("```")
+        emit(ar.text[:500])
+        emit("```")
+        return 0
+    hits = aj.get("hits", [])
+    emit(f"- nbHits={aj.get('nbHits')}, returned={len(hits)}")
+    if hits:
+        emit(f"- product keys: {sorted(hits[0].keys())}")
+        emit("- first product:")
+        emit("```json")
+        emit(json.dumps(hits[0], indent=2)[:1800])
+        emit("```")
+    else:
+        emit("- no hits; raw (first 600):")
+        emit("```json")
+        emit(json.dumps(aj, indent=2)[:600])
+        emit("```")
     return 0
 
 
