@@ -29,8 +29,11 @@ const STORE = (process.env.STORE || '').trim()
 const CATEGORIES = ['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals']
 const SLOW = /^(1|true|yes)$/i.test(process.env.SLOW || '')
 const T = SLOW
-  ? { load: 5000, scrollWait: 2000, scrolls: 6, betweenPages: 3000 }
-  : { load: 2500, scrollWait: 900, scrolls: 6, betweenPages: 900 }
+  ? { load: 4000, scrollWait: 1500, scrolls: 4, betweenPages: 2000 }
+  : { load: 1200, scrollWait: 350, scrolls: 2, betweenPages: 250 }
+// A "full" page returns ~100 products; fewer means it's the last page, so we
+// can stop without fetching an empty next page.
+const FULL_PAGE = 90
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -172,16 +175,20 @@ async function scrapeStore(page, storeId, slug) {
       }
       page.off('response', handler)
 
+      const pageIds = new Set()
       let added = 0
       for (const prod of captured) {
         const row = mapApiProduct(prod, storeId, slug, category)
-        if (row.external_id && row.external_id !== 'undefined' && !seen.has(row.external_id)) {
+        if (!row.external_id || row.external_id === 'undefined') continue
+        pageIds.add(row.external_id)
+        if (!seen.has(row.external_id)) {
           seen.set(row.external_id, row)
           added++
         }
       }
       console.log(`    ${category} p${pageNum}: +${added}`)
-      if (added < 10) break
+      // Stop if this page wasn't full (last page) or added nothing new.
+      if (pageIds.size < FULL_PAGE || added === 0) break
       pageNum++
       await sleep(T.betweenPages)
     }
