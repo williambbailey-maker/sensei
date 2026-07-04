@@ -225,6 +225,19 @@ async function main() {
     )
     process.exit(1)
   }
+  // Fail fast if the service key is rejected — otherwise we'd scrape everything
+  // and then 401 on every write.
+  try {
+    await sb('pipeline_runs?select=id&limit=1', { service: true })
+  } catch (e) {
+    console.error(
+      `\nERROR: your SUPABASE_SERVICE_ROLE_KEY was rejected by Supabase.\n${e.message.slice(0, 140)}\n\n` +
+        'Open .env and make sure the value is the *service_role* key (not anon),\n' +
+        'copied whole from Supabase -> Project Settings -> API -> service_role.\n',
+    )
+    process.exit(1)
+  }
+
   const runStart = new Date().toISOString()
   let stores = await sb('stores?active=eq.true&select=id,slug')
   if (STORE) stores = stores.filter((s) => s.slug === STORE)
