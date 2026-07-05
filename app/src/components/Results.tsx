@@ -30,49 +30,49 @@ export function Results({
   }, [products])
 
   return (
-    <div className="mx-auto max-w-2xl px-5 py-8">
-      <div className="mb-5 flex items-center justify-between">
+    <div className="mx-auto max-w-5xl px-6 py-8">
+      <div className="mb-6 flex items-center justify-between">
         <button
           onClick={onHome}
-          className="flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-white"
+          className="flex items-center gap-1.5 text-sm text-stone-500 transition hover:text-stone-900"
         >
           <Ico name="back" className="h-4 w-4" /> Home
         </button>
         <button
           onClick={onEdit}
-          className="rounded-lg border border-ink-line px-3 py-1.5 text-sm text-zinc-300 transition hover:border-accent/50 hover:text-white"
+          className="border border-line px-3 py-1.5 text-sm text-stone-700 transition hover:border-stone-900 hover:text-stone-900"
         >
           Edit journey
         </button>
       </div>
 
-      <h1 className="text-2xl font-semibold tracking-tight">
+      <p className="eyebrow">Results</p>
+      <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
-      <p className="mt-1 text-sm text-zinc-400">Dial in the details, or tap a chip to loosen a filter.</p>
+      <p className="mt-1 text-sm text-stone-500">
+        Dial in the details, or clear a chip to widen the search.
+      </p>
 
-      <div className="mt-4">
+      <div className="mt-5 border-y border-line py-4">
         <RefineBar f={filters} onChange={onChange} boroughs={boroughs} />
-      </div>
-
-      <div className="mt-3">
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
       {ranked.length === 0 ? (
-        <div className="mt-10 rounded-xl2 border border-dashed border-ink-line p-10 text-center">
-          <p className="text-zinc-300">Nothing matched every filter.</p>
-          <p className="mt-1 text-sm text-zinc-500">Remove a chip above to widen the search.</p>
+        <div className="mt-12 border border-dashed border-line p-12 text-center">
+          <p className="text-stone-700">Nothing matched every filter.</p>
+          <p className="mt-1 text-sm text-stone-500">Clear a filter above to widen the search.</p>
         </div>
       ) : (
-        <div className="mt-5 grid gap-3">
+        <div className="mt-6 grid gap-px border border-line bg-line sm:grid-cols-2">
           {ranked.map((p) => (
             <ProductCard key={p.id} p={p} />
           ))}
         </div>
       )}
 
-      <div className="mt-10">
+      <div className="mt-12">
         <Newsletter source="results" />
       </div>
     </div>

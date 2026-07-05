@@ -37,7 +37,7 @@ export function TapJourney({
       <div className="mb-8 flex items-center justify-between">
         <button
           onClick={step === 0 ? onClose : () => setStep((s) => s - 1)}
-          className="flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-white"
+          className="flex items-center gap-1.5 text-sm text-stone-500 transition hover:text-stone-900"
         >
           <Ico name="back" className="h-4 w-4" /> {step === 0 ? 'Home' : 'Back'}
         </button>
@@ -45,11 +45,14 @@ export function TapJourney({
           {steps.map((_, i) => (
             <span
               key={i}
-              className={`h-1.5 w-8 rounded-full transition ${i <= step ? 'bg-accent' : 'bg-ink-line'}`}
+              className={`h-1 w-8 transition ${i <= step ? 'bg-stone-900' : 'bg-line'}`}
             />
           ))}
         </div>
-        <button onClick={() => onDone(f)} className="text-sm text-zinc-400 transition hover:text-white">
+        <button
+          onClick={() => onDone(f)}
+          className="text-sm text-stone-500 transition hover:text-stone-900"
+        >
           Skip
         </button>
       </div>
@@ -59,8 +62,7 @@ export function TapJourney({
           <div className="grid grid-cols-2 gap-3">
             {VIBES.map((v) => (
               <Card key={v.key} active={f.vibes.includes(v.key)} onClick={() => toggleVibe(v.key)}>
-                <span className="text-2xl">{v.emoji}</span>
-                <span className="font-medium">{v.label}</span>
+                <span className="text-[15px] font-medium">{v.label}</span>
               </Card>
             ))}
           </div>
@@ -78,8 +80,7 @@ export function TapJourney({
                   setF((p) => ({ ...p, format: p.format === fmt.key ? null : (fmt.key as Format) }))
                 }
               >
-                <span className="text-2xl">{fmt.emoji}</span>
-                <span className="font-medium">{fmt.label}</span>
+                <span className="text-[15px] font-medium">{fmt.label}</span>
               </Card>
             ))}
           </div>
@@ -120,7 +121,7 @@ export function TapJourney({
 
       <button
         onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3.5 font-medium text-ink transition hover:bg-accent-soft"
+        className="mt-8 flex w-full items-center justify-center gap-2 bg-stone-900 px-5 py-3.5 font-medium text-paper transition hover:bg-stone-700"
       >
         {step < last ? 'Next' : 'Show my matches'} <Ico name="arrow" className="h-4 w-4" />
       </button>
@@ -131,8 +132,8 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div className="animate-fade-up">
-      <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
-      <p className="mb-6 mt-1 text-sm text-zinc-400">{hint}</p>
+      <h2 className="text-2xl font-semibold tracking-tight text-stone-900">{title}</h2>
+      <p className="mb-6 mt-1 text-sm text-stone-500">{hint}</p>
       {children}
     </div>
   )
@@ -150,10 +151,10 @@ function Card({
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[84px] flex-col items-center justify-center gap-2 rounded-xl2 border p-4 text-center transition ${
+      className={`flex min-h-[84px] flex-col items-center justify-center gap-2 border p-4 text-center transition ${
         active
-          ? 'border-accent bg-accent/10 text-white ring-2 ring-accent/30'
-          : 'border-ink-line bg-ink-card text-zinc-300 hover:border-zinc-600'
+          ? 'border-stone-900 bg-stone-900 text-paper'
+          : 'border-line bg-white text-stone-700 hover:border-stone-400'
       }`}
     >
       {children}

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
@@ -13,17 +13,19 @@ body,
 }
 
 body {
-  @apply bg-ink text-zinc-100 antialiased;
-  background-image: radial-gradient(60rem 40rem at 70% -10%, rgba(124, 92, 255, 0.14), transparent 60%),
-    radial-gradient(50rem 40rem at 0% 10%, rgba(167, 139, 250, 0.08), transparent 55%);
-  background-attachment: fixed;
+  @apply bg-paper text-stone-900 antialiased;
+  font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
-/* Hide number input spinners, keep inputs clean */
+/* Editorial section label — small, uppercase, wide-tracked. */
+.eyebrow {
+  @apply text-[11px] font-medium uppercase tracking-label text-stone-400;
+}
+
 input:focus {
   outline: none;
 }
 
 ::selection {
-  background: rgba(167, 139, 250, 0.3);
+  background: rgba(154, 106, 60, 0.18);
 }
