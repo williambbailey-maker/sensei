@@ -4,47 +4,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Warm-neutral, gallery-like base (Swiss / quiet-luxury).
-        paper: '#F2EFE7', // page background, warm paper
-        panel: '#FAF8F2', // lifted section background
-        line: '#E4DED0', // hairline rules & borders
+        // Warm cream + caramel system (from the banhmivietnam.xyz reference):
+        // brand cream base, caramel surface, red + green accents, black type.
+        paper: '#F5ECD7', // page background (--brand)
+        panel: '#FAF4E4', // lifted section background
+        line: '#E3D5B8', // hairline rules & borders on cream
         accent: {
-          DEFAULT: '#9A6A3C', // restrained warm bronze
-          soft: '#B4885B',
+          DEFAULT: '#BC4749', // red (--surface-red) — hovers, highlights
+          soft: '#D05A5C',
         },
-        // Muted modular tones for the USM-style color-block motif.
-        clay: '#B06E4A',
-        sand: '#CBB68F',
-        slate: '#6E7B83',
-        ochre: '#BC8A40',
+        clay: '#BC4749', // strong potency, errors (red)
+        sand: '#D4A373', // caramel (--surface)
+        slate: '#6A994E', // green (--surface-green) — mild potency
+        ochre: '#E0A458', // amber — medium potency
       },
       fontFamily: {
-        sans: [
-          'Outfit',
-          '"Helvetica Neue"',
-          'ui-sans-serif',
-          'system-ui',
-          '-apple-system',
-          'Arial',
-          'sans-serif',
-        ],
+        sans: ['Poppins', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        display: ['"Asap Condensed"', '"Arial Narrow"', 'ui-sans-serif', 'sans-serif'],
       },
       letterSpacing: {
         label: '0.22em',
       },
-      borderRadius: {
-        DEFAULT: '3px',
-        sm: '2px',
-        md: '4px',
-      },
       keyframes: {
         'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '0%': { opacity: '0', transform: 'translateY(14px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'circle-in': {
+          '0%': { opacity: '0', transform: 'scale(0.6)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both',
+        'fade-up': 'fade-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both',
+        'circle-in': 'circle-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both',
       },
     },
   },

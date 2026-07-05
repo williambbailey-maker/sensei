@@ -30,27 +30,27 @@ export function Results({
   }, [products])
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-8">
+    <div className="mx-auto max-w-6xl px-6 py-8">
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={onHome}
-          className="flex items-center gap-1.5 text-sm text-stone-500 transition hover:text-stone-900"
+          className="flex items-center gap-1.5 text-sm text-black/55 transition hover:text-accent"
         >
           <Ico name="back" className="h-4 w-4" /> Home
         </button>
         <button
           onClick={onEdit}
-          className="border border-line px-3 py-1.5 text-sm text-stone-700 transition hover:border-stone-900 hover:text-stone-900"
+          className="rounded-full border border-black/15 px-4 py-1.5 text-sm text-black transition hover:border-accent hover:text-accent"
         >
           Edit journey
         </button>
       </div>
 
       <p className="eyebrow">Results</p>
-      <h1 className="mt-2 text-3xl font-medium tracking-tight text-stone-900">
+      <h1 className="display mt-1 text-6xl text-black">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
-      <p className="mt-1 text-sm text-stone-500">
+      <p className="mt-2 text-sm text-black/55">
         Dial in the details, or clear a chip to widen the search.
       </p>
 
@@ -60,12 +60,12 @@ export function Results({
       </div>
 
       {ranked.length === 0 ? (
-        <div className="mt-12 border border-dashed border-line p-12 text-center">
-          <p className="text-stone-700">Nothing matched every filter.</p>
-          <p className="mt-1 text-sm text-stone-500">Clear a filter above to widen the search.</p>
+        <div className="mt-12 rounded-3xl border border-dashed border-black/20 p-12 text-center">
+          <p className="text-black">Nothing matched every filter.</p>
+          <p className="mt-1 text-sm text-black/55">Clear a filter above to widen the search.</p>
         </div>
       ) : (
-        <div className="mt-6 grid gap-px border border-line bg-line sm:grid-cols-2">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
           {ranked.map((p) => (
             <ProductCard key={p.id} p={p} />
           ))}

@@ -24,45 +24,54 @@ export function Hero({
   }
 
   return (
-    <section className="mx-auto max-w-5xl px-6 pt-16 sm:pt-24">
-      <div className="animate-fade-up">
-        <p className="eyebrow">New York · Cannabis, considered</p>
-        <h1 className="mt-5 max-w-3xl text-balance text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
-          Find the right thing,
-          <br />
-          without the menu maze.
+    <section className="mx-auto max-w-6xl px-6 pt-10 sm:pt-14">
+      {/* Split headline around a center circle — the reference site's hero. */}
+      <div className="grid grid-cols-1 items-center gap-2 sm:grid-cols-[1fr_auto_1fr] sm:gap-6">
+        <h1 className="display animate-fade-up whitespace-nowrap text-center text-6xl sm:justify-self-end sm:text-right sm:text-7xl lg:text-8xl">
+          Sensei
         </h1>
-        <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-stone-600">
-          Every licensed New York dispensary menu in one place. Search by feel —
-          or by the details that matter: price, format, strain, borough.
+        <div className="relative mx-auto flex aspect-square w-40 items-center justify-center sm:w-48 lg:w-56">
+          <span className="absolute inset-0 animate-circle-in rounded-full bg-sand" />
+          <span className="display relative z-10 text-5xl text-paper sm:text-6xl" aria-hidden="true">
+            先
+          </span>
+        </div>
+        <h1 className="display animate-fade-up whitespace-nowrap text-center text-6xl sm:justify-self-start sm:text-left sm:text-7xl lg:text-8xl">
+          New York
+        </h1>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 items-end gap-4 sm:grid-cols-[1fr_auto_1fr]">
+        <p className="hidden text-sm text-black/60 sm:block">/ˈsen.seɪ/ (noun)</p>
+        <p className="mx-auto max-w-sm text-center text-[15px] leading-relaxed">
+          Every licensed dispensary menu in New York, one place. Search by feel — or by
+          price, format, strain, borough.
+        </p>
+        <p className="hidden items-center justify-end gap-1.5 text-sm text-black/60 sm:flex">
+          Discover the menu <Ico name="arrow" className="h-4 w-4 rotate-90" />
         </p>
       </div>
 
-      <form onSubmit={submit} className="mt-8 max-w-xl animate-fade-up">
-        <div className="flex items-center gap-2 border border-line bg-white px-4 transition focus-within:border-stone-900">
-          <Ico name="search" className="h-5 w-5 shrink-0 text-stone-400" />
+      <form onSubmit={submit} className="mx-auto mt-10 max-w-xl animate-fade-up">
+        <div className="flex items-center gap-2 rounded-full border border-black/15 bg-white py-1.5 pl-5 pr-1.5 transition focus-within:border-black">
+          <Ico name="search" className="h-5 w-5 shrink-0 text-black/40" />
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="mellow flower under $50 in Brooklyn…"
-            className="w-full bg-transparent py-3.5 text-[15px] text-stone-900 placeholder:text-stone-400"
+            className="w-full bg-transparent py-2 text-[15px] placeholder:text-black/40"
             autoComplete="off"
             aria-label="Describe what you want"
           />
           <button
             type="submit"
-            className="-mr-2 flex shrink-0 items-center gap-1.5 bg-stone-900 px-4 py-2.5 text-sm font-medium text-paper transition hover:bg-stone-700 disabled:opacity-30"
+            className="flex shrink-0 items-center gap-1.5 rounded-full bg-black px-5 py-2.5 text-sm font-medium text-paper transition hover:bg-neutral-800 disabled:opacity-30"
             disabled={!text.trim()}
           >
             Search <Ico name="arrow" className="h-4 w-4" />
           </button>
         </div>
       </form>
-
-      {/* USM-style modular color band — self-contained, muted, on-brand. */}
-      <div className="mt-14 animate-fade-up">
-        <ModularBand />
-      </div>
 
       {/* Two equal ways in: by feel, and by the numbers. */}
       <div className="mt-14 grid gap-10 border-t border-line pt-10 animate-fade-up sm:grid-cols-2">
@@ -77,7 +86,7 @@ export function Hero({
           </div>
           <button
             onClick={onBrowse}
-            className="mt-5 inline-flex items-center gap-1.5 border-b border-stone-900/30 pb-0.5 text-sm font-medium text-stone-900 transition hover:border-stone-900"
+            className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-black transition hover:text-accent"
           >
             Take the guided journey <Ico name="arrow" className="h-4 w-4" />
           </button>
@@ -122,35 +131,11 @@ export function Hero({
   )
 }
 
-// A quiet row of modular blocks — a nod to USM's grid, in muted earth tones.
-function ModularBand() {
-  const cells = [
-    'bg-clay',
-    'bg-white',
-    'bg-sand',
-    'bg-slate',
-    'bg-white',
-    'bg-ochre',
-    'bg-white',
-    'bg-accent',
-  ]
-  return (
-    <div className="grid grid-cols-8 overflow-hidden border border-line" aria-hidden="true">
-      {cells.map((c, i) => (
-        <div
-          key={i}
-          className={`aspect-square border-line ${c} ${i > 0 ? 'border-l' : ''}`}
-        />
-      ))}
-    </div>
-  )
-}
-
 function Tag({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
   return (
     <button
       onClick={onClick}
-      className="border border-line bg-white px-3.5 py-1.5 text-sm text-stone-700 transition hover:border-stone-900 hover:text-stone-900"
+      className="rounded-full border border-black/15 bg-white px-4 py-1.5 text-sm text-black transition hover:border-accent hover:text-accent"
     >
       {children}
     </button>

@@ -27,7 +27,7 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
         <button
           key={i}
           onClick={c.clear}
-          className="flex items-center gap-1.5 border border-stone-900 bg-stone-900 px-3 py-1 text-sm capitalize text-paper transition hover:bg-stone-700"
+          className="flex items-center gap-1.5 rounded-full bg-black px-3.5 py-1 text-sm capitalize text-paper transition hover:bg-accent"
         >
           {c.label}
           <Ico name="close" className="h-3.5 w-3.5" />

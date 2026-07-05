@@ -3,14 +3,35 @@
 @tailwind utilities;
 
 /* Self-hosted (no external runtime request — works offline in the PWA).
-   Single variable file; the weight range lets the browser render any
-   weight 400–700 from it. */
+   Poppins for body copy, Asap Condensed for the big display headlines —
+   the same pairing as the reference site. */
 @font-face {
-  font-family: 'Outfit';
+  font-family: 'Poppins';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/outfit-variable.woff2') format('woff2');
+  src: url('/fonts/poppins-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/poppins-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Asap Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/asap-condensed-700.woff2') format('woff2');
 }
 
 :root {
@@ -24,13 +45,18 @@ body,
 }
 
 body {
-  @apply bg-paper text-stone-900 antialiased;
+  @apply bg-paper font-sans text-black antialiased;
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
-/* Editorial section label — small, uppercase, wide-tracked. */
+/* Big condensed display headline — the reference site's signature type. */
+.display {
+  @apply font-display font-bold uppercase leading-none tracking-normal;
+}
+
+/* Small uppercase section label. */
 .eyebrow {
-  @apply text-[11px] font-medium uppercase tracking-label text-stone-400;
+  @apply text-[11px] font-medium uppercase tracking-label text-black/45;
 }
 
 input:focus {
@@ -38,5 +64,6 @@ input:focus {
 }
 
 ::selection {
-  background: rgba(154, 106, 60, 0.18);
+  background: black;
+  color: white;
 }

@@ -54,30 +54,25 @@ export default function App() {
     <div className="min-h-full">
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <header className="sticky top-0 z-30 border-b border-line bg-paper/85 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+      <header className="sticky top-0 z-30 border-b border-line bg-paper/90 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <button
             onClick={() => {
               setFilters(EMPTY_FILTERS)
               go('home')
             }}
-            className="flex items-center gap-2.5 text-[17px] font-semibold tracking-tight text-stone-900"
+            className="display text-xl text-black transition hover:text-accent"
           >
-            <span className="grid grid-cols-2 gap-px" aria-hidden="true">
-              <span className="h-2 w-2 bg-clay" />
-              <span className="h-2 w-2 bg-sand" />
-              <span className="h-2 w-2 bg-slate" />
-              <span className="h-2 w-2 bg-accent" />
-            </span>
             Sensei
           </button>
-          <span className="eyebrow">New York</span>
+          <span className="display text-base text-black">#NewYorkCannabis</span>
+          <span className="hidden text-sm text-black/50 sm:block">21+</span>
         </div>
       </header>
 
       {loadError && (
-        <div className="mx-auto max-w-5xl px-6 pt-4">
-          <div className="border border-clay/40 bg-clay/10 px-4 py-2.5 text-sm text-clay">
+        <div className="mx-auto max-w-6xl px-6 pt-4">
+          <div className="rounded-full border border-clay/40 bg-clay/10 px-5 py-2.5 text-sm text-clay">
             Couldn't reach the menu right now. Check your connection and refresh.
           </div>
         </div>
@@ -93,7 +88,7 @@ export default function App() {
             boroughs={boroughs}
           />
           <Deals deals={deals} />
-          <section className="mx-auto max-w-5xl px-6 pb-20 pt-4">
+          <section className="mx-auto max-w-6xl px-6 pb-20 pt-4">
             <Newsletter source="home" />
           </section>
         </main>
@@ -125,10 +120,15 @@ export default function App() {
         </main>
       )}
 
-      <footer className="mt-8 border-t border-line">
-        <div className="mx-auto flex max-w-5xl flex-col gap-1 px-6 py-10 text-xs text-stone-500">
-          <p className="text-stone-700">Sensei — New York cannabis, considered.</p>
-          <p>21+ only · For use only by adults in New York State.</p>
+      <footer className="mt-10 overflow-hidden bg-black">
+        <div className="mx-auto max-w-6xl px-6 pb-8 pt-12">
+          <p className="display text-center text-[17vw] leading-[0.9] text-sand sm:text-8xl lg:text-9xl">
+            Sensei
+          </p>
+          <div className="mt-8 flex flex-col items-center gap-1 text-xs text-paper/70 sm:flex-row sm:justify-between">
+            <p>Sensei — every New York menu, one place.</p>
+            <p>21+ only · For use only by adults in New York State.</p>
+          </div>
         </div>
       </footer>
     </div>
