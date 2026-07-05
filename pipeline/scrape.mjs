@@ -34,7 +34,9 @@ function loadEnvFile(path) {
       if (!m) continue
       let v = m[2].trim()
       if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) v = v.slice(1, -1)
-      process.env[m[1]] = v
+      // Don't clobber a value already set in the environment (standard dotenv
+      // behavior) — lets `STORE_LIMIT=0 npm run scrape` override the file.
+      if (process.env[m[1]] === undefined) process.env[m[1]] = v
     }
   } catch {
     /* file not present — fine */
