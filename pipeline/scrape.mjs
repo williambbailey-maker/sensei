@@ -127,6 +127,66 @@ export function mapApiProduct(prod, storeId, slug, fallbackCat) {
   }
 }
 
+// Pull {lat,lng} out of the many shapes Dutchie uses for coordinates.
+function pickCoords(o) {
+  if (!o || typeof o !== 'object') return null
+  const lat = o.lt ?? o.lat ?? o.latitude
+  const lng = o.ln ?? o.lng ?? o.longitude
+  if (
+    typeof lat === 'number' &&
+    typeof lng === 'number' &&
+    lat !== 0 &&
+    Math.abs(lat) <= 90 &&
+    Math.abs(lng) <= 180
+  ) {
+    return { lat, lng }
+  }
+  return null
+}
+
+// Recursively look for the dispensary object in a GraphQL response — it
+// carries the store's real name, street address, and coordinates. Shapes vary,
+// so match defensively: a name plus an address or location.
+function findDispensaryMeta(node, out, depth = 0) {
+  if (!node || typeof node !== 'object' || depth > 14 || out.done) return
+  if (Array.isArray(node)) {
+    for (const v of node) findDispensaryMeta(v, out, depth + 1)
+    return
+  }
+  const looksDispensary =
+    node.__typename === 'Dispensary' ||
+    (typeof node.name === 'string' && node.name.length < 80 && (node.address1 || node.location))
+  if (looksDispensary) {
+    const coords = pickCoords(node.location) ?? pickCoords(node)
+    if (typeof node.name === 'string' && node.name && !out.name) out.name = node.name.trim()
+    if (coords && out.lat == null) {
+      out.lat = coords.lat
+      out.lng = coords.lng
+    }
+    if (typeof node.address1 === 'string' && !out.address) {
+      out.address = [node.address1, node.city, node.state, node.zip].filter(Boolean).join(', ')
+    }
+    if (typeof node.city === 'string' && !out.city) out.city = node.city.trim()
+    if (out.name && out.lat != null && out.address) out.done = true
+  }
+  for (const k of Object.keys(node)) findDispensaryMeta(node[k], out, depth + 1)
+}
+
+// City names from Dutchie -> borough, only used when we don't know it yet.
+const CITY_BOROUGH = {
+  'new york': 'Manhattan',
+  manhattan: 'Manhattan',
+  brooklyn: 'Brooklyn',
+  williamsburg: 'Brooklyn',
+  queens: 'Queens',
+  astoria: 'Queens',
+  'long island city': 'Queens',
+  flushing: 'Queens',
+  jamaica: 'Queens',
+  bronx: 'Bronx',
+  'staten island': 'Staten Island',
+}
+
 // Recursively find arrays of product-like objects in a GraphQL JSON response.
 function findProductArrays(node, out, depth = 0) {
   if (!node || depth > 14) return
@@ -143,7 +203,7 @@ function findProductArrays(node, out, depth = 0) {
   }
 }
 
-async function scrapeStore(page, storeId, slug) {
+async function scrapeStore(page, storeId, slug, meta) {
   const base = `https://dutchie.com/dispensary/${slug}/products`
   const seen = new Map()
   for (const category of CATEGORIES) {
@@ -157,6 +217,7 @@ async function scrapeStore(page, storeId, slug) {
           const arrs = []
           findProductArrays(j, arrs)
           for (const a of arrs) captured.push(...a)
+          if (!meta.done) findDispensaryMeta(j, meta)
         } catch {
           /* not json */
         }
@@ -249,7 +310,7 @@ async function main() {
   }
 
   const runStart = new Date().toISOString()
-  let stores = await sb('stores?active=eq.true&select=id,slug')
+  let stores = await sb('stores?active=eq.true&select=id,slug,borough')
   if (STORE) stores = stores.filter((s) => s.slug === STORE)
   if (STORE_LIMIT) stores = stores.slice(0, STORE_LIMIT)
   console.log(`Active stores: ${stores.length}${HEADLESS ? ' (headless)' : ''}`)
@@ -269,10 +330,11 @@ async function main() {
   let failed = 0
   let seen = 0
   for (let i = 0; i < stores.length; i++) {
-    const { id, slug } = stores[i]
+    const { id, slug, borough } = stores[i]
     console.log(`\n[${i + 1}/${stores.length}] ${slug}`)
     try {
-      const list = await scrapeStore(page, id, slug)
+      const meta = {}
+      const list = await scrapeStore(page, id, slug, meta)
       if (list.length) {
         await sb('products?on_conflict=store_id,external_id', {
           method: 'POST',
@@ -286,6 +348,25 @@ async function main() {
         service: true,
         body: { in_stock: false },
       })
+      // Backfill the store's real name/address/coordinates from the feed.
+      // Curated fields (neighborhood) are never touched; borough only fills
+      // in when it's still unknown.
+      const patch = {}
+      if (meta.name) patch.name = meta.name
+      if (meta.address) patch.address = meta.address
+      if (meta.lat != null) {
+        patch.lat = meta.lat
+        patch.lng = meta.lng
+      }
+      if (!borough && meta.city && CITY_BOROUGH[meta.city.toLowerCase()]) {
+        patch.borough = CITY_BOROUGH[meta.city.toLowerCase()]
+      }
+      if (Object.keys(patch).length) {
+        await sb(`stores?id=eq.${id}`, { method: 'PATCH', service: true, body: patch }).catch(
+          () => {},
+        )
+        console.log(`  store info: ${[patch.name, patch.borough, patch.lat != null ? 'coords' : null].filter(Boolean).join(' · ') || 'updated'}`)
+      }
       ok++
       seen += list.length
       console.log(`  -> ${list.length} products upserted`)

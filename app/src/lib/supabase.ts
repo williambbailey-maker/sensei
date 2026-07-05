@@ -15,7 +15,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 })
 
 const PRODUCT_COLS =
-  'id,external_id,name,clean_name,brand,clean_brand,category,strain_type,thc_pct,cbd_pct,variants,price_min,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,slug)'
+  'id,external_id,name,clean_name,brand,clean_brand,category,strain_type,thc_pct,cbd_pct,variants,price_min,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng)'
 
 export async function fetchProducts(): Promise<Product[]> {
   const { data, error } = await supabase

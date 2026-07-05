@@ -10,24 +10,23 @@ import type { Filters, Product } from '../lib/types'
 export function Results({
   products,
   filters,
+  neighborhoodsByBorough,
   onChange,
   onHome,
   onEdit,
 }: {
   products: Product[]
   filters: Filters
+  neighborhoodsByBorough: Record<string, string[]>
   onChange: (f: Filters) => void
   onHome: () => void
   onEdit: () => void
 }) {
   const ranked = useMemo(() => rankProducts(products, filters), [products, filters])
-  // Boroughs that actually have in-stock products, so the filter never offers an
-  // empty option.
-  const boroughs = useMemo(() => {
-    const set = new Set<string>()
-    for (const p of products) if (p.in_stock && p.store?.borough) set.add(p.store.borough)
-    return [...set].sort()
-  }, [products])
+
+  const where = filters.userLoc
+    ? `within ${filters.radiusMiles} mi of you`
+    : (filters.neighborhood ?? filters.borough)
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-8">
@@ -46,7 +45,7 @@ export function Results({
         </button>
       </div>
 
-      <p className="eyebrow">Results</p>
+      <p className="eyebrow">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
       <h1 className="display mt-1 text-6xl">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
@@ -55,19 +54,23 @@ export function Results({
       </p>
 
       <div className="mt-5 border-y border-line py-4">
-        <RefineBar f={filters} onChange={onChange} boroughs={boroughs} />
+        <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
       {ranked.length === 0 ? (
         <div className="mt-12 rounded-[40px] border border-dashed border-line p-12 text-center">
           <p className="uppercase tracking-wide text-black">Nothing matched every filter.</p>
-          <p className="mt-1 text-sm text-muted">Clear a filter above to widen the search.</p>
+          <p className="mt-1 text-sm text-muted">
+            {filters.userLoc
+              ? 'Try a wider radius, or clear a filter above.'
+              : 'Clear a filter above to widen the search.'}
+          </p>
         </div>
       ) : (
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
           {ranked.map((p) => (
-            <ProductCard key={p.id} p={p} />
+            <ProductCard key={p.id} p={p} userLoc={filters.userLoc} />
           ))}
         </div>
       )}

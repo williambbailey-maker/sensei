@@ -8,6 +8,12 @@ import type { Filters } from '../lib/types'
 export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters) => void }) {
   const chips: { label: string; clear: () => void }[] = []
 
+  // "Near me" is set by a home-screen gesture, not a select, so it clears here.
+  if (f.userLoc)
+    chips.push({
+      label: `Near me${f.radiusMiles != null ? ` · ${f.radiusMiles} mi` : ''}`,
+      clear: () => onChange({ ...f, userLoc: null, radiusMiles: null, sort: f.sort === 'distance' ? 'match' : f.sort }),
+    })
   for (const v of f.vibes) {
     chips.push({
       label: vibeLabel(v),

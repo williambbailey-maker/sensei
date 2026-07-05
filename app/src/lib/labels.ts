@@ -27,8 +27,15 @@ export const BUDGETS: { label: string; ceiling: number | null; band: '$' | '$$' 
 
 export const STRAINS: Strain[] = ['Indica', 'Sativa', 'Hybrid']
 
+// The five boroughs are a fixed fact of NYC — always offered, regardless of
+// which currently have stocked stores. Neighborhood lists are data-driven.
+export const BOROUGHS = ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island']
+
+export const RADII = [1, 2, 5, 10]
+
 export const SORTS: { key: SortKey; label: string }[] = [
   { key: 'match', label: 'Best match' },
+  { key: 'distance', label: 'Nearest first' },
   { key: 'price-asc', label: 'Price: low to high' },
   { key: 'price-desc', label: 'Price: high to low' },
   { key: 'potency', label: 'Potency: high to low' },

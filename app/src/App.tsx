@@ -7,7 +7,14 @@ import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
 import { fetchDeals, fetchProducts } from './lib/supabase'
 import { parseQuery } from './lib/parser'
-import { EMPTY_FILTERS, type Deal, type Filters, type Product, type Vibe } from './lib/types'
+import {
+  EMPTY_FILTERS,
+  locationOf,
+  type Deal,
+  type Filters,
+  type Product,
+  type Vibe,
+} from './lib/types'
 
 type View = 'home' | 'journey' | 'results'
 
@@ -30,23 +37,35 @@ export default function App() {
 
   const go = (v: View) => setView(v)
 
-  const boroughs = useMemo(() => {
-    const set = new Set<string>()
-    for (const p of products) if (p.in_stock && p.store?.borough) set.add(p.store.borough)
-    return [...set].sort()
+  // Which neighborhoods actually have in-stock product, per borough — drives
+  // the drill-down chips and selects.
+  const neighborhoodsByBorough = useMemo(() => {
+    const map: Record<string, Set<string>> = {}
+    for (const p of products) {
+      const s = p.store
+      if (!p.in_stock || !s?.borough || !s.neighborhood) continue
+      ;(map[s.borough] ??= new Set()).add(s.neighborhood)
+    }
+    return Object.fromEntries(Object.entries(map).map(([b, set]) => [b, [...set].sort()]))
   }, [products])
 
+  // Location is the primary qualifier: set on the home screen, it persists
+  // through search, vibe taps, quick filters, and the journey.
+  const setLocation = (patch: Partial<Filters>) => setFilters((prev) => ({ ...prev, ...patch }))
+
   const search = (text: string) => {
-    setFilters(parseQuery(text))
+    const parsed = parseQuery(text)
+    // A location typed into the search wins; otherwise keep the chosen one.
+    setFilters({ ...parsed, ...(parsed.borough ? {} : locationOf(filters)) })
     go('results')
   }
   const quickVibe = (v: Vibe) => {
-    setFilters({ ...EMPTY_FILTERS, vibes: [v] })
+    setFilters({ ...EMPTY_FILTERS, ...locationOf(filters), vibes: [v] })
     go('results')
   }
-  // Jump straight to results with an objective filter applied (borough, price, …).
+  // Jump straight to results with an objective filter applied (format, price, …).
   const quickFilter = (patch: Partial<Filters>) => {
-    setFilters({ ...EMPTY_FILTERS, ...patch })
+    setFilters({ ...EMPTY_FILTERS, ...locationOf(filters), ...patch })
     go('results')
   }
 
@@ -83,11 +102,13 @@ export default function App() {
       {view === 'home' && (
         <main>
           <Hero
+            filters={filters}
+            neighborhoodsByBorough={neighborhoodsByBorough}
+            onLocation={setLocation}
             onSearch={search}
             onVibe={quickVibe}
             onBrowse={() => go('journey')}
             onQuick={quickFilter}
-            boroughs={boroughs}
           />
           <Deals deals={deals} />
           <section className="mx-auto max-w-6xl px-6 pb-20 pt-4">
@@ -100,7 +121,7 @@ export default function App() {
         <main>
           <TapJourney
             initial={filters}
-            boroughs={boroughs}
+            neighborhoodsByBorough={neighborhoodsByBorough}
             onDone={(f) => {
               setFilters(f)
               go('results')
@@ -115,6 +136,7 @@ export default function App() {
           <Results
             products={products}
             filters={filters}
+            neighborhoodsByBorough={neighborhoodsByBorough}
             onChange={setFilters}
             onHome={() => go('home')}
             onEdit={() => go('journey')}

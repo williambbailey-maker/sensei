@@ -1,6 +1,14 @@
+import { haversineMiles } from './geo'
 import { hasStructuredFilter, type Filters, type Product } from './types'
 
 const POTENCY_ORDER: Record<string, number> = { mild: 0, medium: 1, strong: 2 }
+
+// Distance from the user to a product's store, or null when either side has
+// no coordinates.
+export function productMiles(p: Product, f: Filters): number | null {
+  if (!f.userLoc || p.store?.lat == null || p.store?.lng == null) return null
+  return haversineMiles(f.userLoc, { lat: p.store.lat, lng: p.store.lng })
+}
 
 // Hard filters remove products; soft signals score the survivors.
 // Spec ranking: filter match -> in_stock -> potency/price fit -> variety across stores.
@@ -13,6 +21,12 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     if (f.format && p.category !== f.format) return false
     if (f.strain && p.strain_type !== f.strain) return false
     if (f.borough && p.store?.borough !== f.borough) return false
+    if (f.neighborhood && p.store?.neighborhood !== f.neighborhood) return false
+    if (f.userLoc && f.radiusMiles != null) {
+      // Radius mode: stores without coordinates can't qualify.
+      const mi = productMiles(p, f)
+      if (mi == null || mi > f.radiusMiles) return false
+    }
     if (f.priceCeiling != null && (p.price_min ?? Infinity) > f.priceCeiling) return false
     if (f.priceBand && p.price_band !== f.priceBand) return false
     if (!structured && query) {
@@ -30,6 +44,10 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     return [...kept].sort((a, b) => (b.price_min ?? -Infinity) - (a.price_min ?? -Infinity))
   if (f.sort === 'potency')
     return [...kept].sort((a, b) => potency(b) - potency(a))
+  if (f.sort === 'distance' && f.userLoc)
+    return [...kept].sort(
+      (a, b) => (productMiles(a, f) ?? Infinity) - (productMiles(b, f) ?? Infinity),
+    )
 
   const scored = kept.map((p) => ({ p, s: score(p, f) }))
   scored.sort((a, b) => b.s - a.s || (a.p.price_min ?? 1e9) - (b.p.price_min ?? 1e9))

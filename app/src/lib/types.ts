@@ -1,6 +1,15 @@
 export type Variant = { weight: string | null; price: number | null; special_price?: number | null }
 
-export type StoreLite = { name: string | null; borough: string | null; slug: string }
+export type StoreLite = {
+  name: string | null
+  borough: string | null
+  neighborhood: string | null
+  slug: string
+  lat: number | null
+  lng: number | null
+}
+
+export type LatLng = { lat: number; lng: number }
 
 export type Product = {
   id: string
@@ -51,7 +60,7 @@ export type Strain = 'Indica' | 'Sativa' | 'Hybrid'
 
 // How the result list is ordered. 'match' = the vibe/relevance score;
 // the rest are objective, user-driven sorts.
-export type SortKey = 'match' | 'price-asc' | 'price-desc' | 'potency'
+export type SortKey = 'match' | 'price-asc' | 'price-desc' | 'potency' | 'distance'
 
 export type Filters = {
   vibes: Vibe[]
@@ -60,7 +69,12 @@ export type Filters = {
   experience: 'beginner' | 'casual' | 'experienced' | null
   priceCeiling: number | null
   priceBand: '$' | '$$' | '$$$' | null
+  // Location — the primary qualifier. Either borough (+ optional
+  // neighborhood), or the user's coordinates with a mile radius.
   borough: string | null
+  neighborhood: string | null
+  userLoc: LatLng | null
+  radiusMiles: number | null
   sort: SortKey
   text: string
 }
@@ -73,8 +87,26 @@ export const EMPTY_FILTERS: Filters = {
   priceCeiling: null,
   priceBand: null,
   borough: null,
+  neighborhood: null,
+  userLoc: null,
+  radiusMiles: null,
   sort: 'match',
   text: '',
+}
+
+// The location half of a filter set — carried across every action so "where
+// you are" persists from the first tap onward.
+export function locationOf(f: Filters): Partial<Filters> {
+  return {
+    borough: f.borough,
+    neighborhood: f.neighborhood,
+    userLoc: f.userLoc,
+    radiusMiles: f.radiusMiles,
+  }
+}
+
+export function hasLocation(f: Filters): boolean {
+  return f.borough !== null || f.neighborhood !== null || f.userLoc !== null
 }
 
 // A "structured" filter narrows results. Sort order is presentation, not a
@@ -87,7 +119,9 @@ export function hasStructuredFilter(f: Filters): boolean {
     f.experience !== null ||
     f.priceCeiling !== null ||
     f.priceBand !== null ||
-    f.borough !== null
+    f.borough !== null ||
+    f.neighborhood !== null ||
+    f.userLoc !== null
   )
 }
 
