@@ -4,32 +4,47 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: {
-          DEFAULT: '#0a0a0b',
-          soft: '#141417',
-          card: '#17171b',
-          line: '#26262c',
-        },
+        // Warm-neutral, gallery-like base (Swiss / quiet-luxury).
+        paper: '#F2EFE7', // page background, warm paper
+        panel: '#FAF8F2', // lifted section background
+        line: '#E4DED0', // hairline rules & borders
         accent: {
-          DEFAULT: '#a78bfa',
-          soft: '#c4b5fd',
-          deep: '#7c5cff',
+          DEFAULT: '#9A6A3C', // restrained warm bronze
+          soft: '#B4885B',
         },
+        // Muted modular tones for the USM-style color-block motif.
+        clay: '#B06E4A',
+        sand: '#CBB68F',
+        slate: '#6E7B83',
+        ochre: '#BC8A40',
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: [
+          '"Helvetica Neue"',
+          'Inter',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'Arial',
+          'sans-serif',
+        ],
+      },
+      letterSpacing: {
+        label: '0.22em',
       },
       borderRadius: {
-        xl2: '1.25rem',
+        DEFAULT: '3px',
+        sm: '2px',
+        md: '4px',
       },
       keyframes: {
         'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.4s ease both',
+        'fade-up': 'fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both',
       },
     },
   },

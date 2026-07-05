@@ -22,12 +22,12 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
   if (chips.length === 0) return null
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="mt-3 flex flex-wrap items-center gap-2">
       {chips.map((c, i) => (
         <button
           key={i}
           onClick={c.clear}
-          className="flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-sm capitalize text-accent-soft transition hover:bg-accent/20"
+          className="flex items-center gap-1.5 border border-stone-900 bg-stone-900 px-3 py-1 text-sm capitalize text-paper transition hover:bg-stone-700"
         >
           {c.label}
           <Ico name="close" className="h-3.5 w-3.5" />

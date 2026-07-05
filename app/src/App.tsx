@@ -54,27 +54,30 @@ export default function App() {
     <div className="min-h-full">
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <header className="sticky top-0 z-30 border-b border-ink-line/60 bg-ink/70 backdrop-blur">
-        <div className="mx-auto flex max-w-2xl items-center justify-between px-5 py-3.5">
+      <header className="sticky top-0 z-30 border-b border-line bg-paper/85 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <button
             onClick={() => {
               setFilters(EMPTY_FILTERS)
               go('home')
             }}
-            className="flex items-center gap-2 font-semibold tracking-tight"
+            className="flex items-center gap-2.5 text-[17px] font-semibold tracking-tight text-stone-900"
           >
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent/15 text-sm text-accent">
-              先
+            <span className="grid grid-cols-2 gap-px" aria-hidden="true">
+              <span className="h-2 w-2 bg-clay" />
+              <span className="h-2 w-2 bg-sand" />
+              <span className="h-2 w-2 bg-slate" />
+              <span className="h-2 w-2 bg-accent" />
             </span>
             Sensei
           </button>
-          <span className="text-xs text-zinc-500">NYC</span>
+          <span className="eyebrow">New York</span>
         </div>
       </header>
 
       {loadError && (
-        <div className="mx-auto max-w-2xl px-5 pt-4">
-          <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-2.5 text-sm text-rose-200">
+        <div className="mx-auto max-w-5xl px-6 pt-4">
+          <div className="border border-clay/40 bg-clay/10 px-4 py-2.5 text-sm text-clay">
             Couldn't reach the menu right now. Check your connection and refresh.
           </div>
         </div>
@@ -90,7 +93,7 @@ export default function App() {
             boroughs={boroughs}
           />
           <Deals deals={deals} />
-          <section className="mx-auto max-w-2xl px-5 pb-16">
+          <section className="mx-auto max-w-5xl px-6 pb-20 pt-4">
             <Newsletter source="home" />
           </section>
         </main>
@@ -122,9 +125,11 @@ export default function App() {
         </main>
       )}
 
-      <footer className="border-t border-ink-line/60 py-8 text-center text-xs text-zinc-600">
-        <p>Sensei · NYC cannabis, matched to your vibe</p>
-        <p className="mt-1">21+ only · For use only by adults in New York State</p>
+      <footer className="mt-8 border-t border-line">
+        <div className="mx-auto flex max-w-5xl flex-col gap-1 px-6 py-10 text-xs text-stone-500">
+          <p className="text-stone-700">Sensei — New York cannabis, considered.</p>
+          <p>21+ only · For use only by adults in New York State.</p>
+        </div>
       </footer>
     </div>
   )
