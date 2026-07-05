@@ -12,37 +12,15 @@
 //
 // Setup (once), from this folder:
 //   npm install
-// Run:
-//   cp .env.example .env   # paste your service_role key into .env
+//   cp .env.example .env   # then paste your service_role key into .env
+// Run (scrapes every active store):
 //   npm run scrape
 //
-// Options: HEADLESS=1 hide browser · STORE_LIMIT=3 first N stores ·
+// Your key is read from a plain .env in this folder (via --env-file in the npm
+// script). Nothing else to configure.
+//
+// Options: HEADLESS=1 hide browser · STORE_LIMIT=3 first N stores (testing) ·
 //          STORE=<slug> one store · SLOW=1 cautious pacing · DEBUG_API=1 dump feed shape.
-
-// Load config from a permanent, code-independent location: ~/.sensei/.env .
-// This is the recommended home for your keys — it's separate from the code, so
-// re-downloading / updating the script never touches it. Values here take
-// precedence. A local ./.env (via --env-file) still works as a fallback.
-import { readFileSync } from 'node:fs'
-import { homedir } from 'node:os'
-import { join } from 'node:path'
-
-function loadEnvFile(path) {
-  try {
-    for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
-      const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/)
-      if (!m) continue
-      let v = m[2].trim()
-      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) v = v.slice(1, -1)
-      // Don't clobber a value already set in the environment (standard dotenv
-      // behavior) — lets `STORE_LIMIT=0 npm run scrape` override the file.
-      if (process.env[m[1]] === undefined) process.env[m[1]] = v
-    }
-  } catch {
-    /* file not present — fine */
-  }
-}
-loadEnvFile(join(homedir(), '.sensei', '.env'))
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dywrisybvcorpfhbwgtg.supabase.co'
 const ANON =
