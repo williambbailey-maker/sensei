@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { Hero } from './components/Hero'
 import { TapJourney } from './components/TapJourney'
@@ -30,12 +30,23 @@ export default function App() {
 
   const go = (v: View) => setView(v)
 
+  const boroughs = useMemo(() => {
+    const set = new Set<string>()
+    for (const p of products) if (p.in_stock && p.store?.borough) set.add(p.store.borough)
+    return [...set].sort()
+  }, [products])
+
   const search = (text: string) => {
     setFilters(parseQuery(text))
     go('results')
   }
   const quickVibe = (v: Vibe) => {
     setFilters({ ...EMPTY_FILTERS, vibes: [v] })
+    go('results')
+  }
+  // Jump straight to results with an objective filter applied (borough, price, …).
+  const quickFilter = (patch: Partial<Filters>) => {
+    setFilters({ ...EMPTY_FILTERS, ...patch })
     go('results')
   }
 
@@ -71,7 +82,13 @@ export default function App() {
 
       {view === 'home' && (
         <main>
-          <Hero onSearch={search} onVibe={quickVibe} onBrowse={() => go('journey')} />
+          <Hero
+            onSearch={search}
+            onVibe={quickVibe}
+            onBrowse={() => go('journey')}
+            onQuick={quickFilter}
+            boroughs={boroughs}
+          />
           <Deals deals={deals} />
           <section className="mx-auto max-w-2xl px-5 pb-16">
             <Newsletter source="home" />
@@ -83,6 +100,7 @@ export default function App() {
         <main>
           <TapJourney
             initial={filters}
+            boroughs={boroughs}
             onDone={(f) => {
               setFilters(f)
               go('results')

@@ -1,8 +1,10 @@
 import { Ico } from './Ico'
-import { formatLabel, vibeLabel } from '../lib/labels'
+import { vibeLabel } from '../lib/labels'
 import type { Filters } from '../lib/types'
 
-// Inline, editable filter chips shown above results. Each chip removes itself.
+// Removable chips for the "soft" signals that come from vibe search or the
+// journey. The objective filters (format/strain/price/borough) live in the
+// RefineBar selects, so they're intentionally not duplicated here.
 export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters) => void }) {
   const chips: { label: string; clear: () => void }[] = []
 
@@ -12,12 +14,8 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
       clear: () => onChange({ ...f, vibes: f.vibes.filter((x) => x !== v) }),
     })
   }
-  if (f.format) chips.push({ label: formatLabel(f.format), clear: () => onChange({ ...f, format: null }) })
-  if (f.strain) chips.push({ label: f.strain, clear: () => onChange({ ...f, strain: null }) })
   if (f.experience)
     chips.push({ label: f.experience, clear: () => onChange({ ...f, experience: null }) })
-  if (f.priceCeiling != null)
-    chips.push({ label: `Under $${f.priceCeiling}`, clear: () => onChange({ ...f, priceCeiling: null }) })
   if (f.priceBand) chips.push({ label: f.priceBand, clear: () => onChange({ ...f, priceBand: null }) })
   if (f.text) chips.push({ label: `"${f.text}"`, clear: () => onChange({ ...f, text: '' }) })
 

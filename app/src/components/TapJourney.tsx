@@ -7,10 +7,12 @@ import { EMPTY_FILTERS, type Filters, type Format, type Vibe } from '../lib/type
 // (e.g. a vibe tapped on the hero).
 export function TapJourney({
   initial,
+  boroughs,
   onDone,
   onClose,
 }: {
   initial: Filters
+  boroughs: string[]
   onDone: (f: Filters) => void
   onClose: () => void
 }) {
@@ -25,7 +27,10 @@ export function TapJourney({
         : [...prev.vibes, v].slice(0, 3),
     }))
 
-  const steps = ['Vibe', 'Format', 'Budget']
+  // Location only earns a step once we actually have boroughs to offer.
+  const hasBoroughs = boroughs.length > 0
+  const steps = hasBoroughs ? ['Vibe', 'Format', 'Budget', 'Where'] : ['Vibe', 'Format', 'Budget']
+  const last = steps.length - 1
 
   return (
     <div className="mx-auto max-w-xl px-5 py-10">
@@ -97,11 +102,27 @@ export function TapJourney({
         </Step>
       )}
 
+      {step === 3 && hasBoroughs && (
+        <Step title="Where?" hint="One pick, or skip for all NYC.">
+          <div className="grid grid-cols-2 gap-3">
+            {boroughs.map((b) => (
+              <Card
+                key={b}
+                active={f.borough === b}
+                onClick={() => setF((p) => ({ ...p, borough: p.borough === b ? null : b }))}
+              >
+                <span className="font-medium">{b}</span>
+              </Card>
+            ))}
+          </div>
+        </Step>
+      )}
+
       <button
-        onClick={step < 2 ? () => setStep((s) => s + 1) : () => onDone(f)}
+        onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
         className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3.5 font-medium text-ink transition hover:bg-accent-soft"
       >
-        {step < 2 ? 'Next' : 'Show my matches'} <Ico name="arrow" className="h-4 w-4" />
+        {step < last ? 'Next' : 'Show my matches'} <Ico name="arrow" className="h-4 w-4" />
       </button>
     </div>
   )

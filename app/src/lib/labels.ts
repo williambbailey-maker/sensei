@@ -1,4 +1,4 @@
-import type { Format, Vibe } from './types'
+import type { Format, SortKey, Strain, Vibe } from './types'
 
 export const VIBES: { key: Vibe; label: string; emoji: string }[] = [
   { key: 'relax', label: 'Relax', emoji: '🛋️' },
@@ -25,5 +25,27 @@ export const BUDGETS: { label: string; ceiling: number | null; band: '$' | '$$' 
   { label: 'No limit', ceiling: null, band: null },
 ]
 
+export const STRAINS: Strain[] = ['Indica', 'Sativa', 'Hybrid']
+
+export const SORTS: { key: SortKey; label: string }[] = [
+  { key: 'match', label: 'Best match' },
+  { key: 'price-asc', label: 'Price: low to high' },
+  { key: 'price-desc', label: 'Price: high to low' },
+  { key: 'potency', label: 'Potency: high to low' },
+]
+
 export const vibeLabel = (v: string) => VIBES.find((x) => x.key === v)?.label ?? v
 export const formatLabel = (f: string) => FORMATS.find((x) => x.key === f)?.label ?? f
+export const sortLabel = (s: string) => SORTS.find((x) => x.key === s)?.label ?? s
+
+// Many stores have no display name yet (only a slug). Turn a slug into a
+// readable label as a fallback until the scraper backfills real store names.
+export function prettyStore(slug: string): string {
+  return slug
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .replace(/\bNyc\b/g, 'NYC')
+    .replace(/\bNy\b/g, 'NY')
+    .replace(/\bLes\b/g, 'LES')
+    .replace(/\bLlc\b/g, 'LLC')
+}

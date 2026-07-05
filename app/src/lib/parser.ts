@@ -33,6 +33,14 @@ const EXPERIENCED = ['experienced', 'heavy hitter', 'high tolerance', 'strongest
 const CHEAP = ['cheap', 'budget', 'affordable', 'deal', 'inexpensive']
 const PREMIUM = ['premium', 'top shelf', 'top-shelf', 'best', 'luxury', 'high end', 'high-end', 'fancy']
 
+const BOROUGH_SYNONYMS: Record<string, string[]> = {
+  Manhattan: ['manhattan', 'soho', 'chelsea', 'east village', 'west village', 'les', 'lower east', 'midtown', 'harlem', 'nyc'],
+  Brooklyn: ['brooklyn', 'williamsburg', 'bushwick', 'park slope', 'bk'],
+  Queens: ['queens', 'astoria', 'flushing', 'long island city', 'lic'],
+  Bronx: ['bronx'],
+  'Staten Island': ['staten island', 'staten'],
+}
+
 function found(text: string, terms: string[]): boolean {
   return terms.some((t) => text.includes(t))
 }
@@ -63,6 +71,15 @@ export function parseQuery(raw: string): Filters {
   if (found(text, BEGINNER)) f.experience = 'beginner'
   else if (found(text, EXPERIENCED)) f.experience = 'experienced'
 
+  for (const borough of Object.keys(BOROUGH_SYNONYMS)) {
+    // 'nyc' alone is too weak to pin a borough — skip it as a sole signal.
+    const terms = BOROUGH_SYNONYMS[borough].filter((t) => t !== 'nyc')
+    if (found(text, terms)) {
+      f.borough = borough
+      break
+    }
+  }
+
   // Price: explicit numbers win, then band words.
   const under = text.match(/(?:under|below|less than|max|up to)\s*\$?\s*(\d{1,4})/)
   const dollar = text.match(/\$\s*(\d{1,4})/)
@@ -74,7 +91,13 @@ export function parseQuery(raw: string): Filters {
   // Whatever didn't parse into structure stays as free text for name/brand match,
   // but only if nothing structured matched (avoids double-filtering).
   const structured =
-    f.vibes.length || f.format || f.strain || f.experience || f.priceCeiling != null || f.priceBand
+    f.vibes.length ||
+    f.format ||
+    f.strain ||
+    f.experience ||
+    f.priceCeiling != null ||
+    f.priceBand ||
+    f.borough
   f.text = structured ? '' : raw.trim()
 
   return f

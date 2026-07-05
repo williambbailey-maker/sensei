@@ -1,5 +1,5 @@
 import { Ico } from './Ico'
-import { vibeLabel } from '../lib/labels'
+import { prettyStore, vibeLabel } from '../lib/labels'
 import type { Product } from '../lib/types'
 
 const TIER_STYLE: Record<string, string> = {
@@ -67,7 +67,7 @@ export function ProductCard({ p }: { p: Product }) {
 
         <div className="mt-2 flex items-end justify-between gap-2">
           <p className="truncate text-xs text-zinc-500">
-            {p.store?.name ?? p.store?.slug}
+            {p.store?.name ?? (p.store?.slug ? prettyStore(p.store.slug) : 'Dispensary')}
             {p.store?.borough ? ` · ${p.store.borough}` : ''}
           </p>
           {p.url && (

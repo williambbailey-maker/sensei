@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { Ico } from './Ico'
 import { FilterChips } from './FilterChips'
+import { RefineBar } from './RefineBar'
 import { ProductCard } from './ProductCard'
 import { Newsletter } from './Newsletter'
 import { rankProducts } from '../lib/rank'
@@ -20,6 +21,13 @@ export function Results({
   onEdit: () => void
 }) {
   const ranked = useMemo(() => rankProducts(products, filters), [products, filters])
+  // Boroughs that actually have in-stock products, so the filter never offers an
+  // empty option.
+  const boroughs = useMemo(() => {
+    const set = new Set<string>()
+    for (const p of products) if (p.in_stock && p.store?.borough) set.add(p.store.borough)
+    return [...set].sort()
+  }, [products])
 
   return (
     <div className="mx-auto max-w-2xl px-5 py-8">
@@ -41,9 +49,13 @@ export function Results({
       <h1 className="text-2xl font-semibold tracking-tight">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
-      <p className="mt-1 text-sm text-zinc-400">Tap a chip to loosen a filter.</p>
+      <p className="mt-1 text-sm text-zinc-400">Dial in the details, or tap a chip to loosen a filter.</p>
 
       <div className="mt-4">
+        <RefineBar f={filters} onChange={onChange} boroughs={boroughs} />
+      </div>
+
+      <div className="mt-3">
         <FilterChips f={filters} onChange={onChange} />
       </div>
 

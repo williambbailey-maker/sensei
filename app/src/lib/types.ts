@@ -47,13 +47,21 @@ export type Vibe =
 
 export type Format = 'flower' | 'pre-rolls' | 'vaporizers' | 'edibles'
 
+export type Strain = 'Indica' | 'Sativa' | 'Hybrid'
+
+// How the result list is ordered. 'match' = the vibe/relevance score;
+// the rest are objective, user-driven sorts.
+export type SortKey = 'match' | 'price-asc' | 'price-desc' | 'potency'
+
 export type Filters = {
   vibes: Vibe[]
   format: Format | null
-  strain: 'Indica' | 'Sativa' | 'Hybrid' | null
+  strain: Strain | null
   experience: 'beginner' | 'casual' | 'experienced' | null
   priceCeiling: number | null
   priceBand: '$' | '$$' | '$$$' | null
+  borough: string | null
+  sort: SortKey
   text: string
 }
 
@@ -64,9 +72,13 @@ export const EMPTY_FILTERS: Filters = {
   experience: null,
   priceCeiling: null,
   priceBand: null,
+  borough: null,
+  sort: 'match',
   text: '',
 }
 
+// A "structured" filter narrows results. Sort order is presentation, not a
+// filter, so it's deliberately excluded here.
 export function hasStructuredFilter(f: Filters): boolean {
   return (
     f.vibes.length > 0 ||
@@ -74,7 +86,8 @@ export function hasStructuredFilter(f: Filters): boolean {
     f.strain !== null ||
     f.experience !== null ||
     f.priceCeiling !== null ||
-    f.priceBand !== null
+    f.priceBand !== null ||
+    f.borough !== null
   )
 }
 
