@@ -9,16 +9,41 @@ database (Supabase), which is reachable from anywhere.
 It's written in Node so there's only one toolchain to install (you already have
 Node for the app).
 
-## One-time setup
+## The folder layout (stable, so it's easy to run again)
 
-From this `pipeline/` folder:
-
-```bash
-npm install
+```
+~/sensei/          ← the code (this whole project). Replaceable — safe to redownload.
+  pipeline/        ← the scraper lives here
+~/.sensei/.env     ← YOUR KEYS. Lives outside the code so updates never touch it.
 ```
 
-That installs Playwright and downloads a Chromium browser automatically. (If the
-browser download is skipped for any reason, run `npx playwright install chromium`.)
+You only ever set your keys once (see below). Updating the code never disturbs
+them.
+
+## One-time setup — no git required
+
+Paste this whole block into Terminal once. It downloads the code to `~/sensei`
+and installs everything:
+
+```bash
+curl -fsSL https://github.com/williambbailey-maker/sensei/archive/refs/heads/main.zip -o /tmp/sensei.zip \
+  && unzip -q -o /tmp/sensei.zip -d /tmp/sensei-dl \
+  && rm -rf ~/sensei && mv /tmp/sensei-dl/sensei-main ~/sensei \
+  && cd ~/sensei/pipeline && npm install \
+  && echo "✅ Done — code is at ~/sensei"
+```
+
+`npm install` also downloads a Chromium browser automatically. (If that step is
+skipped for any reason, run `npx playwright install chromium`.)
+
+## Get the latest code later (no git required)
+
+Whenever the code changes, refresh it in place with one command — your keys are
+untouched:
+
+```bash
+bash ~/sensei/pipeline/update.sh
+```
 
 ## Get your Supabase service-role key
 

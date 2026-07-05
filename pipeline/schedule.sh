@@ -13,9 +13,11 @@ NODE="$(command -v node || true)"
 DIR="$HOME/sensei/pipeline"
 if [ ! -f "$DIR/scrape.mjs" ]; then
   echo "ERROR: expected $DIR/scrape.mjs."
-  echo "Clone the repo to ~/sensei first:"
-  echo "  git clone https://github.com/williambbailey-maker/sensei.git ~/sensei"
-  echo "  cd ~/sensei/pipeline && npm install"
+  echo "Get the code into ~/sensei first (no git needed):"
+  echo "  curl -fsSL https://github.com/williambbailey-maker/sensei/archive/refs/heads/main.zip -o /tmp/sensei.zip \\"
+  echo "    && unzip -q -o /tmp/sensei.zip -d /tmp/sensei-dl \\"
+  echo "    && rm -rf ~/sensei && mv /tmp/sensei-dl/sensei-main ~/sensei \\"
+  echo "    && cd ~/sensei/pipeline && npm install"
   exit 1
 fi
 
