@@ -34,23 +34,23 @@ export function Results({
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={onHome}
-          className="flex items-center gap-1.5 text-sm text-black/55 transition hover:text-accent"
+          className="flex items-center gap-1.5 text-sm uppercase tracking-wide text-muted transition hover:text-accent hover:underline"
         >
           <Ico name="back" className="h-4 w-4" /> Home
         </button>
         <button
           onClick={onEdit}
-          className="rounded-full border border-black/15 px-4 py-1.5 text-sm text-black transition hover:border-accent hover:text-accent"
+          className="rounded-full border border-line px-4 py-1.5 text-sm uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
         >
           Edit journey
         </button>
       </div>
 
       <p className="eyebrow">Results</p>
-      <h1 className="display mt-1 text-6xl text-black">
+      <h1 className="display mt-1 text-6xl">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
-      <p className="mt-2 text-sm text-black/55">
+      <p className="mt-2 text-sm text-muted">
         Dial in the details, or clear a chip to widen the search.
       </p>
 
@@ -60,9 +60,9 @@ export function Results({
       </div>
 
       {ranked.length === 0 ? (
-        <div className="mt-12 rounded-3xl border border-dashed border-black/20 p-12 text-center">
-          <p className="text-black">Nothing matched every filter.</p>
-          <p className="mt-1 text-sm text-black/55">Clear a filter above to widen the search.</p>
+        <div className="mt-12 rounded-[40px] border border-dashed border-line p-12 text-center">
+          <p className="uppercase tracking-wide text-black">Nothing matched every filter.</p>
+          <p className="mt-1 text-sm text-muted">Clear a filter above to widen the search.</p>
         </div>
       ) : (
         <div className="mt-6 grid gap-3 sm:grid-cols-2">

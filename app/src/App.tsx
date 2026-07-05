@@ -54,25 +54,27 @@ export default function App() {
     <div className="min-h-full">
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <header className="sticky top-0 z-30 border-b border-line bg-paper/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+      <header className="sticky top-0 z-30 border-b border-line bg-paper">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <button
             onClick={() => {
               setFilters(EMPTY_FILTERS)
               go('home')
             }}
-            className="display text-xl text-black transition hover:text-accent"
+            className="display text-lg transition hover:opacity-70"
           >
-            Sensei
+            sensei
           </button>
-          <span className="display text-base text-black">#NewYorkCannabis</span>
-          <span className="hidden text-sm text-black/50 sm:block">21+</span>
+          <span className="hidden text-[13px] uppercase tracking-label text-black sm:block">
+            New York · Cannabis
+          </span>
+          <span className="text-[13px] uppercase tracking-label text-muted">21+</span>
         </div>
       </header>
 
       {loadError && (
         <div className="mx-auto max-w-6xl px-6 pt-4">
-          <div className="rounded-full border border-clay/40 bg-clay/10 px-5 py-2.5 text-sm text-clay">
+          <div className="rounded-full border border-clay/40 bg-clay/10 px-5 py-2.5 text-sm uppercase tracking-wide text-clay">
             Couldn't reach the menu right now. Check your connection and refresh.
           </div>
         </div>
@@ -120,14 +122,12 @@ export default function App() {
         </main>
       )}
 
-      <footer className="mt-10 overflow-hidden bg-black">
-        <div className="mx-auto max-w-6xl px-6 pb-8 pt-12">
-          <p className="display text-center text-[17vw] leading-[0.9] text-sand sm:text-8xl lg:text-9xl">
-            Sensei
-          </p>
-          <div className="mt-8 flex flex-col items-center gap-1 text-xs text-paper/70 sm:flex-row sm:justify-between">
-            <p>Sensei — every New York menu, one place.</p>
-            <p>21+ only · For use only by adults in New York State.</p>
+      <footer className="mt-16 border-t border-line">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-12">
+          <p className="display text-3xl">sensei</p>
+          <div className="flex flex-col items-center gap-2 text-[12px] uppercase tracking-label text-muted sm:flex-row sm:gap-8">
+            <p>Every New York menu, one place</p>
+            <p>21+ only · Adults in New York State</p>
           </div>
         </div>
       </footer>
