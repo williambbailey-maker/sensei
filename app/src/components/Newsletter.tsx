@@ -20,39 +20,39 @@ export function Newsletter({ source, compact = false }: { source: string; compac
 
   if (state === 'done') {
     return (
-      <div className="flex items-center gap-2 rounded-full bg-slate/15 px-5 py-4 text-sm text-black">
+      <div className="flex items-center gap-2 rounded-full border border-line bg-white px-5 py-4 text-sm uppercase tracking-wide text-black">
         <Ico name="check" className="h-4 w-4 text-slate" /> You're on the list. Talk soon.
       </div>
     )
   }
 
   return (
-    <div className={compact ? '' : 'rounded-3xl bg-sand/30 p-7'}>
+    <div className={compact ? '' : 'rounded-[40px] border border-line bg-white p-8'}>
       {!compact && (
         <>
           <p className="eyebrow">Newsletter</p>
-          <h3 className="display mt-2 text-3xl text-black">The weekly drop</h3>
-          <p className="mb-4 mt-1 text-sm text-black/55">
+          <h3 className="display mt-2 text-3xl">the weekly drop</h3>
+          <p className="mb-4 mt-1 text-sm normal-case text-muted">
             New deals and standout products, once a week. No spam.
           </p>
         </>
       )}
       <form onSubmit={submit} className="flex gap-2">
-        <div className="flex flex-1 items-center gap-2 rounded-full border border-black/10 bg-white px-4">
-          <Ico name="mail" className="h-4 w-4 shrink-0 text-black/35" />
+        <div className="flex flex-1 items-center gap-2 rounded-full border border-line bg-white px-4 transition focus-within:border-accent">
+          <Ico name="mail" className="h-4 w-4 shrink-0 text-muted" />
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@email.com"
-            className="w-full bg-transparent py-2.5 text-sm text-black placeholder:text-black/35"
+            className="w-full bg-transparent py-2.5 text-sm text-black placeholder:text-muted/70"
             aria-label="Email address"
           />
         </div>
         <button
           type="submit"
           disabled={state === 'loading'}
-          className="shrink-0 rounded-full bg-black px-5 py-2.5 text-sm font-medium text-paper transition hover:bg-neutral-800 disabled:opacity-50"
+          className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)] disabled:opacity-50"
         >
           {state === 'loading' ? '…' : 'Subscribe'}
         </button>

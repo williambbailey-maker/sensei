@@ -2,36 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Self-hosted (no external runtime request — works offline in the PWA).
-   Poppins for body copy, Asap Condensed for the big display headlines —
-   the same pairing as the reference site. */
+/* Self-hosted variable fonts (no external runtime request — offline-capable
+   PWA). Unbounded for the modular lowercase display type, DM Sans for body —
+   matching the reference's Mod + Satoshi pairing. */
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Unbounded';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 600;
   font-display: swap;
-  src: url('/fonts/poppins-400.woff2') format('woff2');
+  src: url('/fonts/unbounded-variable.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'DM Sans';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400 700;
   font-display: swap;
-  src: url('/fonts/poppins-500.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/poppins-600.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Asap Condensed';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/asap-condensed-700.woff2') format('woff2');
+  src: url('/fonts/dmsans-variable.woff2') format('woff2');
 }
 
 :root {
@@ -49,14 +35,15 @@ body {
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
-/* Big condensed display headline — the reference site's signature type. */
+/* The reference's signature display style: modular face, forced lowercase,
+   tight leading, cobalt blue. */
 .display {
-  @apply font-display font-bold uppercase leading-none tracking-normal;
+  @apply font-display font-medium lowercase leading-[1.05] text-accent;
 }
 
-/* Small uppercase section label. */
+/* Small uppercase label — the reference uppercases all of its small text. */
 .eyebrow {
-  @apply text-[11px] font-medium uppercase tracking-label text-black/45;
+  @apply text-[11px] font-medium uppercase tracking-label text-muted;
 }
 
 input:focus {
@@ -64,6 +51,6 @@ input:focus {
 }
 
 ::selection {
-  background: black;
+  background: #00218f;
   color: white;
 }
