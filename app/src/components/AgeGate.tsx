@@ -22,7 +22,7 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
           <span className="h-4 w-4 bg-accent" />
         </div>
         <p className="eyebrow">New York · Cannabis</p>
-        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">Welcome to Sensei</h1>
+        <h1 className="mt-3 text-2xl font-medium tracking-tight text-stone-900">Welcome to Sensei</h1>
         <p className="mt-2 text-sm leading-relaxed text-stone-600">
           You must be 21 or older to enter. Cannabis products are for adult use only in New York
           State.

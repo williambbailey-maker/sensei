@@ -6,7 +6,7 @@ export function Deals({ deals }: { deals: Deal[] }) {
   return (
     <section className="mx-auto max-w-5xl px-6 py-14">
       <p className="eyebrow">Selected · This week</p>
-      <h2 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">Worth a look</h2>
+      <h2 className="mt-3 text-2xl font-medium tracking-tight text-stone-900">Worth a look</h2>
       <div className="mt-6 grid gap-px border border-line bg-line sm:grid-cols-2">
         {deals.map((d) => (
           <a

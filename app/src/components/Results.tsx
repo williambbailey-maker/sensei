@@ -47,7 +47,7 @@ export function Results({
       </div>
 
       <p className="eyebrow">Results</p>
-      <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+      <h1 className="mt-2 text-3xl font-medium tracking-tight text-stone-900">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
       <p className="mt-1 text-sm text-stone-500">
