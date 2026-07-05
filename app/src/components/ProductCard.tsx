@@ -1,6 +1,7 @@
 import { Ico } from './Ico'
+import { formatMiles, haversineMiles } from '../lib/geo'
 import { prettyStore, vibeLabel } from '../lib/labels'
-import type { Product } from '../lib/types'
+import type { LatLng, Product } from '../lib/types'
 
 // Potency as a small colored dot: green mild, amber medium, red strong —
 // straight from the reference palette.
@@ -10,11 +11,15 @@ const TIER_DOT: Record<string, string> = {
   strong: 'bg-clay',
 }
 
-export function ProductCard({ p }: { p: Product }) {
+export function ProductCard({ p, userLoc }: { p: Product; userLoc?: LatLng | null }) {
   const name = p.clean_name ?? p.name ?? 'Unknown'
   const brand = p.clean_brand ?? p.brand
   const price = p.price_min != null ? `$${formatPrice(p.price_min)}` : '—'
   const weights = p.variants?.map((v) => v.weight).filter(Boolean) as string[]
+  const miles =
+    userLoc && p.store?.lat != null && p.store?.lng != null
+      ? haversineMiles(userLoc, { lat: p.store.lat, lng: p.store.lng })
+      : null
 
   return (
     <div className="group flex gap-4 rounded-[28px] border border-line bg-white p-4 transition hover:scale-[1.01]">
@@ -65,7 +70,12 @@ export function ProductCard({ p }: { p: Product }) {
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
           <p className="truncate text-xs uppercase tracking-wide text-muted">
             {p.store?.name ?? (p.store?.slug ? prettyStore(p.store.slug) : 'Dispensary')}
-            {p.store?.borough ? ` · ${p.store.borough}` : ''}
+            {p.store?.neighborhood
+              ? ` · ${p.store.neighborhood}`
+              : p.store?.borough
+                ? ` · ${p.store.borough}`
+                : ''}
+            {miles != null && <span className="text-accent"> · {formatMiles(miles)}</span>}
           </p>
           {p.url && (
             <a

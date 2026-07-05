@@ -33,10 +33,24 @@ const EXPERIENCED = ['experienced', 'heavy hitter', 'high tolerance', 'strongest
 const CHEAP = ['cheap', 'budget', 'affordable', 'deal', 'inexpensive']
 const PREMIUM = ['premium', 'top shelf', 'top-shelf', 'best', 'luxury', 'high end', 'high-end', 'fancy']
 
+// Neighborhood names set BOTH the neighborhood and its borough. Checked
+// before boroughs so "flower in soho" narrows all the way down.
+const NEIGHBORHOOD_SYNONYMS: { borough: string; neighborhood: string; terms: string[] }[] = [
+  { borough: 'Manhattan', neighborhood: 'Lower East Side', terms: ['lower east side', 'les '] },
+  { borough: 'Manhattan', neighborhood: 'East Village', terms: ['east village'] },
+  { borough: 'Manhattan', neighborhood: 'West Village', terms: ['west village', 'greenwich village', 'bleecker'] },
+  { borough: 'Manhattan', neighborhood: 'SoHo', terms: ['soho'] },
+  { borough: 'Manhattan', neighborhood: 'Chelsea', terms: ['chelsea'] },
+  { borough: 'Brooklyn', neighborhood: 'Williamsburg', terms: ['williamsburg'] },
+  { borough: 'Brooklyn', neighborhood: 'Park Slope', terms: ['park slope'] },
+  { borough: 'Brooklyn', neighborhood: 'Downtown Brooklyn', terms: ['downtown brooklyn'] },
+  { borough: 'Queens', neighborhood: 'Astoria', terms: ['astoria'] },
+]
+
 const BOROUGH_SYNONYMS: Record<string, string[]> = {
-  Manhattan: ['manhattan', 'soho', 'chelsea', 'east village', 'west village', 'les', 'lower east', 'midtown', 'harlem', 'nyc'],
-  Brooklyn: ['brooklyn', 'williamsburg', 'bushwick', 'park slope', 'bk'],
-  Queens: ['queens', 'astoria', 'flushing', 'long island city', 'lic'],
+  Manhattan: ['manhattan', 'midtown', 'harlem', 'nyc'],
+  Brooklyn: ['brooklyn', 'bushwick', 'bk'],
+  Queens: ['queens', 'flushing', 'long island city', 'lic'],
   Bronx: ['bronx'],
   'Staten Island': ['staten island', 'staten'],
 }
@@ -71,12 +85,21 @@ export function parseQuery(raw: string): Filters {
   if (found(text, BEGINNER)) f.experience = 'beginner'
   else if (found(text, EXPERIENCED)) f.experience = 'experienced'
 
-  for (const borough of Object.keys(BOROUGH_SYNONYMS)) {
-    // 'nyc' alone is too weak to pin a borough — skip it as a sole signal.
-    const terms = BOROUGH_SYNONYMS[borough].filter((t) => t !== 'nyc')
-    if (found(text, terms)) {
-      f.borough = borough
+  for (const n of NEIGHBORHOOD_SYNONYMS) {
+    if (found(text, n.terms)) {
+      f.borough = n.borough
+      f.neighborhood = n.neighborhood
       break
+    }
+  }
+  if (!f.neighborhood) {
+    for (const borough of Object.keys(BOROUGH_SYNONYMS)) {
+      // 'nyc' alone is too weak to pin a borough — skip it as a sole signal.
+      const terms = BOROUGH_SYNONYMS[borough].filter((t) => t !== 'nyc')
+      if (found(text, terms)) {
+        f.borough = borough
+        break
+      }
     }
   }
 

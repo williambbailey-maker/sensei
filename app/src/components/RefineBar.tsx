@@ -1,20 +1,58 @@
-import { BUDGETS, FORMATS, SORTS, STRAINS } from '../lib/labels'
+import { BOROUGHS, BUDGETS, FORMATS, RADII, SORTS, STRAINS } from '../lib/labels'
 import type { Filters, Format, SortKey, Strain } from '../lib/types'
 
-// Objective controls that sit on equal footing with the vibe search: format,
-// strain, price, borough, and sort. Native selects keep it compact and reliable
-// on mobile without extra dependencies.
+// Objective controls on the results screen. Location leads: borough →
+// neighborhood (data-driven), or a mile radius when the user shared their
+// position. Native selects keep it compact and reliable on mobile.
 export function RefineBar({
   f,
   onChange,
-  boroughs,
+  neighborhoodsByBorough,
 }: {
   f: Filters
   onChange: (f: Filters) => void
-  boroughs: string[]
+  neighborhoodsByBorough: Record<string, string[]>
 }) {
+  const neighborhoods = f.borough ? (neighborhoodsByBorough[f.borough] ?? []) : []
+  const sorts = f.userLoc ? SORTS : SORTS.filter((s) => s.key !== 'distance')
+
   return (
     <div className="flex flex-wrap items-center gap-2">
+      {f.userLoc ? (
+        <Select
+          label="Distance"
+          value={f.radiusMiles == null ? '' : String(f.radiusMiles)}
+          onChange={(v) => onChange({ ...f, radiusMiles: v ? Number(v) : null })}
+          options={[
+            { value: '', label: 'Any distance' },
+            ...RADII.map((r) => ({ value: String(r), label: `Within ${r} mi` })),
+          ]}
+          active={f.radiusMiles != null}
+        />
+      ) : (
+        <Select
+          label="Borough"
+          value={f.borough ?? ''}
+          onChange={(v) => onChange({ ...f, borough: v || null, neighborhood: null })}
+          options={[
+            { value: '', label: 'All boroughs' },
+            ...BOROUGHS.map((b) => ({ value: b, label: b })),
+          ]}
+          active={f.borough != null}
+        />
+      )}
+      {neighborhoods.length > 0 && !f.userLoc && (
+        <Select
+          label="Neighborhood"
+          value={f.neighborhood ?? ''}
+          onChange={(v) => onChange({ ...f, neighborhood: v || null })}
+          options={[
+            { value: '', label: `All ${f.borough}` },
+            ...neighborhoods.map((n) => ({ value: n, label: n })),
+          ]}
+          active={f.neighborhood != null}
+        />
+      )}
       <Select
         label="Format"
         value={f.format ?? ''}
@@ -39,21 +77,12 @@ export function RefineBar({
         ]}
         active={f.priceCeiling != null}
       />
-      {boroughs.length > 0 && (
-        <Select
-          label="Borough"
-          value={f.borough ?? ''}
-          onChange={(v) => onChange({ ...f, borough: v || null })}
-          options={[{ value: '', label: 'All boroughs' }, ...boroughs.map((b) => ({ value: b, label: b }))]}
-          active={f.borough != null}
-        />
-      )}
       <div className="ml-auto">
         <Select
           label="Sort"
           value={f.sort}
           onChange={(v) => onChange({ ...f, sort: v as SortKey })}
-          options={SORTS.map((s) => ({ value: s.key, label: s.label }))}
+          options={sorts.map((s) => ({ value: s.key, label: s.label }))}
           active={f.sort !== 'match'}
         />
       </div>

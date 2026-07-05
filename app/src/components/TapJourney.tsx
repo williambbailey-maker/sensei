@@ -1,23 +1,26 @@
 import { useState } from 'react'
 import { Ico } from './Ico'
-import { BUDGETS, FORMATS, VIBES } from '../lib/labels'
+import { requestLocation } from '../lib/geo'
+import { BOROUGHS, BUDGETS, FORMATS, RADII, VIBES } from '../lib/labels'
 import { EMPTY_FILTERS, type Filters, type Format, type Vibe } from '../lib/types'
 
-// 3 quick steps, big tappable cards, all skippable. Prefilled from `initial`
-// (e.g. a vibe tapped on the hero).
+// 4 quick steps — location first, since "where are you" narrows results the
+// most. Big tappable cards, all skippable. Prefilled from `initial`.
 export function TapJourney({
   initial,
-  boroughs,
+  neighborhoodsByBorough,
   onDone,
   onClose,
 }: {
   initial: Filters
-  boroughs: string[]
+  neighborhoodsByBorough: Record<string, string[]>
   onDone: (f: Filters) => void
   onClose: () => void
 }) {
   const [step, setStep] = useState(0)
   const [f, setF] = useState<Filters>({ ...EMPTY_FILTERS, ...initial })
+  const [locating, setLocating] = useState(false)
+  const [locError, setLocError] = useState('')
 
   const toggleVibe = (v: Vibe) =>
     setF((prev) => ({
@@ -27,10 +30,24 @@ export function TapJourney({
         : [...prev.vibes, v].slice(0, 3),
     }))
 
-  // Location only earns a step once we actually have boroughs to offer.
-  const hasBoroughs = boroughs.length > 0
-  const steps = hasBoroughs ? ['Vibe', 'Format', 'Budget', 'Where'] : ['Vibe', 'Format', 'Budget']
+  const nearMe = () => {
+    setLocError('')
+    setLocating(true)
+    requestLocation(
+      (loc) => {
+        setLocating(false)
+        setF((p) => ({ ...p, userLoc: loc, radiusMiles: p.radiusMiles ?? 2, borough: null, neighborhood: null }))
+      },
+      (msg) => {
+        setLocating(false)
+        setLocError(msg)
+      },
+    )
+  }
+
+  const steps = ['Where', 'Vibe', 'Format', 'Budget']
   const last = steps.length - 1
+  const neighborhoods = f.borough ? (neighborhoodsByBorough[f.borough] ?? []) : []
 
   return (
     <div className="mx-auto max-w-xl px-5 py-10">
@@ -58,7 +75,83 @@ export function TapJourney({
       </div>
 
       {step === 0 && (
-        <Step title="What's the vibe?" hint="Pick up to 3 — or skip.">
+        <Step title="where are you?" hint="This narrows things down the most — or skip for all NYC.">
+          <button
+            onClick={nearMe}
+            className={`mb-3 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-[28px] border p-4 uppercase tracking-wide transition ${
+              f.userLoc
+                ? 'border-accent bg-accent text-white'
+                : 'border-accent bg-white text-accent hover:scale-[1.01]'
+            }`}
+          >
+            ◉ {locating ? 'Locating…' : f.userLoc ? 'Using your location' : 'Use my location'}
+          </button>
+          {locError && (
+            <p className="mb-3 text-xs uppercase tracking-wide text-clay">{locError}</p>
+          )}
+          {f.userLoc ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="eyebrow">Within</span>
+              {RADII.map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setF((p) => ({ ...p, radiusMiles: r }))}
+                  className={`rounded-full px-4 py-1.5 text-[13px] uppercase tracking-wide transition ${
+                    f.radiusMiles === r
+                      ? 'bg-accent text-white'
+                      : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                  }`}
+                >
+                  {r} mi
+                </button>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-2 gap-3">
+                {BOROUGHS.map((b) => (
+                  <Card
+                    key={b}
+                    active={f.borough === b}
+                    onClick={() =>
+                      setF((p) => ({
+                        ...p,
+                        borough: p.borough === b ? null : b,
+                        neighborhood: null,
+                      }))
+                    }
+                  >
+                    <span className="font-medium">{b}</span>
+                  </Card>
+                ))}
+              </div>
+              {neighborhoods.length > 0 && (
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <span className="eyebrow">Narrow it</span>
+                  {neighborhoods.map((n) => (
+                    <button
+                      key={n}
+                      onClick={() =>
+                        setF((p) => ({ ...p, neighborhood: p.neighborhood === n ? null : n }))
+                      }
+                      className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
+                        f.neighborhood === n
+                          ? 'bg-accent text-white'
+                          : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                      }`}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </Step>
+      )}
+
+      {step === 1 && (
+        <Step title="what's the vibe?" hint="Pick up to 3 — or skip.">
           <div className="grid grid-cols-2 gap-3">
             {VIBES.map((v) => (
               <Card key={v.key} active={f.vibes.includes(v.key)} onClick={() => toggleVibe(v.key)}>
@@ -69,8 +162,8 @@ export function TapJourney({
         </Step>
       )}
 
-      {step === 1 && (
-        <Step title="What form?" hint="One pick, or skip for all.">
+      {step === 2 && (
+        <Step title="what form?" hint="One pick, or skip for all.">
           <div className="grid grid-cols-2 gap-3">
             {FORMATS.map((fmt) => (
               <Card
@@ -87,8 +180,8 @@ export function TapJourney({
         </Step>
       )}
 
-      {step === 2 && (
-        <Step title="Budget?" hint="Per item.">
+      {step === 3 && (
+        <Step title="budget?" hint="Per item.">
           <div className="grid grid-cols-2 gap-3">
             {BUDGETS.map((b) => (
               <Card
@@ -97,22 +190,6 @@ export function TapJourney({
                 onClick={() => setF((p) => ({ ...p, priceCeiling: b.ceiling, priceBand: b.band }))}
               >
                 <span className="text-lg font-semibold">{b.label}</span>
-              </Card>
-            ))}
-          </div>
-        </Step>
-      )}
-
-      {step === 3 && hasBoroughs && (
-        <Step title="Where?" hint="One pick, or skip for all NYC.">
-          <div className="grid grid-cols-2 gap-3">
-            {boroughs.map((b) => (
-              <Card
-                key={b}
-                active={f.borough === b}
-                onClick={() => setF((p) => ({ ...p, borough: p.borough === b ? null : b }))}
-              >
-                <span className="font-medium">{b}</span>
               </Card>
             ))}
           </div>
