@@ -80,21 +80,21 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`appearance-none border px-3 py-1.5 pr-7 text-sm transition focus:outline-none ${
+        className={`appearance-none rounded-full border px-3.5 py-1.5 pr-8 text-sm transition focus:outline-none ${
           active
-            ? 'border-stone-900 bg-stone-900 text-paper'
-            : 'border-line bg-white text-stone-700 hover:border-stone-400'
+            ? 'border-black bg-black text-paper'
+            : 'border-black/15 bg-white text-black hover:border-accent hover:text-accent'
         }`}
       >
         {options.map((o) => (
-          <option key={o.value} value={o.value} className="bg-white text-stone-900">
+          <option key={o.value} value={o.value} className="bg-white text-black">
             {o.label}
           </option>
         ))}
       </select>
       <svg
-        className={`pointer-events-none absolute right-2.5 top-1/2 h-3 w-3 -translate-y-1/2 ${
-          active ? 'text-paper' : 'text-stone-400'
+        className={`pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 ${
+          active ? 'text-paper' : 'text-black/40'
         }`}
         viewBox="0 0 12 12"
         fill="none"

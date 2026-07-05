@@ -37,7 +37,7 @@ export function TapJourney({
       <div className="mb-8 flex items-center justify-between">
         <button
           onClick={step === 0 ? onClose : () => setStep((s) => s - 1)}
-          className="flex items-center gap-1.5 text-sm text-stone-500 transition hover:text-stone-900"
+          className="flex items-center gap-1.5 text-sm text-black/55 transition hover:text-accent"
         >
           <Ico name="back" className="h-4 w-4" /> {step === 0 ? 'Home' : 'Back'}
         </button>
@@ -45,13 +45,13 @@ export function TapJourney({
           {steps.map((_, i) => (
             <span
               key={i}
-              className={`h-1 w-8 transition ${i <= step ? 'bg-stone-900' : 'bg-line'}`}
+              className={`h-1.5 w-8 rounded-full transition ${i <= step ? 'bg-black' : 'bg-sand/50'}`}
             />
           ))}
         </div>
         <button
           onClick={() => onDone(f)}
-          className="text-sm text-stone-500 transition hover:text-stone-900"
+          className="text-sm text-black/55 transition hover:text-accent"
         >
           Skip
         </button>
@@ -121,7 +121,7 @@ export function TapJourney({
 
       <button
         onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="mt-8 flex w-full items-center justify-center gap-2 bg-stone-900 px-5 py-3.5 font-medium text-paper transition hover:bg-stone-700"
+        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3.5 font-medium text-paper transition hover:bg-neutral-800"
       >
         {step < last ? 'Next' : 'Show my matches'} <Ico name="arrow" className="h-4 w-4" />
       </button>
@@ -132,8 +132,8 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div className="animate-fade-up">
-      <h2 className="text-2xl font-medium tracking-tight text-stone-900">{title}</h2>
-      <p className="mb-6 mt-1 text-sm text-stone-500">{hint}</p>
+      <h2 className="display text-5xl text-black">{title}</h2>
+      <p className="mb-6 mt-2 text-sm text-black/55">{hint}</p>
       {children}
     </div>
   )
@@ -151,10 +151,10 @@ function Card({
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[84px] flex-col items-center justify-center gap-2 border p-4 text-center transition ${
+      className={`flex min-h-[84px] flex-col items-center justify-center gap-2 rounded-2xl p-4 text-center transition ${
         active
-          ? 'border-stone-900 bg-stone-900 text-paper'
-          : 'border-line bg-white text-stone-700 hover:border-stone-400'
+          ? 'bg-black text-paper'
+          : 'bg-white text-black hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(0,0,0,0.08)]'
       }`}
     >
       {children}
