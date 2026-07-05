@@ -12,6 +12,7 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     if (!p.in_stock) return false
     if (f.format && p.category !== f.format) return false
     if (f.strain && p.strain_type !== f.strain) return false
+    if (f.borough && p.store?.borough !== f.borough) return false
     if (f.priceCeiling != null && (p.price_min ?? Infinity) > f.priceCeiling) return false
     if (f.priceBand && p.price_band !== f.priceBand) return false
     if (!structured && query) {
@@ -21,9 +22,24 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     return true
   })
 
+  // Objective sorts override the vibe score and skip store interleaving so the
+  // ordering the user asked for is exact (cheapest first really is cheapest).
+  if (f.sort === 'price-asc')
+    return [...kept].sort((a, b) => (a.price_min ?? Infinity) - (b.price_min ?? Infinity))
+  if (f.sort === 'price-desc')
+    return [...kept].sort((a, b) => (b.price_min ?? -Infinity) - (a.price_min ?? -Infinity))
+  if (f.sort === 'potency')
+    return [...kept].sort((a, b) => potency(b) - potency(a))
+
   const scored = kept.map((p) => ({ p, s: score(p, f) }))
   scored.sort((a, b) => b.s - a.s || (a.p.price_min ?? 1e9) - (b.p.price_min ?? 1e9))
   return interleaveByStore(scored.map((x) => x.p))
+}
+
+// A single potency number for sorting: THC% when we have it, else the tier.
+function potency(p: Product): number {
+  if (p.thc_pct != null) return p.thc_pct
+  return (POTENCY_ORDER[p.potency_tier ?? ''] ?? 1) * 10
 }
 
 function score(p: Product, f: Filters): number {
