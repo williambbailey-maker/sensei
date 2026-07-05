@@ -20,8 +20,8 @@ export default {
       },
       fontFamily: {
         sans: [
+          'Outfit',
           '"Helvetica Neue"',
-          'Inter',
           'ui-sans-serif',
           'system-ui',
           '-apple-system',

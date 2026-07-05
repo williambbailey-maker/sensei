@@ -27,7 +27,7 @@ export function Hero({
     <section className="mx-auto max-w-5xl px-6 pt-16 sm:pt-24">
       <div className="animate-fade-up">
         <p className="eyebrow">New York · Cannabis, considered</p>
-        <h1 className="mt-5 max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-6xl">
+        <h1 className="mt-5 max-w-3xl text-balance text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
           Find the right thing,
           <br />
           without the menu maze.

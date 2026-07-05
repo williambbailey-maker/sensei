@@ -132,7 +132,7 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div className="animate-fade-up">
-      <h2 className="text-2xl font-semibold tracking-tight text-stone-900">{title}</h2>
+      <h2 className="text-2xl font-medium tracking-tight text-stone-900">{title}</h2>
       <p className="mb-6 mt-1 text-sm text-stone-500">{hint}</p>
       {children}
     </div>

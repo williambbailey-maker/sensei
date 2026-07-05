@@ -31,7 +31,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
       {!compact && (
         <>
           <p className="eyebrow">Newsletter</p>
-          <h3 className="mt-3 text-lg font-semibold tracking-tight text-stone-900">
+          <h3 className="mt-3 text-lg font-medium tracking-tight text-stone-900">
             The weekly drop
           </h3>
           <p className="mb-4 mt-1 text-sm text-stone-500">
