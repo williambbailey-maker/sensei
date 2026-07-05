@@ -26,18 +26,28 @@ Supabase dashboard → your project → **Project Settings → API** → copy th
 **`service_role`** key (the secret one, not `anon`). This lets the scraper write
 products. Keep it private — never commit it.
 
-## Set the key once (recommended)
+## Set the key once — in a permanent place (recommended)
+
+Put your key in `~/.sensei/.env`, a folder that lives **outside the code** so it
+survives any code update or re-download and you never re-enter it:
 
 ```bash
-cp .env.example .env
+mkdir -p ~/.sensei
+touch ~/.sensei/.env
+open -e ~/.sensei/.env
 ```
 
-Then open `.env` and paste your `service_role` key after `SUPABASE_SERVICE_ROLE_KEY=`.
-`.env` is git-ignored, so the key stays on your machine. Now every run picks it up
-automatically — no need to `export` it each time.
+Paste these lines, save, close:
 
-(Alternatively, a one-off: `export SUPABASE_SERVICE_ROLE_KEY="the-key"` in the
-current Terminal window.)
+```
+SUPABASE_SERVICE_ROLE_KEY=eyJ...your service_role key...
+# optional while testing: only scrape the first N stores
+STORE_LIMIT=2
+```
+
+The scraper always reads `~/.sensei/.env` regardless of where the code lives. A
+local `.env` in this folder still works too (as a fallback), but the home
+location is the durable one.
 
 ## Run
 
