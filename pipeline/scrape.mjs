@@ -19,6 +19,29 @@
 // Options: HEADLESS=1 hide browser · STORE_LIMIT=3 first N stores ·
 //          STORE=<slug> one store · SLOW=1 cautious pacing · DEBUG_API=1 dump feed shape.
 
+// Load config from a permanent, code-independent location: ~/.sensei/.env .
+// This is the recommended home for your keys — it's separate from the code, so
+// re-downloading / updating the script never touches it. Values here take
+// precedence. A local ./.env (via --env-file) still works as a fallback.
+import { readFileSync } from 'node:fs'
+import { homedir } from 'node:os'
+import { join } from 'node:path'
+
+function loadEnvFile(path) {
+  try {
+    for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
+      const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/)
+      if (!m) continue
+      let v = m[2].trim()
+      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) v = v.slice(1, -1)
+      process.env[m[1]] = v
+    }
+  } catch {
+    /* file not present — fine */
+  }
+}
+loadEnvFile(join(homedir(), '.sensei', '.env'))
+
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dywrisybvcorpfhbwgtg.supabase.co'
 const ANON =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw'
