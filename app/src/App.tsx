@@ -6,7 +6,7 @@ import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
-import { fetchDeals, fetchProducts } from './lib/supabase'
+import { fetchDeals, fetchProducts, fetchStores } from './lib/supabase'
 import { parseQuery } from './lib/parser'
 import { prettyStore } from './lib/labels'
 import {
@@ -17,6 +17,7 @@ import {
   type Deal,
   type Filters,
   type Product,
+  type StoreLite,
   type Vibe,
 } from './lib/types'
 
@@ -27,6 +28,7 @@ export default function App() {
   const [view, setView] = useState<View>('home')
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
   const [products, setProducts] = useState<Product[]>([])
+  const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
   const [loadError, setLoadError] = useState(false)
   // Dummy cart — one store at a time, survives reloads on this device.
@@ -49,6 +51,7 @@ export default function App() {
 
   useEffect(() => {
     fetchProducts().then(setProducts).catch(() => setLoadError(true))
+    fetchStores().then(setStores).catch(() => {})
     fetchDeals().then(setDeals).catch(() => {})
   }, [])
 
@@ -90,17 +93,16 @@ export default function App() {
   const cartCount = cart?.items.reduce((n, i) => n + i.qty, 0) ?? 0
   const cartTotal = cart?.items.reduce((s, i) => s + (i.product.price_min ?? 0) * i.qty, 0) ?? 0
 
-  // Which neighborhoods actually have in-stock product, per borough — drives
-  // the drill-down chips and selects.
+  // Neighborhoods per borough come from the stores table itself, so the
+  // drill-down never depends on which product rows happened to load.
   const neighborhoodsByBorough = useMemo(() => {
     const map: Record<string, Set<string>> = {}
-    for (const p of products) {
-      const s = p.store
-      if (!p.in_stock || !s?.borough || !s.neighborhood) continue
-      ;(map[s.borough] ??= new Set()).add(s.neighborhood)
+    for (const st of stores) {
+      if (!st.borough || !st.neighborhood) continue
+      ;(map[st.borough] ??= new Set()).add(st.neighborhood)
     }
     return Object.fromEntries(Object.entries(map).map(([b, set]) => [b, [...set].sort()]))
-  }, [products])
+  }, [stores])
 
   // Location is the primary qualifier: set on the home screen, it persists
   // through search, vibe taps, quick filters, and the journey.
@@ -126,7 +128,7 @@ export default function App() {
     <div className="min-h-full">
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <header className="sticky top-0 z-30 border-b border-line bg-paper">
+      <header className="sticky top-0 z-30 border-b-2 border-black bg-paper">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <button
             onClick={() => {
@@ -170,7 +172,7 @@ export default function App() {
               </button>
               <button
                 onClick={clearCart}
-                className="rounded-full border border-line bg-white px-4 py-1.5 text-[13px] uppercase tracking-wide text-muted transition hover:border-clay hover:text-clay"
+                className="rounded-full border-2 border-black bg-white px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:bg-clay hover:text-white"
               >
                 Clear
               </button>
@@ -258,14 +260,14 @@ export default function App() {
         </button>
       )}
 
-      <footer className="mt-16 border-t border-line">
+      <footer className="mt-16 border-t-4 border-black bg-black text-paper">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-6 py-12">
-          <p className="display text-3xl">sensei</p>
+          <p className="display text-3xl text-lemon">sensei</p>
           <div className="w-full max-w-md">
-            <p className="eyebrow mb-2 text-center">The weekly drop — deals, once a week</p>
+            <p className="mb-2 text-center text-[11px] font-bold uppercase tracking-label text-paper/70">The weekly drop — deals, once a week</p>
             <Newsletter source="footer" compact />
           </div>
-          <div className="flex flex-col items-center gap-2 text-[12px] uppercase tracking-label text-muted sm:flex-row sm:gap-8">
+          <div className="flex flex-col items-center gap-2 text-[12px] uppercase tracking-label text-paper/60 sm:flex-row sm:gap-8">
             <p>Every New York menu, one place</p>
             <p>21+ only · Adults in New York State</p>
             <p className="text-muted/60">v{__BUILD_ID__}</p>

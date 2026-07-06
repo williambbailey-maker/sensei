@@ -42,8 +42,8 @@ export function ProductCard({
       : null
 
   return (
-    <div className="group flex gap-4 rounded-[28px] border border-line bg-white p-4 transition hover:scale-[1.01]">
-      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-[18px] border border-line bg-paper">
+    <div className="group flex gap-4 rounded-xl border-2 border-black bg-white p-4 shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5">
+      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-lg border-2 border-black bg-paper">
         {p.image_url ? (
           <img
             src={p.image_url}
@@ -58,7 +58,7 @@ export function ProductCard({
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="line-clamp-2 font-medium leading-tight text-black">{name}</h3>
+            <h3 className="max-h-[2.6em] overflow-hidden font-medium leading-[1.3] text-black">{name}</h3>
             {brand && <p className="truncate text-sm text-muted">{brand}</p>}
           </div>
           <div className="display shrink-0 text-lg">{price}</div>
@@ -99,7 +99,7 @@ export function ProductCard({
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 rounded-full border border-line px-3 py-1 text-xs font-medium uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
+                className="flex items-center gap-1 rounded-full border-2 border-black px-3 py-1 text-xs font-medium uppercase tracking-wide text-black transition hover:bg-lemon"
               >
                 View <Ico name="external" className="h-3 w-3" />
               </a>

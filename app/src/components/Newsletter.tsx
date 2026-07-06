@@ -20,14 +20,14 @@ export function Newsletter({ source, compact = false }: { source: string; compac
 
   if (state === 'done') {
     return (
-      <div className="flex items-center gap-2 rounded-full border border-line bg-white px-5 py-4 text-sm uppercase tracking-wide text-black">
+      <div className="flex items-center gap-2 rounded-full border-2 border-black bg-white px-5 py-4 text-sm uppercase tracking-wide text-black">
         <Ico name="check" className="h-4 w-4 text-slate" /> You're on the list. Talk soon.
       </div>
     )
   }
 
   return (
-    <div className={compact ? '' : 'rounded-[40px] border border-line bg-white p-8'}>
+    <div className={compact ? '' : 'rounded-2xl border-2 border-black bg-white p-8 shadow-[4px_4px_0_#111]'}>
       {!compact && (
         <>
           <p className="eyebrow">Newsletter</p>
@@ -38,7 +38,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
         </>
       )}
       <form onSubmit={submit} className="flex gap-2">
-        <div className="flex flex-1 items-center gap-2 rounded-full border border-line bg-white px-4 transition focus-within:border-accent">
+        <div className="flex flex-1 items-center gap-2 rounded-full border-2 border-black bg-white px-4 transition focus-within:border-accent">
           <Ico name="mail" className="h-4 w-4 shrink-0 text-muted" />
           <input
             type="email"
@@ -52,7 +52,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
         <button
           type="submit"
           disabled={state === 'loading'}
-          className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)] disabled:opacity-50"
+          className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 shadow-[3px_3px_0_#111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#111] disabled:opacity-50"
         >
           {state === 'loading' ? '…' : 'Subscribe'}
         </button>

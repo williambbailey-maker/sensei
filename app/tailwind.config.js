@@ -6,14 +6,15 @@ export default {
       colors: {
         // forn.dk reference system: near-white field, black type, one deep
         // cobalt accent, hairline gray borders, muted gray secondary text.
-        paper: '#F4F0E6', // warm cream page background
+        paper: '#F5ECCF', // manila-yellow zine paper
         panel: '#FFFFFF', // card background
-        line: '#E3DCCB', // hairline borders on cream
+        line: '#111111', // heavy black outlines
+        lemon: '#F7D14A', // sticker yellow
         accent: {
-          DEFAULT: '#2E4A3B', // deep spruce — natural, muted
-          soft: '#4A6B58',
+          DEFAULT: '#E3350D', // punk red
+          soft: '#F06543',
         },
-        muted: '#78715F',
+        muted: '#6B6456',
         // Semantic potency dots (kept small and functional).
         clay: '#BC4749',
         slate: '#6A994E',
@@ -21,7 +22,7 @@ export default {
       },
       fontFamily: {
         sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
-        display: ['Fraunces', 'Georgia', 'ui-serif', 'serif'],
+        display: ['"Archivo Black"', 'Impact', 'ui-sans-serif', 'sans-serif'],
       },
       letterSpacing: {
         label: '0.14em',

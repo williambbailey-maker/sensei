@@ -33,7 +33,7 @@ export function CartView({
         </button>
         <button
           onClick={onClear}
-          className="rounded-full border border-line px-4 py-1.5 text-[13px] uppercase tracking-wide text-muted transition hover:border-clay hover:text-clay"
+          className="rounded-full border-2 border-black px-4 py-1.5 text-[13px] uppercase tracking-wide text-muted transition hover:border-clay hover:text-clay"
         >
           Clear cart
         </button>
@@ -48,15 +48,15 @@ export function CartView({
         {cart.items.map(({ product: p, qty }) => (
           <div
             key={p.id}
-            className="flex items-center gap-4 rounded-[28px] border border-line bg-white p-4"
+            className="flex items-center gap-4 rounded-xl border-2 border-black bg-white p-4"
           >
-            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-[14px] border border-line bg-paper">
+            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 border-black bg-paper">
               {p.image_url ? (
                 <img src={p.image_url} alt="" className="h-full w-full object-cover" />
               ) : null}
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="line-clamp-2 font-medium leading-tight text-black">
+              <h3 className="max-h-[2.6em] overflow-hidden font-medium leading-[1.3] text-black">
                 {cleanTitle(p.clean_name ?? p.name ?? 'Unknown')}
               </h3>
               <p className="mt-0.5 text-xs uppercase tracking-wide text-muted">
@@ -80,7 +80,7 @@ export function CartView({
               <button
                 onClick={() => onQty(p.id, -1)}
                 aria-label="Remove one"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-black transition hover:border-accent hover:text-accent"
+                className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black text-black transition hover:bg-lemon"
               >
                 −
               </button>
@@ -88,7 +88,7 @@ export function CartView({
               <button
                 onClick={() => onQty(p.id, 1)}
                 aria-label="Add one"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-black transition hover:border-accent hover:text-accent"
+                className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black text-black transition hover:bg-lemon"
               >
                 +
               </button>
@@ -97,7 +97,7 @@ export function CartView({
         ))}
       </div>
 
-      <div className="mt-6 flex items-center justify-between rounded-[28px] border border-line bg-white px-6 py-4">
+      <div className="mt-6 flex items-center justify-between rounded-xl border-2 border-black bg-white px-6 py-4">
         <span className="text-[13px] uppercase tracking-wide text-muted">Estimated minimum</span>
         <span className="display text-2xl">${total.toFixed(2).replace(/\.00$/, '')}</span>
       </div>
@@ -106,7 +106,7 @@ export function CartView({
         href={menuUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)]"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] shadow-[3px_3px_0_#111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#111]"
       >
         Order at {storeName} on Dutchie <Ico name="external" className="h-4 w-4" />
       </a>

@@ -41,7 +41,7 @@ export function Results({
         </button>
         <button
           onClick={onEdit}
-          className="rounded-full border border-line px-4 py-1.5 text-sm uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
+          className="rounded-full border-2 border-black px-4 py-1.5 text-sm uppercase tracking-wide text-black transition hover:bg-lemon"
         >
           Edit journey
         </button>
@@ -55,13 +55,13 @@ export function Results({
         Dial in the details, or clear a chip to widen the search.
       </p>
 
-      <div className="mt-5 border-y border-line py-4">
+      <div className="mt-5 border-y border-black py-4">
         <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
       {ranked.length === 0 ? (
-        <div className="mt-12 rounded-[40px] border border-dashed border-line p-12 text-center">
+        <div className="mt-12 rounded-2xl border border-dashed border-black p-12 text-center">
           <p className="uppercase tracking-wide text-black">Nothing matched every filter.</p>
           <p className="mt-1 text-sm text-muted">
             {filters.userLoc

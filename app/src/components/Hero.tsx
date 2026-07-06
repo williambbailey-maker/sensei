@@ -101,21 +101,23 @@ export function Hero({
       {/* Full-bleed photo hero — the corner-store New York this app indexes.
           The image lives at /hero.jpg; a warm dark fallback keeps the overlay
           text legible if it's missing. */}
-      <div className="relative h-[46vh] min-h-[360px] w-full overflow-hidden bg-[#26211a]">
+      <div className="relative h-[46vh] min-h-[360px] w-full overflow-hidden border-b-4 border-black bg-[#26211a]">
         <img
           src="/hero.jpg"
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
           onError={(e) => (e.currentTarget.style.display = 'none')}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
         <div className="absolute inset-x-0 bottom-0">
-          <div className="mx-auto max-w-6xl px-6 pb-16">
-            <p className="text-[11px] font-medium uppercase tracking-label text-paper/80 animate-fade-up">
+          <div className="mx-auto max-w-6xl px-6 pb-14">
+            <span className="inline-block -rotate-1 rounded-md border-2 border-black bg-lemon px-3 py-1 text-[11px] font-bold uppercase tracking-label text-black shadow-[3px_3px_0_#111] animate-fade-up">
               New York · Cannabis
-            </p>
-            <h1 className="display mt-2 max-w-2xl text-4xl text-paper animate-fade-up sm:text-6xl">
-              Every menu in New York, one counter.
+            </span>
+            <h1 className="display mt-3 max-w-2xl animate-fade-up">
+              <span className="inline rounded-md bg-black box-decoration-clone px-3 py-1 text-3xl text-paper sm:text-5xl">
+                Every menu in New York, one counter.
+              </span>
             </h1>
           </div>
         </div>
@@ -125,7 +127,7 @@ export function Hero({
 
       {/* Located: a compact bar with stats. Not located (or editing): the picker. */}
       {!showPicker ? (
-        <div className="relative z-10 mx-auto -mt-8 flex max-w-3xl flex-wrap items-center justify-between gap-3 rounded-full border border-line bg-white py-3 pl-6 pr-3 animate-fade-up">
+        <div className="relative z-10 mx-auto -mt-8 flex max-w-3xl flex-wrap items-center justify-between gap-3 rounded-full border-2 border-black bg-white py-3 pl-6 pr-3 animate-fade-up">
           <span className="text-[13px] font-bold uppercase tracking-wide text-accent">
             ◉ {whereLabel}
           </span>
@@ -137,13 +139,13 @@ export function Hero({
           )}
           <button
             onClick={() => setEditingLoc(true)}
-            className="rounded-full border border-line px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
+            className="rounded-full border-2 border-black px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:bg-lemon"
           >
             Change
           </button>
         </div>
       ) : (
-        <div className="relative z-10 mx-auto -mt-8 max-w-3xl animate-fade-up rounded-[40px] border border-line bg-white p-7 shadow-[0_10px_40px_rgba(38,33,26,0.12)] sm:p-9">
+        <div className="relative z-10 mx-auto -mt-8 max-w-3xl animate-fade-up rounded-2xl border-2 border-black bg-white p-7 shadow-[5px_5px_0_#111] sm:p-9">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="eyebrow text-accent">Start here</p>
@@ -152,7 +154,7 @@ export function Hero({
             {located && (
               <button
                 onClick={() => setEditingLoc(false)}
-                className="rounded-full border border-line px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
+                className="rounded-full border-2 border-black px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:bg-lemon"
               >
                 Done
               </button>
@@ -176,7 +178,7 @@ export function Hero({
                 className={`rounded-full px-4 py-1.5 text-[13px] uppercase tracking-wide transition ${
                   filters.borough === b
                     ? 'bg-accent text-white'
-                    : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                    : 'border-2 border-black bg-white text-black hover:bg-lemon'
                 }`}
               >
                 {b}
@@ -196,7 +198,7 @@ export function Hero({
                   className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
                     filters.radiusMiles === r
                       ? 'bg-accent text-white'
-                      : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                      : 'border-2 border-black bg-white text-black hover:bg-lemon'
                   }`}
                 >
                   {r} mi
@@ -213,7 +215,7 @@ export function Hero({
                 className={`rounded-full px-3.5 py-1.5 text-[13px] uppercase tracking-wide transition ${
                   filters.neighborhood === null
                     ? 'bg-accent text-white'
-                    : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                    : 'border-2 border-black bg-white text-black hover:bg-lemon'
                 }`}
               >
                 All {filters.borough}
@@ -225,7 +227,7 @@ export function Hero({
                   className={`rounded-full px-3.5 py-1.5 text-[13px] uppercase tracking-wide transition ${
                     filters.neighborhood === n
                       ? 'bg-accent text-white'
-                      : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                      : 'border-2 border-black bg-white text-black hover:bg-lemon'
                   }`}
                 >
                   {n}
@@ -238,7 +240,7 @@ export function Hero({
 
       {/* Ask sensei — always present; the shortcut through everything. */}
       <form onSubmit={submit} className="mx-auto mt-8 max-w-xl animate-fade-up">
-        <div className="flex items-center gap-2 rounded-full border border-line bg-white py-1.5 pl-5 pr-1.5 transition focus-within:border-accent">
+        <div className="flex items-center gap-2 rounded-full border-2 border-black bg-white py-1.5 pl-5 pr-1.5 transition focus-within:border-accent">
           <Ico name="search" className="h-5 w-5 shrink-0 text-muted" />
           <input
             value={text}
@@ -254,7 +256,7 @@ export function Hero({
           />
           <button
             type="submit"
-            className="flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)] disabled:opacity-30"
+            className="flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 shadow-[3px_3px_0_#111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#111] disabled:opacity-30"
             disabled={!text.trim()}
           >
             Ask
@@ -291,7 +293,7 @@ export function Hero({
       )}
 
       {/* Refiners: by feel, by the numbers — location rides along on every tap. */}
-      <div className="mt-14 grid gap-10 border-t border-line pt-10 animate-fade-up sm:grid-cols-2">
+      <div className="mt-14 grid gap-10 border-t border-black pt-10 animate-fade-up sm:grid-cols-2">
         <div>
           <p className="eyebrow">By feel</p>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -311,7 +313,7 @@ export function Hero({
 
         <div className="space-y-6">
           <div>
-            <p className="eyebrow">By format</p>
+            <p className="eyebrow">By product type</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {FORMATS.map((fmt) => (
                 <Tag key={fmt.key} onClick={() => onQuick({ format: fmt.key })}>
@@ -366,7 +368,7 @@ function Tag({ onClick, children }: { onClick: () => void; children: React.React
   return (
     <button
       onClick={onClick}
-      className="rounded-full border border-line bg-white px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
+      className="rounded-full border-2 border-black bg-white px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:bg-lemon"
     >
       {children}
     </button>

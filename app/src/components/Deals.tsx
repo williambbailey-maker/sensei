@@ -14,7 +14,7 @@ export function Deals({ deals }: { deals: Deal[] }) {
             href={d.url ?? '#'}
             target={d.url ? '_blank' : undefined}
             rel="noopener noreferrer"
-            className="group flex items-center justify-between gap-4 rounded-[40px] border border-line bg-white p-6 transition hover:scale-[1.02]"
+            className="group flex items-center justify-between gap-4 rounded-2xl border-2 border-black bg-white p-6 shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
           >
             <div className="min-w-0">
               <div className="flex items-center gap-2">

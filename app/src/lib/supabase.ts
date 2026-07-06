@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import type { Deal, Product } from './types'
+import type { Deal, Product, StoreLite } from './types'
 
 // The anon key is public by design (it ships in the client bundle and only has
 // RLS-limited read/insert rights). Env vars win; the fallbacks let the app run
@@ -22,9 +22,20 @@ export async function fetchProducts(): Promise<Product[]> {
     .from('products')
     .select(PRODUCT_COLS)
     .eq('in_stock', true)
-    .limit(2000)
+    .limit(5000)
   if (error) throw error
   return (data ?? []) as unknown as Product[]
+}
+
+// The stores table is tiny and drives the location UI (borough ->
+// neighborhood chips) — independent of whichever product rows we sampled.
+export async function fetchStores(): Promise<StoreLite[]> {
+  const { data, error } = await supabase
+    .from('stores')
+    .select('slug,name,borough,neighborhood,lat,lng')
+    .eq('active', true)
+  if (error) throw error
+  return (data ?? []) as unknown as StoreLite[]
 }
 
 export async function fetchDeals(): Promise<Deal[]> {
