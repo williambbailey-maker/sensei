@@ -150,7 +150,7 @@ export default function App() {
                     ? `Near me${filters.radiusMiles != null ? ` · ${filters.radiusMiles} mi` : ''}`
                     : (filters.neighborhood ?? filters.borough)
                 }`
-              : 'New York · Cannabis'}
+              : ''}
           </span>
           <span className="text-[13px] uppercase tracking-label text-muted">21+</span>
         </div>
