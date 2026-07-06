@@ -115,6 +115,40 @@ export function Hero({
           onError={(e) => (e.currentTarget.style.display = 'none')}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
+
+        {/* Zine collage: comic burst, halftone patch, sticker dot — pure
+            SVG/CSS, layered over the photo (or the dark fallback). */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 120 120"
+          className="absolute right-4 top-6 h-24 w-24 rotate-12 sm:right-14 sm:top-10 sm:h-36 sm:w-36"
+        >
+          <polygon
+            points="60.0,2.0 70.9,19.4 89.0,9.8 89.7,30.3 110.2,31.0 100.6,49.1 118.0,60.0 100.6,70.9 110.2,89.0 89.7,89.7 89.0,110.2 70.9,100.6 60.0,118.0 49.1,100.6 31.0,110.2 30.3,89.7 9.8,89.0 19.4,70.9 2.0,60.0 19.4,49.1 9.8,31.0 30.3,30.3 31.0,9.8 49.1,19.4"
+            fill="#F7D14A"
+            stroke="#111"
+            strokeWidth="4"
+          />
+          <text
+            x="60"
+            y="66"
+            textAnchor="middle"
+            fontFamily="'Archivo Black', sans-serif"
+            fontSize="22"
+            fill="#111"
+          >
+            NYC
+          </text>
+        </svg>
+        <div
+          aria-hidden="true"
+          className="halftone absolute -left-6 top-16 h-24 w-40 -rotate-6 rounded-lg border-2 border-black opacity-90 sm:left-10 sm:h-28 sm:w-56"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute right-10 bottom-40 hidden h-10 w-10 rotate-6 rounded-full border-2 border-black bg-accent shadow-[3px_3px_0_#111] sm:block"
+        />
+
         <div className="absolute inset-x-0 bottom-0">
           <div className="mx-auto max-w-6xl px-6 pb-14">
             <h1 className="display max-w-2xl animate-fade-up">
