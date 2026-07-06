@@ -54,10 +54,10 @@ export function RefineBar({
         />
       )}
       <Select
-        label="Format"
+        label="Product type"
         value={f.format ?? ''}
         onChange={(v) => onChange({ ...f, format: (v || null) as Format | null })}
-        options={[{ value: '', label: 'Any format' }, ...FORMATS.map((x) => ({ value: x.key, label: x.label }))]}
+        options={[{ value: '', label: 'Any product type' }, ...FORMATS.map((x) => ({ value: x.key, label: x.label }))]}
         active={f.format != null}
       />
       <Select
@@ -112,7 +112,7 @@ function Select({
         className={`appearance-none rounded-full border px-3.5 py-1.5 pr-8 text-[13px] uppercase tracking-wide transition focus:outline-none ${
           active
             ? 'border-accent bg-accent text-white'
-            : 'border-line bg-white text-black hover:border-accent hover:text-accent'
+            : 'border-black bg-white text-black hover:bg-lemon'
         }`}
       >
         {options.map((o) => (

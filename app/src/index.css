@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 /* Self-hosted variable fonts (no external runtime request — offline-capable
-   PWA). Fraunces (warm serif) for headlines, DM Sans for body. */
+   PWA). Archivo Black for loud headlines, DM Sans for body. */
 @font-face {
-  font-family: 'Fraunces';
+  font-family: 'Archivo Black';
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/fraunces-variable.woff2') format('woff2');
+  src: url('/fonts/archivo-black-400.woff2') format('woff2');
 }
 @font-face {
   font-family: 'DM Sans';
@@ -40,14 +40,14 @@ body {
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
-/* Soft editorial headline: warm serif, sentence case, ink black. */
+/* Loud zine headline: chunky, uppercase, tight. */
 .display {
-  @apply font-display font-medium leading-[1.08] tracking-tight;
+  @apply font-display uppercase leading-[1.02] tracking-tight;
 }
 
 /* Small uppercase label — the reference uppercases all of its small text. */
 .eyebrow {
-  @apply text-[11px] font-medium uppercase tracking-label text-muted;
+  @apply text-[11px] font-bold uppercase tracking-label text-muted;
 }
 
 input:focus {
@@ -55,6 +55,6 @@ input:focus {
 }
 
 ::selection {
-  background: #2e4a3b;
-  color: #f4f0e6;
+  background: #111111;
+  color: #f7d14a;
 }

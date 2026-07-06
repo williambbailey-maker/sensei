@@ -14,7 +14,7 @@ export function useAgeGate(): [boolean, () => void] {
 export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-paper/95 px-6 backdrop-blur">
-      <div className="w-full max-w-sm rounded-[40px] border border-line bg-white p-10 text-center animate-scale-in">
+      <div className="w-full max-w-sm rounded-2xl border-2 border-black bg-white p-10 text-center animate-scale-in">
         <p className="eyebrow">New York · Cannabis</p>
         <h1 className="display mt-4 text-4xl">Welcome to Sensei</h1>
         <p className="mt-4 text-sm leading-relaxed text-muted">
@@ -23,7 +23,7 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
         </p>
         <button
           onClick={onConfirm}
-          className="mt-8 w-full rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)]"
+          className="mt-8 w-full rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] shadow-[3px_3px_0_#111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#111]"
         >
           I'm 21 or older
         </button>

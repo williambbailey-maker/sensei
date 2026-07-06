@@ -45,7 +45,7 @@ export function TapJourney({
     )
   }
 
-  const steps = ['Where', 'Vibe', 'Format', 'Budget']
+  const steps = ['Where', 'Vibe', 'Product type', 'Budget']
   const last = steps.length - 1
   const neighborhoods = f.borough ? (neighborhoodsByBorough[f.borough] ?? []) : []
 
@@ -78,7 +78,7 @@ export function TapJourney({
         <Step title="Where are you?" hint="This narrows things down the most — or skip for all NYC.">
           <button
             onClick={nearMe}
-            className={`mb-3 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-[28px] border p-4 uppercase tracking-wide transition ${
+            className={`mb-3 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-xl border p-4 uppercase tracking-wide transition ${
               f.userLoc
                 ? 'border-accent bg-accent text-white'
                 : 'border-accent bg-white text-accent hover:scale-[1.01]'
@@ -99,7 +99,7 @@ export function TapJourney({
                   className={`rounded-full px-4 py-1.5 text-[13px] uppercase tracking-wide transition ${
                     f.radiusMiles === r
                       ? 'bg-accent text-white'
-                      : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                      : 'border-2 border-black bg-white text-black hover:bg-lemon'
                   }`}
                 >
                   {r} mi
@@ -137,7 +137,7 @@ export function TapJourney({
                       className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
                         f.neighborhood === n
                           ? 'bg-accent text-white'
-                          : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                          : 'border-2 border-black bg-white text-black hover:bg-lemon'
                       }`}
                     >
                       {n}
@@ -163,7 +163,7 @@ export function TapJourney({
       )}
 
       {step === 2 && (
-        <Step title="What form?" hint="One pick, or skip for all.">
+        <Step title="Product type?" hint="One pick, or skip for all.">
           <div className="grid grid-cols-2 gap-3">
             {FORMATS.map((fmt) => (
               <Card
@@ -198,7 +198,7 @@ export function TapJourney({
 
       <button
         onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)]"
+        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] shadow-[3px_3px_0_#111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#111]"
       >
         {step < last ? 'Next' : 'Show my matches'} <Ico name="arrow" className="h-4 w-4" />
       </button>
@@ -228,10 +228,10 @@ function Card({
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[84px] flex-col items-center justify-center gap-2 rounded-[28px] border p-4 text-center uppercase tracking-wide transition ${
+      className={`flex min-h-[84px] flex-col items-center justify-center gap-2 rounded-xl border p-4 text-center uppercase tracking-wide transition ${
         active
           ? 'border-accent bg-accent text-white'
-          : 'border-line bg-white text-black hover:scale-[1.02] hover:border-accent hover:text-accent'
+          : 'border-black bg-white text-black hover:scale-[1.02] hover:bg-lemon'
       }`}
     >
       {children}
