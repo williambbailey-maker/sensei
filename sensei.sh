@@ -45,8 +45,13 @@ if [ "$TASK" != "app" ]; then
   fi
 fi
 
-echo "==> Checking dependencies (fast when already installed)…"
-npm install --no-audit --no-fund --silent
+echo "==> Checking dependencies (first run can take a few minutes)…"
+npm install --no-audit --no-fund --loglevel=error || {
+  echo
+  echo "ERROR: dependency install failed — see the npm output above."
+  echo "Common fix: check your internet connection and re-run this same command."
+  exit 1
+}
 
 case "$TASK" in
   scrape)
@@ -60,7 +65,7 @@ case "$TASK" in
   app)
     echo "==> Starting the app locally…"
     cd "$DEST/app"
-    npm install --no-audit --no-fund --silent
+    npm install --no-audit --no-fund --loglevel=error
     npm run dev -- --open
     ;;
   *)
