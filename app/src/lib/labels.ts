@@ -56,3 +56,18 @@ export function prettyStore(slug: string): string {
     .replace(/\bLes\b/g, 'LES')
     .replace(/\bLlc\b/g, 'LLC')
 }
+
+// Display-clean a product title: keep only what comes before '|' (the brand
+// usually follows it) and drop number-bearing terms — dosages (100mg, 3.5g),
+// ratios (2:1), counts (10-pack, 20 Pack) — plus a unit word a count was
+// qualifying. Falls back to the raw name if stripping leaves nothing.
+export function cleanTitle(raw: string): string {
+  const base = raw.split('|')[0]
+  let s = base
+    .replace(/\(?\b\d[\w:.%/-]*\)?(\s+(packs?|pks?|cts?|counts?|pcs?|pieces?|servings?))?/gi, ' ')
+    .replace(/[()[\]]/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/^[\s\-–·,&]+|[\s\-–·,&]+$/g, '')
+    .trim()
+  return s || base.trim() || raw
+}

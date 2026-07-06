@@ -34,6 +34,11 @@ export type Product = {
   store: StoreLite | null
 }
 
+// A dummy cart: locked to one store; the end goal is handing this off to a
+// real Dutchie order. Prices are menu minimums; exact totals happen at Dutchie.
+export type CartItem = { product: Product; qty: number }
+export type Cart = { store: StoreLite; items: CartItem[] }
+
 export type Deal = {
   id: string
   title: string
