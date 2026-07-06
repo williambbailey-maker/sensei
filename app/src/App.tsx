@@ -135,7 +135,7 @@ export default function App() {
               setFilters(EMPTY_FILTERS)
               go('home')
             }}
-            className="display rounded-md border-2 border-black bg-paper px-2.5 py-0.5 text-[22px] leading-none shadow-[2px_2px_0_#111] transition hover:-translate-y-0.5"
+            className="display rounded-md border-2 border-black bg-paper px-2.5 py-0.5 text-[28px] leading-none shadow-[2px_2px_0_#111] transition hover:-translate-y-0.5"
           >
             sensei
           </button>
