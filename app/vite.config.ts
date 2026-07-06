@@ -9,11 +9,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
       manifest: {
-        name: 'Sensei — NYC cannabis',
+        name: 'Sensei — every menu in New York',
         short_name: 'Sensei',
-        description: 'Find the right cannabis in NYC. Tell us the vibe, get matched.',
-        theme_color: '#0a0a0b',
-        background_color: '#0a0a0b',
+        description: 'Every licensed NYC dispensary menu, one place. Search by where you are.',
+        theme_color: '#FCFCFC',
+        background_color: '#FCFCFC',
         display: 'standalone',
         start_url: '/',
         icons: [
