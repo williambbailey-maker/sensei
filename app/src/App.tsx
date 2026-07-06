@@ -165,6 +165,7 @@ export default function App() {
           <div className="flex flex-col items-center gap-2 text-[12px] uppercase tracking-label text-muted sm:flex-row sm:gap-8">
             <p>Every New York menu, one place</p>
             <p>21+ only · Adults in New York State</p>
+            <p className="text-muted/60">v{__BUILD_ID__}</p>
           </div>
         </div>
       </footer>
