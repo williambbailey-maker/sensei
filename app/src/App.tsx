@@ -9,6 +9,7 @@ import { fetchDeals, fetchProducts } from './lib/supabase'
 import { parseQuery } from './lib/parser'
 import {
   EMPTY_FILTERS,
+  hasLocation,
   locationOf,
   type Deal,
   type Filters,
@@ -84,8 +85,18 @@ export default function App() {
           >
             sensei
           </button>
-          <span className="hidden text-[13px] uppercase tracking-label text-black sm:block">
-            New York · Cannabis
+          <span
+            className={`hidden text-[13px] uppercase tracking-label sm:block ${
+              hasLocation(filters) ? 'font-bold text-accent' : 'text-black'
+            }`}
+          >
+            {hasLocation(filters)
+              ? `◉ ${
+                  filters.userLoc
+                    ? `Near me${filters.radiusMiles != null ? ` · ${filters.radiusMiles} mi` : ''}`
+                    : (filters.neighborhood ?? filters.borough)
+                }`
+              : 'New York · Cannabis'}
           </span>
           <span className="text-[13px] uppercase tracking-label text-muted">21+</span>
         </div>
@@ -103,6 +114,7 @@ export default function App() {
         <main>
           <Hero
             filters={filters}
+            products={products}
             neighborhoodsByBorough={neighborhoodsByBorough}
             onLocation={setLocation}
             onSearch={search}
@@ -110,10 +122,9 @@ export default function App() {
             onBrowse={() => go('journey')}
             onQuick={quickFilter}
           />
-          <Deals deals={deals} />
-          <section className="mx-auto max-w-6xl px-6 pb-20 pt-4">
-            <Newsletter source="home" />
-          </section>
+          {/* Deals earn their place once the user has said where they are. */}
+          {hasLocation(filters) && <Deals deals={deals} />}
+          <div className="pb-16" />
         </main>
       )}
 
@@ -145,8 +156,12 @@ export default function App() {
       )}
 
       <footer className="mt-16 border-t border-line">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-12">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-6 py-12">
           <p className="display text-3xl">sensei</p>
+          <div className="w-full max-w-md">
+            <p className="eyebrow mb-2 text-center">The weekly drop — deals, once a week</p>
+            <Newsletter source="footer" compact />
+          </div>
           <div className="flex flex-col items-center gap-2 text-[12px] uppercase tracking-label text-muted sm:flex-row sm:gap-8">
             <p>Every New York menu, one place</p>
             <p>21+ only · Adults in New York State</p>

@@ -1,11 +1,24 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Ico } from './Ico'
+import { ProductCard } from './ProductCard'
 import { requestLocation } from '../lib/geo'
 import { BOROUGHS, FORMATS, RADII, VIBES } from '../lib/labels'
-import { hasLocation, type Filters, type Vibe } from '../lib/types'
+import { rankProducts } from '../lib/rank'
+import {
+  EMPTY_FILTERS,
+  hasLocation,
+  locationOf,
+  type Filters,
+  type Product,
+  type Vibe,
+} from '../lib/types'
 
+// The home flow: answer "where are you?" once, then the page becomes a
+// storefront for that location — stats, an always-present "ask sensei" search
+// box, nearby product rows, and refiner chips. Location persists everywhere.
 export function Hero({
   filters,
+  products,
   neighborhoodsByBorough,
   onLocation,
   onSearch,
@@ -14,6 +27,7 @@ export function Hero({
   onQuick,
 }: {
   filters: Filters
+  products: Product[]
   neighborhoodsByBorough: Record<string, string[]>
   onLocation: (patch: Partial<Filters>) => void
   onSearch: (text: string) => void
@@ -24,6 +38,31 @@ export function Hero({
   const [text, setText] = useState('')
   const [locating, setLocating] = useState(false)
   const [locError, setLocError] = useState('')
+  const [editingLoc, setEditingLoc] = useState(false)
+
+  const located = hasLocation(filters)
+  const showPicker = !located || editingLoc
+
+  // Everything in stock at the chosen location, ranked with defaults.
+  const nearby = useMemo(
+    () => rankProducts(products, { ...EMPTY_FILTERS, ...locationOf(filters) }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [products, filters.borough, filters.neighborhood, filters.userLoc, filters.radiusMiles],
+  )
+  const storeCount = useMemo(
+    () => new Set(nearby.map((p) => p.store?.slug ?? '')).size,
+    [nearby],
+  )
+  const cheapest = useMemo(
+    () =>
+      [...nearby].sort((a, b) => (a.price_min ?? Infinity) - (b.price_min ?? Infinity)).slice(0, 6),
+    [nearby],
+  )
+  const picks = nearby.slice(0, 6)
+
+  const whereLabel = filters.userLoc
+    ? `Near me${filters.radiusMiles != null ? ` · ${filters.radiusMiles} mi` : ''}`
+    : (filters.neighborhood ?? filters.borough ?? '')
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -54,11 +93,10 @@ export function Hero({
     })
 
   const neighborhoods = filters.borough ? (neighborhoodsByBorough[filters.borough] ?? []) : []
-  const located = hasLocation(filters)
 
   return (
-    <section className="mx-auto max-w-6xl px-6 pt-14 sm:pt-20">
-      {/* Splash: giant lowercase display wordmark + vertical label. */}
+    <section className="mx-auto max-w-6xl px-6 pt-12 sm:pt-16">
+      {/* Splash: lowercase display wordmark + vertical label. */}
       <div className="flex items-stretch justify-center gap-6 sm:gap-10">
         <h1 className="display animate-scale-in text-6xl sm:text-8xl lg:text-9xl">sensei</h1>
         <div className="flex animate-fade-up flex-col items-center">
@@ -75,130 +113,175 @@ export function Hero({
         </div>
       </div>
 
-      {/* Location first — everything after inherits this answer. */}
-      <div className="mx-auto mt-14 max-w-3xl animate-fade-up rounded-[40px] border border-accent/25 bg-white p-7 sm:p-9">
-        <p className="eyebrow text-accent">Start here</p>
-        <h2 className="display mt-2 text-4xl">where are you?</h2>
-        <div className="mt-5 flex flex-wrap gap-2">
+      {/* Located: a compact bar with stats. Not located (or editing): the picker. */}
+      {!showPicker ? (
+        <div className="mx-auto mt-12 flex max-w-3xl flex-wrap items-center justify-between gap-3 rounded-full border border-line bg-white py-3 pl-6 pr-3 animate-fade-up">
+          <span className="text-[13px] font-bold uppercase tracking-wide text-accent">
+            ◉ {whereLabel}
+          </span>
+          {nearby.length > 0 && (
+            <span className="text-[13px] uppercase tracking-wide text-muted">
+              {storeCount} store{storeCount === 1 ? '' : 's'} · {nearby.length.toLocaleString()}{' '}
+              products
+            </span>
+          )}
           <button
-            onClick={nearMe}
-            className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[13px] font-bold uppercase tracking-wide transition ${
-              filters.userLoc
-                ? 'bg-accent text-white'
-                : 'border border-accent text-accent hover:scale-105'
-            }`}
+            onClick={() => setEditingLoc(true)}
+            className="rounded-full border border-line px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
           >
-            ◉ {locating ? 'Locating…' : filters.userLoc ? 'Near me' : 'Use my location'}
+            Change
           </button>
-          {BOROUGHS.map((b) => (
-            <button
-              key={b}
-              onClick={() => pickBorough(b)}
-              className={`rounded-full px-4 py-1.5 text-[13px] uppercase tracking-wide transition ${
-                filters.borough === b
-                  ? 'bg-accent text-white'
-                  : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
-              }`}
-            >
-              {b}
-            </button>
-          ))}
         </div>
-
-        {locError && <p className="mt-3 text-xs uppercase tracking-wide text-clay">{locError}</p>}
-
-        {filters.userLoc && (
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="eyebrow">Within</span>
-            {RADII.map((r) => (
+      ) : (
+        <div className="mx-auto mt-12 max-w-3xl animate-fade-up rounded-[40px] border border-accent/25 bg-white p-7 sm:p-9">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="eyebrow text-accent">Start here</p>
+              <h2 className="display mt-2 text-4xl">where are you?</h2>
+            </div>
+            {located && (
               <button
-                key={r}
-                onClick={() => onLocation({ radiusMiles: r })}
-                className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
-                  filters.radiusMiles === r
-                    ? 'bg-accent text-white'
-                    : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
-                }`}
+                onClick={() => setEditingLoc(false)}
+                className="rounded-full border border-line px-4 py-1.5 text-[13px] uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
               >
-                {r} mi
+                Done
               </button>
-            ))}
+            )}
           </div>
-        )}
-
-        {neighborhoods.length > 0 && (
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="eyebrow">Narrow it</span>
+          <div className="mt-5 flex flex-wrap gap-2">
             <button
-              onClick={() => onLocation({ neighborhood: null })}
-              className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
-                filters.neighborhood === null
+              onClick={nearMe}
+              className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[13px] font-bold uppercase tracking-wide transition ${
+                filters.userLoc
                   ? 'bg-accent text-white'
-                  : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                  : 'border border-accent text-accent hover:scale-105'
               }`}
             >
-              All {filters.borough}
+              ◉ {locating ? 'Locating…' : filters.userLoc ? 'Near me' : 'Use my location'}
             </button>
-            {neighborhoods.map((n) => (
+            {BOROUGHS.map((b) => (
               <button
-                key={n}
-                onClick={() =>
-                  onLocation({ neighborhood: filters.neighborhood === n ? null : n })
-                }
-                className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
-                  filters.neighborhood === n
+                key={b}
+                onClick={() => pickBorough(b)}
+                className={`rounded-full px-4 py-1.5 text-[13px] uppercase tracking-wide transition ${
+                  filters.borough === b
                     ? 'bg-accent text-white'
                     : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
                 }`}
               >
-                {n}
+                {b}
               </button>
             ))}
           </div>
-        )}
 
-        {located && (
-          <button
-            onClick={() => onQuick({})}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)]"
-          >
-            Browse everything{' '}
-            {filters.userLoc
-              ? `within ${filters.radiusMiles} mi`
-              : (filters.neighborhood ?? filters.borough)}{' '}
-            <Ico name="arrow" className="h-4 w-4" />
-          </button>
-        )}
-      </div>
+          {locError && <p className="mt-3 text-xs uppercase tracking-wide text-clay">{locError}</p>}
 
-      <form onSubmit={submit} className="mx-auto mt-10 max-w-xl animate-fade-up">
+          {filters.userLoc && (
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="eyebrow">Within</span>
+              {RADII.map((r) => (
+                <button
+                  key={r}
+                  onClick={() => onLocation({ radiusMiles: r })}
+                  className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
+                    filters.radiusMiles === r
+                      ? 'bg-accent text-white'
+                      : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                  }`}
+                >
+                  {r} mi
+                </button>
+              ))}
+            </div>
+          )}
+
+          {neighborhoods.length > 0 && !filters.userLoc && (
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="eyebrow">Narrow it</span>
+              <button
+                onClick={() => onLocation({ neighborhood: null })}
+                className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
+                  filters.neighborhood === null
+                    ? 'bg-accent text-white'
+                    : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                }`}
+              >
+                All {filters.borough}
+              </button>
+              {neighborhoods.map((n) => (
+                <button
+                  key={n}
+                  onClick={() => onLocation({ neighborhood: filters.neighborhood === n ? null : n })}
+                  className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
+                    filters.neighborhood === n
+                      ? 'bg-accent text-white'
+                      : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Ask sensei — always present; the shortcut through everything. */}
+      <form onSubmit={submit} className="mx-auto mt-8 max-w-xl animate-fade-up">
         <div className="flex items-center gap-2 rounded-full border border-line bg-white py-1.5 pl-5 pr-1.5 transition focus-within:border-accent">
           <Ico name="search" className="h-5 w-5 shrink-0 text-muted" />
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="MELLOW FLOWER UNDER $50…"
+            placeholder={
+              located
+                ? `ASK SENSEI — SEARCHING ${whereLabel.toUpperCase()}…`
+                : 'ASK SENSEI — “MELLOW FLOWER UNDER $50”…'
+            }
             className="w-full bg-transparent py-2 text-sm uppercase tracking-wide placeholder:text-muted/70"
             autoComplete="off"
-            aria-label="Describe what you want"
+            aria-label="Ask sensei what you want"
           />
           <button
             type="submit"
             className="flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)] disabled:opacity-30"
             disabled={!text.trim()}
           >
-            Search
+            Ask
           </button>
         </div>
-        {located && (
-          <p className="mt-2 text-center text-[11px] uppercase tracking-label text-muted">
-            Searching {filters.userLoc ? `within ${filters.radiusMiles} mi of you` : (filters.neighborhood ?? filters.borough)}
-          </p>
-        )}
       </form>
 
-      {/* Then: by feel, and by the numbers — location carries into all of it. */}
-      <div className="mt-16 grid gap-10 border-t border-line pt-10 animate-fade-up sm:grid-cols-2">
+      {/* Located storefront: what's actually near you, right now. */}
+      {located && cheapest.length > 0 && (
+        <div className="mt-14 animate-fade-up">
+          <Row
+            label={`Cheapest ${filters.userLoc ? 'near you' : `in ${whereLabel}`}`}
+            onSeeAll={() => onQuick({ sort: 'price-asc' })}
+          >
+            {cheapest.map((p) => (
+              <div key={p.id} className="w-[330px] shrink-0">
+                <ProductCard p={p} userLoc={filters.userLoc} />
+              </div>
+            ))}
+          </Row>
+          <div className="mt-8">
+            <Row
+              label={`Top picks ${filters.userLoc ? 'near you' : `in ${whereLabel}`}`}
+              onSeeAll={() => onQuick({})}
+            >
+              {picks.map((p) => (
+                <div key={p.id} className="w-[330px] shrink-0">
+                  <ProductCard p={p} userLoc={filters.userLoc} />
+                </div>
+              ))}
+            </Row>
+          </div>
+        </div>
+      )}
+
+      {/* Refiners: by feel, by the numbers — location rides along on every tap. */}
+      <div className="mt-14 grid gap-10 border-t border-line pt-10 animate-fade-up sm:grid-cols-2">
         <div>
           <p className="eyebrow">By feel</p>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -212,7 +295,7 @@ export function Hero({
             onClick={onBrowse}
             className="mt-6 inline-flex items-center gap-2 text-sm uppercase tracking-wide text-accent transition hover:gap-3 hover:underline"
           >
-            Take the guided journey <Ico name="arrow" className="h-4 w-4" />
+            Not sure? Take the guided journey <Ico name="arrow" className="h-4 w-4" />
           </button>
         </div>
 
@@ -239,6 +322,32 @@ export function Hero({
         </div>
       </div>
     </section>
+  )
+}
+
+// A horizontally scrolling product row with a label and "see all".
+function Row({
+  label,
+  onSeeAll,
+  children,
+}: {
+  label: string
+  onSeeAll: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <div>
+      <div className="flex items-baseline justify-between">
+        <p className="eyebrow">{label}</p>
+        <button
+          onClick={onSeeAll}
+          className="text-[13px] uppercase tracking-wide text-accent transition hover:underline"
+        >
+          See all →
+        </button>
+      </div>
+      <div className="-mx-6 mt-3 flex gap-3 overflow-x-auto px-6 pb-2">{children}</div>
+    </div>
   )
 }
 
