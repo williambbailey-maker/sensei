@@ -97,27 +97,35 @@ export function Hero({
   const neighborhoods = filters.borough ? (neighborhoodsByBorough[filters.borough] ?? []) : []
 
   return (
-    <section className="mx-auto max-w-6xl px-6 pt-12 sm:pt-16">
-      {/* Splash: lowercase display wordmark + vertical label. */}
-      <div className="flex items-stretch justify-center gap-6 sm:gap-10">
-        <h1 className="display animate-scale-in text-6xl sm:text-8xl lg:text-9xl">sensei</h1>
-        <div className="flex animate-fade-up flex-col items-center">
-          <p
-            className="text-[13px] uppercase tracking-label text-black"
-            style={{ writingMode: 'vertical-rl' }}
-          >
-            Every menu in New York
-          </p>
-          <span className="mt-3 w-px flex-grow bg-black" aria-hidden="true" />
-          <span className="-mt-px text-black" aria-hidden="true">
-            ▾
-          </span>
+    <section>
+      {/* Full-bleed photo hero — the corner-store New York this app indexes.
+          The image lives at /hero.jpg; a warm dark fallback keeps the overlay
+          text legible if it's missing. */}
+      <div className="relative h-[46vh] min-h-[360px] w-full overflow-hidden bg-[#26211a]">
+        <img
+          src="/hero.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={(e) => (e.currentTarget.style.display = 'none')}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
+        <div className="absolute inset-x-0 bottom-0">
+          <div className="mx-auto max-w-6xl px-6 pb-16">
+            <p className="text-[11px] font-medium uppercase tracking-label text-paper/80 animate-fade-up">
+              New York · Cannabis
+            </p>
+            <h1 className="display mt-2 max-w-2xl text-4xl text-paper animate-fade-up sm:text-6xl">
+              Every menu in New York, one counter.
+            </h1>
+          </div>
         </div>
       </div>
 
+      <div className="mx-auto max-w-6xl px-6">
+
       {/* Located: a compact bar with stats. Not located (or editing): the picker. */}
       {!showPicker ? (
-        <div className="mx-auto mt-12 flex max-w-3xl flex-wrap items-center justify-between gap-3 rounded-full border border-line bg-white py-3 pl-6 pr-3 animate-fade-up">
+        <div className="relative z-10 mx-auto -mt-8 flex max-w-3xl flex-wrap items-center justify-between gap-3 rounded-full border border-line bg-white py-3 pl-6 pr-3 animate-fade-up">
           <span className="text-[13px] font-bold uppercase tracking-wide text-accent">
             ◉ {whereLabel}
           </span>
@@ -135,11 +143,11 @@ export function Hero({
           </button>
         </div>
       ) : (
-        <div className="mx-auto mt-12 max-w-3xl animate-fade-up rounded-[40px] border border-accent/25 bg-white p-7 sm:p-9">
+        <div className="relative z-10 mx-auto -mt-8 max-w-3xl animate-fade-up rounded-[40px] border border-line bg-white p-7 shadow-[0_10px_40px_rgba(38,33,26,0.12)] sm:p-9">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="eyebrow text-accent">Start here</p>
-              <h2 className="display mt-2 text-4xl">where are you?</h2>
+              <h2 className="display mt-2 text-4xl">Where are you?</h2>
             </div>
             {located && (
               <button
@@ -246,7 +254,7 @@ export function Hero({
           />
           <button
             type="submit"
-            className="flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)] disabled:opacity-30"
+            className="flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)] disabled:opacity-30"
             disabled={!text.trim()}
           >
             Ask
@@ -322,6 +330,7 @@ export function Hero({
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   )

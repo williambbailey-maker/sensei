@@ -15,8 +15,8 @@ export default defineConfig({
         name: 'Sensei — every menu in New York',
         short_name: 'Sensei',
         description: 'Every licensed NYC dispensary menu, one place. Search by where you are.',
-        theme_color: '#FCFCFC',
-        background_color: '#FCFCFC',
+        theme_color: '#F4F0E6',
+        background_color: '#F4F0E6',
         display: 'standalone',
         start_url: '/',
         icons: [

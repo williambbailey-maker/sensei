@@ -16,14 +16,14 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-paper/95 px-6 backdrop-blur">
       <div className="w-full max-w-sm rounded-[40px] border border-line bg-white p-10 text-center animate-scale-in">
         <p className="eyebrow">New York · Cannabis</p>
-        <h1 className="display mt-4 text-4xl">welcome to sensei</h1>
+        <h1 className="display mt-4 text-4xl">Welcome to Sensei</h1>
         <p className="mt-4 text-sm leading-relaxed text-muted">
           You must be 21 or older to enter. Cannabis products are for adult use only in New York
           State.
         </p>
         <button
           onClick={onConfirm}
-          className="mt-8 w-full rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)]"
+          className="mt-8 w-full rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)]"
         >
           I'm 21 or older
         </button>

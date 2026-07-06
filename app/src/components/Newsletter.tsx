@@ -31,7 +31,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
       {!compact && (
         <>
           <p className="eyebrow">Newsletter</p>
-          <h3 className="display mt-2 text-3xl">the weekly drop</h3>
+          <h3 className="display mt-2 text-3xl">The weekly drop</h3>
           <p className="mb-4 mt-1 text-sm normal-case text-muted">
             New deals and standout products, once a week. No spam.
           </p>
@@ -52,7 +52,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
         <button
           type="submit"
           disabled={state === 'loading'}
-          className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)] disabled:opacity-50"
+          className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)] disabled:opacity-50"
         >
           {state === 'loading' ? '…' : 'Subscribe'}
         </button>
