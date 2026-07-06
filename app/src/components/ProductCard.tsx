@@ -11,11 +11,23 @@ const TIER_DOT: Record<string, string> = {
   strong: 'bg-clay',
 }
 
+// Edibles are dosed in milligrams — a "0.05g" gummy is a 50mg gummy. Convert
+// gram-denominated weights to mg for edibles; leave other categories alone.
+function displayWeight(weight: string, category: string | null): string {
+  if (category !== 'edibles') return weight
+  const m = weight.match(/^\s*([\d.]+)\s*g\s*$/i)
+  if (!m) return weight
+  const mg = Math.round(parseFloat(m[1]) * 1000)
+  return Number.isFinite(mg) && mg > 0 ? `${mg}mg` : weight
+}
+
 export function ProductCard({ p, userLoc }: { p: Product; userLoc?: LatLng | null }) {
   const name = p.clean_name ?? p.name ?? 'Unknown'
   const brand = p.clean_brand ?? p.brand
   const price = p.price_min != null ? `$${formatPrice(p.price_min)}` : '—'
-  const weights = p.variants?.map((v) => v.weight).filter(Boolean) as string[]
+  const weights = (p.variants?.map((v) => v.weight).filter(Boolean) as string[])?.map((w) =>
+    displayWeight(w, p.category),
+  )
   const miles =
     userLoc && p.store?.lat != null && p.store?.lng != null
       ? haversineMiles(userLoc, { lat: p.store.lat, lng: p.store.lng })

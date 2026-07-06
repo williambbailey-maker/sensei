@@ -130,6 +130,11 @@ export function mapApiProduct(prod, storeId, slug, fallbackCat) {
 // Pull {lat,lng} out of the many shapes Dutchie uses for coordinates.
 function pickCoords(o) {
   if (!o || typeof o !== 'object') return null
+  // GeoJSON: { coordinates: [lng, lat] }
+  if (Array.isArray(o.coordinates) && o.coordinates.length === 2) {
+    const [lng, lat] = o.coordinates
+    if (typeof lat === 'number' && typeof lng === 'number' && lat !== 0) return { lat, lng }
+  }
   const lat = o.lt ?? o.lat ?? o.latitude
   const lng = o.ln ?? o.lng ?? o.longitude
   if (
@@ -144,6 +149,17 @@ function pickCoords(o) {
   return null
 }
 
+// Some payloads only carry coordinates inside a Google Maps link.
+function coordsFromMapsUrl(url) {
+  if (typeof url !== 'string') return null
+  const m = url.match(/[@=](-?\d{2}\.\d+),(-?\d{2,3}\.\d+)/)
+  if (!m) return null
+  const lat = Number(m[1])
+  const lng = Number(m[2])
+  if (lat !== 0 && Math.abs(lat) <= 90 && Math.abs(lng) <= 180) return { lat, lng }
+  return null
+}
+
 // Recursively look for the dispensary object in a GraphQL response — it
 // carries the store's real name, street address, and coordinates. Shapes vary,
 // so match defensively: a name plus an address or location.
@@ -155,21 +171,62 @@ function findDispensaryMeta(node, out, depth = 0) {
   }
   const looksDispensary =
     node.__typename === 'Dispensary' ||
-    (typeof node.name === 'string' && node.name.length < 80 && (node.address1 || node.location))
+    (typeof node.name === 'string' &&
+      node.name.length < 80 &&
+      (node.address1 || node.address || node.location || node.googleMapsUrl))
   if (looksDispensary) {
-    const coords = pickCoords(node.location) ?? pickCoords(node)
+    const coords =
+      pickCoords(node.location) ?? pickCoords(node) ?? coordsFromMapsUrl(node.googleMapsUrl)
     if (typeof node.name === 'string' && node.name && !out.name) out.name = node.name.trim()
     if (coords && out.lat == null) {
       out.lat = coords.lat
       out.lng = coords.lng
     }
-    if (typeof node.address1 === 'string' && !out.address) {
-      out.address = [node.address1, node.city, node.state, node.zip].filter(Boolean).join(', ')
+    const street = typeof node.address1 === 'string' ? node.address1 : typeof node.address === 'string' ? node.address : null
+    if (street && !out.address) {
+      out.address = [street, node.city, node.state, node.zip].filter(Boolean).join(', ')
     }
     if (typeof node.city === 'string' && !out.city) out.city = node.city.trim()
     if (out.name && out.lat != null && out.address) out.done = true
   }
   for (const k of Object.keys(node)) findDispensaryMeta(node[k], out, depth + 1)
+}
+
+// Dutchie keeps the full address + coordinates on the store's /info page
+// (embedded page data + its own GraphQL calls) rather than in the menu feed.
+// One quick visit per store that still lacks an address fills the gap.
+async function fetchStoreInfo(page, slug, meta) {
+  const handler = async (r) => {
+    if (!/graphql/i.test(r.url())) return
+    try {
+      findDispensaryMeta(await r.json(), meta)
+    } catch {
+      /* not json */
+    }
+  }
+  page.on('response', handler)
+  try {
+    await page.goto(`https://dutchie.com/dispensary/${slug}/info`, {
+      waitUntil: 'domcontentloaded',
+    })
+    await sleep(2500)
+    const nd = await page
+      .evaluate(() => document.getElementById('__NEXT_DATA__')?.textContent || null)
+      .catch(() => null)
+    if (nd) {
+      try {
+        findDispensaryMeta(JSON.parse(nd), meta)
+      } catch {
+        /* unparseable */
+      }
+    }
+    if (process.env.DEBUG_STORE && !meta.address) {
+      console.log(`    DEBUG ${slug}: info page yielded name=${meta.name ?? '-'} coords=${meta.lat ?? '-'} (no address)`)
+    }
+  } catch (err) {
+    console.log(`    info page error: ${err.message.slice(0, 80)}`)
+  }
+  page.off('response', handler)
 }
 
 // City names from Dutchie -> borough, only used when we don't know it yet.
@@ -310,7 +367,7 @@ async function main() {
   }
 
   const runStart = new Date().toISOString()
-  let stores = await sb('stores?active=eq.true&select=id,slug,borough')
+  let stores = await sb('stores?active=eq.true&select=id,slug,borough,address,lat')
   if (STORE) stores = stores.filter((s) => s.slug === STORE)
   if (STORE_LIMIT) stores = stores.slice(0, STORE_LIMIT)
   console.log(`Active stores: ${stores.length}${HEADLESS ? ' (headless)' : ''}`)
@@ -330,10 +387,12 @@ async function main() {
   let failed = 0
   let seen = 0
   for (let i = 0; i < stores.length; i++) {
-    const { id, slug, borough } = stores[i]
+    const { id, slug, borough, address, lat } = stores[i]
     console.log(`\n[${i + 1}/${stores.length}] ${slug}`)
     try {
       const meta = {}
+      // Visit the store's info page once if we still lack its address/coords.
+      if (!address || lat == null) await fetchStoreInfo(page, slug, meta)
       const list = await scrapeStore(page, id, slug, meta)
       if (list.length) {
         await sb('products?on_conflict=store_id,external_id', {
