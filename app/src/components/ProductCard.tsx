@@ -25,9 +25,9 @@ export function ProductCard({ p, userLoc }: { p: Product; userLoc?: LatLng | nul
   const name = p.clean_name ?? p.name ?? 'Unknown'
   const brand = p.clean_brand ?? p.brand
   const price = p.price_min != null ? `$${formatPrice(p.price_min)}` : '—'
-  const weights = (p.variants?.map((v) => v.weight).filter(Boolean) as string[])?.map((w) =>
-    displayWeight(w, p.category),
-  )
+  const weights = (p.variants?.map((v) => v.weight).filter(Boolean) as string[])
+    ?.filter((w) => !/^n\/?a$/i.test(w.trim()))
+    .map((w) => displayWeight(w, p.category))
   const miles =
     userLoc && p.store?.lat != null && p.store?.lng != null
       ? haversineMiles(userLoc, { lat: p.store.lat, lng: p.store.lng })
