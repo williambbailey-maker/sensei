@@ -117,10 +117,7 @@ export function Hero({
         <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
         <div className="absolute inset-x-0 bottom-0">
           <div className="mx-auto max-w-6xl px-6 pb-14">
-            <span className="inline-block -rotate-1 rounded-md border-2 border-black bg-lemon px-3 py-1 text-[11px] font-bold uppercase tracking-label text-black shadow-[3px_3px_0_#111] animate-fade-up">
-              New York · Cannabis
-            </span>
-            <h1 className="display mt-3 max-w-2xl animate-fade-up">
+            <h1 className="display max-w-2xl animate-fade-up">
               <span className="inline rounded-md bg-black box-decoration-clone px-3 py-1 text-3xl text-paper sm:text-5xl">
                 Every menu in New York, one counter.
               </span>
