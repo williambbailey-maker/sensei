@@ -14,6 +14,7 @@ export function Results({
   onChange,
   onHome,
   onEdit,
+  onAdd,
 }: {
   products: Product[]
   filters: Filters
@@ -21,6 +22,7 @@ export function Results({
   onChange: (f: Filters) => void
   onHome: () => void
   onEdit: () => void
+  onAdd?: (p: Product) => void
 }) {
   const ranked = useMemo(() => rankProducts(products, filters), [products, filters])
 
@@ -70,7 +72,7 @@ export function Results({
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {ranked.map((p) => (
-            <ProductCard key={p.id} p={p} userLoc={filters.userLoc} />
+            <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onAdd={onAdd} />
           ))}
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
+import { CartView } from './components/CartView'
 import { Hero } from './components/Hero'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
@@ -7,17 +8,19 @@ import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
 import { fetchDeals, fetchProducts } from './lib/supabase'
 import { parseQuery } from './lib/parser'
+import { prettyStore } from './lib/labels'
 import {
   EMPTY_FILTERS,
   hasLocation,
   locationOf,
+  type Cart,
   type Deal,
   type Filters,
   type Product,
   type Vibe,
 } from './lib/types'
 
-type View = 'home' | 'journey' | 'results'
+type View = 'home' | 'journey' | 'results' | 'cart'
 
 export default function App() {
   const [ageOk, confirmAge] = useAgeGate()
@@ -26,6 +29,23 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
   const [loadError, setLoadError] = useState(false)
+  // Dummy cart — one store at a time, survives reloads on this device.
+  const [cart, setCart] = useState<Cart | null>(() => {
+    try {
+      const raw = localStorage.getItem('sensei_cart')
+      return raw ? (JSON.parse(raw) as Cart) : null
+    } catch {
+      return null
+    }
+  })
+  useEffect(() => {
+    try {
+      if (cart) localStorage.setItem('sensei_cart', JSON.stringify(cart))
+      else localStorage.removeItem('sensei_cart')
+    } catch {
+      /* storage unavailable — cart just won't persist */
+    }
+  }, [cart])
 
   useEffect(() => {
     fetchProducts().then(setProducts).catch(() => setLoadError(true))
@@ -37,6 +57,38 @@ export default function App() {
   }, [view])
 
   const go = (v: View) => setView(v)
+
+  // Once the cart holds a product, browsing narrows to that store — you're
+  // building one order. Clearing the cart reopens the whole city.
+  const scopedProducts = useMemo(
+    () => (cart ? products.filter((p) => p.store?.slug === cart.store.slug) : products),
+    [products, cart],
+  )
+  const addToCart = (p: Product) => {
+    if (!p.store) return
+    setCart((prev) => {
+      if (!prev || prev.store.slug !== p.store!.slug)
+        return { store: p.store!, items: [{ product: p, qty: 1 }] }
+      const exists = prev.items.some((i) => i.product.id === p.id)
+      return {
+        ...prev,
+        items: exists
+          ? prev.items.map((i) => (i.product.id === p.id ? { ...i, qty: i.qty + 1 } : i))
+          : [...prev.items, { product: p, qty: 1 }],
+      }
+    })
+  }
+  const changeQty = (productId: string, delta: number) =>
+    setCart((prev) => {
+      if (!prev) return prev
+      const items = prev.items
+        .map((i) => (i.product.id === productId ? { ...i, qty: i.qty + delta } : i))
+        .filter((i) => i.qty > 0)
+      return items.length ? { ...prev, items } : null
+    })
+  const clearCart = () => setCart(null)
+  const cartCount = cart?.items.reduce((n, i) => n + i.qty, 0) ?? 0
+  const cartTotal = cart?.items.reduce((s, i) => s + (i.product.price_min ?? 0) * i.qty, 0) ?? 0
 
   // Which neighborhoods actually have in-stock product, per borough — drives
   // the drill-down chips and selects.
@@ -102,6 +154,31 @@ export default function App() {
         </div>
       </header>
 
+      {cart && view !== 'cart' && (
+        <div className="mx-auto max-w-6xl px-6 pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-full border border-accent/30 bg-accent/5 py-2 pl-5 pr-2">
+            <span className="text-[13px] font-bold uppercase tracking-wide text-accent">
+              Building a cart at {cart.store.name ?? prettyStore(cart.store.slug)} — showing this
+              store only
+            </span>
+            <span className="flex items-center gap-2">
+              <button
+                onClick={() => go('cart')}
+                className="rounded-full bg-accent px-4 py-1.5 text-[13px] font-bold uppercase tracking-wide text-white transition hover:scale-105"
+              >
+                View cart · {cartCount}
+              </button>
+              <button
+                onClick={clearCart}
+                className="rounded-full border border-line bg-white px-4 py-1.5 text-[13px] uppercase tracking-wide text-muted transition hover:border-clay hover:text-clay"
+              >
+                Clear
+              </button>
+            </span>
+          </div>
+        </div>
+      )}
+
       {loadError && (
         <div className="mx-auto max-w-6xl px-6 pt-4">
           <div className="rounded-full border border-clay/40 bg-clay/10 px-5 py-2.5 text-sm uppercase tracking-wide text-clay">
@@ -114,13 +191,14 @@ export default function App() {
         <main>
           <Hero
             filters={filters}
-            products={products}
+            products={scopedProducts}
             neighborhoodsByBorough={neighborhoodsByBorough}
             onLocation={setLocation}
             onSearch={search}
             onVibe={quickVibe}
             onBrowse={() => go('journey')}
             onQuick={quickFilter}
+            onAdd={addToCart}
           />
           {/* Deals earn their place once the user has said where they are. */}
           {hasLocation(filters) && <Deals deals={deals} />}
@@ -145,14 +223,39 @@ export default function App() {
       {view === 'results' && (
         <main>
           <Results
-            products={products}
+            products={scopedProducts}
             filters={filters}
             neighborhoodsByBorough={neighborhoodsByBorough}
             onChange={setFilters}
             onHome={() => go('home')}
             onEdit={() => go('journey')}
+            onAdd={addToCart}
           />
         </main>
+      )}
+
+      {view === 'cart' && cart && (
+        <main>
+          <CartView
+            cart={cart}
+            onQty={changeQty}
+            onClear={() => {
+              clearCart()
+              go('results')
+            }}
+            onBack={() => go('results')}
+          />
+        </main>
+      )}
+
+      {/* Floating cart pill — one tap from anywhere back to the order. */}
+      {cartCount > 0 && view !== 'cart' && (
+        <button
+          onClick={() => go('cart')}
+          className="fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-[0_7px_29px_rgba(0,0,139,0.35)] transition hover:scale-105"
+        >
+          Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
+        </button>
       )}
 
       <footer className="mt-16 border-t border-line">

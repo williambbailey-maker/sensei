@@ -1,6 +1,6 @@
 import { Ico } from './Ico'
 import { formatMiles, haversineMiles } from '../lib/geo'
-import { prettyStore, vibeLabel } from '../lib/labels'
+import { cleanTitle, prettyStore, vibeLabel } from '../lib/labels'
 import type { LatLng, Product } from '../lib/types'
 
 // Potency as a small colored dot: green mild, amber medium, red strong —
@@ -21,8 +21,16 @@ function displayWeight(weight: string, category: string | null): string {
   return Number.isFinite(mg) && mg > 0 ? `${mg}mg` : weight
 }
 
-export function ProductCard({ p, userLoc }: { p: Product; userLoc?: LatLng | null }) {
-  const name = p.clean_name ?? p.name ?? 'Unknown'
+export function ProductCard({
+  p,
+  userLoc,
+  onAdd,
+}: {
+  p: Product
+  userLoc?: LatLng | null
+  onAdd?: (p: Product) => void
+}) {
+  const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown')
   const brand = p.clean_brand ?? p.brand
   const price = p.price_min != null ? `$${formatPrice(p.price_min)}` : '—'
   const weights = (p.variants?.map((v) => v.weight).filter(Boolean) as string[])
@@ -85,16 +93,26 @@ export function ProductCard({ p, userLoc }: { p: Product; userLoc?: LatLng | nul
                 : ''}
             {miles != null && <span className="text-accent"> · {formatMiles(miles)}</span>}
           </p>
-          {p.url && (
-            <a
-              href={p.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex shrink-0 items-center gap-1 rounded-full border border-line px-3 py-1 text-xs font-medium uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
-            >
-              View <Ico name="external" className="h-3 w-3" />
-            </a>
-          )}
+          <span className="flex shrink-0 items-center gap-1.5">
+            {p.url && (
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 rounded-full border border-line px-3 py-1 text-xs font-medium uppercase tracking-wide text-black transition hover:border-accent hover:text-accent"
+              >
+                View <Ico name="external" className="h-3 w-3" />
+              </a>
+            )}
+            {onAdd && (
+              <button
+                onClick={() => onAdd(p)}
+                className="flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wide text-white transition hover:scale-105"
+              >
+                + Add
+              </button>
+            )}
+          </span>
         </div>
       </div>
     </div>
