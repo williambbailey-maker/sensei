@@ -62,6 +62,10 @@ case "$TASK" in
     echo "==> Discovering new Dutchie stores in Manhattan / Brooklyn / Bronx…"
     node discover.mjs
     ;;
+  addresses)
+    echo "==> Refreshing store addresses only (fast — no menus)…"
+    INFO_ONLY=1 npm run scrape
+    ;;
   app)
     echo "==> Starting the app locally…"
     cd "$DEST/app"
@@ -69,7 +73,7 @@ case "$TASK" in
     npm run dev -- --open
     ;;
   *)
-    echo "Usage: sensei.sh [scrape|discover|app]"
+    echo "Usage: sensei.sh [scrape|addresses|discover|app]"
     exit 1
     ;;
 esac

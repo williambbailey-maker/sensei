@@ -383,6 +383,42 @@ async function main() {
     return
   }
 
+  // INFO_ONLY=1 — refresh store addresses/coordinates from /info pages
+  // without scraping any menus. A few seconds per store.
+  if (/^(1|true|yes)$/i.test(process.env.INFO_ONLY || '')) {
+    console.log('Address-only refresh (no menus)…')
+    let updated = 0
+    for (let i = 0; i < stores.length; i++) {
+      const { id, slug, borough, address, lat } = stores[i]
+      if (address && lat != null) continue
+      const meta = {}
+      console.log(`[${i + 1}/${stores.length}] ${slug}`)
+      await fetchStoreInfo(page, slug, meta)
+      const patch = {}
+      if (meta.name) patch.name = meta.name
+      if (meta.address) patch.address = meta.address
+      if (meta.lat != null) {
+        patch.lat = meta.lat
+        patch.lng = meta.lng
+      }
+      if (!borough && meta.city && CITY_BOROUGH[meta.city.toLowerCase()]) {
+        patch.borough = CITY_BOROUGH[meta.city.toLowerCase()]
+      }
+      if (Object.keys(patch).length) {
+        await sb(`stores?id=eq.${id}`, { method: 'PATCH', service: true, body: patch }).catch(
+          () => {},
+        )
+        updated++
+        console.log(`  ${patch.address ?? patch.name ?? 'updated'}`)
+      } else {
+        console.log('  nothing captured')
+      }
+    }
+    await browser.close()
+    console.log(`\nAddress refresh done: ${updated} stores updated.`)
+    return
+  }
+
   let ok = 0
   let failed = 0
   let seen = 0
