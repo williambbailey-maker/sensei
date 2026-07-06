@@ -78,6 +78,8 @@ export function Hero({
       (loc) => {
         setLocating(false)
         onLocation({ userLoc: loc, radiusMiles: 2, borough: null, neighborhood: null })
+        // Keep the card open so the radius options are visible.
+        setEditingLoc(true)
       },
       (msg) => {
         setLocating(false)
@@ -86,13 +88,17 @@ export function Hero({
     )
   }
 
-  const pickBorough = (b: string) =>
+  const pickBorough = (b: string) => {
     onLocation({
       borough: filters.borough === b ? null : b,
       neighborhood: null,
       userLoc: null,
       radiusMiles: null,
     })
+    // Keep the card open: the neighborhood chips for this borough appear
+    // underneath, and the user collapses with Done (or just moves on).
+    setEditingLoc(true)
+  }
 
   const neighborhoods = filters.borough ? (neighborhoodsByBorough[filters.borough] ?? []) : []
 
