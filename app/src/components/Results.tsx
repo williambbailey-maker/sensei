@@ -68,7 +68,7 @@ export function Results({
           </p>
         </div>
       ) : (
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {ranked.map((p) => (
             <ProductCard key={p.id} p={p} userLoc={filters.userLoc} />
           ))}

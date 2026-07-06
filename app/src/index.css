@@ -30,6 +30,12 @@ body,
   height: 100%;
 }
 
+/* The page itself never scrolls sideways; only designated rows do. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   @apply bg-paper font-sans text-black antialiased;
   font-feature-settings: 'kern' 1, 'liga' 1;

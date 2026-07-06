@@ -7,7 +7,7 @@ export function Deals({ deals }: { deals: Deal[] }) {
     <section className="mx-auto max-w-6xl px-6 py-14">
       <p className="eyebrow">Selected · This week</p>
       <h2 className="display mt-2 text-4xl">worth a look</h2>
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {deals.map((d) => (
           <a
             key={d.id}

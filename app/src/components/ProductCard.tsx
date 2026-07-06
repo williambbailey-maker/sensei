@@ -50,18 +50,14 @@ export function ProductCard({ p, userLoc }: { p: Product; userLoc?: LatLng | nul
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="truncate font-medium leading-tight text-black">{name}</h3>
+            <h3 className="line-clamp-2 font-medium leading-tight text-black">{name}</h3>
             {brand && <p className="truncate text-sm text-muted">{brand}</p>}
           </div>
-          <div className="shrink-0 text-right">
-            <div className="display text-lg">{price}</div>
-            {weights?.length > 0 && (
-              <div className="text-[11px] text-muted">{weights.slice(0, 3).join(' · ')}</div>
-            )}
-          </div>
+          <div className="display shrink-0 text-lg">{price}</div>
         </div>
 
         <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] uppercase tracking-wide text-muted">
+          {weights?.length > 0 && <span className="text-black">{weights.slice(0, 3).join(' · ')}</span>}
           {p.potency_tier && (
             <span className="inline-flex items-center gap-1.5 capitalize">
               <span
