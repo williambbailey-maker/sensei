@@ -27,9 +27,9 @@ export const BUDGETS: { label: string; ceiling: number | null; band: '$' | '$$' 
 
 export const STRAINS: Strain[] = ['Indica', 'Sativa', 'Hybrid']
 
-// The five boroughs are a fixed fact of NYC — always offered, regardless of
-// which currently have stocked stores. Neighborhood lists are data-driven.
-export const BOROUGHS = ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island']
+// Boroughs offered in the pickers. Bronx and Staten Island are parked until
+// they have stocked stores. Neighborhood lists are data-driven.
+export const BOROUGHS = ['Manhattan', 'Brooklyn', 'Queens']
 
 export const RADII = [1, 2, 5, 10]
 
