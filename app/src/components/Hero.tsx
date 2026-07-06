@@ -196,31 +196,38 @@ export function Hero({
           )}
 
           {neighborhoods.length > 0 && !filters.userLoc && (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="eyebrow">Narrow it</span>
-              <button
-                onClick={() => onLocation({ neighborhood: null })}
-                className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
-                  filters.neighborhood === null
-                    ? 'bg-accent text-white'
-                    : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
-                }`}
-              >
-                All {filters.borough}
-              </button>
-              {neighborhoods.map((n) => (
-                <button
-                  key={n}
-                  onClick={() => onLocation({ neighborhood: filters.neighborhood === n ? null : n })}
-                  className={`rounded-full px-3.5 py-1 text-[13px] uppercase tracking-wide transition ${
-                    filters.neighborhood === n
-                      ? 'bg-accent text-white'
-                      : 'border border-line bg-white text-black hover:border-accent hover:text-accent'
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <span className="eyebrow">Neighborhood</span>
+              <div className="relative">
+                <select
+                  value={filters.neighborhood ?? ''}
+                  onChange={(e) => onLocation({ neighborhood: e.target.value || null })}
+                  className={`appearance-none rounded-full border px-4 py-2 pr-9 text-[13px] uppercase tracking-wide transition focus:outline-none ${
+                    filters.neighborhood
+                      ? 'border-accent bg-accent text-white'
+                      : 'border-line bg-white text-black hover:border-accent hover:text-accent'
                   }`}
+                  aria-label={`Neighborhood in ${filters.borough}`}
                 >
-                  {n}
-                </button>
-              ))}
+                  <option value="">All {filters.borough}</option>
+                  {neighborhoods.map((n) => (
+                    <option key={n} value={n} className="bg-white text-black">
+                      {n}
+                    </option>
+                  ))}
+                </select>
+                <svg
+                  className={`pointer-events-none absolute right-3.5 top-1/2 h-3 w-3 -translate-y-1/2 ${
+                    filters.neighborhood ? 'text-white' : 'text-muted'
+                  }`}
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                >
+                  <path d="M3 4.5 6 7.5 9 4.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
             </div>
           )}
         </div>
