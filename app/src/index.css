@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 /* Self-hosted variable fonts (no external runtime request — offline-capable
-   PWA). Unbounded for the modular lowercase display type, DM Sans for body —
-   matching the reference's Mod + Satoshi pairing. */
+   PWA). Fraunces (warm serif) for headlines, DM Sans for body. */
 @font-face {
-  font-family: 'Unbounded';
+  font-family: 'Fraunces';
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
-  src: url('/fonts/unbounded-variable.woff2') format('woff2');
+  src: url('/fonts/fraunces-variable.woff2') format('woff2');
 }
 @font-face {
   font-family: 'DM Sans';
@@ -41,10 +40,9 @@ body {
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
-/* The reference's signature display style: modular face, forced lowercase,
-   tight leading, cobalt blue. */
+/* Soft editorial headline: warm serif, sentence case, ink black. */
 .display {
-  @apply font-display font-medium lowercase leading-[1.05] text-accent;
+  @apply font-display font-medium leading-[1.08] tracking-tight;
 }
 
 /* Small uppercase label — the reference uppercases all of its small text. */
@@ -57,6 +55,6 @@ input:focus {
 }
 
 ::selection {
-  background: #00218f;
-  color: white;
+  background: #2e4a3b;
+  color: #f4f0e6;
 }

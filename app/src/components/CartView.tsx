@@ -106,7 +106,7 @@ export function CartView({
         href={menuUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)]"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)]"
       >
         Order at {storeName} on Dutchie <Ico name="external" className="h-4 w-4" />
       </a>

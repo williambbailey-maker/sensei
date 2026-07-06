@@ -6,14 +6,14 @@ export default {
       colors: {
         // forn.dk reference system: near-white field, black type, one deep
         // cobalt accent, hairline gray borders, muted gray secondary text.
-        paper: '#FCFCFC', // page background
+        paper: '#F4F0E6', // warm cream page background
         panel: '#FFFFFF', // card background
-        line: '#DDDDDD', // hairline borders
+        line: '#E3DCCB', // hairline borders on cream
         accent: {
-          DEFAULT: '#00218F', // deep cobalt — the color
-          soft: '#2A4AB8',
+          DEFAULT: '#2E4A3B', // deep spruce — natural, muted
+          soft: '#4A6B58',
         },
-        muted: '#747474',
+        muted: '#78715F',
         // Semantic potency dots (kept small and functional).
         clay: '#BC4749',
         slate: '#6A994E',
@@ -21,7 +21,7 @@ export default {
       },
       fontFamily: {
         sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
-        display: ['Unbounded', 'ui-sans-serif', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'ui-serif', 'serif'],
       },
       letterSpacing: {
         label: '0.14em',

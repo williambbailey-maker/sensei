@@ -75,7 +75,7 @@ export function TapJourney({
       </div>
 
       {step === 0 && (
-        <Step title="where are you?" hint="This narrows things down the most — or skip for all NYC.">
+        <Step title="Where are you?" hint="This narrows things down the most — or skip for all NYC.">
           <button
             onClick={nearMe}
             className={`mb-3 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-[28px] border p-4 uppercase tracking-wide transition ${
@@ -151,7 +151,7 @@ export function TapJourney({
       )}
 
       {step === 1 && (
-        <Step title="what's the vibe?" hint="Pick up to 3 — or skip.">
+        <Step title="What's the vibe?" hint="Pick up to 3 — or skip.">
           <div className="grid grid-cols-2 gap-3">
             {VIBES.map((v) => (
               <Card key={v.key} active={f.vibes.includes(v.key)} onClick={() => toggleVibe(v.key)}>
@@ -163,7 +163,7 @@ export function TapJourney({
       )}
 
       {step === 2 && (
-        <Step title="what form?" hint="One pick, or skip for all.">
+        <Step title="What form?" hint="One pick, or skip for all.">
           <div className="grid grid-cols-2 gap-3">
             {FORMATS.map((fmt) => (
               <Card
@@ -181,7 +181,7 @@ export function TapJourney({
       )}
 
       {step === 3 && (
-        <Step title="budget?" hint="Per item.">
+        <Step title="Budget?" hint="Per item.">
           <div className="grid grid-cols-2 gap-3">
             {BUDGETS.map((b) => (
               <Card
@@ -198,7 +198,7 @@ export function TapJourney({
 
       <button
         onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(0,0,139,0.2)]"
+        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-[1.02] hover:shadow-[0_7px_29px_rgba(46,74,59,0.28)]"
       >
         {step < last ? 'Next' : 'Show my matches'} <Ico name="arrow" className="h-4 w-4" />
       </button>
