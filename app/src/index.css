@@ -40,6 +40,13 @@ body {
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
+/* Comic-print halftone: black dot screen on sticker yellow. */
+.halftone {
+  background-color: #f7d14a;
+  background-image: radial-gradient(#111 1.1px, transparent 1.5px);
+  background-size: 9px 9px;
+}
+
 /* Loud zine headline: chunky, uppercase, tight. */
 .display {
   @apply font-display uppercase leading-[1.02] tracking-tight;

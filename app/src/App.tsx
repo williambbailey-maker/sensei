@@ -128,20 +128,22 @@ export default function App() {
     <div className="min-h-full">
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <header className="sticky top-0 z-30 border-b-2 border-black bg-paper">
+      <header className="halftone sticky top-0 z-30 border-b-2 border-black">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <button
             onClick={() => {
               setFilters(EMPTY_FILTERS)
               go('home')
             }}
-            className="display text-lg transition hover:opacity-70"
+            className="display rounded-md border-2 border-black bg-paper px-2.5 py-0.5 text-[22px] leading-none shadow-[2px_2px_0_#111] transition hover:-translate-y-0.5"
           >
             sensei
           </button>
           <span
             className={`hidden text-[13px] uppercase tracking-label sm:block ${
-              hasLocation(filters) ? 'font-bold text-accent' : 'text-black'
+              hasLocation(filters)
+                ? 'rounded-md border-2 border-black bg-white px-2.5 py-1 font-bold text-accent'
+                : 'text-black'
             }`}
           >
             {hasLocation(filters)
@@ -152,7 +154,6 @@ export default function App() {
                 }`
               : ''}
           </span>
-          <span className="text-[13px] uppercase tracking-label text-muted">21+</span>
         </div>
       </header>
 
