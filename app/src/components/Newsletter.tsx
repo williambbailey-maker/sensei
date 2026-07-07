@@ -20,46 +20,42 @@ export function Newsletter({ source, compact = false }: { source: string; compac
 
   if (state === 'done') {
     return (
-      <div className="flex items-center gap-2 rounded-full border-2 border-black bg-white px-5 py-4 text-sm uppercase tracking-wide text-black">
+      <div className="flex items-center gap-2 border-b border-hairline py-3 font-grotesk text-[0.72rem] uppercase tracking-label text-ink">
         <Ico name="check" className="h-4 w-4 text-slate" /> You're on the list. Talk soon.
       </div>
     )
   }
 
   return (
-    <div className={compact ? '' : 'rounded-2xl border-2 border-black bg-white p-8 shadow-[4px_4px_0_#111]'}>
+    <div className={compact ? '' : 'border-t border-hairline pt-8'}>
       {!compact && (
         <>
           <p className="eyebrow">Newsletter</p>
-          <h3 className="display mt-2 text-3xl">The weekly drop</h3>
-          <p className="mb-4 mt-1 text-sm normal-case text-muted">
-            New deals and standout products, once a week. No spam.
-          </p>
+          <h3 className="display mt-3 text-3xl">The weekly drop</h3>
+          <p className="prose-jp mb-5 mt-2">New deals and standout products, once a week. No spam.</p>
         </>
       )}
-      <form onSubmit={submit} className="flex gap-2">
-        <div className="flex flex-1 items-center gap-2 rounded-full border-2 border-black bg-white px-4 transition focus-within:border-accent">
-          <Ico name="mail" className="h-4 w-4 shrink-0 text-muted" />
+      <form onSubmit={submit} className="flex gap-3">
+        <div className="flex flex-1 items-center gap-2 border-b border-hairline transition-colors focus-within:border-accent">
+          <Ico name="mail" className="h-4 w-4 shrink-0 text-ink-soft" />
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@email.com"
-            className="w-full bg-transparent py-2.5 text-sm text-black placeholder:text-muted/70"
+            className="w-full bg-transparent py-2.5 text-sm text-ink placeholder:text-ink-soft/70"
             aria-label="Email address"
           />
         </div>
         <button
           type="submit"
           disabled={state === 'loading'}
-          className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:scale-105 shadow-[3px_3px_0_#111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_#111] disabled:opacity-50"
+          className="shrink-0 bg-accent px-5 py-2.5 font-grotesk text-[0.72rem] uppercase tracking-label text-paper transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent-soft disabled:opacity-50"
         >
           {state === 'loading' ? '…' : 'Subscribe'}
         </button>
       </form>
-      {state === 'error' && (
-        <p className="mt-2 text-xs text-clay">Something went wrong — try again.</p>
-      )}
+      {state === 'error' && <p className="mt-2 text-xs text-accent">Something went wrong — try again.</p>}
     </div>
   )
 }

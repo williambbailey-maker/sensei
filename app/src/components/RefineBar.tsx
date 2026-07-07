@@ -17,7 +17,7 @@ export function RefineBar({
   const sorts = f.userLoc ? SORTS : SORTS.filter((s) => s.key !== 'distance')
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2.5">
       {f.userLoc ? (
         <Select
           label="Distance"
@@ -109,26 +109,26 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`appearance-none rounded-full border px-3.5 py-1.5 pr-8 text-[13px] uppercase tracking-wide transition focus:outline-none ${
+        className={`appearance-none rounded-[2px] border px-3.5 py-2 pr-8 font-grotesk text-[0.72rem] uppercase tracking-label transition-colors duration-300 focus:outline-none ${
           active
-            ? 'border-accent bg-accent text-white'
-            : 'border-black bg-white text-black hover:bg-lemon'
+            ? 'border-accent bg-accent text-paper'
+            : 'border-hairline bg-paper text-ink hover:border-accent hover:text-accent'
         }`}
       >
         {options.map((o) => (
-          <option key={o.value} value={o.value} className="bg-white text-black">
+          <option key={o.value} value={o.value} className="bg-paper text-ink">
             {o.label}
           </option>
         ))}
       </select>
       <svg
         className={`pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 ${
-          active ? 'text-white' : 'text-muted'
+          active ? 'text-paper' : 'text-ink-soft'
         }`}
         viewBox="0 0 12 12"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.4"
       >
         <path d="M3 4.5 6 7.5 9 4.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>

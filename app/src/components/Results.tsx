@@ -31,53 +31,51 @@ export function Results({
     : (filters.neighborhood ?? filters.borough)
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="mx-auto max-w-[1240px] px-[clamp(24px,6vw,120px)] py-[clamp(5vh,8vh,100px)]">
+      <div className="mb-8 flex items-center justify-between">
         <button
           onClick={onHome}
-          className="flex items-center gap-1.5 text-sm uppercase tracking-wide text-muted transition hover:text-accent hover:underline"
+          className="group inline-flex items-center gap-1.5 font-grotesk text-[0.72rem] uppercase tracking-label text-ink-soft transition-colors hover:text-accent"
         >
           <Ico name="back" className="h-4 w-4" /> Home
         </button>
         <button
           onClick={onEdit}
-          className="rounded-full border-2 border-black px-4 py-1.5 text-sm uppercase tracking-wide text-black transition hover:bg-lemon"
+          className="link-underline font-grotesk text-[0.72rem] uppercase tracking-label text-ink"
         >
           Edit journey
         </button>
       </div>
 
       <p className="eyebrow">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
-      <h1 className="display mt-1 text-6xl">
+      <h1 className="display mt-3 text-[clamp(2.5rem,7vw,5rem)] leading-none">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
-      <p className="mt-2 text-sm text-muted">
-        Dial in the details, or clear a chip to widen the search.
-      </p>
+      <p className="prose-jp mt-3">Dial in the details, or clear a chip to widen the search.</p>
 
-      <div className="mt-5 border-y border-black py-4">
+      <div className="mt-6 border-y border-hairline py-5">
         <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
       {ranked.length === 0 ? (
-        <div className="mt-12 rounded-2xl border border-dashed border-black p-12 text-center">
-          <p className="uppercase tracking-wide text-black">Nothing matched every filter.</p>
-          <p className="mt-1 text-sm text-muted">
+        <div className="mt-16 border border-dashed border-hairline p-12 text-center">
+          <p className="display text-2xl text-ink">Nothing matched every filter.</p>
+          <p className="prose-jp mt-2">
             {filters.userLoc
               ? 'Try a wider radius, or clear a filter above.'
               : 'Clear a filter above to widen the search.'}
           </p>
         </div>
       ) : (
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {ranked.map((p) => (
             <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onAdd={onAdd} />
           ))}
         </div>
       )}
 
-      <div className="mt-12">
+      <div className="mt-[clamp(8vh,10vh,140px)]">
         <Newsletter source="results" />
       </div>
     </div>
