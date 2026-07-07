@@ -25,8 +25,8 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
         <StickerLeaf className="h-full w-full rotate-6" />
       </FloatSticker>
       <div className="relative w-full max-w-sm rounded-3xl border-3 border-ink bg-white p-9 text-center shadow-[6px_6px_0_#384166]">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border-3 border-ink bg-cobalt font-display text-[28px] leading-none text-white">
-          先
+        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border-3 border-ink bg-cobalt display text-[28px] leading-none text-white">
+          S
         </span>
         <h1 className="display mt-5 text-4xl text-cobalt">Welcome to Sensei</h1>
         <p className="mt-3 text-sm font-semibold leading-relaxed text-muted">

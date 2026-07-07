@@ -2,12 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { Hero } from './components/Hero'
-import { Marquee } from './components/pop'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
-import { useLenis } from './components/motion'
 import { fetchDeals, fetchProducts, fetchStores } from './lib/supabase'
 import { parseQuery } from './lib/parser'
 import { prettyStore } from './lib/labels'
@@ -33,7 +31,6 @@ export default function App() {
   const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
   const [loadError, setLoadError] = useState(false)
-  useLenis()
   // Dummy cart — one store at a time, survives reloads on this device.
   const [cart, setCart] = useState<Cart | null>(() => {
     try {
@@ -129,11 +126,9 @@ export default function App() {
     <div className="min-h-full">
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <Marquee variant="cobalt" text="先生 SENSEI · EVERY MENU, ONE COUNTER · " />
-
       <header className="sticky top-0 z-30 bg-cream/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center px-5 py-2 sm:px-6">
-          <button onClick={goHome} className="display text-[26px] leading-none text-cobalt transition hover:opacity-80">
+        <div className="mx-auto flex max-w-6xl items-center px-5 py-2.5 sm:px-6">
+          <button onClick={goHome} className="display text-[35px] leading-none text-cobalt transition hover:opacity-80">
             sensei
           </button>
         </div>
@@ -244,10 +239,7 @@ export default function App() {
         <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="grid gap-10 sm:grid-cols-[1fr_1fr]">
             <div>
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border-3 border-white font-display text-[17px] leading-none text-white">
-                  先
-                </span>
+              <div className="flex items-center">
                 <span className="display text-3xl">sensei</span>
               </div>
               <p className="mt-4 max-w-sm text-[15px] font-medium leading-relaxed text-white/85">
@@ -269,7 +261,6 @@ export default function App() {
             </div>
           </div>
         </div>
-        <Marquee variant="magenta" fast text="SENSEI 先生 · EVERY MENU, ONE COUNTER · " />
       </footer>
     </div>
   )
