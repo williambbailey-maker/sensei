@@ -27,12 +27,13 @@ export default {
         ochre: '#FFC93C',
       },
       fontFamily: {
-        // Anton = ultra-heavy condensed display; Archivo = bold geometric UI/body.
-        display: ['Anton', 'Impact', 'ui-sans-serif', 'sans-serif'],
-        sans: ['Archivo', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        // Baloo 2 = rounded, friendly, heavy display (matches the reference's
+        // rounded lettering); Hanken Grotesk = clean refined UI/body.
+        display: ['"Baloo 2"', 'ui-rounded', 'system-ui', 'sans-serif'],
+        sans: ['"Hanken Grotesk"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
-        label: '0.06em',
+        label: '0.08em',
       },
       borderWidth: {
         3: '3px',

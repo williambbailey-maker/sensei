@@ -166,7 +166,7 @@ export function TapJourney({
 
       <button
         onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full border-3 border-ink bg-cobalt px-5 py-4 display text-xl text-white shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
+        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full border-3 border-ink bg-cobalt px-5 py-4 display text-xl text-white"
       >
         {step < last ? 'Next →' : 'Show my matches →'}
       </button>

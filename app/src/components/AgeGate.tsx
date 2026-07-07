@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { StickerCookie, StickerLeaf, StickerStar } from './pop'
+import { FloatSticker, StickerCookie, StickerLeaf, StickerStar } from './pop'
 
 const KEY = 'sensei_age_ok'
 
@@ -15,9 +15,15 @@ export function useAgeGate(): [boolean, () => void] {
 export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-cobalt px-6">
-      <StickerCookie className="absolute left-8 top-16 h-20 w-20 rotate-12" />
-      <StickerStar className="absolute right-10 top-24 h-14 w-14 -rotate-6" />
-      <StickerLeaf className="absolute bottom-20 left-12 h-16 w-16 rotate-6" />
+      <FloatSticker seed={1} className="absolute left-8 top-16 h-20 w-20">
+        <StickerCookie className="h-full w-full rotate-12" />
+      </FloatSticker>
+      <FloatSticker seed={3} className="absolute right-10 top-24 h-14 w-14">
+        <StickerStar className="h-full w-full -rotate-6" />
+      </FloatSticker>
+      <FloatSticker seed={2} className="absolute bottom-20 left-12 h-16 w-16">
+        <StickerLeaf className="h-full w-full rotate-6" />
+      </FloatSticker>
       <div className="relative w-full max-w-sm rounded-3xl border-3 border-ink bg-white p-9 text-center shadow-[6px_6px_0_#111]">
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border-3 border-ink bg-cobalt font-display text-[28px] leading-none text-white">
           先
@@ -28,7 +34,7 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
         </p>
         <button
           onClick={onConfirm}
-          className="mt-7 w-full rounded-full border-3 border-ink bg-magenta px-5 py-3.5 display text-xl text-white shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
+          className="pop-press mt-7 w-full rounded-full border-3 border-ink bg-magenta px-5 py-3.5 display text-xl text-white"
         >
           I'm 21 or older
         </button>

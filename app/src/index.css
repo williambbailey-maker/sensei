@@ -2,21 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Self-hosted fonts (offline-capable PWA). Anton = ultra-heavy condensed
-   display, Archivo = bold geometric UI/body. Latin subsets only. */
+/* Self-hosted fonts (offline-capable PWA). Baloo 2 = rounded heavy display,
+   Hanken Grotesk = clean refined UI/body. Latin subsets only. */
 @font-face {
-  font-family: 'Anton';
+  font-family: 'Baloo 2';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 800;
   font-display: swap;
-  src: url('/fonts/anton-latin.woff2') format('woff2');
+  src: url('/fonts/baloo2-latin.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Archivo';
+  font-family: 'Hanken Grotesk';
   font-style: normal;
-  font-weight: 400 900;
+  font-weight: 400 800;
   font-display: swap;
-  src: url('/fonts/archivo-latin.woff2') format('woff2');
+  src: url('/fonts/hanken-latin.woff2') format('woff2');
 }
 
 :root {
@@ -40,9 +40,11 @@ body {
   font-feature-settings: 'kern' 1;
 }
 
-/* Big condensed pop headline: Anton, uppercase, tight. */
+/* Rounded pop headline: Baloo 2 heavy, uppercase, tight leading — friendly,
+   not blocky. */
 .display {
-  @apply font-display uppercase leading-[0.92] tracking-tight;
+  @apply font-display font-extrabold uppercase leading-[0.95];
+  letter-spacing: -0.005em;
 }
 
 /* Bold uppercase UI label. */
@@ -57,6 +59,23 @@ body {
 /* White pill — the recurring shape: nav, buttons, cards. */
 .pill {
   @apply rounded-full border-3 border-ink bg-panel;
+}
+
+/* Chunky pop button: a hard offset shadow that physically presses in on
+   hover/tap. The press is the whole point — it should feel springy. */
+.pop-press {
+  box-shadow: 4px 4px 0 #111;
+  transition:
+    transform 0.14s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.14s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.pop-press:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 #111;
+}
+.pop-press:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #111;
 }
 
 input:focus {
