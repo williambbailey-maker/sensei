@@ -4,42 +4,49 @@ export default {
   theme: {
     extend: {
       colors: {
-        // forn.dk reference system: near-white field, black type, one deep
-        // cobalt accent, hairline gray borders, muted gray secondary text.
-        paper: '#F5ECCF', // manila-yellow zine paper
-        panel: '#FFFFFF', // card background
-        line: '#111111', // heavy black outlines
-        lemon: '#F7D14A', // sticker yellow
+        // TRANS×HOME (変身する家) system: warm paper, warm near-black ink, one
+        // earthy terracotta accent, hairline rules. No cool tones, no shadows.
+        paper: '#F4F0E8', // warm off-white — primary background
+        'paper-2': '#EBE5DA', // slightly deeper — alternating sections
+        panel: '#F4F0E8', // surfaces sit on paper; depth from hairlines, not cards
+        ink: '#1C1B19', // warm near-black — primary text
+        'ink-soft': '#6E6A62', // secondary text, captions
+        muted: '#6E6A62', // alias kept for existing call sites
+        hairline: '#D9D3C7', // dividers, borders, 1px rules
+        line: '#D9D3C7', // alias kept for existing call sites
         accent: {
-          DEFAULT: '#E3350D', // punk red
-          soft: '#F06543',
+          DEFAULT: '#B5502A', // earthy terracotta — CTAs, active state
+          soft: '#C6693F',
         },
-        muted: '#6B6456',
-        // Semantic potency dots (kept small and functional).
-        clay: '#BC4749',
-        slate: '#6A994E',
-        ochre: '#E0A458',
+        // Semantic potency dots (kept small and functional, warmed to fit).
+        clay: '#B5502A',
+        slate: '#6E7A4E',
+        ochre: '#C08A3E',
       },
       fontFamily: {
-        sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
-        display: ['"Archivo Black"', 'Impact', 'ui-sans-serif', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
+        grotesk: ['"Space Grotesk"', 'ui-sans-serif', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
-        label: '0.14em',
+        label: '0.18em',
+        tight2: '-0.01em',
+      },
+      transitionTimingFunction: {
+        expo: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        quint: 'cubic-bezier(0.83, 0, 0.17, 1)',
+      },
+      maxWidth: {
+        measure: '62ch',
       },
       keyframes: {
         'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(14px)' },
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        'scale-in': {
-          '0%': { opacity: '0', transform: 'scale(1.05)' },
-          '100%': { opacity: '1', transform: 'scale(1)' },
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both',
-        'scale-in': 'scale-in 0.5s ease both',
+        'fade-up': 'fade-up 0.95s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
     },
   },

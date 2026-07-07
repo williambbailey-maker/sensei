@@ -3,8 +3,7 @@ import { formatMiles, haversineMiles } from '../lib/geo'
 import { cleanTitle, prettyStore, vibeLabel } from '../lib/labels'
 import type { LatLng, Product } from '../lib/types'
 
-// Potency as a small colored dot: green mild, amber medium, red strong —
-// straight from the reference palette.
+// Potency as a small colored dot: green mild, amber medium, terracotta strong.
 const TIER_DOT: Record<string, string> = {
   mild: 'bg-slate',
   medium: 'bg-ochre',
@@ -42,14 +41,14 @@ export function ProductCard({
       : null
 
   return (
-    <div className="group flex gap-4 rounded-xl border-2 border-black bg-white p-4 shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5">
-      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-lg border-2 border-black bg-paper">
+    <div className="group flex h-full gap-4 rounded-[2px] border border-hairline bg-paper p-4 transition-colors duration-300 hover:border-accent/60">
+      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-[2px] border border-hairline bg-paper-2">
         {p.image_url ? (
           <img
             src={p.image_url}
             alt=""
             loading="lazy"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
             onError={(e) => (e.currentTarget.style.display = 'none')}
           />
         ) : null}
@@ -58,19 +57,19 @@ export function ProductCard({
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="max-h-[2.6em] overflow-hidden font-medium leading-[1.3] text-black">{name}</h3>
-            {brand && <p className="truncate text-sm text-muted">{brand}</p>}
+            <h3 className="max-h-[2.6em] overflow-hidden font-sans text-[15px] font-medium leading-[1.3] text-ink">
+              {name}
+            </h3>
+            {brand && <p className="truncate text-sm text-ink-soft">{brand}</p>}
           </div>
-          <div className="display shrink-0 text-lg">{price}</div>
+          <div className="display shrink-0 text-xl text-ink">{price}</div>
         </div>
 
-        <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] uppercase tracking-wide text-muted">
-          {weights?.length > 0 && <span className="text-black">{weights.slice(0, 3).join(' · ')}</span>}
+        <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-grotesk text-[0.68rem] uppercase tracking-label text-ink-soft">
+          {weights?.length > 0 && <span className="text-ink">{weights.slice(0, 3).join(' · ')}</span>}
           {p.potency_tier && (
-            <span className="inline-flex items-center gap-1.5 capitalize">
-              <span
-                className={`h-1.5 w-1.5 rounded-full ${TIER_DOT[p.potency_tier] ?? 'bg-line'}`}
-              />
+            <span className="inline-flex items-center gap-1.5">
+              <span className={`h-1.5 w-1.5 rounded-full ${TIER_DOT[p.potency_tier] ?? 'bg-ink-soft'}`} />
               {p.potency_tier}
               {p.thc_pct != null && p.category !== 'edibles' ? ` · ${p.thc_pct}% THC` : ''}
             </span>
@@ -84,7 +83,7 @@ export function ProductCard({
         </div>
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-          <p className="truncate text-xs uppercase tracking-wide text-muted">
+          <p className="truncate font-grotesk text-[0.68rem] uppercase tracking-label text-ink-soft">
             {p.store?.name ?? (p.store?.slug ? prettyStore(p.store.slug) : 'Dispensary')}
             {p.store?.neighborhood
               ? ` · ${p.store.neighborhood}`
@@ -93,13 +92,13 @@ export function ProductCard({
                 : ''}
             {miles != null && <span className="text-accent"> · {formatMiles(miles)}</span>}
           </p>
-          <span className="flex shrink-0 items-center gap-1.5">
+          <span className="flex shrink-0 items-center gap-2">
             {p.url && (
               <a
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 rounded-full border-2 border-black px-3 py-1 text-xs font-medium uppercase tracking-wide text-black transition hover:bg-lemon"
+                className="flex items-center gap-1 font-grotesk text-[0.68rem] uppercase tracking-label text-ink transition-colors hover:text-accent"
               >
                 View <Ico name="external" className="h-3 w-3" />
               </a>
@@ -107,7 +106,7 @@ export function ProductCard({
             {onAdd && (
               <button
                 onClick={() => onAdd(p)}
-                className="flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wide text-white transition hover:scale-105"
+                className="flex items-center gap-1 rounded-[2px] bg-accent px-3 py-1.5 font-grotesk text-[0.68rem] uppercase tracking-label text-paper transition-colors duration-300 hover:bg-accent-soft"
               >
                 + Add
               </button>

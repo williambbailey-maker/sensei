@@ -8,7 +8,6 @@ import type { Filters } from '../lib/types'
 export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters) => void }) {
   const chips: { label: string; clear: () => void }[] = []
 
-  // "Near me" is set by a home-screen gesture, not a select, so it clears here.
   if (f.userLoc)
     chips.push({
       label: `Near me${f.radiusMiles != null ? ` · ${f.radiusMiles} mi` : ''}`,
@@ -28,12 +27,12 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
   if (chips.length === 0) return null
 
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2">
+    <div className="mt-3 flex flex-wrap items-center gap-2.5">
       {chips.map((c, i) => (
         <button
           key={i}
           onClick={c.clear}
-          className="flex items-center gap-1.5 rounded-full bg-accent px-3.5 py-1 text-[13px] uppercase tracking-wide text-white transition hover:scale-105"
+          className="flex items-center gap-1.5 rounded-[2px] bg-accent px-3.5 py-1.5 font-grotesk text-[0.72rem] uppercase tracking-label text-paper transition-colors duration-300 hover:bg-accent-soft"
         >
           {c.label}
           <Ico name="close" className="h-3.5 w-3.5" />

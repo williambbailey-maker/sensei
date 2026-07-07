@@ -2,25 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Self-hosted variable fonts (no external runtime request — offline-capable
-   PWA). Archivo Black for loud headlines, DM Sans for body. */
+/* Self-hosted fonts (no external runtime request — offline-capable PWA).
+   Fraunces for poetic display serif lines, Space Grotesk for the big uppercase
+   labels and UI, Inter for body. Latin subsets only. */
 @font-face {
-  font-family: 'Archivo Black';
+  font-family: 'Fraunces';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300 600;
   font-display: swap;
-  src: url('/fonts/archivo-black-400.woff2') format('woff2');
+  src: url('/fonts/fraunces-latin.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'DM Sans';
+  font-family: 'Space Grotesk';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400 600;
   font-display: swap;
-  src: url('/fonts/dmsans-variable.woff2') format('woff2');
+  src: url('/fonts/spacegrotesk-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
 }
 
 :root {
   color-scheme: light;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout-quint: cubic-bezier(0.83, 0, 0.17, 1);
+  --dur-reveal: 0.95s;
+  --dur-toggle: 0.7s;
 }
 
 html,
@@ -36,25 +48,47 @@ body {
 }
 
 body {
-  @apply bg-paper font-sans text-black antialiased;
+  @apply bg-paper font-sans text-ink antialiased;
   font-feature-settings: 'kern' 1, 'liga' 1;
+  letter-spacing: 0.01em;
 }
 
-/* Comic-print halftone: black dot screen on sticker yellow. */
-.halftone {
-  background-color: #f7d14a;
-  background-image: radial-gradient(#111 1.1px, transparent 1.5px);
-  background-size: 9px 9px;
-}
-
-/* Loud zine headline: chunky, uppercase, tight. */
+/* Poetic display line — Fraunces, light, generous. Line breaks are intentional. */
 .display {
-  @apply font-display uppercase leading-[1.02] tracking-tight;
+  @apply font-display font-normal leading-[1.12] tracking-tight2;
 }
 
-/* Small uppercase label — the reference uppercases all of its small text. */
+/* Giant grotesque section label — the visual anchor of each section. */
+.label {
+  @apply font-grotesk font-normal uppercase tracking-label;
+}
+
+/* Small uppercase caption/label. */
 .eyebrow {
-  @apply text-[11px] font-bold uppercase tracking-label text-muted;
+  @apply font-grotesk text-[0.72rem] font-medium uppercase tracking-label text-ink-soft;
+}
+
+/* Body measure with the airy JP line-height. */
+.prose-jp {
+  @apply text-[15px] leading-[1.9] text-ink-soft;
+  letter-spacing: 0.02em;
+}
+
+/* Draw-underline link: a hairline that grows from the left on hover. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Mask-up wrapper: clips a child that slides up from below. */
+.mask {
+  overflow: hidden;
 }
 
 input:focus {
@@ -62,6 +96,15 @@ input:focus {
 }
 
 ::selection {
-  background: #111111;
-  color: #f7d14a;
+  background: #b5502a;
+  color: #f4f0e8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }

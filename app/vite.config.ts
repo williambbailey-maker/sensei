@@ -12,11 +12,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
       manifest: {
-        name: 'Sensei — every menu in New York',
+        name: 'Sensei — every menu, one sensei',
         short_name: 'Sensei',
-        description: 'Every licensed NYC dispensary menu, one place. Search by where you are.',
-        theme_color: '#F4F0E6',
-        background_color: '#F4F0E6',
+        description: 'Every licensed dispensary menu, one calm place. Search by where you are.',
+        theme_color: '#F4F0E8',
+        background_color: '#F4F0E8',
         display: 'standalone',
         start_url: '/',
         icons: [
