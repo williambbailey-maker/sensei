@@ -1,6 +1,39 @@
+import { motion, useReducedMotion } from 'framer-motion'
+import type { ReactNode } from 'react'
+
 // PLAZA-pop building blocks: an infinite marquee ticker band, plus a set of
 // original thick-outline sticker mascots (our own art, in the reference's
 // flat-pop style). All pure SVG/CSS — no external assets.
+
+// Organic float: each sticker bobs and tilts on its own gentle rhythm, so a
+// cluster feels alive rather than uniformly animated. Params vary by `seed`.
+export function FloatSticker({
+  children,
+  seed = 0,
+  className,
+}: {
+  children: ReactNode
+  seed?: number
+  className?: string
+}) {
+  const reduce = useReducedMotion()
+  if (reduce) return <div className={className}>{children}</div>
+  const amp = 7 + (seed % 3) * 3 // 7–13px
+  const dur = 3.4 + (seed % 4) * 0.55 // 3.4–5.05s
+  const tilt = 2.5 + (seed % 3) * 1.5 // 2.5–5.5deg
+  const delay = (seed % 5) * 0.35
+  const dir = seed % 2 === 0 ? 1 : -1
+  return (
+    <motion.div
+      className={className}
+      animate={{ y: [0, -amp, 0, amp * 0.5, 0], rotate: [0, tilt * dir, 0, -tilt * dir, 0] }}
+      transition={{ duration: dur, ease: 'easeInOut', repeat: Infinity, delay }}
+      style={{ willChange: 'transform' }}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export function Marquee({
   text = 'SENSEI · EVERY MENU · ONE COUNTER · HEARTS UP!',

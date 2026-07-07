@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import { Ico } from './Ico'
 import { ProductCard } from './ProductCard'
-import { Reveal } from './motion'
-import { StickerBolt, StickerCookie, StickerJar, StickerLeaf, StickerStar } from './pop'
+import { PopIn, PopItem, Reveal } from './motion'
+import { FloatSticker, StickerBolt, StickerCookie, StickerJar, StickerLeaf, StickerStar } from './pop'
 import { requestLocation } from '../lib/geo'
 import { BOROUGHS, FORMATS, RADII, VIBES } from '../lib/labels'
 import { rankProducts } from '../lib/rank'
@@ -99,41 +99,59 @@ export function Hero({
 
   return (
     <section>
-      {/* Cobalt knockout hero band — huge white Anton headline with scattered
+      {/* Cobalt knockout hero band — rounded heavy headline with floating
           stickers. The loud, immediately-on-brand opener. */}
       <div className="relative overflow-hidden border-b-3 border-ink bg-cobalt">
-        <StickerCookie className="absolute -right-4 top-8 h-24 w-24 rotate-12 sm:right-16 sm:top-14 sm:h-36 sm:w-36 animate-wobble" />
-        <StickerLeaf className="absolute left-4 top-6 h-16 w-16 -rotate-12 sm:left-24 sm:top-24 sm:h-24 sm:w-24" />
-        <StickerStar className="absolute bottom-10 left-6 hidden h-16 w-16 rotate-6 sm:block" />
-        <StickerJar className="absolute -bottom-2 right-6 h-20 w-20 -rotate-6 sm:right-40 sm:h-28 sm:w-28" />
-        <StickerBolt className="absolute right-6 top-1/2 hidden h-14 w-14 sm:block" />
+        <FloatSticker seed={1} className="absolute -right-4 top-8 h-24 w-24 sm:right-16 sm:top-14 sm:h-36 sm:w-36">
+          <StickerCookie className="h-full w-full rotate-12" />
+        </FloatSticker>
+        <FloatSticker seed={2} className="absolute left-4 top-6 h-16 w-16 sm:left-24 sm:top-24 sm:h-24 sm:w-24">
+          <StickerLeaf className="h-full w-full -rotate-12" />
+        </FloatSticker>
+        <FloatSticker seed={3} className="absolute bottom-10 left-6 hidden h-16 w-16 sm:block">
+          <StickerStar className="h-full w-full rotate-6" />
+        </FloatSticker>
+        <FloatSticker seed={4} className="absolute -bottom-2 right-6 h-20 w-20 sm:right-40 sm:h-28 sm:w-28">
+          <StickerJar className="h-full w-full -rotate-6" />
+        </FloatSticker>
+        <FloatSticker seed={5} className="absolute right-6 top-1/2 hidden h-14 w-14 sm:block">
+          <StickerBolt className="h-full w-full" />
+        </FloatSticker>
 
-        <div className="relative mx-auto max-w-6xl px-6 py-16 text-center sm:py-24">
-          <p className="label text-[13px] text-sun">Your dispensary sensei</p>
-          <h1 className="display mx-auto mt-4 max-w-4xl text-[clamp(3rem,13vw,9rem)] text-white">
-            Every menu.
-            <br />
-            One counter.
-          </h1>
-          <p className="mx-auto mt-5 max-w-md text-[15px] font-semibold text-white/85">
-            Compare price, potency &amp; pickup across every licensed dispensary near you — then order
-            where it's right.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <button
-              onClick={() => onQuick({})}
-              className="rounded-full border-3 border-ink bg-white px-7 py-3 display text-lg text-cobalt shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
-            >
-              Browse menus →
-            </button>
-            <button
-              onClick={onBrowse}
-              className="rounded-full border-3 border-ink bg-magenta px-7 py-3 display text-lg text-white shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
-            >
-              Guided journey →
-            </button>
-          </div>
-        </div>
+        <PopIn className="relative mx-auto max-w-6xl px-6 py-16 text-center sm:py-24">
+          <PopItem>
+            <p className="label text-[13px] text-sun">Your dispensary sensei</p>
+          </PopItem>
+          <PopItem>
+            <h1 className="display mx-auto mt-4 max-w-4xl text-[clamp(3rem,13vw,8.5rem)] text-white">
+              Every menu.
+              <br />
+              One counter.
+            </h1>
+          </PopItem>
+          <PopItem>
+            <p className="mx-auto mt-5 max-w-md text-[15px] font-semibold text-white/85">
+              Compare price, potency &amp; pickup across every licensed dispensary near you — then order
+              where it's right.
+            </p>
+          </PopItem>
+          <PopItem>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <button
+                onClick={() => onQuick({})}
+                className="pop-press rounded-full border-3 border-ink bg-white px-7 py-3 display text-lg text-cobalt"
+              >
+                Browse menus →
+              </button>
+              <button
+                onClick={onBrowse}
+                className="pop-press rounded-full border-3 border-ink bg-magenta px-7 py-3 display text-lg text-white"
+              >
+                Guided journey →
+              </button>
+            </div>
+          </PopItem>
+        </PopIn>
       </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { StickerCookie, StickerLeaf, StickerStar } from './pop'
+import { FloatSticker, StickerCookie, StickerLeaf, StickerStar } from './pop'
 
 // Floating white pill nav in the PLAZA idiom: logo left, uppercase links with
 // thin vertical dividers right. On mobile it collapses to a bars button that
@@ -65,9 +65,15 @@ export function Nav({ locationLabel, actions }: { locationLabel: string | null; 
             exit={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : '-4%' }}
             transition={{ duration: 0.35, ease: POP }}
           >
-            <StickerCookie className="absolute right-8 top-24 h-20 w-20 rotate-12" />
-            <StickerStar className="absolute left-10 top-40 h-14 w-14 -rotate-6" />
-            <StickerLeaf className="absolute bottom-24 right-12 h-16 w-16 rotate-6" />
+            <FloatSticker seed={1} className="absolute right-8 top-24 h-20 w-20">
+              <StickerCookie className="h-full w-full rotate-12" />
+            </FloatSticker>
+            <FloatSticker seed={3} className="absolute left-10 top-40 h-14 w-14">
+              <StickerStar className="h-full w-full -rotate-6" />
+            </FloatSticker>
+            <FloatSticker seed={2} className="absolute bottom-24 right-12 h-16 w-16">
+              <StickerLeaf className="h-full w-full rotate-6" />
+            </FloatSticker>
             <nav className="flex flex-col gap-2">
               {actions.map((a, i) => (
                 <motion.button
