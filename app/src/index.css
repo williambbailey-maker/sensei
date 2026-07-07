@@ -64,18 +64,18 @@ body {
 /* Chunky pop button: a hard offset shadow that physically presses in on
    hover/tap. The press is the whole point — it should feel springy. */
 .pop-press {
-  box-shadow: 4px 4px 0 #111;
+  box-shadow: 4px 4px 0 #384166;
   transition:
     transform 0.14s cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.14s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .pop-press:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 #111;
+  box-shadow: 5px 5px 0 #384166;
 }
 .pop-press:active {
   transform: translate(4px, 4px);
-  box-shadow: 0 0 0 #111;
+  box-shadow: 0 0 0 #384166;
 }
 
 input:focus {
@@ -83,14 +83,15 @@ input:focus {
 }
 
 ::selection {
-  background: #1e3ad6;
+  background: #384166;
   color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-marquee-fast,
-  .animate-wobble {
+  .animate-wobble,
+  .animate-bounce2 {
     animation: none !important;
   }
 }

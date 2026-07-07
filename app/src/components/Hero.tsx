@@ -102,15 +102,24 @@ export function Hero({
       {/* Cobalt knockout hero band — rounded heavy headline with floating
           stickers. The loud, immediately-on-brand opener. */}
       <div className="relative overflow-hidden border-b-3 border-ink bg-cobalt">
-        <FloatSticker seed={1} className="absolute -right-4 top-8 h-24 w-24 sm:right-16 sm:top-14 sm:h-36 sm:w-36">
+        {/* Giant faint kanji watermark — 先生 ("sensei"). */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-4 top-1/2 -translate-y-1/2 select-none text-[13rem] font-bold leading-none text-white/[0.06] sm:text-[22rem]"
+          style={{ fontFamily: "'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" }}
+        >
+          先生
+        </span>
+
+        <div className="absolute -right-4 top-8 h-24 w-24 animate-bounce2 sm:right-16 sm:top-14 sm:h-36 sm:w-36">
           <StickerCookie className="h-full w-full rotate-12" />
-        </FloatSticker>
+        </div>
         <FloatSticker seed={2} className="absolute left-4 top-6 h-16 w-16 sm:left-24 sm:top-24 sm:h-24 sm:w-24">
           <StickerLeaf className="h-full w-full -rotate-12" />
         </FloatSticker>
-        <FloatSticker seed={3} className="absolute bottom-10 left-6 hidden h-16 w-16 sm:block">
+        <div className="absolute bottom-10 left-6 hidden h-16 w-16 animate-bounce2 [animation-delay:0.7s] sm:block">
           <StickerStar className="h-full w-full rotate-6" />
-        </FloatSticker>
+        </div>
         <FloatSticker seed={4} className="absolute -bottom-2 right-6 h-20 w-20 sm:right-40 sm:h-28 sm:w-28">
           <StickerJar className="h-full w-full -rotate-6" />
         </FloatSticker>
@@ -118,19 +127,16 @@ export function Hero({
           <StickerBolt className="h-full w-full" />
         </FloatSticker>
 
-        <PopIn className="relative mx-auto max-w-6xl px-6 py-16 text-center sm:py-24">
+        <PopIn className="relative mx-auto max-w-6xl px-6 py-14 text-center sm:py-20">
           <PopItem>
-            <p className="label text-[13px] text-sun">Your dispensary sensei</p>
-          </PopItem>
-          <PopItem>
-            <h1 className="display mx-auto mt-4 max-w-4xl text-[clamp(3rem,13vw,8.5rem)] text-white">
-              Every menu.
+            <h1 className="display mx-auto max-w-4xl text-[clamp(3rem,13vw,8.5rem)] text-white">
+              Every menu,
               <br />
               One counter.
             </h1>
           </PopItem>
           <PopItem>
-            <p className="mx-auto mt-5 max-w-md text-[15px] font-semibold text-white/85">
+            <p className="mx-auto mt-5 max-w-lg text-[20px] font-semibold leading-relaxed text-white/85">
               Compare price, potency &amp; pickup across every licensed dispensary near you — then order
               where it's right.
             </p>
@@ -157,7 +163,7 @@ export function Hero({
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Location — the primary interaction, as a bold pop card. */}
         {!showPicker ? (
-          <div className="-mt-6 flex flex-wrap items-center justify-between gap-3 rounded-full border-3 border-ink bg-white px-6 py-3 shadow-[4px_4px_0_#111]">
+          <div className="-mt-6 flex flex-wrap items-center justify-between gap-3 rounded-full border-3 border-ink bg-white px-6 py-3 shadow-[4px_4px_0_#384166]">
             <span className="label text-[13px] text-magenta">◉ {whereLabel}</span>
             {nearby.length > 0 && (
               <span className="label text-[12px] text-muted">
@@ -172,7 +178,7 @@ export function Hero({
             </button>
           </div>
         ) : (
-          <div className="-mt-6 rounded-3xl border-3 border-ink bg-white p-6 shadow-[6px_6px_0_#111] sm:p-8">
+          <div className="-mt-6 rounded-3xl border-3 border-ink bg-white p-6 shadow-[6px_6px_0_#384166] sm:p-8">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="eyebrow text-magenta">Start here</p>
@@ -236,7 +242,7 @@ export function Hero({
 
         {/* Ask sensei — a pop pill search. */}
         <form onSubmit={submit} className="mt-6">
-          <div className="flex items-center gap-2 rounded-full border-3 border-ink bg-white py-2 pl-5 pr-2 shadow-[4px_4px_0_#111] transition focus-within:bg-ice">
+          <div className="flex items-center gap-2 rounded-full border-3 border-ink bg-white py-2 pl-5 pr-2 shadow-[4px_4px_0_#384166] transition focus-within:bg-ice">
             <Ico name="search" className="h-5 w-5 shrink-0 text-cobalt" />
             <input
               value={text}

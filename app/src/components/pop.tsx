@@ -91,7 +91,7 @@ export function Pennant({ className }: { className?: string }) {
 // ---- Sticker mascots (original) --------------------------------------------
 // Simple, friendly, thick-outlined. Sized by the wrapper's width/height.
 
-const OUT = { stroke: '#111', strokeWidth: 4, strokeLinejoin: 'round' as const }
+const OUT = { stroke: '#384166', strokeWidth: 4, strokeLinejoin: 'round' as const }
 
 export function StickerLeaf({ className }: { className?: string }) {
   return (
@@ -101,10 +101,10 @@ export function StickerLeaf({ className }: { className?: string }) {
         fill="#3BA55C"
         {...OUT}
       />
-      <path d="M50 26v54M50 44l-16-12M50 60l16-12M50 60l-16-12M50 44l16-12" stroke="#111" strokeWidth="3.5" strokeLinecap="round" fill="none" />
-      <circle cx="41" cy="70" r="4.5" fill="#111" />
-      <circle cx="59" cy="70" r="4.5" fill="#111" />
-      <path d="M43 80c4 4 10 4 14 0" stroke="#111" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+      <path d="M50 26v54M50 44l-16-12M50 60l16-12M50 60l-16-12M50 44l16-12" stroke="#384166" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+      <circle cx="41" cy="70" r="4.5" fill="#384166" />
+      <circle cx="59" cy="70" r="4.5" fill="#384166" />
+      <path d="M43 80c4 4 10 4 14 0" stroke="#384166" strokeWidth="3.5" strokeLinecap="round" fill="none" />
     </svg>
   )
 }
@@ -121,9 +121,9 @@ export function StickerCookie({ className }: { className?: string }) {
       <circle cx="66" cy="34" r="5" fill="#7A4A22" />
       <circle cx="70" cy="62" r="6" fill="#7A4A22" />
       <circle cx="38" cy="66" r="5" fill="#7A4A22" />
-      <circle cx="42" cy="50" r="4.5" fill="#111" />
-      <circle cx="60" cy="50" r="4.5" fill="#111" />
-      <path d="M40 64c6 6 14 6 20 0" stroke="#111" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+      <circle cx="42" cy="50" r="4.5" fill="#384166" />
+      <circle cx="60" cy="50" r="4.5" fill="#384166" />
+      <path d="M40 64c6 6 14 6 20 0" stroke="#384166" strokeWidth="3.5" strokeLinecap="round" fill="none" />
     </svg>
   )
 }
@@ -136,9 +136,9 @@ export function StickerStar({ className }: { className?: string }) {
         fill="#FFC93C"
         {...OUT}
       />
-      <circle cx="43" cy="48" r="4" fill="#111" />
-      <circle cx="57" cy="48" r="4" fill="#111" />
-      <path d="M44 58c4 3 8 3 12 0" stroke="#111" strokeWidth="3" strokeLinecap="round" fill="none" />
+      <circle cx="43" cy="48" r="4" fill="#384166" />
+      <circle cx="57" cy="48" r="4" fill="#384166" />
+      <path d="M44 58c4 3 8 3 12 0" stroke="#384166" strokeWidth="3" strokeLinecap="round" fill="none" />
     </svg>
   )
 }
@@ -152,9 +152,9 @@ export function StickerJar({ className }: { className?: string }) {
         fill="#8FD0FF"
         {...OUT}
       />
-      <circle cx="42" cy="54" r="4.5" fill="#111" />
-      <circle cx="58" cy="54" r="4.5" fill="#111" />
-      <path d="M42 66c5 5 11 5 16 0" stroke="#111" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+      <circle cx="42" cy="54" r="4.5" fill="#384166" />
+      <circle cx="58" cy="54" r="4.5" fill="#384166" />
+      <path d="M42 66c5 5 11 5 16 0" stroke="#384166" strokeWidth="3.5" strokeLinecap="round" fill="none" />
     </svg>
   )
 }

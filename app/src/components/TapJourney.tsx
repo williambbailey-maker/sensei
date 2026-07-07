@@ -72,7 +72,7 @@ export function TapJourney({
         <Step title="Where are you?" hint="This narrows things down the most — or skip for all NYC.">
           <button
             onClick={nearMe}
-            className={`mb-4 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-2xl border-3 border-ink p-4 display text-xl shadow-[4px_4px_0_#111] transition ${
+            className={`mb-4 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-2xl border-3 border-ink p-4 display text-xl shadow-[4px_4px_0_#384166] transition ${
               f.userLoc ? 'bg-cobalt text-white' : 'bg-magenta text-white hover:-translate-y-0.5'
             }`}
           >
@@ -188,7 +188,7 @@ function Card({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[80px] items-center justify-center rounded-2xl border-3 border-ink p-4 text-center label text-sm shadow-[3px_3px_0_#111] transition ${
+      className={`flex min-h-[80px] items-center justify-center rounded-2xl border-3 border-ink p-4 text-center label text-sm shadow-[3px_3px_0_#384166] transition ${
         active ? 'bg-cobalt text-white' : 'bg-white text-ink hover:bg-sun'
       }`}
     >

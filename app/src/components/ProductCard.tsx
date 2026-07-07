@@ -39,7 +39,7 @@ export function ProductCard({
       : null
 
   return (
-    <div className="group flex h-full gap-4 rounded-2xl border-3 border-ink bg-white p-4 shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5">
+    <div className="group flex h-full gap-4 rounded-2xl border-3 border-ink bg-white p-4 shadow-[4px_4px_0_#384166] transition hover:-translate-y-0.5">
       <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl border-3 border-ink bg-ice">
         {p.image_url ? (
           <img
