@@ -44,7 +44,7 @@ export function CartView({
 
       <div className="mt-6 flex flex-col gap-3">
         {cart.items.map(({ product: p, qty }) => (
-          <div key={p.id} className="flex items-center gap-4 rounded-2xl border-3 border-ink bg-white p-4 shadow-[4px_4px_0_#111]">
+          <div key={p.id} className="flex items-center gap-4 rounded-2xl border-3 border-ink bg-white p-4 shadow-[4px_4px_0_#384166]">
             <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border-3 border-ink bg-ice">
               {p.image_url ? <img src={p.image_url} alt="" className="h-full w-full object-cover" /> : null}
             </div>
@@ -85,7 +85,7 @@ export function CartView({
         ))}
       </div>
 
-      <div className="mt-6 flex items-center justify-between rounded-2xl border-3 border-ink bg-sun px-6 py-4 shadow-[4px_4px_0_#111]">
+      <div className="mt-6 flex items-center justify-between rounded-2xl border-3 border-ink bg-sun px-6 py-4 shadow-[4px_4px_0_#384166]">
         <span className="label text-[13px] text-ink">Estimated minimum</span>
         <span className="display text-3xl text-cobalt">${total.toFixed(2).replace(/\.00$/, '')}</span>
       </div>

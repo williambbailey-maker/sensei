@@ -4,27 +4,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        // PLAZA-60th pop system: icy blue field, bold cobalt, crisp white,
-        // hot magenta accent, black outlines. Flat, bright, playful.
-        ice: '#E7F3FC', // pale icy-blue page background
-        cobalt: '#1E3AD6', // bold brand blue
-        'cobalt-deep': '#182FB0',
-        magenta: '#EC1C92', // hot pink accent
-        sun: '#FFC93C', // warm sticker yellow
-        tomato: '#F0562E', // sticker orange-red
-        ink: '#111111', // outline / near-black
-        paper: '#E7F3FC', // page bg alias
+        // Earthy pop system: warm cream field, deep indigo-navy, sage-green
+        // accent — the three requested colors, with navy standing in for the
+        // black outlines so the whole thing reads soft and cohesive.
+        ice: '#ECDFD2', // warm cream page background
+        cobalt: '#384166', // deep indigo-navy (primary dark)
+        'cobalt-deep': '#2C3350',
+        magenta: '#639D75', // sage-green accent
+        sun: '#639D75', // sage highlight
+        tomato: '#B5502A', // muted terracotta for warnings
+        ink: '#384166', // outlines/shadows are navy, not black
+        paper: '#ECDFD2', // page bg alias
         panel: '#FFFFFF', // white cards & pills
-        line: '#111111', // outlines are black in this system
-        muted: '#5B6B86', // muted blue-grey text
+        line: '#384166',
+        muted: '#6E718C', // muted navy text
+        cream: '#ECDFD2',
+        navy: '#384166',
+        sage: '#639D75',
         // aliases kept so existing call sites keep compiling
         accent: {
-          DEFAULT: '#1E3AD6', // primary actions = cobalt
-          soft: '#EC1C92', // secondary pop = magenta
+          DEFAULT: '#384166',
+          soft: '#639D75',
         },
-        clay: '#F0562E',
-        slate: '#3BA55C',
-        ochre: '#FFC93C',
+        clay: '#B5502A',
+        slate: '#639D75',
+        ochre: '#C08A3E',
       },
       fontFamily: {
         // Baloo 2 = rounded, friendly, heavy display (matches the reference's
@@ -51,12 +55,20 @@ export default {
           '0%,100%': { transform: 'rotate(-3deg)' },
           '50%': { transform: 'rotate(3deg)' },
         },
+        bounce2: {
+          '0%,100%': { transform: 'translateY(0)' },
+          '30%': { transform: 'translateY(-14px)' },
+          '55%': { transform: 'translateY(0)' },
+          '70%': { transform: 'translateY(-6px)' },
+          '85%': { transform: 'translateY(0)' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both',
         marquee: 'marquee 22s linear infinite',
         'marquee-fast': 'marquee 14s linear infinite',
         wobble: 'wobble 3.5s ease-in-out infinite',
+        bounce2: 'bounce2 2.4s cubic-bezier(0.3, 0.7, 0.4, 1) infinite',
       },
     },
   },

@@ -15,8 +15,8 @@ export default defineConfig({
         name: 'Sensei — every menu, one sensei',
         short_name: 'Sensei',
         description: 'Every licensed dispensary menu, one calm place. Search by where you are.',
-        theme_color: '#1E3AD6',
-        background_color: '#E7F3FC',
+        theme_color: '#384166',
+        background_color: '#ECDFD2',
         display: 'standalone',
         start_url: '/',
         icons: [

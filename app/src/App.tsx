@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { Hero } from './components/Hero'
-import { Nav, type NavAction } from './components/Nav'
 import { Marquee } from './components/pop'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
@@ -125,40 +124,24 @@ export default function App() {
     go('home')
   }
 
-  const locationLabel = hasLocation(filters)
-    ? filters.userLoc
-      ? `Near me${filters.radiusMiles != null ? ` · ${filters.radiusMiles} mi` : ''}`
-      : (filters.neighborhood ?? filters.borough ?? '')
-    : null
-
-  const navActions: NavAction[] = [
-    { label: 'Home', onClick: goHome },
-    { label: 'Browse', onClick: () => quickFilter({}) },
-    { label: 'Journey', onClick: () => go('journey') },
-    ...(cartCount > 0 ? [{ label: `Cart · ${cartCount}`, onClick: () => go('cart') } as NavAction] : []),
-  ]
 
   return (
     <div className="min-h-full">
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <Marquee variant="cobalt" />
+      <Marquee variant="cobalt" text="先生 SENSEI · EVERY MENU, ONE COUNTER · " />
 
-      <header className="sticky top-0 z-30 px-3 pt-3 sm:px-6 sm:pt-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full border-3 border-ink bg-panel px-4 py-2.5 shadow-[4px_4px_0_#111] sm:px-6 sm:py-3">
-          <button onClick={goHome} className="flex items-center gap-2 transition hover:opacity-80">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border-3 border-ink bg-cobalt font-display text-[15px] leading-none text-white">
-              先
-            </span>
-            <span className="display text-2xl text-cobalt sm:text-[26px]">sensei</span>
+      <header className="sticky top-0 z-30 bg-cream/90 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center px-5 py-2 sm:px-6">
+          <button onClick={goHome} className="display text-[26px] leading-none text-cobalt transition hover:opacity-80">
+            sensei
           </button>
-          <Nav locationLabel={locationLabel} actions={navActions} />
         </div>
       </header>
 
       {cart && view !== 'cart' && (
         <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-3 border-ink bg-sun px-5 py-3 shadow-[4px_4px_0_#111]">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-3 border-ink bg-sun px-5 py-3 shadow-[4px_4px_0_#384166]">
             <span className="label text-[12px] text-ink">
               Building a cart · {cart.store.name ?? prettyStore(cart.store.slug)} — this store only
             </span>
@@ -251,7 +234,7 @@ export default function App() {
       {cartCount > 0 && view !== 'cart' && (
         <button
           onClick={() => go('cart')}
-          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full border-3 border-ink bg-magenta px-6 py-3.5 label text-[13px] text-white shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
+          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full border-3 border-ink bg-magenta px-6 py-3.5 label text-[13px] text-white shadow-[4px_4px_0_#384166] transition hover:-translate-y-0.5"
         >
           Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
         </button>
@@ -272,7 +255,7 @@ export default function App() {
                 order where it's right.
               </p>
               <p className="label mt-6 text-[12px] text-white/70">
-                21+ only · Adults in New York State · v{__BUILD_ID__}
+                21+ only · Adults in New York State
               </p>
             </div>
             <div className="sm:pl-6">
@@ -286,7 +269,7 @@ export default function App() {
             </div>
           </div>
         </div>
-        <Marquee variant="magenta" fast />
+        <Marquee variant="magenta" fast text="SENSEI 先生 · EVERY MENU, ONE COUNTER · " />
       </footer>
     </div>
   )

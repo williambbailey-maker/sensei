@@ -16,7 +16,7 @@ export function Deals({ deals }: { deals: Deal[] }) {
               href={d.url ?? '#'}
               target={d.url ? '_blank' : undefined}
               rel="noopener noreferrer"
-              className="group flex items-center justify-between gap-4 rounded-2xl border-3 border-ink bg-white p-6 shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
+              className="group flex items-center justify-between gap-4 rounded-2xl border-3 border-ink bg-white p-6 shadow-[4px_4px_0_#384166] transition hover:-translate-y-0.5"
             >
               <div className="min-w-0">
                 {d.featured && <span className="label text-[10px] text-magenta">Featured</span>}

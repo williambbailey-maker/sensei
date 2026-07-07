@@ -27,7 +27,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
   }
 
   return (
-    <div className={compact ? '' : 'rounded-3xl border-3 border-ink bg-white p-8 shadow-[4px_4px_0_#111]'}>
+    <div className={compact ? '' : 'rounded-3xl border-3 border-ink bg-white p-8 shadow-[4px_4px_0_#384166]'}>
       {!compact && (
         <>
           <p className="eyebrow text-magenta">Newsletter</p>

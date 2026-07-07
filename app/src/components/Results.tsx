@@ -55,7 +55,7 @@ export function Results({
         Dial in the details, or clear a chip to widen the search.
       </p>
 
-      <div className="mt-5 rounded-3xl border-3 border-ink bg-white p-5 shadow-[4px_4px_0_#111]">
+      <div className="mt-5 rounded-3xl border-3 border-ink bg-white p-5 shadow-[4px_4px_0_#384166]">
         <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
