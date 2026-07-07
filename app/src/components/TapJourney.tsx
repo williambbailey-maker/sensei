@@ -176,7 +176,7 @@ export function TapJourney({
 
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
-    <div className="animate-fade-up">
+    <div>
       <h2 className="display text-[clamp(2.5rem,8vw,4rem)] text-cobalt">{title}</h2>
       <p className="mb-7 mt-2 text-sm font-semibold text-muted">{hint}</p>
       {children}

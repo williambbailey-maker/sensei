@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Ico } from './Ico'
 import { ProductCard } from './ProductCard'
-import { PopIn, PopItem, Reveal } from './motion'
+import { Reveal } from './motion'
 import { FloatSticker, StickerBolt, StickerCookie, StickerJar, StickerLeaf, StickerStar } from './pop'
 import { requestLocation } from '../lib/geo'
 import { BOROUGHS, FORMATS, RADII, VIBES } from '../lib/labels'
@@ -99,65 +99,50 @@ export function Hero({
 
   return (
     <section>
-      {/* Cobalt knockout hero band — rounded heavy headline with floating
-          stickers. The loud, immediately-on-brand opener. */}
+      {/* Cobalt knockout hero band — rounded heavy headline with static
+          sticker mascots. */}
       <div className="relative overflow-hidden border-b-3 border-ink bg-cobalt">
-        {/* Giant faint kanji watermark — 先生 ("sensei"). */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-4 top-1/2 -translate-y-1/2 select-none text-[13rem] font-bold leading-none text-white/[0.06] sm:text-[22rem]"
-          style={{ fontFamily: "'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" }}
-        >
-          先生
-        </span>
-
-        <div className="absolute -right-4 top-8 h-24 w-24 animate-bounce2 sm:right-16 sm:top-14 sm:h-36 sm:w-36">
+        <div className="absolute -right-4 top-8 h-24 w-24 sm:right-16 sm:top-14 sm:h-36 sm:w-36">
           <StickerCookie className="h-full w-full rotate-12" />
         </div>
-        <FloatSticker seed={2} className="absolute left-4 top-6 h-16 w-16 sm:left-24 sm:top-24 sm:h-24 sm:w-24">
+        <FloatSticker className="absolute left-4 top-6 h-16 w-16 sm:left-24 sm:top-24 sm:h-24 sm:w-24">
           <StickerLeaf className="h-full w-full -rotate-12" />
         </FloatSticker>
-        <div className="absolute bottom-10 left-6 hidden h-16 w-16 animate-bounce2 [animation-delay:0.7s] sm:block">
+        <div className="absolute bottom-10 left-6 hidden h-16 w-16 sm:block">
           <StickerStar className="h-full w-full rotate-6" />
         </div>
-        <FloatSticker seed={4} className="absolute -bottom-2 right-6 h-20 w-20 sm:right-40 sm:h-28 sm:w-28">
+        <FloatSticker className="absolute -bottom-2 right-6 h-20 w-20 sm:right-40 sm:h-28 sm:w-28">
           <StickerJar className="h-full w-full -rotate-6" />
         </FloatSticker>
-        <FloatSticker seed={5} className="absolute right-6 top-1/2 hidden h-14 w-14 sm:block">
+        <FloatSticker className="absolute right-6 top-1/2 hidden h-14 w-14 sm:block">
           <StickerBolt className="h-full w-full" />
         </FloatSticker>
 
-        <PopIn className="relative mx-auto max-w-6xl px-6 py-14 text-center sm:py-20">
-          <PopItem>
-            <h1 className="display mx-auto max-w-4xl text-[clamp(3rem,13vw,8.5rem)] text-white">
-              Every menu,
-              <br />
-              One counter.
-            </h1>
-          </PopItem>
-          <PopItem>
-            <p className="mx-auto mt-5 max-w-lg text-[20px] font-semibold leading-relaxed text-white/85">
-              Compare price, potency &amp; pickup across every licensed dispensary near you — then order
-              where it's right.
-            </p>
-          </PopItem>
-          <PopItem>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <button
-                onClick={() => onQuick({})}
-                className="pop-press rounded-full border-3 border-ink bg-white px-7 py-3 display text-lg text-cobalt"
-              >
-                Browse menus →
-              </button>
-              <button
-                onClick={onBrowse}
-                className="pop-press rounded-full border-3 border-ink bg-magenta px-7 py-3 display text-lg text-white"
-              >
-                Guided journey →
-              </button>
-            </div>
-          </PopItem>
-        </PopIn>
+        <div className="relative mx-auto max-w-6xl px-6 py-12 text-center sm:py-16">
+          <h1 className="display mx-auto max-w-4xl text-[clamp(2.75rem,11vw,7rem)] text-white">
+            Every Menu in NYC,
+            <br />
+            One Counter.
+          </h1>
+          <p className="mx-auto mt-5 max-w-lg text-[20px] font-semibold leading-relaxed text-white/85">
+            Compare price, potency &amp; pickup across every licensed dispensary near you — then order
+            where it's right.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <button
+              onClick={() => onQuick({})}
+              className="pop-press rounded-full border-3 border-ink bg-white px-7 py-3 display text-lg text-cobalt"
+            >
+              Browse menus →
+            </button>
+            <button
+              onClick={onBrowse}
+              className="pop-press rounded-full border-3 border-ink bg-magenta px-7 py-3 display text-lg text-white"
+            >
+              Guided journey →
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -181,8 +166,10 @@ export function Hero({
           <div className="-mt-6 rounded-3xl border-3 border-ink bg-white p-6 shadow-[6px_6px_0_#384166] sm:p-8">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="eyebrow text-magenta">Start here</p>
-                <h2 className="display mt-1 text-4xl text-cobalt sm:text-5xl">Where are you?</h2>
+                <span className="inline-block rounded-full border-3 border-ink bg-magenta px-4 py-1 display text-lg leading-none text-white shadow-[3px_3px_0_#384166]">
+                  Start here
+                </span>
+                <h2 className="display mt-3 text-4xl text-cobalt sm:text-5xl">Where are you?</h2>
               </div>
               {located && (
                 <button
@@ -284,8 +271,9 @@ export function Hero({
           </div>
         )}
 
-        {/* Refiners */}
-        <Reveal className="mt-14 grid gap-8 sm:grid-cols-2">
+        {/* Refiners — pushed well below the fold before a location is chosen,
+            so the "Where are you?" box is the clear first action. */}
+        <Reveal className={`grid gap-8 sm:grid-cols-2 ${located ? 'mt-14' : 'mt-[45vh]'}`}>
           <div>
             <p className="display text-2xl text-cobalt">By feel</p>
             <div className="mt-4 flex flex-wrap gap-2.5">
