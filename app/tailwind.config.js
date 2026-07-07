@@ -4,49 +4,58 @@ export default {
   theme: {
     extend: {
       colors: {
-        // TRANS×HOME (変身する家) system: warm paper, warm near-black ink, one
-        // earthy terracotta accent, hairline rules. No cool tones, no shadows.
-        paper: '#F4F0E8', // warm off-white — primary background
-        'paper-2': '#EBE5DA', // slightly deeper — alternating sections
-        panel: '#F4F0E8', // surfaces sit on paper; depth from hairlines, not cards
-        ink: '#1C1B19', // warm near-black — primary text
-        'ink-soft': '#6E6A62', // secondary text, captions
-        muted: '#6E6A62', // alias kept for existing call sites
-        hairline: '#D9D3C7', // dividers, borders, 1px rules
-        line: '#D9D3C7', // alias kept for existing call sites
+        // PLAZA-60th pop system: icy blue field, bold cobalt, crisp white,
+        // hot magenta accent, black outlines. Flat, bright, playful.
+        ice: '#E7F3FC', // pale icy-blue page background
+        cobalt: '#1E3AD6', // bold brand blue
+        'cobalt-deep': '#182FB0',
+        magenta: '#EC1C92', // hot pink accent
+        sun: '#FFC93C', // warm sticker yellow
+        tomato: '#F0562E', // sticker orange-red
+        ink: '#111111', // outline / near-black
+        paper: '#E7F3FC', // page bg alias
+        panel: '#FFFFFF', // white cards & pills
+        line: '#111111', // outlines are black in this system
+        muted: '#5B6B86', // muted blue-grey text
+        // aliases kept so existing call sites keep compiling
         accent: {
-          DEFAULT: '#B5502A', // earthy terracotta — CTAs, active state
-          soft: '#C6693F',
+          DEFAULT: '#1E3AD6', // primary actions = cobalt
+          soft: '#EC1C92', // secondary pop = magenta
         },
-        // Semantic potency dots (kept small and functional, warmed to fit).
-        clay: '#B5502A',
-        slate: '#6E7A4E',
-        ochre: '#C08A3E',
+        clay: '#F0562E',
+        slate: '#3BA55C',
+        ochre: '#FFC93C',
       },
       fontFamily: {
-        display: ['Fraunces', 'Georgia', 'serif'],
-        grotesk: ['"Space Grotesk"', 'ui-sans-serif', 'sans-serif'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        // Anton = ultra-heavy condensed display; Archivo = bold geometric UI/body.
+        display: ['Anton', 'Impact', 'ui-sans-serif', 'sans-serif'],
+        sans: ['Archivo', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
-        label: '0.18em',
-        tight2: '-0.01em',
+        label: '0.06em',
       },
-      transitionTimingFunction: {
-        expo: 'cubic-bezier(0.16, 1, 0.3, 1)',
-        quint: 'cubic-bezier(0.83, 0, 0.17, 1)',
-      },
-      maxWidth: {
-        measure: '62ch',
+      borderWidth: {
+        3: '3px',
       },
       keyframes: {
         'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(24px)' },
+          '0%': { opacity: '0', transform: 'translateY(18px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        wobble: {
+          '0%,100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.95s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'fade-up': 'fade-up 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both',
+        marquee: 'marquee 22s linear infinite',
+        'marquee-fast': 'marquee 14s linear infinite',
+        wobble: 'wobble 3.5s ease-in-out infinite',
       },
     },
   },

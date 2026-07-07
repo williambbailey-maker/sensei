@@ -3,11 +3,12 @@ import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { Hero } from './components/Hero'
 import { Nav, type NavAction } from './components/Nav'
+import { Marquee } from './components/pop'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
-import { Preloader, useLenis } from './components/motion'
+import { useLenis } from './components/motion'
 import { fetchDeals, fetchProducts, fetchStores } from './lib/supabase'
 import { parseQuery } from './lib/parser'
 import { prettyStore } from './lib/labels'
@@ -64,8 +65,6 @@ export default function App() {
 
   const go = (v: View) => setView(v)
 
-  // Once the cart holds a product, browsing narrows to that store — you're
-  // building one order. Clearing the cart reopens the whole city.
   const scopedProducts = useMemo(
     () => (cart ? products.filter((p) => p.store?.slug === cart.store.slug) : products),
     [products, cart],
@@ -96,8 +95,6 @@ export default function App() {
   const cartCount = cart?.items.reduce((n, i) => n + i.qty, 0) ?? 0
   const cartTotal = cart?.items.reduce((s, i) => s + (i.product.price_min ?? 0) * i.qty, 0) ?? 0
 
-  // Neighborhoods per borough come from the stores table itself, so the
-  // drill-down never depends on which product rows happened to load.
   const neighborhoodsByBorough = useMemo(() => {
     const map: Record<string, Set<string>> = {}
     for (const st of stores) {
@@ -107,13 +104,10 @@ export default function App() {
     return Object.fromEntries(Object.entries(map).map(([b, set]) => [b, [...set].sort()]))
   }, [stores])
 
-  // Location is the primary qualifier: set on the home screen, it persists
-  // through search, vibe taps, quick filters, and the journey.
   const setLocation = (patch: Partial<Filters>) => setFilters((prev) => ({ ...prev, ...patch }))
 
   const search = (text: string) => {
     const parsed = parseQuery(text)
-    // A location typed into the search wins; otherwise keep the chosen one.
     setFilters({ ...parsed, ...(parsed.borough ? {} : locationOf(filters)) })
     go('results')
   }
@@ -121,7 +115,6 @@ export default function App() {
     setFilters({ ...EMPTY_FILTERS, ...locationOf(filters), vibes: [v] })
     go('results')
   }
-  // Jump straight to results with an objective filter applied (format, price, …).
   const quickFilter = (patch: Partial<Filters>) => {
     setFilters({ ...EMPTY_FILTERS, ...locationOf(filters), ...patch })
     go('results')
@@ -139,47 +132,46 @@ export default function App() {
     : null
 
   const navActions: NavAction[] = [
-    { label: 'Home', sub: 'Start over', onClick: goHome },
-    { label: 'Browse', sub: 'Every menu', onClick: () => quickFilter({}) },
-    { label: 'Journey', sub: 'Guided', onClick: () => go('journey') },
-    ...(cartCount > 0
-      ? [{ label: 'Cart', sub: `${cartCount} item${cartCount === 1 ? '' : 's'}`, onClick: () => go('cart') } as NavAction]
-      : []),
+    { label: 'Home', onClick: goHome },
+    { label: 'Browse', onClick: () => quickFilter({}) },
+    { label: 'Journey', onClick: () => go('journey') },
+    ...(cartCount > 0 ? [{ label: `Cart · ${cartCount}`, onClick: () => go('cart') } as NavAction] : []),
   ]
 
   return (
     <div className="min-h-full">
-      <Preloader />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <header className="sticky top-0 z-50 border-b border-hairline bg-paper/90 backdrop-blur">
-        <div className="mx-auto flex max-w-[1240px] items-center justify-between px-[clamp(24px,6vw,120px)] py-4">
-          <button onClick={goHome} className="flex items-center gap-2.5 transition hover:opacity-80">
-            <span className="flex h-7 w-7 items-center justify-center rounded-[3px] bg-accent font-display text-[15px] leading-none text-paper">
+      <Marquee variant="cobalt" />
+
+      <header className="sticky top-0 z-30 px-3 pt-3 sm:px-6 sm:pt-4">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full border-3 border-ink bg-panel px-4 py-2.5 shadow-[4px_4px_0_#111] sm:px-6 sm:py-3">
+          <button onClick={goHome} className="flex items-center gap-2 transition hover:opacity-80">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border-3 border-ink bg-cobalt font-display text-[15px] leading-none text-white">
               先
             </span>
-            <span className="display text-[22px] leading-none">sensei</span>
+            <span className="display text-2xl text-cobalt sm:text-[26px]">sensei</span>
           </button>
           <Nav locationLabel={locationLabel} actions={navActions} />
         </div>
       </header>
 
       {cart && view !== 'cart' && (
-        <div className="mx-auto max-w-[1240px] px-[clamp(24px,6vw,120px)] pt-5">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline pb-4">
-            <span className="font-grotesk text-[0.72rem] uppercase tracking-label text-accent">
+        <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-3 border-ink bg-sun px-5 py-3 shadow-[4px_4px_0_#111]">
+            <span className="label text-[12px] text-ink">
               Building a cart · {cart.store.name ?? prettyStore(cart.store.slug)} — this store only
             </span>
-            <span className="flex items-center gap-4">
+            <span className="flex items-center gap-2">
               <button
                 onClick={() => go('cart')}
-                className="font-grotesk text-[0.72rem] uppercase tracking-label text-ink transition hover:text-accent"
+                className="rounded-full border-3 border-ink bg-cobalt px-4 py-1.5 label text-[12px] text-white transition hover:bg-cobalt-deep"
               >
-                View cart · {cartCount}
+                View · {cartCount}
               </button>
               <button
                 onClick={clearCart}
-                className="font-grotesk text-[0.72rem] uppercase tracking-label text-ink-soft transition hover:text-accent"
+                className="rounded-full border-3 border-ink bg-panel px-4 py-1.5 label text-[12px] text-ink transition hover:bg-ice"
               >
                 Clear
               </button>
@@ -189,8 +181,8 @@ export default function App() {
       )}
 
       {loadError && (
-        <div className="mx-auto max-w-[1240px] px-[clamp(24px,6vw,120px)] pt-5">
-          <div className="border-l-2 border-accent bg-paper-2 px-5 py-3 text-sm text-ink-soft">
+        <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
+          <div className="rounded-2xl border-3 border-ink bg-tomato px-5 py-3 label text-[12px] text-white">
             Couldn't reach the menu right now. Check your connection and refresh.
           </div>
         </div>
@@ -209,7 +201,6 @@ export default function App() {
             onQuick={quickFilter}
             onAdd={addToCart}
           />
-          {/* Deals earn their place once the user has said where they are. */}
           {hasLocation(filters) && <Deals deals={deals} />}
           <div className="pb-16" />
         </main>
@@ -257,44 +248,45 @@ export default function App() {
         </main>
       )}
 
-      {/* Floating cart pill — one tap from anywhere back to the order. */}
       {cartCount > 0 && view !== 'cart' && (
         <button
           onClick={() => go('cart')}
-          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 bg-accent px-6 py-3.5 font-grotesk text-[0.72rem] uppercase tracking-label text-paper transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent-soft"
+          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full border-3 border-ink bg-magenta px-6 py-3.5 label text-[13px] text-white shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
         >
           Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
         </button>
       )}
 
-      <footer className="mt-[clamp(10vh,14vh,200px)] border-t border-hairline bg-paper-2">
-        <div className="mx-auto grid max-w-[1240px] gap-12 px-[clamp(24px,6vw,120px)] py-[clamp(10vh,12vh,160px)] sm:grid-cols-[1fr_1fr]">
-          <div>
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-7 w-7 items-center justify-center rounded-[3px] bg-accent font-display text-[15px] leading-none text-paper">
-                先
-              </span>
-              <span className="display text-2xl">sensei</span>
+      <footer className="mt-16 border-t-3 border-ink bg-cobalt text-white">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <div className="grid gap-10 sm:grid-cols-[1fr_1fr]">
+            <div>
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border-3 border-white font-display text-[17px] leading-none text-white">
+                  先
+                </span>
+                <span className="display text-3xl">sensei</span>
+              </div>
+              <p className="mt-4 max-w-sm text-[15px] font-medium leading-relaxed text-white/85">
+                Every licensed dispensary menu, one place. Compare price, potency and pickup — then
+                order where it's right.
+              </p>
+              <p className="label mt-6 text-[12px] text-white/70">
+                21+ only · Adults in New York State · v{__BUILD_ID__}
+              </p>
             </div>
-            <p className="prose-jp mt-5 max-w-measure">
-              Every licensed dispensary menu, one calm place. Compare price, potency and pickup —
-              then order where it's right.
-            </p>
-            <p className="mt-8 font-grotesk text-[0.72rem] uppercase tracking-label text-ink-soft">
-              21+ only · Adults in New York State
-            </p>
-            <p className="mt-1 font-grotesk text-[0.72rem] uppercase tracking-label text-ink-soft/70">
-              v{__BUILD_ID__}
-            </p>
-          </div>
-          <div className="sm:pl-8">
-            <p className="eyebrow">The weekly drop</p>
-            <p className="prose-jp mt-3">Deals and standouts, once a week. No spam.</p>
-            <div className="mt-5">
-              <Newsletter source="footer" compact />
+            <div className="sm:pl-6">
+              <p className="display text-2xl text-sun">The weekly drop</p>
+              <p className="mt-2 text-sm font-medium text-white/80">
+                Deals and standouts, once a week. No spam.
+              </p>
+              <div className="mt-4">
+                <Newsletter source="footer" compact />
+              </div>
             </div>
           </div>
         </div>
+        <Marquee variant="magenta" fast />
       </footer>
     </div>
   )

@@ -31,51 +31,53 @@ export function Results({
     : (filters.neighborhood ?? filters.borough)
 
   return (
-    <div className="mx-auto max-w-[1240px] px-[clamp(24px,6vw,120px)] py-[clamp(5vh,8vh,100px)]">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <div className="mb-6 flex items-center justify-between">
         <button
           onClick={onHome}
-          className="group inline-flex items-center gap-1.5 font-grotesk text-[0.72rem] uppercase tracking-label text-ink-soft transition-colors hover:text-accent"
+          className="inline-flex items-center gap-1.5 label text-[13px] text-cobalt transition hover:text-magenta"
         >
           <Ico name="back" className="h-4 w-4" /> Home
         </button>
         <button
           onClick={onEdit}
-          className="link-underline font-grotesk text-[0.72rem] uppercase tracking-label text-ink"
+          className="rounded-full border-3 border-ink bg-white px-4 py-1.5 label text-[12px] text-ink transition hover:bg-ice"
         >
           Edit journey
         </button>
       </div>
 
-      <p className="eyebrow">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
-      <h1 className="display mt-3 text-[clamp(2.5rem,7vw,5rem)] leading-none">
+      <p className="eyebrow text-magenta">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
+      <h1 className="display mt-2 text-[clamp(3rem,10vw,6rem)] text-cobalt">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
-      <p className="prose-jp mt-3">Dial in the details, or clear a chip to widen the search.</p>
+      <p className="mt-2 text-sm font-semibold text-muted">
+        Dial in the details, or clear a chip to widen the search.
+      </p>
 
-      <div className="mt-6 border-y border-hairline py-5">
+      <div className="mt-5 rounded-3xl border-3 border-ink bg-white p-5 shadow-[4px_4px_0_#111]">
         <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
       {ranked.length === 0 ? (
-        <div className="mt-16 border border-dashed border-hairline p-12 text-center">
-          <p className="display text-2xl text-ink">Nothing matched every filter.</p>
-          <p className="prose-jp mt-2">
+        <div className="mt-10 rounded-3xl border-3 border-dashed border-ink bg-white p-12 text-center">
+          <p className="display text-3xl text-cobalt">Nothing matched.</p>
+          <p className="mt-2 text-sm font-semibold text-muted">
             {filters.userLoc
               ? 'Try a wider radius, or clear a filter above.'
               : 'Clear a filter above to widen the search.'}
           </p>
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {ranked.map((p) => (
             <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onAdd={onAdd} />
           ))}
         </div>
       )}
 
-      <div className="mt-[clamp(8vh,10vh,140px)]">
+      <div className="mt-14">
         <Newsletter source="results" />
       </div>
     </div>
