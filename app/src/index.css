@@ -2,37 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Self-hosted fonts (no external runtime request — offline-capable PWA).
-   Fraunces for poetic display serif lines, Space Grotesk for the big uppercase
-   labels and UI, Inter for body. Latin subsets only. */
+/* Self-hosted fonts (offline-capable PWA). Anton = ultra-heavy condensed
+   display, Archivo = bold geometric UI/body. Latin subsets only. */
 @font-face {
-  font-family: 'Fraunces';
+  font-family: 'Anton';
   font-style: normal;
-  font-weight: 300 600;
+  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/fraunces-latin.woff2') format('woff2');
+  src: url('/fonts/anton-latin.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Space Grotesk';
+  font-family: 'Archivo';
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400 900;
   font-display: swap;
-  src: url('/fonts/spacegrotesk-latin.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url('/fonts/inter-latin.woff2') format('woff2');
+  src: url('/fonts/archivo-latin.woff2') format('woff2');
 }
 
 :root {
   color-scheme: light;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-inout-quint: cubic-bezier(0.83, 0, 0.17, 1);
-  --dur-reveal: 0.95s;
-  --dur-toggle: 0.7s;
 }
 
 html,
@@ -41,54 +29,34 @@ body,
   height: 100%;
 }
 
-/* The page itself never scrolls sideways; only designated rows do. */
+/* The page itself never scrolls sideways; only designated marquees/rows do. */
 html,
 body {
   overflow-x: clip;
 }
 
 body {
-  @apply bg-paper font-sans text-ink antialiased;
-  font-feature-settings: 'kern' 1, 'liga' 1;
-  letter-spacing: 0.01em;
+  @apply bg-ice font-sans text-ink antialiased;
+  font-feature-settings: 'kern' 1;
 }
 
-/* Poetic display line — Fraunces, light, generous. Line breaks are intentional. */
+/* Big condensed pop headline: Anton, uppercase, tight. */
 .display {
-  @apply font-display font-normal leading-[1.12] tracking-tight2;
+  @apply font-display uppercase leading-[0.92] tracking-tight;
 }
 
-/* Giant grotesque section label — the visual anchor of each section. */
+/* Bold uppercase UI label. */
 .label {
-  @apply font-grotesk font-normal uppercase tracking-label;
+  @apply font-sans font-bold uppercase tracking-label;
 }
 
-/* Small uppercase caption/label. */
 .eyebrow {
-  @apply font-grotesk text-[0.72rem] font-medium uppercase tracking-label text-ink-soft;
+  @apply font-sans text-[11px] font-bold uppercase tracking-label text-cobalt;
 }
 
-/* Body measure with the airy JP line-height. */
-.prose-jp {
-  @apply text-[15px] leading-[1.9] text-ink-soft;
-  letter-spacing: 0.02em;
-}
-
-/* Draw-underline link: a hairline that grows from the left on hover. */
-.link-underline {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.link-underline:hover {
-  background-size: 100% 1px;
-}
-
-/* Mask-up wrapper: clips a child that slides up from below. */
-.mask {
-  overflow: hidden;
+/* White pill — the recurring shape: nav, buttons, cards. */
+.pill {
+  @apply rounded-full border-3 border-ink bg-panel;
 }
 
 input:focus {
@@ -96,15 +64,14 @@ input:focus {
 }
 
 ::selection {
-  background: #b5502a;
-  color: #f4f0e8;
+  background: #1e3ad6;
+  color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
+  .animate-marquee,
+  .animate-marquee-fast,
+  .animate-wobble {
+    animation: none !important;
   }
 }

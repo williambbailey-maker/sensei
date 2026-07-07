@@ -4,8 +4,7 @@ import { requestLocation } from '../lib/geo'
 import { BOROUGHS, BUDGETS, FORMATS, RADII, VIBES } from '../lib/labels'
 import { EMPTY_FILTERS, type Filters, type Format, type Vibe } from '../lib/types'
 
-// 4 quick steps — location first, since "where are you" narrows results the
-// most. Big tappable cards, all skippable. Prefilled from `initial`.
+// 4 quick steps — location first. Big tappable pop cards, all skippable.
 export function TapJourney({
   initial,
   neighborhoodsByBorough,
@@ -25,9 +24,7 @@ export function TapJourney({
   const toggleVibe = (v: Vibe) =>
     setF((prev) => ({
       ...prev,
-      vibes: prev.vibes.includes(v)
-        ? prev.vibes.filter((x) => x !== v)
-        : [...prev.vibes, v].slice(0, 3),
+      vibes: prev.vibes.includes(v) ? prev.vibes.filter((x) => x !== v) : [...prev.vibes, v].slice(0, 3),
     }))
 
   const nearMe = () => {
@@ -50,11 +47,11 @@ export function TapJourney({
   const neighborhoods = f.borough ? (neighborhoodsByBorough[f.borough] ?? []) : []
 
   return (
-    <div className="mx-auto max-w-2xl px-[clamp(24px,6vw,120px)] py-[clamp(6vh,9vh,120px)]">
-      <div className="mb-10 flex items-center justify-between">
+    <div className="mx-auto max-w-2xl px-5 py-10 sm:px-6">
+      <div className="mb-8 flex items-center justify-between">
         <button
           onClick={step === 0 ? onClose : () => setStep((s) => s - 1)}
-          className="inline-flex items-center gap-1.5 font-grotesk text-[0.72rem] uppercase tracking-label text-ink-soft transition-colors hover:text-accent"
+          className="inline-flex items-center gap-1.5 label text-[13px] text-cobalt transition hover:text-magenta"
         >
           <Ico name="back" className="h-4 w-4" /> {step === 0 ? 'Home' : 'Back'}
         </button>
@@ -62,14 +59,11 @@ export function TapJourney({
           {steps.map((_, i) => (
             <span
               key={i}
-              className={`h-px w-8 transition-colors duration-500 ${i <= step ? 'bg-accent' : 'bg-hairline'}`}
+              className={`h-2.5 w-8 rounded-full border-2 border-ink transition ${i <= step ? 'bg-cobalt' : 'bg-white'}`}
             />
           ))}
         </div>
-        <button
-          onClick={() => onDone(f)}
-          className="link-underline font-grotesk text-[0.72rem] uppercase tracking-label text-ink-soft"
-        >
+        <button onClick={() => onDone(f)} className="label text-[13px] text-muted transition hover:text-magenta">
           Skip
         </button>
       </div>
@@ -78,15 +72,13 @@ export function TapJourney({
         <Step title="Where are you?" hint="This narrows things down the most — or skip for all NYC.">
           <button
             onClick={nearMe}
-            className={`mb-4 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-[2px] border p-4 font-grotesk text-[0.72rem] uppercase tracking-label transition-colors duration-300 ${
-              f.userLoc
-                ? 'border-accent bg-accent text-paper'
-                : 'border-accent text-accent hover:bg-accent hover:text-paper'
+            className={`mb-4 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-2xl border-3 border-ink p-4 display text-xl shadow-[4px_4px_0_#111] transition ${
+              f.userLoc ? 'bg-cobalt text-white' : 'bg-magenta text-white hover:-translate-y-0.5'
             }`}
           >
             ◉ {locating ? 'Locating…' : f.userLoc ? 'Using your location' : 'Use my location'}
           </button>
-          {locError && <p className="mb-4 text-xs text-accent">{locError}</p>}
+          {locError && <p className="mb-4 label text-[12px] text-tomato">{locError}</p>}
           {f.userLoc ? (
             <div className="flex flex-wrap items-center gap-2.5">
               <span className="eyebrow mr-1">Within</span>
@@ -103,9 +95,7 @@ export function TapJourney({
                   <Card
                     key={b}
                     active={f.borough === b}
-                    onClick={() =>
-                      setF((p) => ({ ...p, borough: p.borough === b ? null : b, neighborhood: null }))
-                    }
+                    onClick={() => setF((p) => ({ ...p, borough: p.borough === b ? null : b, neighborhood: null }))}
                   >
                     {b}
                   </Card>
@@ -176,10 +166,9 @@ export function TapJourney({
 
       <button
         onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="group mt-10 flex w-full items-center justify-center gap-2 bg-accent px-5 py-4 font-grotesk text-[0.72rem] uppercase tracking-label text-paper transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent-soft"
+        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full border-3 border-ink bg-cobalt px-5 py-4 display text-xl text-white shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5"
       >
-        {step < last ? 'Next' : 'Show my matches'}
-        <Ico name="arrow" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+        {step < last ? 'Next →' : 'Show my matches →'}
       </button>
     </div>
   )
@@ -188,8 +177,8 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div className="animate-fade-up">
-      <h2 className="display text-[clamp(2rem,5vw,3.25rem)] leading-tight">{title}</h2>
-      <p className="prose-jp mb-8 mt-3">{hint}</p>
+      <h2 className="display text-[clamp(2.5rem,8vw,4rem)] text-cobalt">{title}</h2>
+      <p className="mb-7 mt-2 text-sm font-semibold text-muted">{hint}</p>
       {children}
     </div>
   )
@@ -199,10 +188,8 @@ function Card({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[80px] items-center justify-center rounded-[2px] border p-4 text-center font-grotesk text-[0.8rem] uppercase tracking-label transition-colors duration-300 ${
-        active
-          ? 'border-accent bg-accent text-paper'
-          : 'border-hairline text-ink hover:border-accent hover:text-accent'
+      className={`flex min-h-[80px] items-center justify-center rounded-2xl border-3 border-ink p-4 text-center label text-sm shadow-[3px_3px_0_#111] transition ${
+        active ? 'bg-cobalt text-white' : 'bg-white text-ink hover:bg-sun'
       }`}
     >
       {children}
@@ -214,10 +201,8 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className={`rounded-[2px] border px-4 py-2 font-grotesk text-[0.72rem] uppercase tracking-label transition-colors duration-300 ${
-        active
-          ? 'border-accent bg-accent text-paper'
-          : 'border-hairline text-ink hover:border-accent hover:text-accent'
+      className={`rounded-full border-3 border-ink px-4 py-2 label text-[12px] transition ${
+        active ? 'bg-cobalt text-white' : 'bg-white text-ink hover:bg-ice'
       }`}
     >
       {children}

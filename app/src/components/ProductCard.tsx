@@ -1,17 +1,15 @@
-import { Ico } from './Ico'
 import { formatMiles, haversineMiles } from '../lib/geo'
 import { cleanTitle, prettyStore, vibeLabel } from '../lib/labels'
 import type { LatLng, Product } from '../lib/types'
 
-// Potency as a small colored dot: green mild, amber medium, terracotta strong.
+// Potency as a small colored dot.
 const TIER_DOT: Record<string, string> = {
   mild: 'bg-slate',
   medium: 'bg-ochre',
-  strong: 'bg-clay',
+  strong: 'bg-tomato',
 }
 
-// Edibles are dosed in milligrams — a "0.05g" gummy is a 50mg gummy. Convert
-// gram-denominated weights to mg for edibles; leave other categories alone.
+// Edibles are dosed in milligrams — a "0.05g" gummy is a 50mg gummy.
 function displayWeight(weight: string, category: string | null): string {
   if (category !== 'edibles') return weight
   const m = weight.match(/^\s*([\d.]+)\s*g\s*$/i)
@@ -41,14 +39,14 @@ export function ProductCard({
       : null
 
   return (
-    <div className="group flex h-full gap-4 rounded-[2px] border border-hairline bg-paper p-4 transition-colors duration-300 hover:border-accent/60">
-      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-[2px] border border-hairline bg-paper-2">
+    <div className="group flex h-full gap-4 rounded-2xl border-3 border-ink bg-white p-4 shadow-[4px_4px_0_#111] transition hover:-translate-y-0.5">
+      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl border-3 border-ink bg-ice">
         {p.image_url ? (
           <img
             src={p.image_url}
             alt=""
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+            className="h-full w-full object-cover"
             onError={(e) => (e.currentTarget.style.display = 'none')}
           />
         ) : null}
@@ -57,40 +55,40 @@ export function ProductCard({
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="max-h-[2.6em] overflow-hidden font-sans text-[15px] font-medium leading-[1.3] text-ink">
+            <h3 className="max-h-[2.6em] overflow-hidden text-[15px] font-bold leading-[1.3] text-ink">
               {name}
             </h3>
-            {brand && <p className="truncate text-sm text-ink-soft">{brand}</p>}
+            {brand && <p className="truncate text-sm font-medium text-muted">{brand}</p>}
           </div>
-          <div className="display shrink-0 text-xl text-ink">{price}</div>
+          <div className="display shrink-0 text-2xl text-cobalt">{price}</div>
         </div>
 
-        <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-grotesk text-[0.68rem] uppercase tracking-label text-ink-soft">
+        <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 label text-[10px] text-muted">
           {weights?.length > 0 && <span className="text-ink">{weights.slice(0, 3).join(' · ')}</span>}
           {p.potency_tier && (
             <span className="inline-flex items-center gap-1.5">
-              <span className={`h-1.5 w-1.5 rounded-full ${TIER_DOT[p.potency_tier] ?? 'bg-ink-soft'}`} />
+              <span className={`h-2 w-2 rounded-full border border-ink ${TIER_DOT[p.potency_tier] ?? 'bg-muted'}`} />
               {p.potency_tier}
               {p.thc_pct != null && p.category !== 'edibles' ? ` · ${p.thc_pct}% THC` : ''}
             </span>
           )}
           {p.strain_type && <span>{p.strain_type}</span>}
           {(p.vibes ?? []).slice(0, 2).map((v) => (
-            <span key={v} className="text-accent">
+            <span key={v} className="text-magenta">
               {vibeLabel(v)}
             </span>
           ))}
         </div>
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-          <p className="truncate font-grotesk text-[0.68rem] uppercase tracking-label text-ink-soft">
+          <p className="truncate label text-[10px] text-muted">
             {p.store?.name ?? (p.store?.slug ? prettyStore(p.store.slug) : 'Dispensary')}
             {p.store?.neighborhood
               ? ` · ${p.store.neighborhood}`
               : p.store?.borough
                 ? ` · ${p.store.borough}`
                 : ''}
-            {miles != null && <span className="text-accent"> · {formatMiles(miles)}</span>}
+            {miles != null && <span className="text-magenta"> · {formatMiles(miles)}</span>}
           </p>
           <span className="flex shrink-0 items-center gap-2">
             {p.url && (
@@ -98,15 +96,15 @@ export function ProductCard({
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 font-grotesk text-[0.68rem] uppercase tracking-label text-ink transition-colors hover:text-accent"
+                className="rounded-full border-3 border-ink px-3 py-1 label text-[10px] text-ink transition hover:bg-ice"
               >
-                View <Ico name="external" className="h-3 w-3" />
+                View
               </a>
             )}
             {onAdd && (
               <button
                 onClick={() => onAdd(p)}
-                className="flex items-center gap-1 rounded-[2px] bg-accent px-3 py-1.5 font-grotesk text-[0.68rem] uppercase tracking-label text-paper transition-colors duration-300 hover:bg-accent-soft"
+                className="rounded-full border-3 border-ink bg-cobalt px-3 py-1 label text-[10px] text-white transition hover:bg-cobalt-deep"
               >
                 + Add
               </button>
