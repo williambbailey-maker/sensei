@@ -102,8 +102,8 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`appearance-none rounded-full border-3 border-ink px-4 py-2 pr-8 label text-[12px] transition focus:outline-none ${
-          active ? 'bg-cobalt text-white' : 'bg-white text-ink hover:bg-ice'
+        className={`appearance-none rounded-full border border-ink px-4 py-2 pr-8 label text-[11px] transition focus:outline-none ${
+          active ? 'bg-ink text-white' : 'bg-white text-ink hover:bg-ice'
         }`}
       >
         {options.map((o) => (
@@ -113,7 +113,7 @@ function Select({
         ))}
       </select>
       <svg
-        className={`pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 ${active ? 'text-white' : 'text-cobalt'}`}
+        className={`pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 ${active ? 'text-white' : 'text-ink'}`}
         viewBox="0 0 12 12"
         fill="none"
         stroke="currentColor"

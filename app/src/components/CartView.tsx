@@ -25,27 +25,27 @@ export function CartView({
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 label text-[13px] text-cobalt transition hover:text-magenta"
+          className="inline-flex items-center gap-1.5 label text-[12px] text-muted transition hover:text-ink"
         >
           <Ico name="back" className="h-4 w-4" /> Keep shopping
         </button>
         <button
           onClick={onClear}
-          className="rounded-full border-3 border-ink bg-white px-4 py-1.5 label text-[12px] text-ink transition hover:bg-tomato hover:text-white"
+          className="rounded-full border border-line px-4 py-1.5 label text-[11px] text-ink transition hover:bg-ink hover:text-white"
         >
           Clear cart
         </button>
       </div>
 
-      <p className="eyebrow text-magenta">Your cart · {storeName}</p>
-      <h1 className="display mt-2 text-[clamp(2.75rem,9vw,5rem)] text-cobalt">
+      <p className="eyebrow">Your cart · {storeName}</p>
+      <h1 className="display mt-2 text-[clamp(2rem,6vw,3rem)] text-ink">
         {count} item{count === 1 ? '' : 's'}
       </h1>
 
       <div className="mt-6 flex flex-col gap-3">
         {cart.items.map(({ product: p, qty }) => (
-          <div key={p.id} className="flex items-center gap-4 rounded-2xl border-3 border-ink bg-white p-4 shadow-[4px_4px_0_#384166]">
-            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border-3 border-ink bg-ice">
+          <div key={p.id} className="flex items-center gap-4 rounded-2xl border border-line bg-panel p-4 shadow-soft-sm">
+            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-ice">
               {p.image_url ? <img src={p.image_url} alt="" className="h-full w-full object-cover" /> : null}
             </div>
             <div className="min-w-0 flex-1">
@@ -57,7 +57,7 @@ export function CartView({
                 {p.url && (
                   <>
                     {' · '}
-                    <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-magenta hover:underline">
+                    <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-ink hover:underline">
                       view on Dutchie ↗
                     </a>
                   </>
@@ -68,15 +68,15 @@ export function CartView({
               <button
                 onClick={() => onQty(p.id, -1)}
                 aria-label="Remove one"
-                className="flex h-9 w-9 items-center justify-center rounded-full border-3 border-ink bg-white text-lg text-ink transition hover:bg-ice"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-lg text-ink transition hover:bg-ice"
               >
                 −
               </button>
-              <span className="w-6 text-center display text-lg text-cobalt">{qty}</span>
+              <span className="w-6 text-center display text-base text-ink">{qty}</span>
               <button
                 onClick={() => onQty(p.id, 1)}
                 aria-label="Add one"
-                className="flex h-9 w-9 items-center justify-center rounded-full border-3 border-ink bg-white text-lg text-ink transition hover:bg-ice"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-lg text-ink transition hover:bg-ice"
               >
                 +
               </button>
@@ -85,16 +85,16 @@ export function CartView({
         ))}
       </div>
 
-      <div className="mt-6 flex items-center justify-between rounded-2xl border-3 border-ink bg-sun px-6 py-4 shadow-[4px_4px_0_#384166]">
-        <span className="label text-[13px] text-ink">Estimated minimum</span>
-        <span className="display text-3xl text-cobalt">${total.toFixed(2).replace(/\.00$/, '')}</span>
+      <div className="mt-6 flex items-center justify-between rounded-2xl border border-ink bg-panel px-6 py-4">
+        <span className="label text-[12px] text-ink">Estimated minimum</span>
+        <span className="display text-2xl text-ink">${total.toFixed(2).replace(/\.00$/, '')}</span>
       </div>
 
       <a
         href={menuUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="pop-press mt-6 flex w-full items-center justify-center gap-2 rounded-full border-3 border-ink bg-cobalt px-5 py-4 display text-xl text-white"
+        className="pop-press mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-ink px-5 py-3.5 label text-sm text-white"
       >
         Order at {storeName} on Dutchie →
       </a>

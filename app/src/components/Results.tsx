@@ -35,34 +35,34 @@ export function Results({
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={onHome}
-          className="inline-flex items-center gap-1.5 label text-[13px] text-cobalt transition hover:text-magenta"
+          className="inline-flex items-center gap-1.5 label text-[12px] text-muted transition hover:text-ink"
         >
           <Ico name="back" className="h-4 w-4" /> Home
         </button>
         <button
           onClick={onEdit}
-          className="rounded-full border-3 border-ink bg-white px-4 py-1.5 label text-[12px] text-ink transition hover:bg-ice"
+          className="rounded-full border border-line px-4 py-1.5 label text-[11px] text-ink transition hover:bg-ice"
         >
           Edit journey
         </button>
       </div>
 
-      <p className="eyebrow text-magenta">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
-      <h1 className="display mt-2 text-[clamp(3rem,10vw,6rem)] text-cobalt">
+      <p className="eyebrow">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
+      <h1 className="display mt-2 text-[clamp(2.25rem,7vw,3.6rem)] text-ink">
         {ranked.length} match{ranked.length === 1 ? '' : 'es'}
       </h1>
       <p className="mt-2 text-sm font-semibold text-muted">
         Dial in the details, or clear a chip to widen the search.
       </p>
 
-      <div className="mt-5 rounded-3xl border-3 border-ink bg-white p-5 shadow-[4px_4px_0_#384166]">
+      <div className="mt-5 rounded-3xl border border-ink bg-panel p-5 shadow-soft-sm">
         <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
       {ranked.length === 0 ? (
-        <div className="mt-10 rounded-3xl border-3 border-dashed border-ink bg-white p-12 text-center">
-          <p className="display text-3xl text-cobalt">Nothing matched.</p>
+        <div className="mt-10 rounded-3xl border border-dashed border-line bg-panel p-12 text-center">
+          <p className="display text-2xl text-ink">Nothing matched.</p>
           <p className="mt-2 text-sm font-semibold text-muted">
             {filters.userLoc
               ? 'Try a wider radius, or clear a filter above.'

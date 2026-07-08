@@ -4,71 +4,34 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Earthy pop system: warm cream field, deep indigo-navy, sage-green
-        // accent — the three requested colors, with navy standing in for the
-        // black outlines so the whole thing reads soft and cohesive.
-        ice: '#ECDFD2', // warm cream page background
-        cobalt: '#384166', // deep indigo-navy (primary dark)
-        'cobalt-deep': '#2C3350',
-        magenta: '#639D75', // sage-green accent
-        sun: '#639D75', // sage highlight
-        tomato: '#B5502A', // muted terracotta for warnings
-        ink: '#384166', // outlines/shadows are navy, not black
-        paper: '#ECDFD2', // page bg alias
-        panel: '#FFFFFF', // white cards & pills
-        line: '#384166',
-        muted: '#6E718C', // muted navy text
-        cream: '#ECDFD2',
-        navy: '#384166',
-        sage: '#639D75',
-        // aliases kept so existing call sites keep compiling
-        accent: {
-          DEFAULT: '#384166',
-          soft: '#639D75',
-        },
-        clay: '#B5502A',
-        slate: '#639D75',
-        ochre: '#C08A3E',
+        // Fancy-minimal monochrome system: near-black ink, soft paper white,
+        // a brighter white for cards, and a steel grey for quiet metal
+        // accents (the katana in the intro, hairline dividers).
+        ink: '#0B0B0C', // primary text, borders, solid fills
+        ice: '#F6F5F2', // page background (soft paper)
+        panel: '#FBFAF8', // card/panel background (brighter white)
+        muted: '#85837E', // secondary text
+        line: 'rgba(11,11,12,0.13)', // hairline dividers/borders on white
+        'line-dark': 'rgba(246,245,242,0.16)', // hairline dividers/borders on black
+        steel: '#C7CAD0',
+        'steel-dim': '#9A9DA3',
       },
       fontFamily: {
-        // Baloo 2 = rounded, friendly, heavy display (matches the reference's
-        // rounded lettering); Hanken Grotesk = clean refined UI/body.
-        display: ['"Baloo 2"', 'ui-rounded', 'system-ui', 'sans-serif'],
-        sans: ['"Hanken Grotesk"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        // One rounded, humanist family (Aptos-like) for both display and body —
+        // weight alone carries the hierarchy.
+        display: ['"Plus Jakarta Sans"', 'ui-rounded', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
         label: '0.08em',
       },
       borderWidth: {
-        3: '3px',
+        3: '1.5px', // the app's "solid ink outline" — thinned from the old 3px pop-art weight
       },
-      keyframes: {
-        'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(18px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
-        wobble: {
-          '0%,100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
-        },
-        bounce2: {
-          '0%,100%': { transform: 'translateY(0)' },
-          '30%': { transform: 'translateY(-14px)' },
-          '55%': { transform: 'translateY(0)' },
-          '70%': { transform: 'translateY(-6px)' },
-          '85%': { transform: 'translateY(0)' },
-        },
-      },
-      animation: {
-        'fade-up': 'fade-up 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both',
-        marquee: 'marquee 22s linear infinite',
-        'marquee-fast': 'marquee 14s linear infinite',
-        wobble: 'wobble 3.5s ease-in-out infinite',
-        bounce2: 'bounce2 2.4s cubic-bezier(0.3, 0.7, 0.4, 1) infinite',
+      boxShadow: {
+        soft: '0 18px 40px rgba(11,11,12,0.08)',
+        'soft-sm': '0 6px 18px rgba(11,11,12,0.07)',
+        'soft-lg': '0 24px 60px rgba(11,11,12,0.12)',
       },
     },
   },

@@ -4,7 +4,7 @@ import { requestLocation } from '../lib/geo'
 import { BOROUGHS, BUDGETS, FORMATS, RADII, VIBES } from '../lib/labels'
 import { EMPTY_FILTERS, type Filters, type Format, type Vibe } from '../lib/types'
 
-// 4 quick steps — location first. Big tappable pop cards, all skippable.
+// 4 quick steps — location first. Big tappable cards, all skippable.
 export function TapJourney({
   initial,
   neighborhoodsByBorough,
@@ -51,7 +51,7 @@ export function TapJourney({
       <div className="mb-8 flex items-center justify-between">
         <button
           onClick={step === 0 ? onClose : () => setStep((s) => s - 1)}
-          className="inline-flex items-center gap-1.5 label text-[13px] text-cobalt transition hover:text-magenta"
+          className="inline-flex items-center gap-1.5 label text-[12px] text-muted transition hover:text-ink"
         >
           <Ico name="back" className="h-4 w-4" /> {step === 0 ? 'Home' : 'Back'}
         </button>
@@ -59,11 +59,11 @@ export function TapJourney({
           {steps.map((_, i) => (
             <span
               key={i}
-              className={`h-2.5 w-8 rounded-full border-2 border-ink transition ${i <= step ? 'bg-cobalt' : 'bg-white'}`}
+              className={`h-1.5 w-8 rounded-full transition ${i <= step ? 'bg-ink' : 'bg-line'}`}
             />
           ))}
         </div>
-        <button onClick={() => onDone(f)} className="label text-[13px] text-muted transition hover:text-magenta">
+        <button onClick={() => onDone(f)} className="label text-[12px] text-muted transition hover:text-ink">
           Skip
         </button>
       </div>
@@ -72,15 +72,15 @@ export function TapJourney({
         <Step title="Where are you?" hint="This narrows things down the most — or skip for all NYC.">
           <button
             onClick={nearMe}
-            className={`mb-4 flex min-h-[64px] w-full items-center justify-center gap-2 rounded-2xl border-3 border-ink p-4 display text-xl shadow-[4px_4px_0_#384166] transition ${
-              f.userLoc ? 'bg-cobalt text-white' : 'bg-magenta text-white hover:-translate-y-0.5'
+            className={`mb-4 flex min-h-[60px] w-full items-center justify-center gap-2 rounded-2xl border border-ink p-4 label text-sm transition ${
+              f.userLoc ? 'bg-ink text-white' : 'bg-panel text-ink hover:bg-ice'
             }`}
           >
             ◉ {locating ? 'Locating…' : f.userLoc ? 'Using your location' : 'Use my location'}
           </button>
-          {locError && <p className="mb-4 label text-[12px] text-tomato">{locError}</p>}
+          {locError && <p className="mb-4 label text-[11px] text-ink">{locError}</p>}
           {f.userLoc ? (
-            <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="eyebrow mr-1">Within</span>
               {RADII.map((r) => (
                 <Chip key={r} active={f.radiusMiles === r} onClick={() => setF((p) => ({ ...p, radiusMiles: r }))}>
@@ -102,7 +102,7 @@ export function TapJourney({
                 ))}
               </div>
               {neighborhoods.length > 0 && (
-                <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                <div className="mt-5 flex flex-wrap items-center gap-2">
                   <span className="eyebrow mr-1">Narrow it</span>
                   {neighborhoods.map((n) => (
                     <Chip
@@ -166,7 +166,7 @@ export function TapJourney({
 
       <button
         onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full border-3 border-ink bg-cobalt px-5 py-4 display text-xl text-white"
+        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-ink px-5 py-3.5 label text-sm text-white"
       >
         {step < last ? 'Next →' : 'Show my matches →'}
       </button>
@@ -177,7 +177,7 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="display text-[clamp(2.5rem,8vw,4rem)] text-cobalt">{title}</h2>
+      <h2 className="display text-[clamp(1.9rem,6vw,2.75rem)] text-ink">{title}</h2>
       <p className="mb-7 mt-2 text-sm font-semibold text-muted">{hint}</p>
       {children}
     </div>
@@ -188,8 +188,8 @@ function Card({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[80px] items-center justify-center rounded-2xl border-3 border-ink p-4 text-center label text-sm shadow-[3px_3px_0_#384166] transition ${
-        active ? 'bg-cobalt text-white' : 'bg-white text-ink hover:bg-sun'
+      className={`flex min-h-[76px] items-center justify-center rounded-2xl border border-ink p-4 text-center label text-sm transition ${
+        active ? 'bg-ink text-white' : 'bg-panel text-ink hover:bg-ice'
       }`}
     >
       {children}
@@ -201,8 +201,8 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className={`rounded-full border-3 border-ink px-4 py-2 label text-[12px] transition ${
-        active ? 'bg-cobalt text-white' : 'bg-white text-ink hover:bg-ice'
+      className={`rounded-full border border-ink px-4 py-2 label text-[11px] transition ${
+        active ? 'bg-ink text-white' : 'bg-white text-ink hover:bg-ice'
       }`}
     >
       {children}

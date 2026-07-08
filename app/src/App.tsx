@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { Hero } from './components/Hero'
+import { IntroSlice } from './components/IntroSlice'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
@@ -124,32 +125,34 @@ export default function App() {
 
   return (
     <div className="min-h-full">
+      <IntroSlice />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      <header className="sticky top-0 z-30 bg-cream/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center px-5 py-2.5 sm:px-6">
-          <button onClick={goHome} className="display text-[35px] leading-none text-cobalt transition hover:opacity-80">
+      <header className="sticky top-0 z-30 border-b border-line bg-ice/90 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6">
+          <button onClick={goHome} className="display text-xl text-ink transition hover:opacity-70">
             sensei
           </button>
+          <span className="label text-[11px] text-muted">NYC · 21+ Only</span>
         </div>
       </header>
 
       {cart && view !== 'cart' && (
         <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-3 border-ink bg-sun px-5 py-3 shadow-[4px_4px_0_#384166]">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-ink bg-panel px-5 py-3 shadow-soft-sm">
             <span className="label text-[12px] text-ink">
               Building a cart · {cart.store.name ?? prettyStore(cart.store.slug)} — this store only
             </span>
             <span className="flex items-center gap-2">
               <button
                 onClick={() => go('cart')}
-                className="rounded-full border-3 border-ink bg-cobalt px-4 py-1.5 label text-[12px] text-white transition hover:bg-cobalt-deep"
+                className="rounded-full bg-ink px-4 py-1.5 label text-[12px] text-white transition hover:opacity-85"
               >
                 View · {cartCount}
               </button>
               <button
                 onClick={clearCart}
-                className="rounded-full border-3 border-ink bg-panel px-4 py-1.5 label text-[12px] text-ink transition hover:bg-ice"
+                className="rounded-full border border-line px-4 py-1.5 label text-[12px] text-ink transition hover:bg-ice"
               >
                 Clear
               </button>
@@ -160,8 +163,8 @@ export default function App() {
 
       {loadError && (
         <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
-          <div className="rounded-2xl border-3 border-ink bg-tomato px-5 py-3 label text-[12px] text-white">
-            Couldn't reach the menu right now. Check your connection and refresh.
+          <div className="rounded-2xl border border-ink bg-panel px-5 py-3 label text-[12px] text-ink">
+            ⚠ Couldn't reach the menu right now. Check your connection and refresh.
           </div>
         </div>
       )}
@@ -229,30 +232,30 @@ export default function App() {
       {cartCount > 0 && view !== 'cart' && (
         <button
           onClick={() => go('cart')}
-          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full border-3 border-ink bg-magenta px-6 py-3.5 label text-[13px] text-white shadow-[4px_4px_0_#384166] transition hover:-translate-y-0.5"
+          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-ink px-6 py-3.5 label text-[12px] text-white shadow-soft-lg transition hover:-translate-y-0.5 hover:opacity-90"
         >
           Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
         </button>
       )}
 
-      <footer className="mt-16 border-t-3 border-ink bg-cobalt text-white">
+      <footer className="mt-16 border-t border-line-dark bg-ink text-white">
         <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="grid gap-10 sm:grid-cols-[1fr_1fr]">
             <div>
               <div className="flex items-center">
-                <span className="display text-3xl">sensei</span>
+                <span className="display text-xl">sensei</span>
               </div>
-              <p className="mt-4 max-w-sm text-[15px] font-medium leading-relaxed text-white/85">
+              <p className="mt-4 max-w-sm text-[15px] font-medium leading-relaxed text-white/80">
                 Every licensed dispensary menu, one place. Compare price, potency and pickup — then
                 order where it's right.
               </p>
-              <p className="label mt-6 text-[12px] text-white/70">
+              <p className="label mt-6 text-[11px] text-white/50">
                 21+ only · Adults in New York State
               </p>
             </div>
             <div className="sm:pl-6">
-              <p className="display text-2xl text-sun">The weekly drop</p>
-              <p className="mt-2 text-sm font-medium text-white/80">
+              <p className="eyebrow text-steel">The weekly drop</p>
+              <p className="mt-2 text-sm font-medium text-white/75">
                 Deals and standouts, once a week. No spam.
               </p>
               <div className="mt-4">

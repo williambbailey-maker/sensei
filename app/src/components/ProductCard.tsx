@@ -2,11 +2,12 @@ import { formatMiles, haversineMiles } from '../lib/geo'
 import { cleanTitle, prettyStore, vibeLabel } from '../lib/labels'
 import type { LatLng, Product } from '../lib/types'
 
-// Potency as a small colored dot.
+// Potency as a small dot — tone varies, not hue, to stay inside the
+// black/white/steel system.
 const TIER_DOT: Record<string, string> = {
-  mild: 'bg-slate',
-  medium: 'bg-ochre',
-  strong: 'bg-tomato',
+  mild: 'bg-steel',
+  medium: 'bg-steel-dim',
+  strong: 'bg-ink',
 }
 
 // Edibles are dosed in milligrams — a "0.05g" gummy is a 50mg gummy.
@@ -22,10 +23,12 @@ export function ProductCard({
   p,
   userLoc,
   onAdd,
+  dark = false,
 }: {
   p: Product
   userLoc?: LatLng | null
   onAdd?: (p: Product) => void
+  dark?: boolean
 }) {
   const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown')
   const brand = p.clean_brand ?? p.brand
@@ -39,8 +42,18 @@ export function ProductCard({
       : null
 
   return (
-    <div className="group flex h-full gap-4 rounded-2xl border-3 border-ink bg-white p-4 shadow-[4px_4px_0_#384166] transition hover:-translate-y-0.5">
-      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl border-3 border-ink bg-ice">
+    <div
+      className={`group flex h-full gap-4 rounded-2xl border p-4 transition hover:-translate-y-0.5 ${
+        dark
+          ? 'border-line-dark bg-white/[0.04]'
+          : 'border-line bg-panel shadow-soft-sm'
+      }`}
+    >
+      <div
+        className={`h-24 w-24 shrink-0 overflow-hidden rounded-xl ${
+          dark ? 'bg-gradient-to-br from-[#38393c] to-[#1c1d1f]' : 'bg-ice'
+        }`}
+      >
         {p.image_url ? (
           <img
             src={p.image_url}
@@ -55,40 +68,48 @@ export function ProductCard({
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="max-h-[2.6em] overflow-hidden text-[15px] font-bold leading-[1.3] text-ink">
+            <h3 className={`max-h-[2.6em] overflow-hidden text-[15px] font-bold leading-[1.3] ${dark ? 'text-white' : 'text-ink'}`}>
               {name}
             </h3>
-            {brand && <p className="truncate text-sm font-medium text-muted">{brand}</p>}
+            {brand && (
+              <p className={`truncate text-sm font-medium ${dark ? 'text-steel-dim' : 'text-muted'}`}>{brand}</p>
+            )}
           </div>
-          <div className="display shrink-0 text-2xl text-cobalt">{price}</div>
+          <div
+            className={`shrink-0 rounded-full px-2.5 py-0.5 display text-base ${
+              dark ? 'bg-white text-ink' : 'text-ink'
+            }`}
+          >
+            {price}
+          </div>
         </div>
 
-        <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 label text-[10px] text-muted">
-          {weights?.length > 0 && <span className="text-ink">{weights.slice(0, 3).join(' · ')}</span>}
+        <div className={`mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 label text-[10px] ${dark ? 'text-steel-dim' : 'text-muted'}`}>
+          {weights?.length > 0 && (
+            <span className={dark ? 'text-white' : 'text-ink'}>{weights.slice(0, 3).join(' · ')}</span>
+          )}
           {p.potency_tier && (
             <span className="inline-flex items-center gap-1.5">
-              <span className={`h-2 w-2 rounded-full border border-ink ${TIER_DOT[p.potency_tier] ?? 'bg-muted'}`} />
+              <span className={`h-2 w-2 rounded-full ${TIER_DOT[p.potency_tier] ?? 'bg-muted'}`} />
               {p.potency_tier}
               {p.thc_pct != null && p.category !== 'edibles' ? ` · ${p.thc_pct}% THC` : ''}
             </span>
           )}
           {p.strain_type && <span>{p.strain_type}</span>}
           {(p.vibes ?? []).slice(0, 2).map((v) => (
-            <span key={v} className="text-magenta">
-              {vibeLabel(v)}
-            </span>
+            <span key={v}>{vibeLabel(v)}</span>
           ))}
         </div>
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-          <p className="truncate label text-[10px] text-muted">
+          <p className={`truncate label text-[10px] ${dark ? 'text-steel-dim' : 'text-muted'}`}>
             {p.store?.name ?? (p.store?.slug ? prettyStore(p.store.slug) : 'Dispensary')}
             {p.store?.neighborhood
               ? ` · ${p.store.neighborhood}`
               : p.store?.borough
                 ? ` · ${p.store.borough}`
                 : ''}
-            {miles != null && <span className="text-magenta"> · {formatMiles(miles)}</span>}
+            {miles != null && <span> · {formatMiles(miles)}</span>}
           </p>
           <span className="flex shrink-0 items-center gap-2">
             {p.url && (
@@ -96,7 +117,9 @@ export function ProductCard({
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full border-3 border-ink px-3 py-1 label text-[10px] text-ink transition hover:bg-ice"
+                className={`rounded-full border px-3 py-1 label text-[10px] transition ${
+                  dark ? 'border-line-dark text-white hover:bg-white/10' : 'border-line text-ink hover:bg-ice'
+                }`}
               >
                 View
               </a>
@@ -104,7 +127,9 @@ export function ProductCard({
             {onAdd && (
               <button
                 onClick={() => onAdd(p)}
-                className="rounded-full border-3 border-ink bg-cobalt px-3 py-1 label text-[10px] text-white transition hover:bg-cobalt-deep"
+                className={`rounded-full px-3 py-1 label text-[10px] transition ${
+                  dark ? 'bg-white text-ink hover:opacity-85' : 'bg-ink text-white hover:opacity-85'
+                }`}
               >
                 + Add
               </button>

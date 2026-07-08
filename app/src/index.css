@@ -2,21 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Self-hosted fonts (offline-capable PWA). Baloo 2 = rounded heavy display,
-   Hanken Grotesk = clean refined UI/body. Latin subsets only. */
+/* Self-hosted font (offline-capable PWA). Plus Jakarta Sans — a single
+   rounded, humanist family (Aptos-like) carrying both display and body
+   weight, Latin subset only. */
 @font-face {
-  font-family: 'Baloo 2';
+  font-family: 'Plus Jakarta Sans';
   font-style: normal;
-  font-weight: 400 800;
+  font-weight: 200 800;
   font-display: swap;
-  src: url('/fonts/baloo2-latin.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Hanken Grotesk';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/fonts/hanken-latin.woff2') format('woff2');
+  src: url('/fonts/plus-jakarta-sans-latin.woff2') format('woff2');
 }
 
 :root {
@@ -29,7 +23,7 @@ body,
   height: 100%;
 }
 
-/* The page itself never scrolls sideways; only designated marquees/rows do. */
+/* The page itself never scrolls sideways; only designated rows do. */
 html,
 body {
   overflow-x: clip;
@@ -40,20 +34,20 @@ body {
   font-feature-settings: 'kern' 1;
 }
 
-/* Rounded pop headline: Baloo 2 heavy, uppercase, tight leading — friendly,
-   not blocky. */
+/* Headline weight: bold, sentence case, tight leading. No forced uppercase —
+   that's what .label/.eyebrow are for. */
 .display {
-  @apply font-display font-extrabold uppercase leading-[0.95];
-  letter-spacing: -0.005em;
+  @apply font-display font-extrabold leading-[1.05];
+  letter-spacing: -0.015em;
 }
 
-/* Bold uppercase UI label. */
+/* Bold uppercase UI label — buttons, badges, small controls. */
 .label {
   @apply font-sans font-bold uppercase tracking-label;
 }
 
 .eyebrow {
-  @apply font-sans text-[11px] font-bold uppercase tracking-label text-cobalt;
+  @apply font-sans text-[11px] font-bold uppercase tracking-label text-muted;
 }
 
 /* White pill — the recurring shape: nav, buttons, cards. */
@@ -61,21 +55,19 @@ body {
   @apply rounded-full border-3 border-ink bg-panel;
 }
 
-/* Chunky pop button: a hard offset shadow that physically presses in on
-   hover/tap. The press is the whole point — it should feel springy. */
+/* Quiet interactive lift — replaces the old hard offset "pop" shadow with a
+   soft, minimal hover appropriate to the fancy-minimal register. */
 .pop-press {
-  box-shadow: 4px 4px 0 #384166;
   transition:
-    transform 0.14s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.14s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.16s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .pop-press:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 #384166;
+  opacity: 0.86;
 }
 .pop-press:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0 0 0 #384166;
+  transform: scale(0.98);
+  opacity: 0.75;
 }
 
 input:focus {
@@ -83,15 +75,6 @@ input:focus {
 }
 
 ::selection {
-  background: #384166;
+  background: #0b0b0c;
   color: #ffffff;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .animate-marquee-fast,
-  .animate-wobble,
-  .animate-bounce2 {
-    animation: none !important;
-  }
 }
