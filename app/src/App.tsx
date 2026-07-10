@@ -130,7 +130,7 @@ export default function App() {
 
       <header className="sticky top-0 z-30 border-b border-line bg-ice/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center px-5 py-4 sm:px-6">
-          <button onClick={goHome} className="display text-[27px] text-ink transition hover:opacity-70">
+          <button onClick={goHome} className="display text-[36px] text-ink transition hover:opacity-70">
             sensei
           </button>
         </div>
