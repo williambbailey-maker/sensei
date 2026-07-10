@@ -129,11 +129,10 @@ export default function App() {
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
       <header className="sticky top-0 z-30 border-b border-line bg-ice/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6">
-          <button onClick={goHome} className="display text-xl text-ink transition hover:opacity-70">
+        <div className="mx-auto flex max-w-6xl items-center px-5 py-4 sm:px-6">
+          <button onClick={goHome} className="display text-[27px] text-ink transition hover:opacity-70">
             sensei
           </button>
-          <span className="label text-[11px] text-muted">NYC · 21+ Only</span>
         </div>
       </header>
 

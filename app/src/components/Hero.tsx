@@ -99,9 +99,8 @@ export function Hero({
   return (
     <section>
       <div className="mx-auto max-w-xl px-6 pt-14 text-center sm:pt-20">
-        <p className="eyebrow">Start here</p>
-        <h1 className="display mt-4 text-[clamp(2.1rem,6vw,3.1rem)] text-ink">
-          Tell <span className="font-medium text-muted">sensei</span> what you want.
+        <h1 className="display text-[clamp(2.1rem,6vw,3.1rem)] text-ink">
+          Browse every NYC licensed dispensary in one place.
         </h1>
         <p className="mx-auto mt-3 max-w-md text-[15px] font-medium leading-relaxed text-muted">
           One search across every licensed NYC dispensary — price, potency &amp; pickup, instantly.
