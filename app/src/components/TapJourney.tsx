@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Ico } from './Ico'
-import { requestLocation } from '../lib/geo'
-import { BOROUGHS, BUDGETS, FORMATS, RADII, VIBES } from '../lib/labels'
-import { EMPTY_FILTERS, type Filters, type Format, type Vibe } from '../lib/types'
+import { BOROUGHS, BUDGETS, FORMATS, STRAINS } from '../lib/labels'
+import { EMPTY_FILTERS, type Filters } from '../lib/types'
 
-// 4 quick steps — location first. Big tappable cards, all skippable.
+// The core experience: a pure tap-through selection journey.
+// Borough → Neighborhood → Product type → Strain → Price → the product list.
+// One tap advances each step; every step is skippable.
 export function TapJourney({
   initial,
   neighborhoodsByBorough,
@@ -18,45 +19,53 @@ export function TapJourney({
 }) {
   const [step, setStep] = useState(0)
   const [f, setF] = useState<Filters>({ ...EMPTY_FILTERS, ...initial })
-  const [locating, setLocating] = useState(false)
-  const [locError, setLocError] = useState('')
 
-  const toggleVibe = (v: Vibe) =>
-    setF((prev) => ({
-      ...prev,
-      vibes: prev.vibes.includes(v) ? prev.vibes.filter((x) => x !== v) : [...prev.vibes, v].slice(0, 3),
-    }))
+  const STEPS = ['Borough', 'Neighborhood', 'Product type', 'Strain', 'Price']
+  const LAST = STEPS.length - 1
 
-  const nearMe = () => {
-    setLocError('')
-    setLocating(true)
-    requestLocation(
-      (loc) => {
-        setLocating(false)
-        setF((p) => ({ ...p, userLoc: loc, radiusMiles: p.radiusMiles ?? 2, borough: null, neighborhood: null }))
-      },
-      (msg) => {
-        setLocating(false)
-        setLocError(msg)
-      },
-    )
+  const hoodsFor = (borough: string | null) =>
+    borough ? (neighborhoodsByBorough[borough] ?? []) : []
+
+  // Move forward, skipping the neighborhood step when the chosen borough has
+  // none (or was skipped). Past the last step, hand off to the product list.
+  const advance = (from: number, draft: Filters) => {
+    let n = from + 1
+    if (n === 1 && hoodsFor(draft.borough).length === 0) n = 2
+    if (n > LAST) return onDone(draft)
+    setStep(n)
+  }
+  const goBack = (from: number) => {
+    let p = from - 1
+    if (p === 1 && hoodsFor(f.borough).length === 0) p = 0
+    if (p < 0) return onClose()
+    setStep(p)
   }
 
-  const steps = ['Where', 'Vibe', 'Product type', 'Budget']
-  const last = steps.length - 1
-  const neighborhoods = f.borough ? (neighborhoodsByBorough[f.borough] ?? []) : []
+  // A selection writes its filter, then advances.
+  const pick = (patch: Partial<Filters>) => {
+    const draft = { ...f, ...patch }
+    setF(draft)
+    advance(step, draft)
+  }
+  const skip = () => advance(step, f)
+
+  const neighborhoods = hoodsFor(f.borough)
 
   return (
     <div className="mx-auto max-w-2xl px-5 py-10 sm:px-6">
       <div className="mb-8 flex items-center justify-between">
-        <button
-          onClick={step === 0 ? onClose : () => setStep((s) => s - 1)}
-          className="inline-flex items-center gap-1.5 label text-[12px] text-muted transition hover:text-ink"
-        >
-          <Ico name="back" className="h-4 w-4" /> {step === 0 ? 'Home' : 'Back'}
-        </button>
+        {step === 0 ? (
+          <span className="label text-[12px] text-muted">Step 1 of {LAST + 1}</span>
+        ) : (
+          <button
+            onClick={() => goBack(step)}
+            className="inline-flex items-center gap-1.5 label text-[12px] text-muted transition hover:text-ink"
+          >
+            <Ico name="back" className="h-4 w-4" /> Back
+          </button>
+        )}
         <div className="flex gap-1.5">
-          {steps.map((_, i) => (
+          {STEPS.map((_, i) => (
             <span
               key={i}
               className={`h-1.5 w-8 rounded-full transition ${i <= step ? 'bg-ink' : 'bg-line'}`}
@@ -64,68 +73,31 @@ export function TapJourney({
           ))}
         </div>
         <button onClick={() => onDone(f)} className="label text-[12px] text-muted transition hover:text-ink">
-          Skip
+          See all →
         </button>
       </div>
 
       {step === 0 && (
-        <Step title="Where are you?" hint="This narrows things down the most — or skip for all NYC.">
-          <button
-            onClick={nearMe}
-            className={`mb-4 flex min-h-[60px] w-full items-center justify-center gap-2 rounded-2xl border border-ink p-4 label text-sm transition ${
-              f.userLoc ? 'bg-ink text-white' : 'bg-panel text-ink hover:bg-ice'
-            }`}
-          >
-            ◉ {locating ? 'Locating…' : f.userLoc ? 'Using your location' : 'Use my location'}
-          </button>
-          {locError && <p className="mb-4 label text-[11px] text-ink">{locError}</p>}
-          {f.userLoc ? (
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="eyebrow mr-1">Within</span>
-              {RADII.map((r) => (
-                <Chip key={r} active={f.radiusMiles === r} onClick={() => setF((p) => ({ ...p, radiusMiles: r }))}>
-                  {r} mi
-                </Chip>
-              ))}
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-2 gap-3">
-                {BOROUGHS.map((b) => (
-                  <Card
-                    key={b}
-                    active={f.borough === b}
-                    onClick={() => setF((p) => ({ ...p, borough: p.borough === b ? null : b, neighborhood: null }))}
-                  >
-                    {b}
-                  </Card>
-                ))}
-              </div>
-              {neighborhoods.length > 0 && (
-                <div className="mt-5 flex flex-wrap items-center gap-2">
-                  <span className="eyebrow mr-1">Narrow it</span>
-                  {neighborhoods.map((n) => (
-                    <Chip
-                      key={n}
-                      active={f.neighborhood === n}
-                      onClick={() => setF((p) => ({ ...p, neighborhood: p.neighborhood === n ? null : n }))}
-                    >
-                      {n}
-                    </Chip>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
+        <Step title="Where are you?" hint="Pick a borough — or see all of NYC.">
+          <div className="grid grid-cols-1 gap-3">
+            {BOROUGHS.map((b) => (
+              <Card key={b} active={f.borough === b} onClick={() => pick({ borough: b, neighborhood: null })}>
+                {b}
+              </Card>
+            ))}
+          </div>
         </Step>
       )}
 
       {step === 1 && (
-        <Step title="What's the vibe?" hint="Pick up to 3 — or skip.">
+        <Step title={`Where in ${f.borough}?`} hint="Choose a neighborhood — or all of them.">
           <div className="grid grid-cols-2 gap-3">
-            {VIBES.map((v) => (
-              <Card key={v.key} active={f.vibes.includes(v.key)} onClick={() => toggleVibe(v.key)}>
-                {v.label}
+            <Card active={f.neighborhood === null} onClick={() => pick({ neighborhood: null })}>
+              All {f.borough}
+            </Card>
+            {neighborhoods.map((n) => (
+              <Card key={n} active={f.neighborhood === n} onClick={() => pick({ neighborhood: n })}>
+                {n}
               </Card>
             ))}
           </div>
@@ -133,14 +105,10 @@ export function TapJourney({
       )}
 
       {step === 2 && (
-        <Step title="Product type?" hint="One pick, or skip for all.">
+        <Step title="What are you after?" hint="Pick a product type — or any.">
           <div className="grid grid-cols-2 gap-3">
             {FORMATS.map((fmt) => (
-              <Card
-                key={fmt.key}
-                active={f.format === fmt.key}
-                onClick={() => setF((p) => ({ ...p, format: p.format === fmt.key ? null : (fmt.key as Format) }))}
-              >
+              <Card key={fmt.key} active={f.format === fmt.key} onClick={() => pick({ format: fmt.key })}>
                 {fmt.label}
               </Card>
             ))}
@@ -149,13 +117,25 @@ export function TapJourney({
       )}
 
       {step === 3 && (
-        <Step title="Budget?" hint="Per item.">
+        <Step title="Which strain?" hint="Indica, sativa, hybrid — or any.">
+          <div className="grid grid-cols-1 gap-3">
+            {STRAINS.map((s) => (
+              <Card key={s} active={f.strain === s} onClick={() => pick({ strain: s })}>
+                {s}
+              </Card>
+            ))}
+          </div>
+        </Step>
+      )}
+
+      {step === 4 && (
+        <Step title="What's your budget?" hint="Per item — or no limit.">
           <div className="grid grid-cols-2 gap-3">
             {BUDGETS.map((b) => (
               <Card
                 key={b.label}
                 active={f.priceCeiling === b.ceiling}
-                onClick={() => setF((p) => ({ ...p, priceCeiling: b.ceiling, priceBand: b.band }))}
+                onClick={() => pick({ priceCeiling: b.ceiling, priceBand: b.band })}
               >
                 {b.label}
               </Card>
@@ -165,10 +145,10 @@ export function TapJourney({
       )}
 
       <button
-        onClick={step < last ? () => setStep((s) => s + 1) : () => onDone(f)}
-        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-ink px-5 py-3.5 label text-sm text-white"
+        onClick={skip}
+        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full border border-ink bg-panel px-5 py-3.5 label text-sm text-ink transition hover:bg-ice"
       >
-        {step < last ? 'Next →' : 'Show my matches →'}
+        {step < LAST ? 'Skip this step →' : 'Show my products →'}
       </button>
     </div>
   )
@@ -190,19 +170,6 @@ function Card({ active, onClick, children }: { active: boolean; onClick: () => v
       onClick={onClick}
       className={`flex min-h-[76px] items-center justify-center rounded-2xl border border-ink p-4 text-center label text-sm transition ${
         active ? 'bg-ink text-white' : 'bg-panel text-ink hover:bg-ice'
-      }`}
-    >
-      {children}
-    </button>
-  )
-}
-
-function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`rounded-full border border-ink px-4 py-2 label text-[11px] transition ${
-        active ? 'bg-ink text-white' : 'bg-white text-ink hover:bg-ice'
       }`}
     >
       {children}
