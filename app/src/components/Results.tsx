@@ -25,6 +25,10 @@ export function Results({
   onAdd?: (p: Product) => void
 }) {
   const ranked = useMemo(() => rankProducts(products, filters), [products, filters])
+  // Render a bounded slice so a broad match set (thousands of products) stays
+  // smooth; the heading still reports the true total.
+  const CAP = 240
+  const shown = ranked.slice(0, CAP)
 
   const where = filters.userLoc
     ? `within ${filters.radiusMiles} mi of you`
@@ -70,11 +74,18 @@ export function Results({
           </p>
         </div>
       ) : (
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {ranked.map((p) => (
-            <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onAdd={onAdd} />
-          ))}
-        </div>
+        <>
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {shown.map((p) => (
+              <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onAdd={onAdd} />
+            ))}
+          </div>
+          {ranked.length > CAP && (
+            <p className="mt-6 text-center text-sm font-semibold text-muted">
+              Showing the first {CAP} of {ranked.length.toLocaleString()} — refine above to narrow it down.
+            </p>
+          )}
+        </>
       )}
 
       <div className="mt-14">

@@ -17,14 +17,43 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 const PRODUCT_COLS =
   'id,external_id,name,clean_name,brand,clean_brand,category,strain_type,thc_pct,cbd_pct,variants,price_min,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng)'
 
+// PostgREST caps each response (typically 1000 rows), so a single request only
+// ever returns a slice of the ~37k in-stock catalog — which made results look
+// sparse once a neighborhood/type was chosen. Page through the whole set: read
+// the first page (with an exact count) to learn the total, then fetch the
+// remaining pages in parallel. A stable id ordering keeps pages from
+// overlapping or skipping rows.
+const PRODUCT_PAGE = 1000
+
 export async function fetchProducts(): Promise<Product[]> {
-  const { data, error } = await supabase
+  const first = await supabase
     .from('products')
-    .select(PRODUCT_COLS)
+    .select(PRODUCT_COLS, { count: 'exact' })
     .eq('in_stock', true)
-    .limit(5000)
-  if (error) throw error
-  return (data ?? []) as unknown as Product[]
+    .order('id', { ascending: true })
+    .range(0, PRODUCT_PAGE - 1)
+  if (first.error) throw first.error
+  const rows = (first.data ?? []) as unknown as Product[]
+  const total = first.count ?? rows.length
+  const pages = Math.ceil(total / PRODUCT_PAGE)
+  if (pages <= 1) return rows
+
+  const rest = await Promise.all(
+    Array.from({ length: pages - 1 }, (_, i) => {
+      const from = (i + 1) * PRODUCT_PAGE
+      return supabase
+        .from('products')
+        .select(PRODUCT_COLS)
+        .eq('in_stock', true)
+        .order('id', { ascending: true })
+        .range(from, from + PRODUCT_PAGE - 1)
+        .then((r) => {
+          if (r.error) throw r.error
+          return (r.data ?? []) as unknown as Product[]
+        })
+    }),
+  )
+  return rows.concat(...rest)
 }
 
 // The stores table is tiny and drives the location UI (borough ->
