@@ -1,5 +1,5 @@
 import { Ico } from './Ico'
-import { vibeLabel } from '../lib/labels'
+import { sizeLabel, vibeLabel } from '../lib/labels'
 import type { Filters } from '../lib/types'
 
 // Removable chips for the "soft" signals from vibe search or the journey.
@@ -16,6 +16,8 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
   }
   if (f.experience) chips.push({ label: f.experience, clear: () => onChange({ ...f, experience: null }) })
   if (f.priceBand) chips.push({ label: f.priceBand, clear: () => onChange({ ...f, priceBand: null }) })
+  if (f.thcMin != null) chips.push({ label: `${f.thcMin}%+ THC`, clear: () => onChange({ ...f, thcMin: null }) })
+  if (f.size) chips.push({ label: sizeLabel(f.size), clear: () => onChange({ ...f, size: null }) })
   if (f.text) chips.push({ label: `"${f.text}"`, clear: () => onChange({ ...f, text: '' }) })
 
   if (chips.length === 0) return null

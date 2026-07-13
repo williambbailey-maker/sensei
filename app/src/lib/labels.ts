@@ -27,6 +27,39 @@ export const BUDGETS: { label: string; ceiling: number | null; band: '$' | '$$' 
 
 export const STRAINS: Strain[] = ['Indica', 'Sativa', 'Hybrid']
 
+// Minimum-THC filter thresholds (percent). Applied as "this % or higher".
+export const THC_MINS = [15, 20, 25, 30]
+
+// "Quantity" (pack size) buckets, matched against a product's variant weights
+// normalized to grams. Ranges are midpoint-based around the standard retail
+// sizes, so 1/8oz and 3.5g both land in the eighth. max is exclusive.
+export const SIZES: { key: string; label: string; min: number; max: number }[] = [
+  { key: '1g', label: '1g', min: 0, max: 1.5 },
+  { key: 'eighth', label: 'Eighth · 3.5g', min: 1.5, max: 5.25 },
+  { key: 'quarter', label: 'Quarter · 7g', min: 5.25, max: 10.5 },
+  { key: 'half', label: 'Half · 14g', min: 10.5, max: 21 },
+  { key: 'ounce', label: 'Ounce · 28g', min: 21, max: Infinity },
+]
+
+export const sizeLabel = (key: string) => SIZES.find((s) => s.key === key)?.label ?? key
+
+// Normalize a Dutchie variant weight string to grams. Handles g, mg, oz and
+// fractional ounces (1/8oz, 1/4oz). Returns null when unparseable.
+export function weightToGrams(w: string | null | undefined): number | null {
+  if (!w) return null
+  const s = String(w).toLowerCase().trim()
+  const frac = s.match(/^(\d+)\s*\/\s*(\d+)\s*oz/)
+  if (frac) return (Number(frac[1]) / Number(frac[2])) * 28.3495
+  const oz = s.match(/([\d.]+)\s*oz/)
+  if (oz) return Number(oz[1]) * 28.3495
+  const mg = s.match(/([\d.]+)\s*mg/)
+  if (mg) return Number(mg[1]) / 1000
+  const g = s.match(/([\d.]+)\s*g/)
+  if (g) return Number(g[1])
+  const n = s.match(/[\d.]+/)
+  return n ? Number(n[0]) : null
+}
+
 // Boroughs offered in the pickers. Bronx and Staten Island are parked until
 // they have stocked stores. Neighborhood lists are data-driven.
 export const BOROUGHS = ['Manhattan', 'Brooklyn', 'Queens']

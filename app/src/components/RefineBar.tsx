@@ -1,4 +1,4 @@
-import { BOROUGHS, BUDGETS, FORMATS, RADII, SORTS, STRAINS } from '../lib/labels'
+import { BOROUGHS, BUDGETS, FORMATS, RADII, SIZES, SORTS, STRAINS, THC_MINS } from '../lib/labels'
 import type { Filters, Format, SortKey, Strain } from '../lib/types'
 
 // Objective controls on the results screen. Location leads: borough →
@@ -69,6 +69,20 @@ export function RefineBar({
           ...BUDGETS.filter((b) => b.ceiling != null).map((b) => ({ value: String(b.ceiling), label: b.label })),
         ]}
         active={f.priceCeiling != null}
+      />
+      <Select
+        label="THC"
+        value={f.thcMin == null ? '' : String(f.thcMin)}
+        onChange={(v) => onChange({ ...f, thcMin: v ? Number(v) : null })}
+        options={[{ value: '', label: 'Any THC' }, ...THC_MINS.map((t) => ({ value: String(t), label: `${t}%+ THC` }))]}
+        active={f.thcMin != null}
+      />
+      <Select
+        label="Quantity"
+        value={f.size ?? ''}
+        onChange={(v) => onChange({ ...f, size: v || null })}
+        options={[{ value: '', label: 'Any quantity' }, ...SIZES.map((s) => ({ value: s.key, label: s.label }))]}
+        active={f.size != null}
       />
       <div className="ml-auto">
         <Select
