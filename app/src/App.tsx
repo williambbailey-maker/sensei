@@ -107,35 +107,13 @@ export default function App() {
       <IntroSlice />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      {/* Transparent, borderless header — the page flows under it; only the
-          wordmark and the menu float on top. */}
+      {/* Transparent, borderless header pinned to the top — the page flows
+          under it; only the wordmark sits on top. */}
       <header className="sticky top-0 z-30 bg-transparent">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6">
-          <button onClick={restart} className="display text-[36px] text-ink transition hover:opacity-70">
+        <div className="mx-auto flex max-w-6xl items-center px-5 py-4 sm:px-6">
+          <button onClick={restart} className="display text-[43px] text-ink transition hover:opacity-70">
             sensei
           </button>
-          <label className="relative">
-            <span className="sr-only">Menu</span>
-            <select
-              aria-label="Menu"
-              defaultValue=""
-              className="appearance-none rounded-full border border-ink bg-panel/80 px-4 py-2 pr-8 label text-[11px] text-ink backdrop-blur transition hover:bg-ice focus:outline-none"
-            >
-              <option value="" disabled hidden>
-                Menu
-              </option>
-              <option value="sample">Sample</option>
-            </select>
-            <svg
-              className="pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 text-ink"
-              viewBox="0 0 12 12"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M3 4.5 6 7.5 9 4.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </label>
         </div>
       </header>
 
