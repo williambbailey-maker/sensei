@@ -4,17 +4,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Fancy-minimal monochrome system: near-black ink, soft paper white,
-        // a brighter white for cards, and a steel grey for quiet metal
-        // accents (the katana in the intro, hairline dividers).
-        ink: '#0B0B0C', // primary text, borders, solid fills
-        ice: '#F6F5F2', // page background (soft paper)
-        panel: '#FBFAF8', // card/panel background (brighter white)
-        muted: '#85837E', // secondary text
-        line: 'rgba(11,11,12,0.13)', // hairline dividers/borders on white
-        'line-dark': 'rgba(246,245,242,0.16)', // hairline dividers/borders on black
-        steel: '#C7CAD0',
-        'steel-dim': '#9A9DA3',
+        // Earthy botanical system: warm parchment page, cream cards, warm
+        // charcoal ink, taupe secondary text — with sage-green and terracotta
+        // (clay) as the living accents. Steel tokens stay warm neutral taupes
+        // (potency dots, quiet text on dark cards).
+        ink: '#2B2A24', // primary text, borders, solid fills (warm charcoal)
+        ice: '#F1EBDD', // page background (warm parchment)
+        panel: '#FBF6EA', // card/panel background (cream)
+        muted: '#8B8271', // secondary text (warm taupe)
+        line: 'rgba(43,42,36,0.14)', // hairline dividers/borders on cream
+        'line-dark': 'rgba(241,235,221,0.18)', // hairline dividers/borders on charcoal
+        steel: '#C3BBAA', // warm light taupe (potency dot, quiet accents on dark)
+        'steel-dim': '#A79E8C', // warm taupe (secondary text on dark)
+        // Living accents
+        sage: '#5F7A4B', // primary botanical accent — selected states, key actions
+        'sage-deep': '#4B6339', // deeper sage (hover)
+        'sage-soft': '#E5E7D2', // quiet sage tint for backgrounds
+        clay: '#B4603C', // warm terracotta accent
+        'clay-deep': '#9A4F30', // deeper terracotta (hover)
       },
       fontFamily: {
         // One rounded, humanist family (Aptos-like) for both display and body —

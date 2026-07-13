@@ -68,7 +68,7 @@ export function TapJourney({
           {STEPS.map((_, i) => (
             <span
               key={i}
-              className={`h-1.5 w-8 rounded-full transition ${i <= step ? 'bg-ink' : 'bg-line'}`}
+              className={`h-1.5 w-8 rounded-full transition ${i <= step ? 'bg-sage' : 'bg-line'}`}
             />
           ))}
         </div>
@@ -169,7 +169,7 @@ function Card({ active, onClick, children }: { active: boolean; onClick: () => v
     <button
       onClick={onClick}
       className={`flex min-h-[76px] items-center justify-center rounded-2xl border border-ink p-4 text-center label text-sm transition ${
-        active ? 'bg-ink text-white' : 'bg-panel text-ink hover:bg-ice'
+        active ? 'bg-sage text-white' : 'bg-panel text-ink hover:bg-sage-soft'
       }`}
     >
       {children}

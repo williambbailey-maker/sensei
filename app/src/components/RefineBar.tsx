@@ -103,7 +103,7 @@ function Select({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={`appearance-none rounded-full border border-ink px-4 py-2 pr-8 label text-[11px] transition focus:outline-none ${
-          active ? 'bg-ink text-white' : 'bg-white text-ink hover:bg-ice'
+          active ? 'bg-sage text-white' : 'bg-white text-ink hover:bg-sage-soft'
         }`}
       >
         {options.map((o) => (
