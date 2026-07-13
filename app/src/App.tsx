@@ -124,7 +124,7 @@ export default function App() {
             <span className="flex items-center gap-2">
               <button
                 onClick={() => go('cart')}
-                className="rounded-full bg-ink px-4 py-1.5 label text-[12px] text-white transition hover:opacity-85"
+                className="rounded-full bg-sage px-4 py-1.5 label text-[12px] text-white transition hover:bg-sage-deep"
               >
                 View · {cartCount}
               </button>
@@ -149,6 +149,17 @@ export default function App() {
 
       {view === 'journey' && (
         <main>
+          {/* Landing header — the introductory sentence sits above the flow. */}
+          <div className="mx-auto max-w-2xl px-5 pt-9 text-center sm:px-6">
+            <p className="eyebrow text-sage">Every dispensary · one counter</p>
+            <h1 className="display mt-3 text-[clamp(1.9rem,5.5vw,2.9rem)] text-ink">
+              Browse every NYC licensed dispensary in one place.
+            </h1>
+            <p className="mx-auto mt-3 max-w-md text-[15px] font-medium leading-relaxed text-muted">
+              Compare price, potency &amp; pickup across every licensed NYC dispensary — then order
+              where it's right.
+            </p>
+          </div>
           <TapJourney
             initial={filters}
             neighborhoodsByBorough={neighborhoodsByBorough}
@@ -194,7 +205,7 @@ export default function App() {
       {cartCount > 0 && view !== 'cart' && (
         <button
           onClick={() => go('cart')}
-          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-ink px-6 py-3.5 label text-[12px] text-white shadow-soft-lg transition hover:-translate-y-0.5 hover:opacity-90"
+          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-clay px-6 py-3.5 label text-[12px] text-white shadow-soft-lg transition hover:-translate-y-0.5 hover:bg-clay-deep"
         >
           Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
         </button>
@@ -216,7 +227,7 @@ export default function App() {
               </p>
             </div>
             <div className="sm:pl-6">
-              <p className="eyebrow text-steel">The weekly drop</p>
+              <p className="eyebrow text-sage-soft">The weekly drop</p>
               <p className="mt-2 text-sm font-medium text-white/75">
                 Deals and standouts, once a week. No spam.
               </p>

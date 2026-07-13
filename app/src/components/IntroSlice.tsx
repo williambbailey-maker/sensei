@@ -22,7 +22,6 @@ function readShouldPlayIntro(): boolean {
 // underneath is revealed. First-load only, once per tab session.
 export function IntroSlice() {
   const [playing, setPlaying] = useState(readShouldPlayIntro)
-  const [skipping, setSkipping] = useState(false)
 
   useEffect(() => {
     if (!playing) return
@@ -43,14 +42,8 @@ export function IntroSlice() {
 
   if (!playing) return null
 
-  const skip = () => {
-    setSkipping(true)
-    document.body.style.overflow = ''
-    setTimeout(() => setPlaying(false), 210)
-  }
-
   return (
-    <div className={skipping ? 'sen-intro sen-skip-out' : 'sen-intro'} aria-hidden="true">
+    <div className="sen-intro" aria-hidden="true">
       <div className="sen-intro-stage">
         <span className="sen-intro-word sen-half-a">SENSEI</span>
         <span className="sen-intro-word sen-half-b">SENSEI</span>
@@ -74,9 +67,6 @@ export function IntroSlice() {
         </svg>
       </div>
       <div className="sen-flash-screen" />
-      <button type="button" className="sen-skip-btn" onClick={skip}>
-        Skip intro
-      </button>
     </div>
   )
 }
