@@ -1,4 +1,5 @@
 import { haversineMiles } from './geo'
+import { SIZES, weightToGrams } from './labels'
 import { hasStructuredFilter, type Filters, type Product } from './types'
 
 const POTENCY_ORDER: Record<string, number> = { mild: 0, medium: 1, strong: 2 }
@@ -29,6 +30,18 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     }
     if (f.priceCeiling != null && (p.price_min ?? Infinity) > f.priceCeiling) return false
     if (f.priceBand && p.price_band !== f.priceBand) return false
+    if (f.thcMin != null && (p.thc_pct == null || p.thc_pct < f.thcMin)) return false
+    if (f.size) {
+      const bucket = SIZES.find((s) => s.key === f.size)
+      // A product qualifies if any of its variants falls in the size bucket.
+      if (bucket) {
+        const ok = (p.variants ?? []).some((v) => {
+          const g = weightToGrams(v.weight)
+          return g != null && g >= bucket.min && g < bucket.max
+        })
+        if (!ok) return false
+      }
+    }
     if (!structured && query) {
       const hay = `${p.clean_name ?? p.name ?? ''} ${p.clean_brand ?? p.brand ?? ''}`.toLowerCase()
       if (!hay.includes(query)) return false

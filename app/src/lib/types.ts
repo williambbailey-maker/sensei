@@ -74,6 +74,12 @@ export type Filters = {
   experience: 'beginner' | 'casual' | 'experienced' | null
   priceCeiling: number | null
   priceBand: '$' | '$$' | '$$$' | null
+  // Minimum THC potency (percent). Products without a % potency are excluded
+  // when this is set.
+  thcMin: number | null
+  // "Quantity" — a pack-size bucket key (see SIZES in labels); matched against
+  // a product's variant weights normalized to grams.
+  size: string | null
   // Location — the primary qualifier. Either borough (+ optional
   // neighborhood), or the user's coordinates with a mile radius.
   borough: string | null
@@ -91,6 +97,8 @@ export const EMPTY_FILTERS: Filters = {
   experience: null,
   priceCeiling: null,
   priceBand: null,
+  thcMin: null,
+  size: null,
   borough: null,
   neighborhood: null,
   userLoc: null,
@@ -124,6 +132,8 @@ export function hasStructuredFilter(f: Filters): boolean {
     f.experience !== null ||
     f.priceCeiling !== null ||
     f.priceBand !== null ||
+    f.thcMin !== null ||
+    f.size !== null ||
     f.borough !== null ||
     f.neighborhood !== null ||
     f.userLoc !== null
