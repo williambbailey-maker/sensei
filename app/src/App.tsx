@@ -1,32 +1,27 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
-import { Hero } from './components/Hero'
 import { IntroSlice } from './components/IntroSlice'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
 import { fetchDeals, fetchProducts, fetchStores } from './lib/supabase'
-import { parseQuery } from './lib/parser'
 import { prettyStore } from './lib/labels'
 import {
   EMPTY_FILTERS,
-  hasLocation,
-  locationOf,
   type Cart,
   type Deal,
   type Filters,
   type Product,
   type StoreLite,
-  type Vibe,
 } from './lib/types'
 
-type View = 'home' | 'journey' | 'results' | 'cart'
+type View = 'journey' | 'results' | 'cart'
 
 export default function App() {
   const [ageOk, confirmAge] = useAgeGate()
-  const [view, setView] = useState<View>('home')
+  const [view, setView] = useState<View>('journey')
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
   const [products, setProducts] = useState<Product[]>([])
   const [stores, setStores] = useState<StoreLite[]>([])
@@ -101,27 +96,11 @@ export default function App() {
     return Object.fromEntries(Object.entries(map).map(([b, set]) => [b, [...set].sort()]))
   }, [stores])
 
-  const setLocation = (patch: Partial<Filters>) => setFilters((prev) => ({ ...prev, ...patch }))
-
-  const search = (text: string) => {
-    const parsed = parseQuery(text)
-    setFilters({ ...parsed, ...(parsed.borough ? {} : locationOf(filters)) })
-    go('results')
-  }
-  const quickVibe = (v: Vibe) => {
-    setFilters({ ...EMPTY_FILTERS, ...locationOf(filters), vibes: [v] })
-    go('results')
-  }
-  const quickFilter = (patch: Partial<Filters>) => {
-    setFilters({ ...EMPTY_FILTERS, ...locationOf(filters), ...patch })
-    go('results')
-  }
-
-  const goHome = () => {
+  // Start a fresh journey from the top.
+  const restart = () => {
     setFilters(EMPTY_FILTERS)
-    go('home')
+    go('journey')
   }
-
 
   return (
     <div className="min-h-full">
@@ -130,7 +109,7 @@ export default function App() {
 
       <header className="sticky top-0 z-30 border-b border-line bg-ice/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center px-5 py-4 sm:px-6">
-          <button onClick={goHome} className="display text-[36px] text-ink transition hover:opacity-70">
+          <button onClick={restart} className="display text-[36px] text-ink transition hover:opacity-70">
             sensei
           </button>
         </div>
@@ -168,24 +147,6 @@ export default function App() {
         </div>
       )}
 
-      {view === 'home' && (
-        <main>
-          <Hero
-            filters={filters}
-            products={scopedProducts}
-            neighborhoodsByBorough={neighborhoodsByBorough}
-            onLocation={setLocation}
-            onSearch={search}
-            onVibe={quickVibe}
-            onBrowse={() => go('journey')}
-            onQuick={quickFilter}
-            onAdd={addToCart}
-          />
-          {hasLocation(filters) && <Deals deals={deals} />}
-          <div className="pb-16" />
-        </main>
-      )}
-
       {view === 'journey' && (
         <main>
           <TapJourney
@@ -195,7 +156,7 @@ export default function App() {
               setFilters(f)
               go('results')
             }}
-            onClose={() => go('home')}
+            onClose={restart}
           />
         </main>
       )}
@@ -207,10 +168,12 @@ export default function App() {
             filters={filters}
             neighborhoodsByBorough={neighborhoodsByBorough}
             onChange={setFilters}
-            onHome={() => go('home')}
+            onHome={restart}
             onEdit={() => go('journey')}
             onAdd={addToCart}
           />
+          <Deals deals={deals} />
+          <div className="pb-16" />
         </main>
       )}
 
