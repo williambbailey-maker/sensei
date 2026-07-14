@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Ico } from './Ico'
-import { BOROUGHS, BUDGETS, FORMATS, STRAINS } from '../lib/labels'
+import { BOROUGHS, BUDGETS, FORMATS, SIZES, STRAINS } from '../lib/labels'
 import { EMPTY_FILTERS, type Filters } from '../lib/types'
 
 // The core experience: a pure tap-through selection journey.
-// Borough → Neighborhood → Product type → Strain → Price → the product list.
-// One tap advances each step; every step is skippable.
+// Borough → Neighborhood → Product type → Strain → Quantity (flower only) →
+// Price → the product list. One tap advances each step; every step is skippable.
 export function TapJourney({
   initial,
   neighborhoodsByBorough,
@@ -20,23 +20,31 @@ export function TapJourney({
   const [step, setStep] = useState(0)
   const [f, setF] = useState<Filters>({ ...EMPTY_FILTERS, ...initial })
 
-  const STEPS = ['Borough', 'Neighborhood', 'Product type', 'Strain', 'Price']
+  const STEPS = ['Borough', 'Neighborhood', 'Product type', 'Strain', 'Quantity', 'Price']
   const LAST = STEPS.length - 1
 
   const hoodsFor = (borough: string | null) =>
     borough ? (neighborhoodsByBorough[borough] ?? []) : []
 
-  // Move forward, skipping the neighborhood step when the chosen borough has
-  // none (or was skipped). Past the last step, hand off to the product list.
+  // Which steps apply to the current draft: the neighborhood step needs
+  // neighborhoods to exist, and the quantity (pack size) step is flower-only.
+  const stepVisible = (i: number, draft: Filters) => {
+    if (i === 1) return hoodsFor(draft.borough).length > 0
+    if (i === 4) return draft.format === 'flower'
+    return true
+  }
+
+  // Move to the next/previous applicable step; past the last, hand off to the
+  // product list.
   const advance = (from: number, draft: Filters) => {
     let n = from + 1
-    if (n === 1 && hoodsFor(draft.borough).length === 0) n = 2
+    while (n <= LAST && !stepVisible(n, draft)) n++
     if (n > LAST) return onDone(draft)
     setStep(n)
   }
   const goBack = (from: number) => {
     let p = from - 1
-    if (p === 1 && hoodsFor(f.borough).length === 0) p = 0
+    while (p >= 0 && !stepVisible(p, f)) p--
     if (p < 0) return onClose()
     setStep(p)
   }
@@ -50,12 +58,15 @@ export function TapJourney({
   const skip = () => advance(step, f)
 
   const neighborhoods = hoodsFor(f.borough)
+  // Progress reflects only the steps that apply to the current path.
+  const visibleSteps = STEPS.map((_, i) => i).filter((i) => stepVisible(i, f))
+  const currentPos = visibleSteps.indexOf(step)
 
   return (
     <div className="mx-auto max-w-2xl px-5 py-10 sm:px-6">
       <div className="mb-8 flex items-center justify-between">
         {step === 0 ? (
-          <span className="label text-[12px] text-muted">Step 1 of {LAST + 1}</span>
+          <span className="label text-[12px] text-muted">Step 1 of {visibleSteps.length}</span>
         ) : (
           <button
             onClick={() => goBack(step)}
@@ -65,10 +76,10 @@ export function TapJourney({
           </button>
         )}
         <div className="flex gap-1.5">
-          {STEPS.map((_, i) => (
+          {visibleSteps.map((i, j) => (
             <span
               key={i}
-              className={`h-1.5 w-8 rounded-full transition ${i <= step ? 'bg-sage' : 'bg-line'}`}
+              className={`h-1.5 w-8 rounded-full transition ${j <= currentPos ? 'bg-sage' : 'bg-line'}`}
             />
           ))}
         </div>
@@ -108,7 +119,12 @@ export function TapJourney({
         <Step title="What are you after?" hint="Pick a product type — or any.">
           <div className="grid grid-cols-2 gap-3">
             {FORMATS.map((fmt) => (
-              <Card key={fmt.key} active={f.format === fmt.key} onClick={() => pick({ format: fmt.key })}>
+              <Card
+                key={fmt.key}
+                active={f.format === fmt.key}
+                // Size only applies to flower; clear it when another type is chosen.
+                onClick={() => pick({ format: fmt.key, ...(fmt.key === 'flower' ? {} : { size: null }) })}
+              >
                 {fmt.label}
               </Card>
             ))}
@@ -129,6 +145,18 @@ export function TapJourney({
       )}
 
       {step === 4 && (
+        <Step title="How much?" hint="Pick a size — or any amount.">
+          <div className="grid grid-cols-2 gap-3">
+            {SIZES.map((s) => (
+              <Card key={s.key} active={f.size === s.key} onClick={() => pick({ size: s.key })}>
+                {s.label}
+              </Card>
+            ))}
+          </div>
+        </Step>
+      )}
+
+      {step === 5 && (
         <Step title="What's your budget?" hint="Per item — or no limit.">
           <div className="grid grid-cols-2 gap-3">
             {BUDGETS.map((b) => (
