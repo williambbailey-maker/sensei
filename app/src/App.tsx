@@ -23,6 +23,9 @@ export default function App() {
   const [ageOk, confirmAge] = useAgeGate()
   const [view, setView] = useState<View>('journey')
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
+  // Bumped on restart to force the journey to remount at step one, even when
+  // we're already on the journey view (e.g. tapping the logo mid-flow).
+  const [journeyKey, setJourneyKey] = useState(0)
   const [products, setProducts] = useState<Product[]>([])
   const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
@@ -99,6 +102,7 @@ export default function App() {
   // Start a fresh journey from the top.
   const restart = () => {
     setFilters(EMPTY_FILTERS)
+    setJourneyKey((k) => k + 1)
     go('journey')
   }
 
@@ -163,6 +167,7 @@ export default function App() {
             </p>
           </div>
           <TapJourney
+            key={journeyKey}
             initial={filters}
             neighborhoodsByBorough={neighborhoodsByBorough}
             onDone={(f) => {
