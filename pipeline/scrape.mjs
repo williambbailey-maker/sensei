@@ -82,6 +82,24 @@ function potencyPct(content) {
   return vals.length ? Math.max(...vals) : null
 }
 
+// Dutchie product descriptions often carry light HTML entities/tags. Strip to
+// clean, single-spaced text and cap the length so rows stay lean.
+function cleanDescription(raw) {
+  if (!raw || typeof raw !== 'string') return null
+  const text = raw
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<\/(p|div|li|h\d)>/gi, ' ')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&#39;|&rsquo;|&apos;/gi, "'")
+    .replace(/&quot;|&ldquo;|&rdquo;/gi, '"')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (!text) return null
+  return text.length > 1500 ? text.slice(0, 1497).trimEnd() + '…' : text
+}
+
 export function mapApiProduct(prod, storeId, slug, fallbackCat) {
   const options = Array.isArray(prod.Options) ? prod.Options : []
   const rec = Array.isArray(prod.recPrices) && prod.recPrices.length
@@ -114,6 +132,7 @@ export function mapApiProduct(prod, storeId, slug, fallbackCat) {
     external_id: String(cName),
     name: prod.Name || null,
     brand: brandName,
+    description: cleanDescription(prod.Description ?? prod.description),
     category: normCategory(prod.type, fallbackCat),
     strain_type: strain,
     thc_pct: potencyPct(prod.THCContent) ?? num(prod.THC),

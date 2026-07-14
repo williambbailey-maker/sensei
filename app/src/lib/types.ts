@@ -18,6 +18,7 @@ export type Product = {
   clean_name: string | null
   brand: string | null
   clean_brand: string | null
+  description: string | null
   category: string | null
   strain_type: string | null
   thc_pct: number | null
