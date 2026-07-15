@@ -183,10 +183,20 @@ export function ProductCard({
                 {weights?.length > 0 && <span className="text-ink">{weights.join(' · ')}</span>}
                 {potency}
                 {p.strain_type && <span>{p.strain_type}</span>}
-                {(p.vibes ?? []).map((v) => (
-                  <span key={v}>{vibeLabel(v)}</span>
-                ))}
               </div>
+
+              {(p.effects?.length ?? 0) > 0 && (
+                <div className="mt-3">
+                  <p className="label text-[10px] text-muted">Effects</p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {p.effects!.slice(0, 8).map((e) => (
+                      <span key={e} className="rounded-full bg-sage-soft px-2.5 py-1 label text-[10px] text-ink">
+                        {e}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="mt-4 border-t border-line pt-4">
                 <p className="label text-[10px] text-muted">Dispensary</p>
@@ -199,9 +209,19 @@ export function ProductCard({
                 )}
               </div>
 
-              <p className="mt-4 text-[13px] leading-relaxed text-ink/75">
-                {p.description || 'No description yet — it’ll appear after the next menu sync.'}
-              </p>
+              {/* Product-level description if we have it, else the brand blurb. */}
+              {p.description ? (
+                <p className="mt-4 text-[13px] leading-relaxed text-ink/75">{p.description}</p>
+              ) : p.brand_description ? (
+                <div className="mt-4">
+                  <p className="label text-[10px] text-muted">About {brand ?? 'the brand'}</p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-ink/75">{p.brand_description}</p>
+                </div>
+              ) : (
+                <p className="mt-4 text-[13px] leading-relaxed text-ink/60">
+                  No description yet — it’ll appear after the next menu sync.
+                </p>
+              )}
 
               <div className="mt-5 flex items-center gap-2.5">
                 {p.url && (

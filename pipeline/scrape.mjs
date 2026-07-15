@@ -100,6 +100,23 @@ function cleanDescription(raw) {
   return text.length > 1500 ? text.slice(0, 1497).trimEnd() + '…' : text
 }
 
+// Dutchie's `effects` come as an array of strings or small objects; normalize
+// to a deduped list of effect names.
+function extractEffects(raw) {
+  if (!Array.isArray(raw)) return null
+  const out = []
+  for (const e of raw) {
+    let v = null
+    if (typeof e === 'string') v = e
+    else if (e && typeof e === 'object') v = e.name || e.effect || e.displayName || e.label || null
+    if (v && typeof v === 'string') {
+      const s = v.trim()
+      if (s && !out.includes(s)) out.push(s)
+    }
+  }
+  return out.length ? out.slice(0, 8) : null
+}
+
 export function mapApiProduct(prod, storeId, slug, fallbackCat) {
   const options = Array.isArray(prod.Options) ? prod.Options : []
   const rec = Array.isArray(prod.recPrices) && prod.recPrices.length
@@ -132,7 +149,10 @@ export function mapApiProduct(prod, storeId, slug, fallbackCat) {
     external_id: String(cName),
     name: prod.Name || null,
     brand: brandName,
+    // Product-level description isn't in Dutchie's menu feed; the brand blurb is.
     description: cleanDescription(prod.Description ?? prod.description),
+    brand_description: cleanDescription(prod.brand?.description),
+    effects: extractEffects(prod.effects),
     category: normCategory(prod.type, fallbackCat),
     strain_type: strain,
     thc_pct: potencyPct(prod.THCContent) ?? num(prod.THC),
