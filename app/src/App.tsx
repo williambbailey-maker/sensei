@@ -99,6 +99,18 @@ export default function App() {
     return Object.fromEntries(Object.entries(map).map(([b, set]) => [b, [...set].sort()]))
   }, [stores])
 
+  // Store counts drive the swatch-block captions on the location steps.
+  const boroughCounts = useMemo(() => {
+    const m: Record<string, number> = {}
+    for (const st of stores) if (st.borough) m[st.borough] = (m[st.borough] ?? 0) + 1
+    return m
+  }, [stores])
+  const neighborhoodCounts = useMemo(() => {
+    const m: Record<string, number> = {}
+    for (const st of stores) if (st.neighborhood) m[st.neighborhood] = (m[st.neighborhood] ?? 0) + 1
+    return m
+  }, [stores])
+
   // Start a fresh journey from the top.
   const restart = () => {
     setFilters(EMPTY_FILTERS)
@@ -174,6 +186,8 @@ export default function App() {
             key={journeyKey}
             initial={filters}
             neighborhoodsByBorough={neighborhoodsByBorough}
+            boroughCounts={boroughCounts}
+            neighborhoodCounts={neighborhoodCounts}
             onDone={(f) => {
               setFilters(f)
               go('results')
