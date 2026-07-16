@@ -8,7 +8,7 @@ export default {
         // color and glassmorphic surfaces. Existing token names are re-pointed
         // for a dark theme (ink = white text/strokes; ice = onyx page), plus
         // explicit yellow/onyx/charcoal names for new fluid components.
-        yellow: '#FDE047', // the "shout" color
+        yellow: '#2FE3A0', // the "shout" color — jade (calm/plant, not taxi)
         onyx: '#0A0A0A', // deep void background
         charcoal: '#171717', // secondary dark panels
         voidgray: '#262626', // UI in the void
@@ -22,13 +22,13 @@ export default {
         muted: '#A3A3A3', // secondary text (gray)
         line: 'rgba(255,255,255,0.14)',
         'line-dark': 'rgba(255,255,255,0.10)',
-        sage: '#FDE047', // primary accent → cyber yellow
-        'sage-deep': '#EACA18',
-        'sage-soft': 'rgba(253,224,71,0.16)',
-        clay: '#FDE047',
-        'clay-deep': '#EACA18',
-        blue: '#FDE047',
-        'blue-d': '#EACA18',
+        sage: '#2FE3A0', // primary accent → jade
+        'sage-deep': '#22C48A',
+        'sage-soft': 'rgba(47,227,160,0.16)',
+        clay: '#2FE3A0',
+        'clay-deep': '#22C48A',
+        blue: '#2FE3A0',
+        'blue-d': '#22C48A',
         orange: '#262626',
         'orange-d': '#171717',
         steel: '#A3A3A3',
