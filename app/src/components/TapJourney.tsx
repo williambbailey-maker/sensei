@@ -196,8 +196,8 @@ function Card({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[76px] items-center justify-center rounded-2xl border border-ink p-4 text-center label text-sm transition ${
-        active ? 'bg-sage text-white' : 'bg-panel text-ink hover:bg-sage-soft'
+      className={`flex min-h-[76px] items-center justify-center rounded-2xl border-2 border-ink p-4 text-center label text-sm shadow-soft-sm transition ${
+        active ? 'bg-sage text-white' : 'bg-card text-ink hover:bg-sage-soft'
       }`}
     >
       {children}

@@ -111,13 +111,17 @@ export default function App() {
       <IntroSlice />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      {/* Transparent, borderless header pinned to the top — the page flows
-          under it; only the wordmark sits on top. */}
-      <header className="sticky top-0 z-30 bg-transparent">
-        <div className="mx-auto flex max-w-6xl items-center px-5 py-4 sm:px-6">
-          <button onClick={restart} className="display text-[43px] text-ink transition hover:opacity-70">
-            sensei
+      {/* Swatch-poster masthead — pinned to the top (never moves on scroll):
+          the blue wordmark with its signature 3px orange rule beneath. */}
+      <header className="sticky top-0 z-40 border-b-3 border-ink bg-cream">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6">
+          <button onClick={restart} className="flex flex-col items-start transition hover:opacity-90">
+            <span className="display text-[64px] leading-[0.95] tracking-[-0.01em] text-blue">sensei</span>
+            <span className="mt-1 h-[3px] w-full rounded-[2px] bg-orange" />
           </button>
+          <span className="hidden rounded-full border-2 border-blue px-3 py-1 label text-[11px] text-blue sm:inline-block">
+            Est. 2026
+          </span>
         </div>
       </header>
 
@@ -157,11 +161,11 @@ export default function App() {
         <main>
           {/* Landing header — the introductory sentence sits above the flow. */}
           <div className="mx-auto max-w-2xl px-5 pt-9 text-center sm:px-6">
-            <p className="eyebrow text-sage">Every dispensary · one counter</p>
-            <h1 className="display mt-3 text-[clamp(1.9rem,5.5vw,2.9rem)] text-ink">
+            <p className="label text-[12px] text-orange-d">New York · Cannabis Discovery</p>
+            <h1 className="display mt-3 text-[clamp(2rem,6vw,3.1rem)] leading-[1.06] text-blue">
               Browse every NYC licensed dispensary in one place.
             </h1>
-            <p className="mx-auto mt-3 max-w-md text-[15px] font-medium leading-relaxed text-muted">
+            <p className="mx-auto mt-4 max-w-md text-[16px] font-medium leading-relaxed text-ink/75">
               Compare price, potency &amp; pickup across every licensed NYC dispensary — then order
               where it's right.
             </p>

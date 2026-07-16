@@ -4,41 +4,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Earthy botanical system: warm parchment page, cream cards, warm
-        // charcoal ink, taupe secondary text — with sage-green and terracotta
-        // (clay) as the living accents. Steel tokens stay warm neutral taupes
-        // (potency dots, quiet text on dark cards).
-        ink: '#2B2A24', // primary text, borders, solid fills (warm charcoal)
-        ice: '#F1EBDD', // page background (warm parchment)
-        panel: '#FBF6EA', // card/panel background (cream)
-        muted: '#8B8271', // secondary text (warm taupe)
-        line: 'rgba(43,42,36,0.14)', // hairline dividers/borders on cream
-        'line-dark': 'rgba(241,235,221,0.18)', // hairline dividers/borders on charcoal
-        steel: '#C3BBAA', // warm light taupe (potency dot, quiet accents on dark)
-        'steel-dim': '#A79E8C', // warm taupe (secondary text on dark)
-        // Living accents
-        sage: '#5F7A4B', // primary botanical accent — selected states, key actions
-        'sage-deep': '#4B6339', // deeper sage (hover)
-        'sage-soft': '#E5E7D2', // quiet sage tint for backgrounds
-        clay: '#B4603C', // warm terracotta accent
-        'clay-deep': '#9A4F30', // deeper terracotta (hover)
+        // Colorblock swatch-poster system: cream paper, near-navy ink, and
+        // exactly two accents — royal blue + orange. The existing token names
+        // (ice/panel/muted/line/sage/clay…) are kept but re-pointed at the new
+        // palette so the whole app re-skins at once; new poster components use
+        // the explicit names (cream/card/blue/orange).
+        cream: '#F5EFDF',
+        card: '#FBF7EC',
+        ink: '#1B2A4A', // near-navy — all borders + body text
+        blue: '#1E3F8B',
+        'blue-d': '#152C63',
+        orange: '#F0871E',
+        'orange-d': '#D9720E',
+
+        // Back-compat aliases → new palette
+        ice: '#F5EFDF', // page background → cream
+        panel: '#FBF7EC', // raised surfaces → card
+        muted: '#5B6478', // secondary text (gray-blue, kept legible)
+        line: 'rgba(27,42,74,0.14)', // hairline on cream
+        'line-dark': 'rgba(245,239,223,0.18)', // hairline on ink
+        sage: '#1E3F8B', // primary accent → blue (selected states, key actions)
+        'sage-deep': '#152C63',
+        'sage-soft': '#E3E8F3', // quiet blue tint for backgrounds
+        clay: '#F0871E', // warm accent → orange
+        'clay-deep': '#D9720E',
+        steel: '#9AA3B5',
+        'steel-dim': '#6B7793',
       },
       fontFamily: {
-        // One rounded, humanist family (Aptos-like) for both display and body —
-        // weight alone carries the hierarchy.
-        display: ['"Plus Jakarta Sans"', 'ui-rounded', 'system-ui', 'sans-serif'],
-        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        display: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
-        label: '0.08em',
+        label: '0.13em',
       },
       borderWidth: {
-        3: '1.5px', // the app's "solid ink outline" — thinned from the old 3px pop-art weight
+        3: '2px', // the system's printed "solid ink outline"
       },
       boxShadow: {
-        soft: '0 18px 40px rgba(11,11,12,0.08)',
-        'soft-sm': '0 6px 18px rgba(11,11,12,0.07)',
-        'soft-lg': '0 24px 60px rgba(11,11,12,0.12)',
+        // Hard offset shadows only — never soft blur. Keeps it feeling printed.
+        soft: '8px 8px 0 0 rgba(27,42,74,0.12)',
+        'soft-sm': '5px 5px 0 0 rgba(27,42,74,0.12)',
+        'soft-lg': '10px 10px 0 0 rgba(27,42,74,0.14)',
       },
     },
   },
