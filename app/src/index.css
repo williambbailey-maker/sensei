@@ -2,19 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Self-hosted font (offline-capable PWA). Plus Jakarta Sans — a single
-   rounded, humanist family (Aptos-like) carrying both display and body
-   weight, Latin subset only. */
-@font-face {
-  font-family: 'Plus Jakarta Sans';
-  font-style: normal;
-  font-weight: 200 800;
-  font-display: swap;
-  src: url('/fonts/plus-jakarta-sans-latin.woff2') format('woff2');
-}
+/* Poppins is loaded via Google Fonts in index.html — the swatch-poster
+   system's single typeface (weights 400–800). */
 
 :root {
-  color-scheme: light;
+  color-scheme: light only;
+}
+
+/* This page is a printed-poster aesthetic — never dark-mode invert it. */
+html {
+  background: #f5efdf;
 }
 
 html,
@@ -108,6 +105,6 @@ input:focus {
 }
 
 ::selection {
-  background: #5f7a4b;
+  background: #f0871e;
   color: #ffffff;
 }
