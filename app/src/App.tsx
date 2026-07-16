@@ -252,6 +252,7 @@ export default function App() {
               <p className="label mt-6 text-[11px] text-white/50">
                 21+ only · Adults in New York State
               </p>
+              <p className="mt-2 text-[10px] font-medium text-white/30">Build {__BUILD_ID__}</p>
             </div>
             <div className="sm:pl-6">
               <p className="eyebrow text-sage-soft">The weekly drop</p>
