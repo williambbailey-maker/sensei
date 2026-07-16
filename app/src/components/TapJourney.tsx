@@ -3,17 +3,22 @@ import { Ico } from './Ico'
 import { BOROUGHS, BUDGETS, FORMATS, SIZES, STRAINS } from '../lib/labels'
 import { EMPTY_FILTERS, type Filters } from '../lib/types'
 
-// The core experience: a pure tap-through selection journey.
+// The core experience: a pure tap-through selection journey rendered as
+// colorblock swatches (alternating blue/orange).
 // Borough → Neighborhood → Product type → Strain → Quantity (flower only) →
 // Price → the product list. One tap advances each step; every step is skippable.
 export function TapJourney({
   initial,
   neighborhoodsByBorough,
+  boroughCounts,
+  neighborhoodCounts,
   onDone,
   onClose,
 }: {
   initial: Filters
   neighborhoodsByBorough: Record<string, string[]>
+  boroughCounts: Record<string, number>
+  neighborhoodCounts: Record<string, number>
   onDone: (f: Filters) => void
   onClose: () => void
 }) {
@@ -62,6 +67,8 @@ export function TapJourney({
   const visibleSteps = STEPS.map((_, i) => i).filter((i) => stepVisible(i, f))
   const currentPos = visibleSteps.indexOf(step)
 
+  const shops = (n: number | undefined) => (n ? `${n} shop${n === 1 ? '' : 's'}` : undefined)
+
   return (
     <div className="mx-auto max-w-2xl px-5 py-10 sm:px-6">
       <div className="mb-8 flex items-center justify-between">
@@ -91,10 +98,15 @@ export function TapJourney({
       {step === 0 && (
         <Step title="Where are you?" hint="Pick a borough — or see all of NYC.">
           <div className="grid grid-cols-1 gap-3">
-            {BOROUGHS.map((b) => (
-              <Card key={b} active={f.borough === b} onClick={() => pick({ borough: b, neighborhood: null })}>
-                {b}
-              </Card>
+            {BOROUGHS.map((b, i) => (
+              <Swatch
+                key={b}
+                i={i}
+                label={b}
+                caption={shops(boroughCounts[b])}
+                active={f.borough === b}
+                onClick={() => pick({ borough: b, neighborhood: null })}
+              />
             ))}
           </div>
         </Step>
@@ -103,13 +115,16 @@ export function TapJourney({
       {step === 1 && (
         <Step title={`Where in ${f.borough}?`} hint="Choose a neighborhood — or all of them.">
           <div className="grid grid-cols-2 gap-3">
-            <Card active={f.neighborhood === null} onClick={() => pick({ neighborhood: null })}>
-              All {f.borough}
-            </Card>
-            {neighborhoods.map((n) => (
-              <Card key={n} active={f.neighborhood === n} onClick={() => pick({ neighborhood: n })}>
-                {n}
-              </Card>
+            <Swatch i={0} label={`All ${f.borough}`} active={f.neighborhood === null} onClick={() => pick({ neighborhood: null })} />
+            {neighborhoods.map((n, i) => (
+              <Swatch
+                key={n}
+                i={i + 1}
+                label={n}
+                caption={shops(neighborhoodCounts[n])}
+                active={f.neighborhood === n}
+                onClick={() => pick({ neighborhood: n })}
+              />
             ))}
           </div>
         </Step>
@@ -118,15 +133,15 @@ export function TapJourney({
       {step === 2 && (
         <Step title="What are you after?" hint="Pick a product type — or any.">
           <div className="grid grid-cols-2 gap-3">
-            {FORMATS.map((fmt) => (
-              <Card
+            {FORMATS.map((fmt, i) => (
+              <Swatch
                 key={fmt.key}
+                i={i}
+                label={fmt.label}
                 active={f.format === fmt.key}
                 // Size only applies to flower; clear it when another type is chosen.
                 onClick={() => pick({ format: fmt.key, ...(fmt.key === 'flower' ? {} : { size: null }) })}
-              >
-                {fmt.label}
-              </Card>
+              />
             ))}
           </div>
         </Step>
@@ -135,10 +150,8 @@ export function TapJourney({
       {step === 3 && (
         <Step title="Which strain?" hint="Indica, sativa, hybrid — or any.">
           <div className="grid grid-cols-1 gap-3">
-            {STRAINS.map((s) => (
-              <Card key={s} active={f.strain === s} onClick={() => pick({ strain: s })}>
-                {s}
-              </Card>
+            {STRAINS.map((s, i) => (
+              <Swatch key={s} i={i} label={s} active={f.strain === s} onClick={() => pick({ strain: s })} />
             ))}
           </div>
         </Step>
@@ -147,10 +160,8 @@ export function TapJourney({
       {step === 4 && (
         <Step title="How much?" hint="Pick a size — or any amount.">
           <div className="grid grid-cols-2 gap-3">
-            {SIZES.map((s) => (
-              <Card key={s.key} active={f.size === s.key} onClick={() => pick({ size: s.key })}>
-                {s.label}
-              </Card>
+            {SIZES.map((s, i) => (
+              <Swatch key={s.key} i={i} label={s.label} active={f.size === s.key} onClick={() => pick({ size: s.key })} />
             ))}
           </div>
         </Step>
@@ -159,14 +170,14 @@ export function TapJourney({
       {step === 5 && (
         <Step title="What's your budget?" hint="Per item — or no limit.">
           <div className="grid grid-cols-2 gap-3">
-            {BUDGETS.map((b) => (
-              <Card
+            {BUDGETS.map((b, i) => (
+              <Swatch
                 key={b.label}
+                i={i}
+                label={b.label}
                 active={f.priceCeiling === b.ceiling}
                 onClick={() => pick({ priceCeiling: b.ceiling, priceBand: b.band })}
-              >
-                {b.label}
-              </Card>
+              />
             ))}
           </div>
         </Step>
@@ -174,7 +185,7 @@ export function TapJourney({
 
       <button
         onClick={skip}
-        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full border border-ink bg-panel px-5 py-3.5 label text-sm text-ink transition hover:bg-ice"
+        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full border-2 border-ink bg-card px-5 py-3.5 label text-sm text-ink transition hover:bg-sage-soft"
       >
         {step < LAST ? 'Skip this step →' : 'Show my products →'}
       </button>
@@ -185,22 +196,38 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="display text-[clamp(1.9rem,6vw,2.75rem)] text-ink">{title}</h2>
+      <h2 className="display text-[clamp(1.9rem,6vw,2.75rem)] leading-[1.06] text-blue">{title}</h2>
       <p className="mb-7 mt-2 text-sm font-semibold text-muted">{hint}</p>
       {children}
     </div>
   )
 }
 
-function Card({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+// A colorblock swatch — solid blue/orange fill (alternating by index), bold
+// white label, optional uppercase caption pinned bottom-right (poster style).
+function Swatch({
+  i,
+  label,
+  caption,
+  active,
+  onClick,
+}: {
+  i: number
+  label: string
+  caption?: string
+  active: boolean
+  onClick: () => void
+}) {
+  const fill = i % 2 === 0 ? 'bg-blue' : 'bg-orange'
   return (
     <button
       onClick={onClick}
-      className={`flex min-h-[76px] items-center justify-center rounded-2xl border-2 border-ink p-4 text-center label text-sm shadow-soft-sm transition ${
-        active ? 'bg-sage text-white' : 'bg-card text-ink hover:bg-sage-soft'
-      }`}
+      className={`relative flex min-h-[112px] rounded-2xl border-2 border-ink p-4 shadow-soft-sm transition hover:-translate-y-0.5 ${fill} ${
+        caption ? 'flex-col justify-between text-left' : 'items-center justify-center text-center'
+      } ${active ? 'ring-2 ring-ink ring-offset-2 ring-offset-cream' : ''}`}
     >
-      {children}
+      <span className="display text-lg leading-tight text-white">{label}</span>
+      {caption && <span className="self-end label text-[10px] text-white/85">{caption}</span>}
     </button>
   )
 }
