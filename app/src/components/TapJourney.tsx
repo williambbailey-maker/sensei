@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Ico } from './Ico'
+import { requestLocation } from '../lib/geo'
 import { BOROUGHS, BUDGETS, FORMATS, SIZES, STRAINS } from '../lib/labels'
 import { EMPTY_FILTERS, type Filters } from '../lib/types'
 
@@ -24,6 +25,8 @@ export function TapJourney({
 }) {
   const [step, setStep] = useState(0)
   const [f, setF] = useState<Filters>({ ...EMPTY_FILTERS, ...initial })
+  const [locating, setLocating] = useState(false)
+  const [locError, setLocError] = useState('')
 
   const STEPS = ['Borough', 'Neighborhood', 'Product type', 'Strain', 'Quantity', 'Price']
   const LAST = STEPS.length - 1
@@ -62,6 +65,25 @@ export function TapJourney({
   }
   const skip = () => advance(step, f)
 
+  // Location-first: on a successful share, jump straight to results within a
+  // default radius (neighborhood step self-skips with no borough set).
+  const locate = () => {
+    setLocError('')
+    setLocating(true)
+    requestLocation(
+      (loc) => {
+        setLocating(false)
+        const draft = { ...f, userLoc: loc, radiusMiles: 2, borough: null, neighborhood: null }
+        setF(draft)
+        advance(step, draft)
+      },
+      (msg) => {
+        setLocating(false)
+        setLocError(msg)
+      },
+    )
+  }
+
   const neighborhoods = hoodsFor(f.borough)
   // Progress reflects only the steps that apply to the current path.
   const visibleSteps = STEPS.map((_, i) => i).filter((i) => stepVisible(i, f))
@@ -96,7 +118,17 @@ export function TapJourney({
       </div>
 
       {step === 0 && (
-        <Step title="Where are you?" hint="Pick a borough — or see all of NYC.">
+        <Step title="Where are you?" hint="Share your location for what's closest — or pick a borough.">
+          <button
+            onClick={locate}
+            disabled={locating}
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-yellow px-5 py-4 label text-sm text-onyx transition active:scale-[0.98] disabled:opacity-60"
+          >
+            ◉ {locating ? 'Locating…' : 'Share my location'}
+          </button>
+          {locError && <p className="mt-3 label text-[11px] text-yellow">{locError}</p>}
+
+          <p className="mb-3 mt-7 label text-[11px] text-muted">Or pick a borough</p>
           <div className="grid grid-cols-1 gap-3">
             {BOROUGHS.map((b, i) => (
               <Swatch
