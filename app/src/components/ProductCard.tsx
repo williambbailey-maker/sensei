@@ -7,7 +7,7 @@ import type { LatLng, Product } from '../lib/types'
 const TIER_DOT: Record<string, string> = {
   mild: 'bg-steel',
   medium: 'bg-steel-dim',
-  strong: 'bg-ink',
+  strong: 'bg-yellow',
 }
 
 // Edibles are dosed in milligrams — a "0.05g" gummy is a 50mg gummy.
@@ -71,9 +71,9 @@ export function ProductCard({
       {/* Compact card */}
       <div
         onClick={() => setOpen(true)}
-        className="group flex h-full cursor-pointer gap-4 rounded-2xl border border-line bg-panel p-4 shadow-soft-sm transition hover:-translate-y-0.5"
+        className="group glass flex h-full cursor-pointer gap-4 rounded-[28px] p-4 shadow-soft-sm transition hover:-translate-y-0.5"
       >
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-ice">
+        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-white/5">
           {p.image_url ? (
             <img
               src={p.image_url}
@@ -83,7 +83,7 @@ export function ProductCard({
               onError={(e) => (e.currentTarget.style.display = 'none')}
             />
           ) : null}
-          <span className="pointer-events-none absolute bottom-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-ink/70 text-[11px] leading-none text-white">
+          <span className="pointer-events-none absolute bottom-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-[11px] leading-none text-white">
             ⤢
           </span>
         </div>
@@ -119,7 +119,7 @@ export function ProductCard({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="rounded-full border border-line px-3 py-1 label text-[10px] text-ink transition hover:bg-ice"
+                  className="rounded-full border border-white/20 px-3 py-1 label text-[10px] text-white transition hover:bg-white/10"
                 >
                   View
                 </a>
@@ -130,7 +130,7 @@ export function ProductCard({
                     e.stopPropagation()
                     onAdd(p)
                   }}
-                  className="rounded-full bg-ink px-3 py-1 label text-[10px] text-white transition hover:opacity-85"
+                  className="rounded-full bg-yellow px-3 py-1 label text-[10px] text-onyx transition active:scale-95"
                 >
                   + Add
                 </button>
@@ -146,10 +146,10 @@ export function ProductCard({
           className="fade-in fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={() => setOpen(false)}
         >
-          <div className="absolute inset-0 bg-ink/50 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
           <div
             onClick={(e) => e.stopPropagation()}
-            className="expand-in relative z-10 flex max-h-[88vh] w-full max-w-md flex-col overflow-hidden rounded-3xl border border-ink bg-panel shadow-soft-lg"
+            className="expand-in relative z-10 flex max-h-[88vh] w-full max-w-md flex-col overflow-hidden rounded-[32px] border border-white/15 bg-charcoal shadow-soft-lg"
           >
             {/* Large product image from the site */}
             <div className="relative aspect-square w-full shrink-0 bg-ice">
@@ -163,7 +163,7 @@ export function ProductCard({
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close"
-                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-ink/70 text-white transition hover:bg-ink"
+                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
               >
                 ✕
               </button>
@@ -190,7 +190,7 @@ export function ProductCard({
                   <p className="label text-[10px] text-muted">Effects</p>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
                     {p.effects!.slice(0, 8).map((e) => (
-                      <span key={e} className="rounded-full bg-sage-soft px-2.5 py-1 label text-[10px] text-ink">
+                      <span key={e} className="rounded-full border border-yellow/40 bg-yellow/10 px-2.5 py-1 label text-[10px] text-yellow">
                         {e}
                       </span>
                     ))}
@@ -229,7 +229,7 @@ export function ProductCard({
                     href={p.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 rounded-full border border-ink px-4 py-2.5 text-center label text-[11px] text-ink transition hover:bg-ice"
+                    className="flex-1 rounded-full border border-white/25 px-4 py-2.5 text-center label text-[11px] text-white transition hover:bg-white/10"
                   >
                     View on Dutchie
                   </a>
@@ -240,7 +240,7 @@ export function ProductCard({
                       onAdd(p)
                       setOpen(false)
                     }}
-                    className="flex-1 rounded-full bg-ink px-4 py-2.5 label text-[11px] text-white transition hover:opacity-85"
+                    className="flex-1 rounded-full bg-yellow px-4 py-2.5 label text-[11px] text-onyx transition active:scale-95"
                   >
                     + Add to cart
                   </button>

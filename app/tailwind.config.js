@@ -4,48 +4,60 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Colorblock swatch-poster system: cream paper, near-navy ink, and
-        // exactly two accents — royal blue + orange. The existing token names
-        // (ice/panel/muted/line/sage/clay…) are kept but re-pointed at the new
-        // palette so the whole app re-skins at once; new poster components use
-        // the explicit names (cream/card/blue/orange).
-        cream: '#F5EFDF',
-        card: '#FBF7EC',
-        ink: '#1B2A4A', // near-navy — all borders + body text
-        blue: '#1E3F8B',
-        'blue-d': '#152C63',
-        orange: '#F0871E',
-        'orange-d': '#D9720E',
+        // Hyper-Saturated Fluid: a Deep Onyx void with one Cyber Yellow shout
+        // color and glassmorphic surfaces. Existing token names are re-pointed
+        // for a dark theme (ink = white text/strokes; ice = onyx page), plus
+        // explicit yellow/onyx/charcoal names for new fluid components.
+        yellow: '#FDE047', // the "shout" color
+        onyx: '#0A0A0A', // deep void background
+        charcoal: '#171717', // secondary dark panels
+        voidgray: '#262626', // UI in the void
 
-        // Back-compat aliases → new palette
-        ice: '#F5EFDF', // page background → cream
-        panel: '#FBF7EC', // raised surfaces → card
-        muted: '#5B6478', // secondary text (gray-blue, kept legible)
-        line: 'rgba(27,42,74,0.14)', // hairline on cream
-        'line-dark': 'rgba(245,239,223,0.18)', // hairline on ink
-        sage: '#1E3F8B', // primary accent → blue (selected states, key actions)
-        'sage-deep': '#152C63',
-        'sage-soft': '#E3E8F3', // quiet blue tint for backgrounds
-        clay: '#F0871E', // warm accent → orange
-        'clay-deep': '#D9720E',
-        steel: '#9AA3B5',
-        'steel-dim': '#6B7793',
+        // Back-compat aliases → dark theme
+        ink: '#FFFFFF', // primary text + glass strokes (light on dark)
+        ice: '#0A0A0A', // page background → onyx
+        panel: '#171717', // raised surface → charcoal
+        card: '#171717',
+        cream: '#0A0A0A',
+        muted: '#A3A3A3', // secondary text (gray)
+        line: 'rgba(255,255,255,0.14)',
+        'line-dark': 'rgba(255,255,255,0.10)',
+        sage: '#FDE047', // primary accent → cyber yellow
+        'sage-deep': '#EACA18',
+        'sage-soft': 'rgba(253,224,71,0.16)',
+        clay: '#FDE047',
+        'clay-deep': '#EACA18',
+        blue: '#FDE047',
+        'blue-d': '#EACA18',
+        orange: '#262626',
+        'orange-d': '#171717',
+        steel: '#A3A3A3',
+        'steel-dim': '#737373',
       },
       fontFamily: {
-        display: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        sans: ['Poppins', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        display: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
-        label: '0.13em',
+        label: '0.16em',
       },
       borderWidth: {
-        3: '2px', // the system's printed "solid ink outline"
+        3: '2px',
       },
       boxShadow: {
-        // Hard offset shadows only — never soft blur. Keeps it feeling printed.
-        soft: '8px 8px 0 0 rgba(27,42,74,0.12)',
-        'soft-sm': '5px 5px 0 0 rgba(27,42,74,0.12)',
-        'soft-lg': '10px 10px 0 0 rgba(27,42,74,0.14)',
+        // Soft, large-radius dark shadows to lift glass off the void.
+        soft: '0 20px 60px rgba(0,0,0,0.45)',
+        'soft-sm': '0 10px 30px rgba(0,0,0,0.35)',
+        'soft-lg': '0 30px 80px rgba(0,0,0,0.6)',
+      },
+      keyframes: {
+        float: {
+          '0%,100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+      },
+      animation: {
+        float: 'float 6s ease-in-out infinite',
       },
     },
   },

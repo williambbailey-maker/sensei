@@ -185,7 +185,7 @@ export function TapJourney({
 
       <button
         onClick={skip}
-        className="pop-press mt-8 flex w-full items-center justify-center gap-2 rounded-full border-2 border-ink bg-card px-5 py-3.5 label text-sm text-ink transition hover:bg-sage-soft"
+        className="mt-8 flex w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-4 label text-sm text-white/80 backdrop-blur-xl transition hover:bg-white/10 active:scale-[0.98]"
       >
         {step < LAST ? 'Skip this step →' : 'Show my products →'}
       </button>
@@ -196,15 +196,17 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="display text-[clamp(1.9rem,6vw,2.75rem)] leading-[1.06] text-blue">{title}</h2>
-      <p className="mb-7 mt-2 text-sm font-semibold text-muted">{hint}</p>
+      <h2 className="display text-[clamp(2.4rem,8vw,3.6rem)] font-black leading-[0.95] tracking-tight text-white">
+        {title}
+      </h2>
+      <p className="mb-7 mt-3 text-sm font-medium text-muted">{hint}</p>
       {children}
     </div>
   )
 }
 
-// A colorblock swatch — solid blue/orange fill (alternating by index), bold
-// white label, optional uppercase caption pinned bottom-right (poster style).
+// A glassmorphic swatch — frosted glass in the void, turning solid cyber-yellow
+// when active. Label top-left, optional uppercase caption pinned bottom-right.
 function Swatch({
   i,
   label,
@@ -218,16 +220,18 @@ function Swatch({
   active: boolean
   onClick: () => void
 }) {
-  const fill = i % 2 === 0 ? 'bg-blue' : 'bg-orange'
+  void i
   return (
     <button
       onClick={onClick}
-      className={`relative flex min-h-[112px] rounded-2xl border-2 border-ink p-4 shadow-soft-sm transition hover:-translate-y-0.5 ${fill} ${
+      className={`relative flex min-h-[116px] rounded-[28px] border p-5 shadow-soft-sm backdrop-blur-xl transition hover:-translate-y-0.5 active:scale-[0.98] ${
         caption ? 'flex-col justify-between text-left' : 'items-center justify-center text-center'
-      } ${active ? 'ring-2 ring-ink ring-offset-2 ring-offset-cream' : ''}`}
+      } ${active ? 'border-yellow bg-yellow text-onyx' : 'border-white/20 bg-white/10 text-white'}`}
     >
-      <span className="display text-lg leading-tight text-white">{label}</span>
-      {caption && <span className="self-end label text-[10px] text-white/85">{caption}</span>}
+      <span className="display text-lg font-bold leading-tight">{label}</span>
+      {caption && (
+        <span className={`self-end label text-[10px] ${active ? 'text-onyx/70' : 'text-white/60'}`}>{caption}</span>
+      )}
     </button>
   )
 }

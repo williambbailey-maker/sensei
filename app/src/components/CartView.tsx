@@ -31,7 +31,7 @@ export function CartView({
         </button>
         <button
           onClick={onClear}
-          className="rounded-full border border-line px-4 py-1.5 label text-[11px] text-ink transition hover:bg-ink hover:text-white"
+          className="rounded-full border border-line px-4 py-1.5 label text-[11px] text-ink transition hover:bg-white/10"
         >
           Clear cart
         </button>
@@ -68,7 +68,7 @@ export function CartView({
               <button
                 onClick={() => onQty(p.id, -1)}
                 aria-label="Remove one"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-lg text-ink transition hover:bg-ice"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-lg text-ink transition hover:bg-white/10"
               >
                 −
               </button>
@@ -76,7 +76,7 @@ export function CartView({
               <button
                 onClick={() => onQty(p.id, 1)}
                 aria-label="Add one"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-lg text-ink transition hover:bg-ice"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-lg text-ink transition hover:bg-white/10"
               >
                 +
               </button>
@@ -94,7 +94,7 @@ export function CartView({
         href={menuUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="pop-press mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-ink px-5 py-3.5 label text-sm text-white"
+        className="pop-press mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-yellow px-5 py-3.5 label text-sm text-onyx"
       >
         Order at {storeName} on Dutchie →
       </a>

@@ -123,15 +123,14 @@ export default function App() {
       <IntroSlice />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      {/* Swatch-poster masthead — pinned to the top (never moves on scroll):
-          the blue wordmark with its signature 3px orange rule beneath. */}
-      <header className="sticky top-0 z-40 border-b-3 border-ink bg-cream">
+      {/* Masthead — pinned to the top (never moves on scroll): the cyber-yellow
+          wordmark floating over a frosted onyx bar. */}
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-onyx/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6">
-          <button onClick={restart} className="flex flex-col items-start transition hover:opacity-90">
-            <span className="display text-[64px] leading-[0.95] tracking-[-0.01em] text-blue">sensei</span>
-            <span className="mt-1 h-[3px] w-full rounded-[2px] bg-orange" />
+          <button onClick={restart} className="transition active:scale-95">
+            <span className="display text-[64px] font-black leading-[0.9] tracking-tight text-yellow">sensei</span>
           </button>
-          <span className="hidden rounded-full border-2 border-blue px-3 py-1 label text-[11px] text-blue sm:inline-block">
+          <span className="hidden rounded-full border border-white/20 px-4 py-1.5 label text-[10px] text-white/80 sm:inline-block">
             Est. 2026
           </span>
         </div>
@@ -146,7 +145,7 @@ export default function App() {
             <span className="flex items-center gap-2">
               <button
                 onClick={() => go('cart')}
-                className="rounded-full bg-sage px-4 py-1.5 label text-[12px] text-white transition hover:bg-sage-deep"
+                className="rounded-full bg-yellow px-4 py-1.5 label text-[12px] text-onyx transition hover:bg-sage-deep"
               >
                 View · {cartCount}
               </button>
@@ -171,16 +170,19 @@ export default function App() {
 
       {view === 'journey' && (
         <main>
-          {/* Landing header — the introductory sentence sits above the flow. */}
-          <div className="mx-auto max-w-2xl px-5 pt-9 text-center sm:px-6">
-            <p className="label text-[12px] text-orange-d">New York · Cannabis Discovery</p>
-            <h1 className="display mt-3 text-[clamp(2rem,6vw,3.1rem)] leading-[1.06] text-blue">
-              Browse every NYC licensed dispensary in one place.
-            </h1>
-            <p className="mx-auto mt-4 max-w-md text-[16px] font-medium leading-relaxed text-ink/75">
-              Compare price, potency &amp; pickup across every licensed NYC dispensary — then order
-              where it's right.
-            </p>
+          {/* Liquid hero — a cyber-yellow block that bleeds into the void, with
+              a massive black headline. */}
+          <div className="px-4 pt-4 sm:px-6">
+            <div className="mx-auto max-w-6xl rounded-[40px] rounded-br-[110px] bg-yellow px-7 py-12 sm:px-12 sm:py-16">
+              <p className="label text-[11px] text-onyx/70">New York · Cannabis Discovery</p>
+              <h1 className="display mt-4 max-w-[15ch] text-[clamp(2.7rem,9vw,5rem)] font-black leading-[0.92] tracking-tight text-onyx">
+                Every NYC dispensary, one place.
+              </h1>
+              <p className="mt-6 max-w-md text-[15px] font-medium leading-relaxed text-onyx/70">
+                Compare price, potency &amp; pickup across every licensed NYC dispensary — then order
+                where it's right.
+              </p>
+            </div>
           </div>
           <TapJourney
             key={journeyKey}
@@ -230,18 +232,18 @@ export default function App() {
       {cartCount > 0 && view !== 'cart' && (
         <button
           onClick={() => go('cart')}
-          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-clay px-6 py-3.5 label text-[12px] text-white shadow-soft-lg transition hover:-translate-y-0.5 hover:bg-clay-deep"
+          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-yellow px-6 py-3.5 label text-[12px] text-onyx shadow-soft-lg transition hover:-translate-y-0.5 active:scale-95"
         >
           Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
         </button>
       )}
 
-      <footer className="mt-16 border-t border-line-dark bg-ink text-white">
+      <footer className="mt-16 border-t border-white/10 bg-charcoal text-white">
         <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="grid gap-10 sm:grid-cols-[1fr_1fr]">
             <div>
               <div className="flex items-center">
-                <span className="display text-xl">sensei</span>
+                <span className="display text-2xl font-black text-yellow">sensei</span>
               </div>
               <p className="mt-4 max-w-sm text-[15px] font-medium leading-relaxed text-white/80">
                 Every licensed dispensary menu, one place. Compare price, potency and pickup — then
