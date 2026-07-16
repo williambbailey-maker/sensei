@@ -46,7 +46,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
       <form onSubmit={submit} className="flex items-center gap-2">
         <div
           className={`flex flex-1 items-center gap-2 rounded-full px-4 transition ${
-            compact ? 'border border-line-dark' : 'border border-ink bg-white focus-within:bg-ice'
+            compact ? 'border border-line-dark' : 'border border-white/20 bg-white/5 focus-within:bg-white/10'
           }`}
         >
           <Ico name="mail" className={`h-4 w-4 shrink-0 ${compact ? 'text-steel' : 'text-muted'}`} />
@@ -65,7 +65,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
           type="submit"
           disabled={state === 'loading'}
           className={`shrink-0 rounded-full px-5 py-2.5 label text-[11px] transition disabled:opacity-50 ${
-            compact ? 'bg-white text-ink hover:opacity-85' : 'bg-ink text-white hover:opacity-85'
+            compact ? 'bg-yellow text-onyx hover:opacity-90' : 'bg-yellow text-onyx hover:opacity-90'
           }`}
         >
           {state === 'loading' ? '…' : 'Subscribe'}
