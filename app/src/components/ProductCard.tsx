@@ -130,7 +130,7 @@ export function ProductCard({
                     e.stopPropagation()
                     onAdd(p)
                   }}
-                  className="rounded-full bg-yellow px-3 py-1 label text-[10px] text-onyx transition active:scale-95"
+                  className="rounded-full bg-clay px-3 py-1 label text-[10px] text-onyx transition active:scale-95"
                 >
                   + Add
                 </button>
@@ -190,7 +190,7 @@ export function ProductCard({
                   <p className="label text-[10px] text-muted">Effects</p>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
                     {p.effects!.slice(0, 8).map((e) => (
-                      <span key={e} className="rounded-full border border-yellow/40 bg-yellow/10 px-2.5 py-1 label text-[10px] text-yellow">
+                      <span key={e} className="rounded-full border border-clay/40 bg-clay/10 px-2.5 py-1 label text-[10px] text-clay">
                         {e}
                       </span>
                     ))}
@@ -240,7 +240,7 @@ export function ProductCard({
                       onAdd(p)
                       setOpen(false)
                     }}
-                    className="flex-1 rounded-full bg-yellow px-4 py-2.5 label text-[11px] text-onyx transition active:scale-95"
+                    className="flex-1 rounded-full bg-clay px-4 py-2.5 label text-[11px] text-onyx transition active:scale-95"
                   >
                     + Add to cart
                   </button>
