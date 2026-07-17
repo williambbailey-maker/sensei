@@ -11,7 +11,7 @@
 
 /* A deep-onyx void — the fixed dark base of this design. */
 html {
-  background: #141d17;
+  background: #0a0a0a;
 }
 
 html,
@@ -112,6 +112,6 @@ input:focus {
 }
 
 ::selection {
-  background: #9cb89c;
-  color: #141d17;
+  background: #fde047;
+  color: #0a0a0a;
 }

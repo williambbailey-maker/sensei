@@ -8,31 +8,31 @@ export default {
         // color and glassmorphic surfaces. Existing token names are re-pointed
         // for a dark theme (ink = white text/strokes; ice = onyx page), plus
         // explicit yellow/onyx/charcoal names for new fluid components.
-        yellow: '#9CB89C', // primary accent → sage (dark-theme value)
-        onyx: '#141D17', // deep void background (= --bg / --on-accent)
-        charcoal: '#1C271F', // secondary dark panels (--surface)
-        voidgray: '#26332A', // UI in the void (--surface-2)
+        yellow: '#FDE047', // the "shout" color — cyber yellow
+        onyx: '#0A0A0A', // deep void background
+        charcoal: '#171717', // secondary dark panels
+        voidgray: '#262626', // UI in the void
 
-        // Warm sage/citrus palette (dark variant) mapped onto the same names.
-        ink: '#EEF1EA', // primary text
-        ice: '#141D17', // page background (--bg)
-        panel: '#1C271F', // raised surface (--surface)
-        card: '#1C271F',
-        cream: '#141D17',
-        muted: '#9FB0A2', // secondary text (--ink-dim)
-        line: 'rgba(238,241,234,0.14)',
-        'line-dark': 'rgba(238,241,234,0.10)',
-        sage: '#9CB89C', // primary accent (--accent)
-        'sage-deep': '#B9D0B9',
-        'sage-soft': 'rgba(156,184,156,0.16)',
-        clay: '#E8A33D', // secondary accent → citrus
-        'clay-deep': '#EDB45F',
-        blue: '#9CB89C',
-        'blue-d': '#B9D0B9',
-        orange: '#E8A33D',
-        'orange-d': '#EDB45F',
-        steel: '#9FB0A2',
-        'steel-dim': '#6F8072',
+        // Back-compat aliases → dark theme
+        ink: '#FFFFFF', // primary text + glass strokes (light on dark)
+        ice: '#0A0A0A', // page background → onyx
+        panel: '#171717', // raised surface → charcoal
+        card: '#171717',
+        cream: '#0A0A0A',
+        muted: '#A3A3A3', // secondary text (gray)
+        line: 'rgba(255,255,255,0.14)',
+        'line-dark': 'rgba(255,255,255,0.10)',
+        sage: '#FDE047', // primary accent → cyber yellow
+        'sage-deep': '#EACA18',
+        'sage-soft': 'rgba(253,224,71,0.16)',
+        clay: '#FDE047',
+        'clay-deep': '#EACA18',
+        blue: '#FDE047',
+        'blue-d': '#EACA18',
+        orange: '#262626',
+        'orange-d': '#171717',
+        steel: '#A3A3A3',
+        'steel-dim': '#737373',
       },
       fontFamily: {
         display: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
