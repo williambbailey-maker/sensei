@@ -65,15 +65,26 @@ export function TapJourney({
   }
   const skip = () => advance(step, f)
 
-  // Location-first: on a successful share, jump straight to results within a
-  // default radius (neighborhood step self-skips with no borough set).
+  // Location-first: on a successful share, jump straight to results ordered by
+  // distance (closest first). We deliberately don't hard-limit to a tight radius
+  // up front — that produced empty screens for anyone not standing right next to
+  // a shop. "Any distance" guarantees results; the Distance control on the
+  // results screen lets them tighten to a mile radius. (Neighborhood step
+  // self-skips with no borough set.)
   const locate = () => {
     setLocError('')
     setLocating(true)
     requestLocation(
       (loc) => {
         setLocating(false)
-        const draft = { ...f, userLoc: loc, radiusMiles: 2, borough: null, neighborhood: null }
+        const draft = {
+          ...f,
+          userLoc: loc,
+          radiusMiles: null,
+          sort: 'distance' as const,
+          borough: null,
+          neighborhood: null,
+        }
         setF(draft)
         advance(step, draft)
       },

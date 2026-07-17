@@ -31,7 +31,9 @@ export function Results({
   const shown = ranked.slice(0, CAP)
 
   const where = filters.userLoc
-    ? `within ${filters.radiusMiles} mi of you`
+    ? filters.radiusMiles != null
+      ? `within ${filters.radiusMiles} mi of you`
+      : 'closest to you'
     : (filters.neighborhood ?? filters.borough)
 
   return (
