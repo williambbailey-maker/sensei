@@ -5,7 +5,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: #141d17;
+  background: #0a0a0a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@
   font-weight: 800;
   font-size: clamp(4.32rem, 17.55vw, 11.48rem);
   letter-spacing: -0.02em;
-  color: #9cb89c;
+  color: #fde047;
   white-space: nowrap;
   line-height: 1;
   padding: 0 4px;
@@ -94,9 +94,9 @@
   justify-self: stretch;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent 2%, #9cb89c 20%, #9cb89c 80%, transparent 98%);
+  background: linear-gradient(90deg, transparent 2%, #fde047 20%, #fde047 80%, transparent 98%);
   opacity: 0;
-  box-shadow: 0 0 18px 2px rgba(156, 184, 156, 0.9);
+  box-shadow: 0 0 18px 2px rgba(253, 224, 71, 0.9);
   animation: sen-glowPulse 520ms ease-out both;
   animation-delay: 930ms;
 }
@@ -122,7 +122,7 @@
 .sen-flash-screen {
   position: absolute;
   inset: 0;
-  background: #9cb89c;
+  background: #fde047;
   opacity: 0;
   animation: sen-flashPulse 200ms ease-out both;
   animation-delay: 940ms;
