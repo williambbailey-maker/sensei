@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { IntroSlice } from './components/IntroSlice'
+import { SmartSearch } from './components/SmartSearch'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
@@ -170,6 +171,13 @@ export default function App() {
 
       {view === 'journey' && (
         <main>
+          <SmartSearch
+            neighborhoodsByBorough={neighborhoodsByBorough}
+            onSearch={(f) => {
+              setFilters(f)
+              go('results')
+            }}
+          />
           {/* Liquid hero — a cyber-yellow block that bleeds into the void, with
               a massive black headline. */}
           <div className="px-4 pt-4 sm:px-6">

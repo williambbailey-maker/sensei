@@ -1,6 +1,6 @@
 import { haversineMiles } from './geo'
 import { SIZES, weightToGrams } from './labels'
-import { hasStructuredFilter, type Filters, type Product } from './types'
+import type { Filters, Product } from './types'
 
 const POTENCY_ORDER: Record<string, number> = { mild: 0, medium: 1, strong: 2 }
 
@@ -14,7 +14,6 @@ export function productMiles(p: Product, f: Filters): number | null {
 // Hard filters remove products; soft signals score the survivors.
 // Spec ranking: filter match -> in_stock -> potency/price fit -> variety across stores.
 export function rankProducts(products: Product[], f: Filters): Product[] {
-  const structured = hasStructuredFilter(f)
   const query = f.text.trim().toLowerCase()
 
   const kept = products.filter((p) => {
@@ -42,9 +41,11 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
         if (!ok) return false
       }
     }
-    if (!structured && query) {
+    if (query) {
+      // Every word in the free-text query must appear in the name or brand, so
+      // text narrows alongside the structured filters (e.g. "stiiizy" + vapes).
       const hay = `${p.clean_name ?? p.name ?? ''} ${p.clean_brand ?? p.brand ?? ''}`.toLowerCase()
-      if (!hay.includes(query)) return false
+      if (!query.split(/\s+/).every((w) => hay.includes(w))) return false
     }
     return true
   })
