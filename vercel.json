@@ -5,7 +5,7 @@
   "outputDirectory": "app/dist",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!dispensaries/|neighborhoods/|brands/|nyc/|sitemap\\.xml|robots\\.txt).*)",
       "destination": "/index.html"
     }
   ]
