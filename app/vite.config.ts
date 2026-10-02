@@ -11,6 +11,20 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
+      // The static SEO pages (served from the same domain) must not be shadowed
+      // by the SPA navigation fallback for installed-app users. Googlebot never
+      // runs the service worker, so this only affects repeat human visitors.
+      workbox: {
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [
+          /^\/dispensaries\//,
+          /^\/neighborhoods\//,
+          /^\/brands\//,
+          /^\/nyc\//,
+          /^\/sitemap\.xml$/,
+          /^\/robots\.txt$/,
+        ],
+      },
       manifest: {
         name: 'Sensei — every menu, one sensei',
         short_name: 'Sensei',
