@@ -47,8 +47,37 @@ Optional knobs (prefix the command):
 Manage which stores are scraped in the Supabase `stores` table (`active` flag),
 not in the code.
 
+## Pipeline health (self-checks each run)
+
+Every run now protects the live menu and records how it went:
+
+- **30% drop guard.** The out-of-stock sweep (flipping unseen items to sold out)
+  is deferred to one gated step after the scrape. If this run saw more than 30%
+  fewer products than the last good run, the sweep is **skipped** and the last
+  snapshot is kept — a block or feed change can't empty the menu. Only stores
+  that returned products this run are ever swept, so a failed store keeps its
+  inventory.
+- **Match rate + stale stores.** After the run it logs match rate (in-stock rows
+  with `clean_brand`, target ≥90%) and any store with no product update in 3+
+  days, into the `pipeline_runs.notes` for that run.
+- **Alerts.** On a crash, zero changes, most stores failing, the guard tripping,
+  or match rate under target, it emails via Resend — if configured. Without the
+  Resend vars it still logs the warning and writes the run row; it just doesn't
+  email. See the alert block in `.env.example`.
+
+**Test it safely** before trusting a nightly run:
+
+```bash
+STORE_LIMIT=3 npm run scrape     # scrapes 3 stores, writes a pipeline_runs row
+```
+
+Then check the newest `pipeline_runs` row in Supabase — its `notes` should show
+`match …% · … · sweep applied`. To test an alert email, set the Resend vars and
+run with `STORE_LIMIT=0` against a blocked network (or temporarily lower the
+guard) so it reports zero changes.
+
 ## Files
 
-- `scrape.mjs` — the scraper (GraphQL feed capture + Supabase upsert).
+- `scrape.mjs` — the scraper (GraphQL feed capture + Supabase upsert + health).
 - `package.json` — Node deps (Playwright).
-- `.env.example` — copy to `.env` and add your key.
+- `.env.example` — copy to `.env` and add your key (+ optional alert vars).
