@@ -16,6 +16,16 @@ export default defineConfig({
       // runs the service worker, so this only affects repeat human visitors.
       workbox: {
         navigateFallback: '/index.html',
+        // Don't precache the ~107 static SEO pages (they're network-served, not
+        // part of the app shell) — keeps the service worker small.
+        globIgnores: [
+          '**/dispensaries/**',
+          '**/neighborhoods/**',
+          '**/brands/**',
+          '**/nyc/**',
+          'sitemap.xml',
+          'robots.txt',
+        ],
         navigateFallbackDenylist: [
           /^\/dispensaries\//,
           /^\/neighborhoods\//,
