@@ -1,0 +1,110 @@
+---
+import Layout from '../../components/Layout.astro'
+import MapIsland from '../../components/MapIsland.astro'
+import ProductCard from '../../components/ProductCard.astro'
+import CrossLinks from '../../components/CrossLinks.astro'
+import {
+  SEO, money, categoryLabel, slugify, appDispensary, appCategory, appBrand,
+  brandPath, categoryPath, neighborhoodPath,
+} from '../../lib/site'
+
+export function getStaticPaths() {
+  return SEO.dispensaries.map((d: any) => ({ params: { slug: d.slug }, props: { d } }))
+}
+const { d } = Astro.props
+const title = `${d.name} — Menu Prices & Live Stock | Sensei`
+const description = `${d.name} in ${d.neighborhood}, ${d.borough}: ${d.in_stock.toLocaleString()} products in stock from ${d.brands} brands, from ${money(d.min_price)}. Compare prices against nearby NYC dispensaries on Sensei.`
+const canonical = new URL(`/dispensaries/${d.slug}`, Astro.site).href
+
+const [street, city, stateZip] = (d.address || '').split(',').map((s: string) => s.trim())
+const [region, postal] = (stateZip || '').split(' ')
+const cats = Object.entries(d.categories).sort((a: any, b: any) => b[1] - a[1]) as [string, number][]
+const maxCat = Math.max(...cats.map(([, n]) => n))
+const brandSlugs = new Set(SEO.brands.map((b: any) => b.slug))
+const hoodSlug = slugify(d.neighborhood)
+const hoodKnown = SEO.neighborhoods.some((n: any) => n.slug === hoodSlug)
+const directions = `https://www.google.com/maps/search/?api=1&query=${d.lat},${d.lng}`
+const dutchie = `https://dutchie.com/dispensary/${d.slug}`
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': ['Store', 'LocalBusiness'],
+    name: d.name,
+    url: canonical,
+    image: d.featured?.[0]?.image_url,
+    address: { '@type': 'PostalAddress', streetAddress: street, addressLocality: city, addressRegion: region, postalCode: postal, addressCountry: 'US' },
+    geo: { '@type': 'GeoCoordinates', latitude: d.lat, longitude: d.lng },
+    areaServed: `${d.borough}, New York`,
+    makesOffer: `${d.in_stock} cannabis products`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Sensei', item: Astro.site?.href },
+      { '@type': 'ListItem', position: 2, name: 'Dispensaries', item: new URL('/dispensaries', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: d.name, item: canonical },
+    ],
+  },
+]
+---
+<Layout title={title} description={description} jsonld={jsonld}>
+  <p class="crumb"><a href="/">Sensei</a> › <a href={neighborhoodPath(hoodSlug)}>{d.neighborhood}</a> › Dispensary</p>
+  <p class="eyebrow">{d.neighborhood} · {d.borough}</p>
+  <h1>{d.name}</h1>
+  <div class="prose-slot">{'{prose}'} — intro: what makes this shop worth a Sensei comparison.</div>
+
+  <div class="stats">
+    <div class="stat glass"><span class="n">{d.in_stock.toLocaleString()}</span><span class="k label">In stock</span></div>
+    <div class="stat glass"><span class="n">{d.brands}</span><span class="k label">Brands</span></div>
+    <div class="stat glass"><span class="n">{money(d.min_price)}</span><span class="k label">From</span></div>
+  </div>
+
+  <section>
+    <a class="cta block" href={appDispensary(d.slug)}>Compare {d.name}'s prices nearby →</a>
+    <p class="cta-sub">See the same products at other NYC dispensaries on Sensei.</p>
+  </section>
+
+  <section>
+    <h2>Where it is</h2>
+    <MapIsland points={[{ lat: d.lat, lng: d.lng, name: d.address }]} directionsHref={directions} />
+  </section>
+
+  <section>
+    <h2>What's on the shelf</h2>
+    <div class="breakdown">
+      {cats.map(([cat, n]) => (
+        <a class="brow" href={cat === 'pre-rolls' ? categoryPath('pre-rolls') : appCategory(cat, `store=${d.slug}`)}>
+          <span class="bk">{categoryLabel(cat)}</span>
+          <span class="btrack"><span class="bfill" style={`width:${Math.round((n / maxCat) * 100)}%`}></span></span>
+          <span class="bn">{n}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Top brands here</h2>
+    <div class="chips">
+      {d.top_brands.map((b: any) => (
+        <a class="chip" href={brandSlugs.has(slugify(b.brand)) ? brandPath(slugify(b.brand)) : appBrand(b.brand)}>
+          {b.brand} <span class="c">{b.n}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Featured products</h2>
+    <div class="products">
+      {d.featured.map((p: any) => <ProductCard p={p} compareLabel="Compare" />)}
+    </div>
+  </section>
+
+  <section>
+    <a class="secondary" href={dutchie} target="_blank" rel="noopener nofollow">View full menu on Dutchie ↗</a>
+  </section>
+
+  <CrossLinks exclude="dispensary" />
+</Layout>

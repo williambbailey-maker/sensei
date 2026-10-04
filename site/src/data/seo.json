@@ -1,0 +1,228 @@
+{
+  "generatedAt": "2026-10-01",
+  "source": "Supabase (project dywrisybvcorpfhbwgtg) — live rows snapshotted via MCP; regenerate with src/data/pull.mjs from an unblocked network.",
+  "dispensaries": [
+    {
+      "slug": "qube-manhattan",
+      "name": "Qube - Manhattan",
+      "neighborhood": "Midtown",
+      "borough": "Manhattan",
+      "address": "1412 Broadway, New York, NY 10018, USA",
+      "lat": 40.754,
+      "lng": -73.987,
+      "in_stock": 2155,
+      "brands": 249,
+      "min_price": 3,
+      "categories": { "vaporizers": 652, "pre-rolls": 650, "flower": 387, "edibles": 372, "concentrates": 70, "tinctures": 17, "topicals": 7 },
+      "top_brands": [
+        { "brand": "Jeeter", "n": 68 }, { "brand": "STIIIZY", "n": 53 }, { "brand": "Boukét", "n": 44 },
+        { "brand": "Botanist", "n": 44 }, { "brand": "MFNY", "n": 42 }, { "brand": "Jaunty", "n": 40 },
+        { "brand": "Zips", "n": 37 }, { "brand": "PICC", "n": 35 }
+      ],
+      "featured": [
+        { "name": "Sour Diesel | 510 Cart | 1g", "brand": "Puff", "category": "vaporizers", "strain_type": "Sativa", "thc_pct": 97.64, "price_min": 35, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/a48ef7b692c6151d9bb0ce9d4f0823f4", "url": "https://dutchie.com/dispensary/qube-manhattan/product/sour-diesel-510-cart-1g-79866" },
+        { "name": "Permanent Marker | 510 Cart | 1g", "brand": "Puff", "category": "vaporizers", "strain_type": "Indica", "thc_pct": 97, "price_min": 35, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/4d2b58d7dae5d820ab949d3509127fd9", "url": "https://dutchie.com/dispensary/qube-manhattan/product/permanent-marker-510-cart-1g" },
+        { "name": "Cactus Cooler Haze | AIO | 1g", "brand": "Flav", "category": "vaporizers", "strain_type": "Hybrid", "thc_pct": 95.49, "price_min": 40, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/c97eed4ac97d8b085fc6d9421d570492", "url": "https://dutchie.com/dispensary/qube-manhattan/product/cactus-cooler-haze-aio-1g" },
+        { "name": "Lucifer OG | Flower | 3.5g", "brand": "1937", "category": "flower", "strain_type": "Hybrid", "thc_pct": 36.64, "price_min": 35, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/48e258bea837b8b92a0808c0558eff02", "url": "https://dutchie.com/dispensary/qube-manhattan/product/lucifer-og-flower-3-5g" },
+        { "name": "Apple Fritter | LIIIL AIO | 0.5g", "brand": "STIIIZY", "category": "vaporizers", "strain_type": "Hybrid", "thc_pct": 83.84, "price_min": 22.95, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/6fd0cdbc2ec188859c8a5e7a51ebd11b", "url": "https://dutchie.com/dispensary/qube-manhattan/product/apple-fritter-liiil-aio-0-5g" },
+        { "name": "Rainbow Cookie | Infused Cookie | 10mg", "brand": "2X Baked", "category": "edibles", "strain_type": "Hybrid", "thc_pct": null, "price_min": 10, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/c5d23bbc4e5a68dd1e82c9d6166e9576", "url": "https://dutchie.com/dispensary/qube-manhattan/product/rainbow-cookie-infused-cookie-10mg" }
+      ]
+    },
+    {
+      "slug": "brooklyn-bourne",
+      "name": "Brooklyn Bourne Dispensary",
+      "neighborhood": "Flatbush",
+      "borough": "Brooklyn",
+      "address": "2225 Church Avenue, Brooklyn, NY 11226, USA",
+      "lat": 40.6503,
+      "lng": -73.956,
+      "in_stock": 1208,
+      "brands": 137,
+      "min_price": 5,
+      "categories": { "flower": 370, "pre-rolls": 333, "vaporizers": 240, "edibles": 209, "concentrates": 38, "tinctures": 13, "topicals": 5 },
+      "top_brands": [
+        { "brand": "STIIIZY", "n": 58 }, { "brand": "Revert Cannabis", "n": 49 }, { "brand": "ZIPS", "n": 43 },
+        { "brand": "Hepworth", "n": 37 }, { "brand": "Gron NY LLC", "n": 31 }, { "brand": "RYTHM", "n": 28 },
+        { "brand": "Grassroots", "n": 27 }, { "brand": "ayrloom", "n": 26 }
+      ],
+      "featured": [
+        { "name": "Magic Melon | Liquid Diamonds | Indica | AIO | 1.5g", "brand": "Jaunty", "category": "vaporizers", "strain_type": "Indica", "thc_pct": 95.26, "price_min": 70, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/062df06394ae8e2d16c092d1a5f33507", "url": "https://dutchie.com/dispensary/brooklyn-bourne/product/magic-melon-liquid-diamonds-indica-aio-1-5g-24208" },
+        { "name": "Ruby Red Diesel | Liquid Diamonds | Sativa | AIO | 1.5g", "brand": "Jaunty", "category": "vaporizers", "strain_type": "Sativa", "thc_pct": 93.4, "price_min": 70, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/a40f34e6bdd95a8c134bf0d7e064b166", "url": "https://dutchie.com/dispensary/brooklyn-bourne/product/ruby-red-diesel-liquid-diamonds-sativa-aio-1-5g" },
+        { "name": "Select | Juicy Red Apple - ACE | 1g cart", "brand": "Select", "category": "vaporizers", "strain_type": "Hybrid", "thc_pct": 93.33, "price_min": 60, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/93cb1bf3daf2157dcee27565730d55e6", "url": "https://dutchie.com/dispensary/brooklyn-bourne/product/select-juicy-red-apple-ace-1g-cart" },
+        { "name": "STIIIZY | Super Lemon Haze | 1g pod (S)", "brand": "STIIIZY", "category": "vaporizers", "strain_type": "Sativa", "thc_pct": 92.27, "price_min": 40, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/051286895e17a06b435fcc55b91816df", "url": "https://dutchie.com/dispensary/brooklyn-bourne/product/stiiizy-super-lemon-haze-1g-pod-s" },
+        { "name": "Jaunty | Blackberry Kush | 1.5g Disposable Vape", "brand": "Jaunty", "category": "vaporizers", "strain_type": "Indica", "thc_pct": 92.31, "price_min": 60, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/fd9c530e71092141be4a8b1e557c4607", "url": "https://dutchie.com/dispensary/brooklyn-bourne/product/jaunty-blackberry-kush-1-5g-disposable-vape" },
+        { "name": "Pineapple Whip | Liquid Diamonds | Hybrid | AIO | 1.5g", "brand": "Jaunty", "category": "vaporizers", "strain_type": "Hybrid", "thc_pct": 92.96, "price_min": 70, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/cf121e3415806aa58f5543e6c30b9e3c", "url": "https://dutchie.com/dispensary/brooklyn-bourne/product/pineapple-whip-liquid-diamonds-hybrid-aio-1-5g" }
+      ]
+    },
+    {
+      "slug": "terp-bros-astoria",
+      "name": "Terp Bros - Astoria",
+      "neighborhood": "Astoria",
+      "borough": "Queens",
+      "address": "36-10 Ditmars Boulevard, Queens, NY 11105, USA",
+      "lat": 40.7709,
+      "lng": -73.9207,
+      "in_stock": 801,
+      "brands": 116,
+      "min_price": 3.54,
+      "categories": { "vaporizers": 212, "pre-rolls": 206, "flower": 187, "edibles": 151, "concentrates": 28, "tinctures": 13, "topicals": 4 },
+      "top_brands": [
+        { "brand": "ayrloom", "n": 37 }, { "brand": "MFNY", "n": 34 }, { "brand": "STIIIZY", "n": 34 },
+        { "brand": "Jetty Extracts", "n": 26 }, { "brand": "Dank By Definition.", "n": 24 }, { "brand": "Jaunty", "n": 23 },
+        { "brand": "HASHTAG HONEY", "n": 23 }, { "brand": "Off Hours", "n": 20 }
+      ],
+      "featured": [
+        { "name": "Skywalker OG Reload Pod - 1G", "brand": "Rove", "category": "vaporizers", "strain_type": "Indica", "thc_pct": 98.2, "price_min": 80.53, "image_url": "https://dutchie-images.s3.us-west-2.amazonaws.com/3b70e7c611effe7490f1a6b5a6938c40", "url": "https://dutchie.com/dispensary/terp-bros-astoria/product/skywalker-og-reload-pod-1g" },
+        { "name": "Pink Lemonade x Lemon Cane - 10pk", "brand": "MFNY", "category": "edibles", "strain_type": "Sativa-Hybrid", "thc_pct": null, "price_min": 22.12, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/e3bbabea59a6f2f527eaa39c2aa16fac", "url": "https://dutchie.com/dispensary/terp-bros-astoria/product/pink-lemonade-x-lemon-cane-10pk" },
+        { "name": "Mythical Manhattan Mango - 10pk", "brand": "Minny Grown", "category": "edibles", "strain_type": "Sativa-Hybrid", "thc_pct": null, "price_min": 17.7, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/77eae7ebe766b7cb095043309630b69a", "url": "https://dutchie.com/dispensary/terp-bros-astoria/product/mythical-manhattan-mango-10pk" },
+        { "name": "Blue Razzberry Pearl Clusters - 20pk", "brand": "PIXLZ", "category": "edibles", "strain_type": "Sativa", "thc_pct": null, "price_min": 26.55, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/52b9a77bc5f9999f72cbb4d2d4aca1ab", "url": "https://dutchie.com/dispensary/terp-bros-astoria/product/blue-razzberry-pearl-clusters-20pk" },
+        { "name": "Birthday Cake Bar - 1pk", "brand": "Crispy's", "category": "edibles", "strain_type": "Hybrid", "thc_pct": null, "price_min": 26.55, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/de51bc0a07ac2f889896a0c2a027d790", "url": "https://dutchie.com/dispensary/terp-bros-astoria/product/birthday-cake-bar-1pk" },
+        { "name": "Papa & Barkley 1:1:1 Sleep Tincture - 30mL", "brand": "Papa & Barkley", "category": "tinctures", "strain_type": null, "thc_pct": null, "price_min": 90.27, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/2f3e0c17000919df87aade92d75fad71", "url": "https://dutchie.com/dispensary/terp-bros-astoria/product/1-1-1-cbd-thc-cbn-sleep-tincture-30ml" }
+      ]
+    }
+  ],
+  "neighborhoods": [
+    {
+      "slug": "midtown",
+      "neighborhood": "Midtown",
+      "borough": "Manhattan",
+      "stores": 7,
+      "in_stock": 4743,
+      "categories": { "vaporizers": 1410, "pre-rolls": 1216, "edibles": 1121, "flower": 723, "concentrates": 184, "tinctures": 57, "topicals": 32 },
+      "stores_list": [
+        { "slug": "qube-manhattan", "name": "Qube - Manhattan", "address": "1412 Broadway, New York, NY 10018, USA", "in_stock": 2155 },
+        { "slug": "ny-canna-co-5th-ave", "name": "NY Canna Co - 5th Ave", "address": "381 5th Avenue, New York, NY 10016, USA", "in_stock": 779 },
+        { "slug": "the-daily-green", "name": "The Daily Green", "address": "719 7th Avenue, New York, NY 10036, USA", "in_stock": 532 },
+        { "slug": "culture-house", "name": "Culture House NYC", "address": "958 6th Avenue, New York, NY 10001, USA", "in_stock": 380 },
+        { "slug": "torches-nyc", "name": "Torches", "address": "12 East 42nd Street, New York, NY 10017, USA", "in_stock": 370 },
+        { "slug": "organic-relief-leaf", "name": "Urban Leaf", "address": "977 2nd Avenue, New York, NY 10022, USA", "in_stock": 338 },
+        { "slug": "baiked", "name": "Nicklz", "address": "797 8th Avenue, New York, NY 10019, USA", "in_stock": 189 }
+      ],
+      "featured": [
+        { "name": "Lucifer OG | Flower | 3.5g", "brand": "1937", "category": "flower", "strain_type": "Hybrid", "thc_pct": 36.64, "price_min": 35, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/48e258bea837b8b92a0808c0558eff02", "url": "https://dutchie.com/dispensary/qube-manhattan/product/lucifer-og-flower-3-5g" },
+        { "name": "1Slice | Udderly Strawberry | 1.1g", "brand": "1slice", "category": "pre-rolls", "strain_type": "Indica-Hybrid", "thc_pct": 23.43, "price_min": 14, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/b6b8a962dbd876e94d642e1053f4b9be", "url": "https://dutchie.com/dispensary/baiked/product/1slice-udderly-strawberry-1-1g" },
+        { "name": "5-Boro - Fuel Pump - .7G Dime Bag", "brand": "5-Boro", "category": "flower", "strain_type": "Indica", "thc_pct": 30.46, "price_min": 13, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/60fa44e0242b2e47c21db93ad062f9a6", "url": "https://dutchie.com/dispensary/ny-canna-co-5th-ave/product/5-boro-fuel-pump-7g-dime-bag" },
+        { "name": "5 Boro | Permanent Marker", "brand": "5 Boro", "category": "flower", "strain_type": "Hybrid", "thc_pct": 24.2, "price_min": 9, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/flower-stock-9-v1.jpg", "url": "https://dutchie.com/dispensary/culture-house/product/5-boro-permanent-marker" },
+        { "name": "Bliss Drops 20-pack", "brand": "1906", "category": "edibles", "strain_type": "Sativa", "thc_pct": null, "price_min": 32.77, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/c1296cbc7c17128fd710e4d2f15ffdbe", "url": "https://dutchie.com/dispensary/organic-relief-leaf/product/bliss-drops-20-pack" },
+        { "name": "Rainbow Cookie | Infused Cookie | 10mg", "brand": "2X Baked", "category": "edibles", "strain_type": "Hybrid", "thc_pct": null, "price_min": 10, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/c5d23bbc4e5a68dd1e82c9d6166e9576", "url": "https://dutchie.com/dispensary/qube-manhattan/product/rainbow-cookie-infused-cookie-10mg" }
+      ]
+    },
+    {
+      "slug": "williamsburg",
+      "neighborhood": "Williamsburg",
+      "borough": "Brooklyn",
+      "stores": 6,
+      "in_stock": 1798,
+      "categories": { "pre-rolls": 504, "edibles": 442, "vaporizers": 407, "flower": 330, "concentrates": 80, "tinctures": 23, "topicals": 12 },
+      "stores_list": [
+        { "slug": "hybrid-nyc", "name": "Gotham - Domino", "address": "296 Kent Avenue, Brooklyn, NY 11249, USA", "in_stock": 515 },
+        { "slug": "flowery", "name": "The Flowery - Brooklyn", "address": "692 Grand Street, Brooklyn, NY 11211, USA", "in_stock": 351 },
+        { "slug": "gram-cannabis-dispensary", "name": "Grams Cannabis - Dispensary", "address": "360 Graham Avenue, Brooklyn, NY 11211, USA", "in_stock": 346 },
+        { "slug": "sunflower-dispensary-retail", "name": "Sunflower Cannabis Dispensary Inc.", "address": "377 Metropolitan Avenue, Brooklyn, NY 11211, USA", "in_stock": 267 },
+        { "slug": "dagmar-cannabis-williamsburg", "name": "Dagmar Cannabis - Williamsburg", "address": "61 North 11th Street, Brooklyn, NY 11249, USA", "in_stock": 185 },
+        { "slug": "twisted-vibrations-retail", "name": "Twisted Vibrations - Retail", "address": "301 Broadway, Brooklyn, NY 11211, USA", "in_stock": 134 }
+      ],
+      "featured": [
+        { "name": "1937 Fruity Loopz 3.5g", "brand": "1937", "category": "flower", "strain_type": "Hybrid", "thc_pct": 26.45, "price_min": 30.97, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/47c5dcd331edf04fa92b9ec633de2f64", "url": "https://dutchie.com/dispensary/flowery/product/1937-fruity-loopz-3-5g" },
+        { "name": "Indoor ATOMIC APPLE", "brand": "Alien Labs", "category": "flower", "strain_type": "Hybrid", "thc_pct": 33.39, "price_min": 60, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/b812eca62d4dcf7500b06084ca6bf5ee", "url": "https://dutchie.com/dispensary/hybrid-nyc/product/indoor-atomic-apple" },
+        { "name": "5 Boro - Forbidden Fruit Dime Bag", "brand": "5 Boro", "category": "flower", "strain_type": "Indica", "thc_pct": 29.65, "price_min": 9, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/1be3a3486f112c42da008234d0e364f9", "url": "https://dutchie.com/dispensary/sunflower-dispensary-retail/product/5-boro-forbidden-fruit-dime-bag" },
+        { "name": "&Shine - Northern Lights - Vape Pen (Indica)", "brand": "&Shine", "category": "vaporizers", "strain_type": "Indica", "thc_pct": 89.29, "price_min": 30, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/4eb225a1b005f6a854991f6e642d60d4", "url": "https://dutchie.com/dispensary/sunflower-dispensary-retail/product/shine-northern-lights-vape-pen-indica" },
+        { "name": "Alchemy Pure Night + Day Preroll 6pk", "brand": "Alchemy Pure", "category": "pre-rolls", "strain_type": null, "thc_pct": 35.66, "price_min": 29, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/preroll-stock-3-v1.jpg", "url": "https://dutchie.com/dispensary/dagmar-cannabis-williamsburg/product/alchemy-pure-night-day-preroll-6pk" },
+        { "name": "Sleep Drops 2-pack", "brand": "1906", "category": "edibles", "strain_type": "Indica", "thc_pct": null, "price_min": 8.85, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/aad8a4cd14e91ff149ae4f43379c285c", "url": "https://dutchie.com/dispensary/gram-cannabis-dispensary/product/sleep-drops-2-pack-21641" }
+      ]
+    }
+  ],
+  "brands": [
+    {
+      "slug": "ayrloom",
+      "brand": "ayrloom",
+      "stores": 63,
+      "in_stock": 1395,
+      "min_price": 3.39,
+      "avg_price": 35,
+      "categories": { "edibles": 618, "vaporizers": 403, "pre-rolls": 150, "tinctures": 123, "topicals": 101 },
+      "stores_list": [
+        { "slug": "ny-canna-co-5th-ave", "name": "NY Canna Co - 5th Ave", "neighborhood": "Midtown", "borough": "Manhattan", "n": 49, "min_price": 5 },
+        { "slug": "case-management", "name": "Quality Control NY", "neighborhood": "Sheepshead Bay", "borough": "Brooklyn", "n": 47, "min_price": 5.65 },
+        { "slug": "twenty-one-thirty", "name": "The Flowery - Upper West Side", "neighborhood": "Upper West Side", "borough": "Manhattan", "n": 43, "min_price": 5 },
+        { "slug": "enflor", "name": "ENFLOR", "neighborhood": "Jackson Heights", "borough": "Queens", "n": 41, "min_price": 4.92 },
+        { "slug": "twenty8gramz", "name": "Twenty8gramz", "neighborhood": "Sheepshead Bay", "borough": "Brooklyn", "n": 41, "min_price": 5 },
+        { "slug": "cannaisseur", "name": "Poppin", "neighborhood": "Chelsea & Flatiron", "borough": "Manhattan", "n": 39, "min_price": 4 },
+        { "slug": "blazinup", "name": "The Alchemy - Chelsea", "neighborhood": "Chelsea & Flatiron", "borough": "Manhattan", "n": 38, "min_price": 5 },
+        { "slug": "terp-bros-astoria", "name": "Terp Bros - Astoria", "neighborhood": "Astoria", "borough": "Queens", "n": 37, "min_price": 3.54 },
+        { "slug": "kiki-buddz", "name": "Weedside", "neighborhood": "Woodside", "borough": "Queens", "n": 35, "min_price": 5.65 },
+        { "slug": "stash-master", "name": "Stash Master", "neighborhood": "Bushwick", "borough": "Brooklyn", "n": 35, "min_price": 3.5 }
+      ],
+      "featured": [
+        { "name": "\"Up\" 2:1 Sunny Days Infused Gummies | 100mg", "category": "edibles", "strain_type": "Sativa", "thc_pct": null, "price_min": 28.25, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/26ed108a0d814a41928fd4f2e8fb3cc8", "url": "https://dutchie.com/dispensary/kiki-buddz/product/up-2-1-sunny-days-infused-gummies-100mg-95883" },
+        { "name": "Alaska ThunderFu*k AIO Disposable Vape | 2g", "category": "vaporizers", "strain_type": "Sativa", "thc_pct": 90.69, "price_min": 75.22, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/4674f2145f38dd4c35be260b59813ad8", "url": "https://dutchie.com/dispensary/green-genius-nyc/product/alaska-thunderfu-k-aio-disposable-vape-2g" },
+        { "name": "\"Up\" 2:1 Cran Apple Infused Beverage | 10mg", "category": "edibles", "strain_type": "Hybrid", "thc_pct": null, "price_min": 5.65, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/e392ad14118d3b812e9048348758e0e6", "url": "https://dutchie.com/dispensary/kiki-buddz/product/up-2-1-cran-apple-infused-beverage-10mg-33490" },
+        { "name": "\"Up\" 2:1 Lemonade Infused Beverage | 10mg", "category": "edibles", "strain_type": "Hybrid", "thc_pct": null, "price_min": 5.65, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/215f544f072f152b5f9675b21b3a84f4", "url": "https://dutchie.com/dispensary/kiki-buddz/product/up-2-1-lemonade-infused-beverage-10mg" },
+        { "name": "\"Up\" 2:1 Half + Half Infused Beverage | 10mg", "category": "edibles", "strain_type": "Hybrid", "thc_pct": null, "price_min": 5.65, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/c6d04ad10ea628757d5c54f6fcf5d547", "url": "https://dutchie.com/dispensary/kiki-buddz/product/up-2-1-half-half-infused-beverage-10mg-74459" },
+        { "name": "\"Up\" 2:1 Vanilla Cola Infused Beverage | 10mg", "category": "edibles", "strain_type": "Hybrid", "thc_pct": null, "price_min": 5.65, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/593747ffa2483ccb8e2d52c5672dadf1", "url": "https://dutchie.com/dispensary/kiki-buddz/product/up-2-1-vanilla-cola-infused-beverage-10mg-45532" }
+      ]
+    },
+    {
+      "slug": "stiiizy",
+      "brand": "STIIIZY",
+      "stores": 36,
+      "in_stock": 834,
+      "min_price": 0.88,
+      "avg_price": 39,
+      "categories": { "vaporizers": 574, "pre-rolls": 200, "edibles": 59, "flower": 1 },
+      "stores_list": [
+        { "slug": "twenty8gramz", "name": "Twenty8gramz", "neighborhood": "Sheepshead Bay", "borough": "Brooklyn", "n": 68, "min_price": 18.4 },
+        { "slug": "case-management", "name": "Quality Control NY", "neighborhood": "Sheepshead Bay", "borough": "Brooklyn", "n": 65, "min_price": 22 },
+        { "slug": "grow-together-brooklyn", "name": "Grow Together - Brooklyn", "neighborhood": "Coney Island", "borough": "Brooklyn", "n": 62, "min_price": 22.6 },
+        { "slug": "brooklyn-bourne", "name": "Brooklyn Bourne Dispensary", "neighborhood": "Flatbush", "borough": "Brooklyn", "n": 58, "min_price": 20 },
+        { "slug": "qube-manhattan", "name": "Qube - Manhattan", "neighborhood": "Midtown", "borough": "Manhattan", "n": 53, "min_price": 17 },
+        { "slug": "the-daily-green", "name": "The Daily Green", "neighborhood": "Midtown", "borough": "Manhattan", "n": 38, "min_price": 24 },
+        { "slug": "torches-nyc", "name": "Torches", "neighborhood": "Midtown", "borough": "Manhattan", "n": 36, "min_price": 22 },
+        { "slug": "sweet-life-nyc", "name": "Sweetlife", "neighborhood": "Upper East Side", "borough": "Manhattan", "n": 34, "min_price": 60 },
+        { "slug": "terp-bros-astoria", "name": "Terp Bros - Astoria", "neighborhood": "Astoria", "borough": "Queens", "n": 34, "min_price": 16.28 },
+        { "slug": "organic-relief-leaf", "name": "Urban Leaf", "neighborhood": "Midtown", "borough": "Manhattan", "n": 32, "min_price": 23.05 }
+      ],
+      "featured": [
+        { "name": "40's | Biscotti", "category": "pre-rolls", "strain_type": "Indica", "thc_pct": 44.12, "price_min": 20, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/a6ef2a7dfe1f26b8d5cd2a2212f00da6", "url": "https://dutchie.com/dispensary/twenty-one-thirty/product/40-s-biscotti" },
+        { "name": "40's | Super Lemon Haze", "category": "pre-rolls", "strain_type": "Sativa", "thc_pct": 37.64, "price_min": 20, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/f8d8865ee6c8021452b5447db38ae7f8", "url": "https://dutchie.com/dispensary/twenty-one-thirty/product/40-s-super-lemon-haze" },
+        { "name": "40's | Magic Melon | 5pk", "category": "pre-rolls", "strain_type": "Sativa", "thc_pct": 37.28, "price_min": 45, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/382f34523d59e71c5323b72110a715a9", "url": "https://dutchie.com/dispensary/twenty-one-thirty/product/40-s-magic-melon-5pk" },
+        { "name": "40's | Cereal Milk | 5pk | 0.5g", "category": "pre-rolls", "strain_type": "Hybrid", "thc_pct": 35.41, "price_min": 45, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/b41303e44d477cf64fa40fa7068a82eb", "url": "https://dutchie.com/dispensary/twenty-one-thirty/product/40-s-cereal-milk-5pk-0-5g" },
+        { "name": "40s: Blue Burst - Infused Pre-Roll", "category": "pre-rolls", "strain_type": "Hybrid", "thc_pct": 36.33, "price_min": 23.05, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/fb39a3d2c15a5b66b0c7a523cc51c79c", "url": "https://dutchie.com/dispensary/organic-relief-leaf/product/40s-blue-burst-infused-pre-roll" },
+        { "name": "Apple Fritter | LIIIL AIO | 0.5g", "category": "vaporizers", "strain_type": "Hybrid", "thc_pct": 83.84, "price_min": 22.95, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/6fd0cdbc2ec188859c8a5e7a51ebd11b", "url": "https://dutchie.com/dispensary/qube-manhattan/product/apple-fritter-liiil-aio-0-5g" }
+      ]
+    }
+  ],
+  "categories": {
+    "pre-rolls": {
+      "slug": "pre-rolls",
+      "label": "Pre-Rolls",
+      "in_stock": 9994,
+      "stores": 67,
+      "brands": 456,
+      "min_price": 5.31,
+      "avg_price": 30,
+      "strains": { "sativa": 2876, "indica": 2479, "hybrid": 3301 },
+      "top_brands": [
+        { "brand": "Ruby Farms", "n": 752, "min_price": 12.6 }, { "brand": "Dank By Definition.", "n": 304, "min_price": 7.5 },
+        { "brand": "Florist Farms", "n": 280, "min_price": 11.8 }, { "brand": "Jeeter", "n": 277, "min_price": 13.27 },
+        { "brand": "Anthem", "n": 248, "min_price": 15 }, { "brand": "Dogwalkers", "n": 227, "min_price": 9.73 },
+        { "brand": "Claybourne Co.", "n": 211, "min_price": 32 }, { "brand": "STIIIZY", "n": 200, "min_price": 16.28 }
+      ],
+      "neighborhoods": [
+        { "slug": "midtown", "neighborhood": "Midtown", "n": 1216 }, { "slug": "chelsea-flatiron", "neighborhood": "Chelsea & Flatiron", "n": 853 },
+        { "slug": "east-west-village", "neighborhood": "East & West Village", "n": 754 }, { "slug": "sheepshead-bay", "neighborhood": "Sheepshead Bay", "n": 654 },
+        { "slug": "upper-west-side", "neighborhood": "Upper West Side", "n": 555 }, { "slug": "williamsburg", "neighborhood": "Williamsburg", "n": 504 },
+        { "slug": "bushwick", "neighborhood": "Bushwick", "n": 502 }, { "slug": "coney-island", "neighborhood": "Coney Island", "n": 463 },
+        { "slug": "astoria", "neighborhood": "Astoria", "n": 445 }, { "slug": "upper-east-side", "neighborhood": "Upper East Side", "n": 425 }
+      ],
+      "featured": [
+        { "name": "1Slice | Pineapple Cream | Pre-Roll | 1.1g", "brand": "1slice", "strain_type": "Hybrid", "thc_pct": 27.61, "price_min": 14, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/744326ba1bce0a06dbfe67af1da9d909", "url": "https://dutchie.com/dispensary/highest-standards-fidi/product/1slice-pineapple-cream-pre-roll-1-1g" },
+        { "name": "5 Boro | Cereal Milk | Hybrid | Blunt | 1.5g", "brand": "5 boro", "strain_type": "Hybrid", "thc_pct": 27.85, "price_min": 17.5, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/3cabaf2d03ad98622ad8ee00b66249c5", "url": "https://dutchie.com/dispensary/alta-lower-manhattan/product/5-boro-cereal-milk-hybrid-blunt-1-5g" },
+        { "name": "7SEAZ - Mini Tsunami - Bikini Diesel - 0.6g Infused Preroll", "brand": "7 SEAZ", "strain_type": "Hybrid", "thc_pct": 29.46, "price_min": 11.3, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/e773da4e5e72c8839e0fcc6691cf9ddc", "url": "https://dutchie.com/dispensary/grow-together-brooklyn/product/7seaz-0-6g-infused-preroll-mini-tsunami-bikini-diesel-hybrid" },
+        { "name": "5 Boro - Forbidden Fruit - Preroll (Hybrid)", "brand": "5 Boro", "strain_type": "Hybrid", "thc_pct": 23.38, "price_min": 14.69, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/ecb98b250937c3273132f422977d5f16", "url": "https://dutchie.com/dispensary/gotham-buds/product/5-boro-forbidden-fruit-preroll-hybrid-22" },
+        { "name": "2X Baked | Tree Slumps | Handroll | 1.2g Hash Rosin", "brand": "2X Baked", "strain_type": "Hybrid", "thc_pct": 30.82, "price_min": 50, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/8b0780814d9cf16858a1f7a4816cd3c7", "url": "https://dutchie.com/dispensary/sweet-life-nyc/product/2x-baked-tree-slumps-handroll-1-2g-x-0-3g-hash-rosin" },
+        { "name": "CBG Cake 2:1 THC:CBG | Ratio Joints 2pk | 1.5g", "brand": "Supernaturals", "strain_type": "2 to 1", "thc_pct": 10, "price_min": 14.16, "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/4d22dae3cfc9b1e90453d9b0b007a44c", "url": "https://dutchie.com/dispensary/flowery/product/cbg-cake-2-1-thc-cbg-ratio-joints-2pk-1-5g-30040" }
+      ]
+    }
+  }
+}

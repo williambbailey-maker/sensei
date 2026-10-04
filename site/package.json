@@ -1,0 +1,19 @@
+{
+  "name": "sensei-seo",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sensei SEO landing pages — static Astro site rendered from live Supabase data.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "pull": "node src/data/pull.mjs"
+  },
+  "dependencies": {
+    "astro": "^4.16.18"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
+  }
+}

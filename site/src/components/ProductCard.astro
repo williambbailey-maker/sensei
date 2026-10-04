@@ -1,0 +1,26 @@
+---
+import { money, showThc, categoryLabel, appProduct, type Product } from '../lib/site'
+// A product tile. PRIMARY action is the Sensei one — "Compare" deep-links into
+// the app to price this product across nearby stores. The dispensary menu link
+// is present but secondary (small, bottom, de-emphasised).
+const { p, compareLabel = 'Compare' } = Astro.props as { p: Product; compareLabel?: string }
+---
+<article class="pcard glass">
+  <div class="thumb">
+    {p.image_url && <img src={p.image_url} alt={p.name} loading="lazy" decoding="async" />}
+  </div>
+  <div class="pbody">
+    <div class="pname">{p.name}</div>
+    {p.brand && <div class="pbrand">{p.brand}</div>}
+    <div class="pmeta">
+      {p.strain_type && <span class="tag">{p.strain_type}</span>}
+      {showThc(p) && <span class="tag">{Math.round(p.thc_pct!)}% THC</span>}
+      {p.category && <span class="tag">{categoryLabel(p.category)}</span>}
+    </div>
+    <div class="prow">
+      <span class="price"><span class="from">From</span>{money(p.price_min)}</span>
+      <a class="compare" href={appProduct(p)}>{compareLabel} →</a>
+    </div>
+  </div>
+  {p.url && <a class="menu-link" href={p.url} target="_blank" rel="noopener nofollow">View on dispensary menu ↗</a>}
+</article>

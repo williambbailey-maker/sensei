@@ -1,0 +1,166 @@
+/* Sensei visual identity — "Hyper-Saturated Fluid": a deep onyx void, one cyber
+   yellow shout color, Inter throughout, uppercase tracked labels, glass cards.
+   Mirrors app/tailwind.config.js. Single dark theme by design. */
+:root {
+  --yellow: #fde047;
+  --yellow-deep: #eaca18;
+  --onyx: #0a0a0a;
+  --charcoal: #171717;
+  --voidgray: #262626;
+  --ink: #ffffff;
+  --muted: #a3a3a3;
+  --steel-dim: #737373;
+  --line: rgba(255, 255, 255, 0.14);
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-line: rgba(255, 255, 255, 0.12);
+  color-scheme: dark;
+  --font: 'Inter', ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--onyx); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--onyx);
+  color: var(--ink);
+  font-family: var(--font);
+  font-feature-settings: 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* Layout shell — mobile-first, single column, 16px gutters. */
+.wrap { width: 100%; max-width: 640px; margin: 0 auto; padding-inline: 16px; }
+main { padding-block: 8px 56px; }
+section { margin-top: 32px; }
+
+/* Masthead */
+.masthead {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  background: rgba(10, 10, 10, 0.82);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.masthead .wrap { display: flex; align-items: center; justify-content: space-between; padding-block: 12px; }
+.wordmark { font-size: 30px; font-weight: 900; letter-spacing: -0.03em; color: var(--yellow); line-height: 1; text-decoration: none; }
+.masthead .est { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; }
+
+/* Typography */
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--yellow); margin: 0; }
+h1 { font-size: clamp(2rem, 8vw, 2.9rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.02; margin: 10px 0 0; text-wrap: balance; }
+h2 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 14px; }
+h3 { font-size: 1rem; font-weight: 700; margin: 0; }
+.lede { color: var(--muted); font-size: 15px; margin: 14px 0 0; max-width: 60ch; }
+.label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+
+/* generated-copy placeholder marker */
+.prose-slot {
+  margin-top: 16px; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 14px;
+  color: var(--steel-dim); font-size: 13px; letter-spacing: 0.02em; background: rgba(255,255,255,0.02);
+}
+
+/* Glass card */
+.glass { background: var(--glass); border: 1px solid var(--glass-line); border-radius: 22px; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+
+/* Primary CTA — the Sensei action */
+.cta {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  background: var(--yellow); color: var(--onyx); font-weight: 800; font-size: 14px;
+  text-decoration: none; padding: 14px 20px; border-radius: 999px; border: 0; width: 100%;
+  letter-spacing: -0.01em;
+}
+.cta.block { width: 100%; }
+.cta-sub { text-align: center; font-size: 11px; color: var(--muted); margin: 8px 0 0; }
+.secondary {
+  display: inline-flex; align-items: center; gap: 6px; justify-content: center;
+  color: var(--ink); font-weight: 600; font-size: 13px; text-decoration: none;
+  padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent;
+}
+
+/* Stat row */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+.stat { padding: 14px; text-align: left; }
+.stat .n { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.02em; color: var(--yellow); font-variant-numeric: tabular-nums; }
+.stat .k { display: block; margin-top: 2px; }
+
+/* Chips */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+  font-size: 12px; font-weight: 600; color: var(--ink);
+  background: var(--glass); border: 1px solid var(--glass-line); border-radius: 999px; padding: 8px 13px;
+}
+.chip .c { color: var(--muted); font-variant-numeric: tabular-nums; }
+.chip.on { background: var(--yellow); color: var(--onyx); border-color: var(--yellow); }
+.chip.on .c { color: rgba(10,10,10,0.6); }
+
+/* Product grid */
+.products { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+.pcard { overflow: hidden; display: flex; flex-direction: column; }
+.pcard .thumb { aspect-ratio: 1/1; background: var(--voidgray) center/cover no-repeat; position: relative; }
+.pcard .thumb::after { content: 'SENSEI'; position: absolute; inset: 0; display: grid; place-items: center; color: var(--steel-dim); font-size: 10px; letter-spacing: 0.2em; font-weight: 800; z-index: 0; }
+.pcard .thumb img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.pcard .pbody { padding: 11px 12px 13px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.pcard .pname { font-size: 13px; font-weight: 700; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pcard .pbrand { font-size: 11px; color: var(--muted); }
+.pcard .pmeta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 1px; }
+.pcard .tag { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 7px; }
+.pcard .prow { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 6px; }
+.pcard .price { font-weight: 900; font-size: 15px; }
+.pcard .price .from { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); display: block; }
+.pcard .compare { font-size: 11px; font-weight: 800; color: var(--onyx); background: var(--yellow); border-radius: 999px; padding: 7px 11px; text-decoration: none; white-space: nowrap; }
+.pcard .menu-link { font-size: 10px; color: var(--steel-dim); text-decoration: none; padding: 9px 12px 11px; border-top: 1px solid var(--line); display: block; }
+
+/* Store list */
+.stores { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.storerow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; text-decoration: none; }
+.storerow .sname { font-weight: 700; font-size: 14px; }
+.storerow .saddr { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.storerow .sn { font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.storerow .sn b { color: var(--yellow); font-size: 15px; display: block; text-align: right; }
+
+/* Breadcrumb + cross-links */
+.crumb { font-size: 11px; color: var(--muted); margin: 0; }
+.crumb a { text-decoration: none; }
+.crosslinks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.xlink { display: block; padding: 14px 16px; text-decoration: none; }
+.xlink .xk { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--yellow); font-weight: 700; }
+.xlink .xv { font-size: 13px; font-weight: 700; margin-top: 4px; }
+.xlink .xd { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* Category breakdown bar */
+.breakdown { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.brow { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brow .bk { width: 92px; font-size: 12px; font-weight: 600; flex: none; }
+.brow .btrack { flex: 1; height: 8px; background: var(--voidgray); border-radius: 999px; overflow: hidden; min-width: 0; }
+.brow .bfill { height: 100%; background: var(--yellow); border-radius: 999px; }
+.brow .bn { width: 42px; text-align: right; font-size: 11px; color: var(--muted); flex: none; font-variant-numeric: tabular-nums; }
+
+/* Map island */
+.mapwrap { margin-top: 4px; overflow: hidden; }
+#map { width: 100%; height: 190px; display: block; background: var(--voidgray); }
+.maprow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.maprow .addr { font-size: 12px; color: var(--muted); }
+
+footer { border-top: 1px solid var(--line); margin-top: 48px; }
+footer .wrap { padding-block: 28px 40px; }
+footer .fnote { font-size: 11px; color: var(--steel-dim); margin-top: 16px; }
+
+/* 21+ overlay — visually covers, but the page content stays in the DOM (never
+   display:none) so crawlers index everything. */
+#agegate {
+  position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px;
+  background: rgba(10, 10, 10, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+}
+#agegate .box { max-width: 340px; }
+#agegate .wordmark { display: inline-block; margin-bottom: 14px; }
+#agegate p { color: var(--muted); font-size: 13px; margin: 10px 0 22px; }
+#agegate .row { display: flex; flex-direction: column; gap: 10px; }
+#agegate .no { color: var(--muted); background: transparent; border: 1px solid var(--line); }
+#agegate button { cursor: pointer; font-family: inherit; }
+.ag-dismissed #agegate { display: none; }
+
+@media (max-width: 360px) { .products { grid-template-columns: 1fr; } }

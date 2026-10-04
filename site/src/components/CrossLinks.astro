@@ -1,0 +1,30 @@
+---
+import { SEO, dispensaryPath, neighborhoodPath, brandPath, categoryPath } from '../lib/site'
+// Every page cross-links to the other three page types. `exclude` drops the
+// current type so a page never links to its own kind here.
+const { exclude } = Astro.props as { exclude: 'dispensary' | 'neighborhood' | 'brand' | 'category' }
+const d = SEO.dispensaries[0], d2 = SEO.dispensaries[1]
+const n = SEO.neighborhoods[0]
+const b = SEO.brands[0]
+const c = SEO.categories['pre-rolls']
+const all = [
+  exclude !== 'dispensary' && { href: dispensaryPath(d.slug), k: 'Dispensary', v: d.name, d: `${d.neighborhood}, ${d.borough}` },
+  exclude !== 'neighborhood' && { href: neighborhoodPath(n.slug), k: 'Neighborhood', v: n.neighborhood, d: `${n.stores} shops, ${n.borough}` },
+  exclude !== 'brand' && { href: brandPath(b.slug), k: 'Brand', v: b.brand, d: `${b.stores} stores stock it` },
+  exclude !== 'category' && { href: categoryPath(c.slug), k: 'Category', v: c.label, d: `${c.in_stock.toLocaleString()} across NYC` },
+  // a second dispensary keeps the grid at four when one type is excluded
+  exclude === 'dispensary' && { href: dispensaryPath(d2.slug), k: 'Dispensary', v: d2.name, d: `${d2.neighborhood}, ${d2.borough}` },
+].filter(Boolean)
+---
+<section>
+  <h2>Explore Sensei</h2>
+  <div class="crosslinks">
+    {all.map((x: any) => (
+      <a class="xlink glass" href={x.href}>
+        <span class="xk">{x.k}</span>
+        <div class="xv">{x.v}</div>
+        <div class="xd">{x.d}</div>
+      </a>
+    ))}
+  </div>
+</section>

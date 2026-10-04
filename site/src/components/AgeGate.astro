@@ -1,0 +1,28 @@
+---
+// 21+ overlay. It covers the viewport but never removes or hides the page
+// content from the DOM — crawlers and no-JS readers get the full page. A tiny
+// inline script dismisses it and remembers the choice for the session.
+---
+<div id="agegate" role="dialog" aria-label="Age verification" aria-modal="true">
+  <div class="box">
+    <span class="wordmark">sensei</span>
+    <h2 style="margin:0">Are you 21 or older?</h2>
+    <p>You must be of legal age to view licensed cannabis products in New York State.</p>
+    <div class="row">
+      <button class="cta" type="button" id="ag-yes">Yes, I'm 21+</button>
+      <button class="cta no" type="button" onclick="location.href='https://www.google.com'">No, take me back</button>
+    </div>
+  </div>
+</div>
+<script is:inline>
+  (function () {
+    var KEY = 'sensei_age_ok'
+    try { if (sessionStorage.getItem(KEY) === '1') document.documentElement.classList.add('ag-dismissed') } catch (e) {}
+    var yes = document.getElementById('ag-yes')
+    if (yes) yes.addEventListener('click', function () {
+      document.documentElement.classList.add('ag-dismissed')
+      try { sessionStorage.setItem(KEY, '1') } catch (e) {}
+    })
+  })()
+</script>
+<noscript><style>#agegate{display:none}</style></noscript>
