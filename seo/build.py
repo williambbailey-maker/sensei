@@ -30,10 +30,10 @@ SITE = json.loads((ROOT / "data" / "site.json").read_text())
 SITE_URL = "https://sensei.nyc"
 APP = "https://sensei.nyc"  # the Sensei web app (SPA at the domain root)
 
-# PostHog — baked in at build time. The project key is public (write-only). With
-# no SENSEI_POSTHOG_KEY set, the inline script no-ops and the pages ship clean;
-# rebuild with the key to switch analytics on. See reports/README.md.
-POSTHOG_KEY = os.environ.get("SENSEI_POSTHOG_KEY", "__POSTHOG_KEY__")
+# PostHog — baked in at build time. The project key is public (write-only), so
+# it's a default fallback like the app's; env overrides it, and setting it to a
+# value starting "__" makes the inline script no-op. See ANALYTICS-EVENTS.md.
+POSTHOG_KEY = os.environ.get("SENSEI_POSTHOG_KEY", "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX")
 POSTHOG_HOST = os.environ.get("SENSEI_POSTHOG_HOST", "https://us.i.posthog.com")
 
 CAT_LABEL = {"pre-rolls": "Pre-Rolls", "vaporizers": "Vapes", "edibles": "Edibles",

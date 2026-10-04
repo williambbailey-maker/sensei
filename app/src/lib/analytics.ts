@@ -11,7 +11,12 @@
 // here is a safe no-op so the app runs untouched until the key is dropped in.
 import posthog from 'posthog-js'
 
-const KEY = import.meta.env.VITE_POSTHOG_KEY as string | undefined
+// The project key is public (write-only, ships in the bundle) — baked as a
+// fallback like the Supabase anon key, so analytics works out of the box. Env
+// vars win; set VITE_POSTHOG_KEY='' to disable.
+const KEY =
+  (import.meta.env.VITE_POSTHOG_KEY as string | undefined) ??
+  'phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX'
 const HOST = (import.meta.env.VITE_POSTHOG_HOST as string | undefined) || 'https://us.i.posthog.com'
 
 let on = false
