@@ -19,6 +19,7 @@ Regenerate the snapshot with pull from an unblocked network; then: python build.
 """
 
 import json
+import os
 import re
 from pathlib import Path
 from urllib.parse import quote
@@ -28,6 +29,12 @@ DIST = ROOT / "dist"
 SITE = json.loads((ROOT / "data" / "site.json").read_text())
 SITE_URL = "https://sensei.nyc"
 APP = "https://sensei.nyc"  # the Sensei web app (SPA at the domain root)
+
+# PostHog — baked in at build time. The project key is public (write-only). With
+# no SENSEI_POSTHOG_KEY set, the inline script no-ops and the pages ship clean;
+# rebuild with the key to switch analytics on. See reports/README.md.
+POSTHOG_KEY = os.environ.get("SENSEI_POSTHOG_KEY", "__POSTHOG_KEY__")
+POSTHOG_HOST = os.environ.get("SENSEI_POSTHOG_HOST", "https://us.i.posthog.com")
 
 CAT_LABEL = {"pre-rolls": "Pre-Rolls", "vaporizers": "Vapes", "edibles": "Edibles",
              "flower": "Flower", "concentrates": "Concentrates", "tinctures": "Tinctures",
@@ -152,7 +159,47 @@ var y=document.getElementById('agy');if(y)y.onclick=function(){document.document
 <noscript><style>#ag{display:none}</style></noscript>
 """
 
-def page(title, desc, path, jsonld, body):
+def pkey(brand, name):
+    # Canonical product key — same slug the app uses (analytics.ts productKey).
+    return slugify(f"{brand or ''} {name or ''}")
+
+# Inline analytics for the static pages. Every event carries the six mandated
+# properties via registered super-properties (brand/product_key default null,
+# page_type/dispensary/neighborhood/source set per page). Events fired here:
+#   $pageview (auto) · brand_view (brand pages) · product_impression (cards in
+#   view) · chip_tap (chips/bars) · menu_click (the "open in Sensei" CTAs).
+# product_view/compare_view/save/signup have no surface on these pages — they
+# live in the app. See reports/README.md for the full mapping.
+def analytics_js(page_type, ctx):
+    cfg = {"key": POSTHOG_KEY, "host": POSTHOG_HOST, "page_type": page_type}
+    for k, v in (ctx or {}).items():
+        if v:
+            cfg[k] = v
+    return """<script>
+(function(){var CFG=%s;if(!CFG.key||CFG.key.indexOf('__')===0)return;
+function src(){try{var q=new URLSearchParams(location.search),s=(q.get('src')||'').toLowerCase();
+if(s.indexOf('qr')===0)return'qr';var m=(q.get('utm_medium')||'').toLowerCase(),u=(q.get('utm_source')||'').toLowerCase();
+if(['cpc','ppc','paid','paidsearch','display'].indexOf(m)>=0||/ad/.test(u))return'ad';
+var r=document.referrer;if(!r)return'direct';var h=new URL(r).hostname.replace(/^www\\./,'');
+if(h===location.hostname)return'direct';
+if(/(^|\\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\\./.test(h)||h.indexOf('search')>=0)return'organic';
+if(/(instagram|facebook|t\\.co|twitter|x\\.com|reddit|tiktok|linkedin|youtube|pinterest|threads)/.test(h))return'social';
+return'direct';}catch(e){return'direct';}}
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister getFeatureFlag isFeatureEnabled".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,person_profiles:'identified_only'});
+var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:src()};
+if(CFG.category)base.category=CFG.category;posthog.register(base);
+if(CFG.page_type==='brand')posthog.capture('brand_view',{});
+function cp(el){return{brand:el.getAttribute('data-brand')||base.brand,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}
+try{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){posthog.capture('product_impression',cp(x.target));io.unobserve(x.target);}});},{threshold:0.5});
+document.querySelectorAll('.card[data-ev="product"]').forEach(function(el){io.observe(el);});}catch(e){}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-ev]');if(!a)return;var ev=a.getAttribute('data-ev');
+if(ev==='chip')posthog.capture('chip_tap',{brand:a.getAttribute('data-brand')||null,neighborhood:a.getAttribute('data-hood')||null,category:a.getAttribute('data-cat')||null,label:(a.textContent||'').trim()});
+else if(ev==='menu')posthog.capture('menu_click',{brand:a.getAttribute('data-brand')||base.brand,dispensary:a.getAttribute('data-dispensary')||base.dispensary,url:a.getAttribute('href')||null});},true);
+})();
+</script>""" % json.dumps(cfg)
+
+def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
     canon = SITE_URL + path
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j)}</script>' for j in jsonld)
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -169,7 +216,7 @@ def page(title, desc, path, jsonld, body):
 <header class="hd"><a class="wm" href="/">sensei</a><span class="est">21+ · NYC</span></header>
 <main class="wrap">{body}</main>
 <footer class="ft"><a class="wm" href="/">sensei</a><br>Every licensed NYC dispensary menu, one place. Prices refresh from live menus. Sensei is an independent guide — order on the dispensary's own site. Adults 21+ only.</footer>
-</div>{AGE_GATE}</body></html>
+</div>{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """
 
 def breadcrumb(items):
@@ -190,7 +237,10 @@ def pcard(p):
     if p.get("category"): tags.append(f'<span class="tag">{esc(clabel(p["category"]))}</span>')
     name = p.get("name") or ""
     brand = f'<div class="mt">{esc(p["brand"])}</div>' if p.get("brand") else ""
-    return (f'<div class="card"><span class="tile">{img}</span><div class="l">'
+    attrs = (f'data-ev="product" data-brand="{esc(p.get("brand") or "")}" '
+             f'data-product-key="{esc(pkey(p.get("brand"), name))}" '
+             f'data-category="{esc(p.get("category") or "")}"')
+    return (f'<div class="card" {attrs}><span class="tile">{img}</span><div class="l">'
             f'<div class="nm">{esc(name)}</div>{brand}<div>{"".join(tags[:2])}</div></div>'
             f'<div class="r"><div class="pr">{money(p.get("price_min"))}</div><div class="pg">from</div></div></div>')
 
@@ -208,7 +258,7 @@ def catbars(cats, link_fn):
         inner = (f'<span class="bk">{esc(clabel(cat))}</span>'
                  f'<span class="bt"><span class="bf" style="width:{round(n/mx*100)}%"></span></span>'
                  f'<span class="bn">{n}</span>')
-        rows += f'<a class="bar" href="{href}">{inner}</a>'
+        rows += f'<a class="bar" href="{href}" data-ev="chip" data-cat="{esc(cat)}">{inner}</a>'
     return f'<div class="bars">{rows}</div>'
 
 # ---------- page builders ----------
@@ -234,7 +284,7 @@ def build_dispensary(d):
     for b in (d.get("top_brands") or []):
         s = slugify(b["brand"])
         href = f"/brands/{s}/" if s in BRAND_SLUGS else app_brand(b["brand"])
-        bchips += f'<a class="chip" href="{href}">{esc(b["brand"])} <span class="c">{b["n"]}</span></a>'
+        bchips += f'<a class="chip" href="{href}" data-ev="chip" data-brand="{esc(b["brand"])}">{esc(b["brand"])} <span class="c">{b["n"]}</span></a>'
     cats = catbars(d.get("categories") or {},
                    lambda c: (f"/nyc/{c}/" if c in CAT_SLUGS else app_cat(c, f"store={d['slug']}")))
     feat = "".join(pcard(p) for p in (d.get("featured") or [])[:4])
@@ -249,13 +299,14 @@ def build_dispensary(d):
 <div class="hero"><div class="bn">{esc(d.get('neighborhood') or 'NYC')} · live menu</div>
 <h2>Shop {esc(d['name'])} on Sensei</h2>
 <p>Compare every item here against nearby NYC shops — then order where it's cheapest.</p>
-<a class="cta" href="{app_store(d['slug'])}">Browse {esc(d['name'])} →</a></div>
+<a class="cta" href="{app_store(d['slug'])}" data-ev="menu" data-dispensary="{esc(d['name'])}">Browse {esc(d['name'])} →</a></div>
 <div class="sh">What's on the shelf</div>{cats}
 <div class="sh">Top brands here</div><div class="chips">{bchips}</div>
 <div class="sh">Featured right now</div>{feat}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_store=d['slug'], hood=d.get('neighborhood'))}
 """
-    write(path, page(title, desc, path, ld, body))
+    write(path, page(title, desc, path, ld, body, "dispensary",
+                     {"dispensary": d["name"], "neighborhood": d.get("neighborhood")}))
     return path
 
 def build_neighborhood(n):
@@ -285,13 +336,14 @@ def build_neighborhood(n):
 <div class="hero"><div class="bn">{n['stores']} shops · one search</div>
 <h2>Shop all of {esc(n['neighborhood'])} on Sensei</h2>
 <p>Every {esc(n['neighborhood'])} menu in one place, sorted by price and distance.</p>
-<a class="cta" href="{app_hood(n['neighborhood'])}">Shop {esc(n['neighborhood'])} →</a></div>
+<a class="cta" href="{app_hood(n['neighborhood'])}" data-ev="menu">Shop {esc(n['neighborhood'])} →</a></div>
 <div class="sh">Filter {esc(n['neighborhood'])} by category</div>{cats}
 <div class="sh">Dispensaries in {esc(n['neighborhood'])}</div>{stores}
 <div class="sh">Popular right now</div>{feat}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_hood=slug)}
 """
-    write(path, page(title, desc, path, ld, body))
+    write(path, page(title, desc, path, ld, body, "neighborhood",
+                     {"neighborhood": n["neighborhood"]}))
     return path
 
 def build_brand(b):
@@ -323,13 +375,13 @@ def build_brand(b):
 <div class="hero"><div class="bn">Carried at {b['stores']} shops</div>
 <h2>See every store stocking {esc(b['brand'])}</h2>
 <p>Compare {esc(b['brand'])} prices across all {b['stores']} NYC shops on Sensei.</p>
-<a class="cta" href="{app_brand(b['brand'])}">Find {esc(b['brand'])} nearby →</a></div>
+<a class="cta" href="{app_brand(b['brand'])}" data-ev="menu" data-brand="{esc(b['brand'])}">Find {esc(b['brand'])} nearby →</a></div>
 <div class="sh">What {esc(b['brand'])} makes</div><div class="chips">{cchips}</div>
 <div class="sh">Stores carrying {esc(b['brand'])}</div>{stores}
 <div class="sh">Popular {esc(b['brand'])} products</div>{feat}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_brand=slug)}
 """
-    write(path, page(title, desc, path, ld, body))
+    write(path, page(title, desc, path, ld, body, "brand", {"brand": b["brand"]}))
     return path
 
 def build_category(c):
@@ -342,11 +394,11 @@ def build_category(c):
     bchips = ""
     for x in (c.get("top_brands") or []):
         s = slugify(x["brand"]); href = f"/brands/{s}/" if s in BRAND_SLUGS else app_brand(x["brand"])
-        bchips += f'<a class="chip" href="{href}">{esc(x["brand"])} <span class="c">{x["n"]}</span></a>'
+        bchips += f'<a class="chip" href="{href}" data-ev="chip" data-brand="{esc(x["brand"])}">{esc(x["brand"])} <span class="c">{x["n"]}</span></a>'
     hchips = ""
     for h in (c.get("neighborhoods") or []):
         s = slugify(h["neighborhood"]); href = f"/neighborhoods/{s}/" if s in HOOD_SLUGS else app_hood(h["neighborhood"], cat)
-        hchips += f'<a class="chip" href="{href}">{esc(h["neighborhood"])} <span class="c">{h["n"]}</span></a>'
+        hchips += f'<a class="chip" href="{href}" data-ev="chip" data-hood="{esc(h["neighborhood"])}">{esc(h["neighborhood"])} <span class="c">{h["n"]}</span></a>'
     feat = "".join(pcard({**p, "category": cat}) for p in (c.get("featured") or [])[:6])
     body = f"""
 <p class="crumb"><a href="/">Sensei</a> › NYC › {esc(label)}</p>
@@ -359,13 +411,13 @@ def build_category(c):
 <div class="hero"><div class="bn">{c['brands']} brands · {c['stores']} shops</div>
 <h2>Find the best {esc(label.lower())} near you</h2>
 <p>Every NYC {esc(label.lower())} listing, ranked by price and distance on Sensei.</p>
-<a class="cta" href="{app_cat(cat)}">Browse {esc(label.lower())} →</a></div>
+<a class="cta" href="{app_cat(cat)}" data-ev="menu" data-cat="{esc(cat)}">Browse {esc(label.lower())} →</a></div>
 <div class="sh">Top {esc(label.lower())} brands</div><div class="chips">{bchips}</div>
 <div class="sh">Where it's stocked</div><div class="chips">{hchips}</div>
 <div class="sh">Featured {esc(label.lower())}</div>{feat}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_cat=cat)}
 """
-    write(path, page(title, desc, path, ld, body))
+    write(path, page(title, desc, path, ld, body, "category", {"category": cat}))
     return path
 
 # representative cross-links to the other page types (connected graph for crawl)
@@ -390,9 +442,9 @@ def crosslinks(exclude_store=None, exclude_hood=None, exclude_brand=None, exclud
 def build_home(paths):
     title = "Sensei — Every NYC Dispensary Menu, One Place"
     desc = "Compare prices, potency and pickup across every licensed New York City dispensary. Browse by dispensary, neighborhood, brand or product type."
-    cat_chips = "".join(f'<a class="chip" href="/nyc/{c["category"]}/">{esc(clabel(c["category"]))} <span class="c">{c["in_stock"]}</span></a>' for c in SITE["categories"])
-    hood_chips = "".join(f'<a class="chip" href="/neighborhoods/{slugify(n["neighborhood"])}/">{esc(n["neighborhood"])} <span class="c">{n["stores"]}</span></a>' for n in TOP_HOODS)
-    brand_chips = "".join(f'<a class="chip" href="/brands/{slugify(b["brand"])}/">{esc(b["brand"])} <span class="c">{b["stores"]}</span></a>' for b in TOP_BRANDS)
+    cat_chips = "".join(f'<a class="chip" href="/nyc/{c["category"]}/" data-ev="chip" data-cat="{esc(c["category"])}">{esc(clabel(c["category"]))} <span class="c">{c["in_stock"]}</span></a>' for c in SITE["categories"])
+    hood_chips = "".join(f'<a class="chip" href="/neighborhoods/{slugify(n["neighborhood"])}/" data-ev="chip" data-hood="{esc(n["neighborhood"])}">{esc(n["neighborhood"])} <span class="c">{n["stores"]}</span></a>' for n in TOP_HOODS)
+    brand_chips = "".join(f'<a class="chip" href="/brands/{slugify(b["brand"])}/" data-ev="chip" data-brand="{esc(b["brand"])}">{esc(b["brand"])} <span class="c">{b["stores"]}</span></a>' for b in TOP_BRANDS)
     disp_rows = ""
     for d in TOP_DISP[:12]:
         disp_rows += (f'<a class="row" href="/dispensaries/{d["slug"]}/"><div class="l"><div class="snm">{esc(d["name"])}</div>'
@@ -404,13 +456,13 @@ def build_home(paths):
 <p class="lede">Compare price, potency and pickup across every licensed NYC dispensary — then order where it's right.</p>
 <div class="hero"><div class="bn">{len(SITE['dispensaries'])} shops · live menus</div>
 <h2>Open Sensei</h2><p>Search by vibe or by the details, across the whole city.</p>
-<a class="cta" href="{APP}/">Launch Sensei →</a></div>
+<a class="cta" href="{APP}/" data-ev="menu">Launch Sensei →</a></div>
 <div class="sh">By product</div><div class="chips">{cat_chips}</div>
 <div class="sh">Neighborhoods</div><div class="chips">{hood_chips}</div>
 <div class="sh">Brands</div><div class="chips">{brand_chips}</div>
 <div class="sh">Dispensaries</div>{disp_rows}
 """
-    write("/", page(title, desc, "/", [breadcrumb([("Sensei", "/")])], body))
+    write("/", page(title, desc, "/", [breadcrumb([("Sensei", "/")])], body, "home", None))
 
 def build_sitemap(paths):
     today = SITE["generatedAt"]
