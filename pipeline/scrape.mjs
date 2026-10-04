@@ -38,6 +38,17 @@ const T = SLOW
 // can stop without fetching an empty next page.
 const FULL_PAGE = 90
 
+// --- Block 2: pipeline health ------------------------------------------------
+// Email alerts via Resend (optional — logs to console when unset). Config lives
+// in .env next to the Supabase key. ALERT_EMAIL_FROM must be on a Resend-verified
+// domain; the default onboarding sender only delivers to your own Resend account.
+const RESEND_API_KEY = (process.env.RESEND_API_KEY || '').trim()
+const ALERT_TO = (process.env.ALERT_EMAIL_TO || '').trim()
+const ALERT_FROM = (process.env.ALERT_EMAIL_FROM || 'Sensei Pipeline <onboarding@resend.dev>').trim()
+const DROP_GUARD = 0.3 // skip the destructive out-of-stock sweep if products_seen falls >30%
+const STALE_DAYS = 3 // a store with no product update in this many days is "stale"
+const MATCH_TARGET = 90 // match-rate target (% of in-stock rows with clean_brand)
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 async function sb(path, { method = 'GET', headers = {}, body, service = false } = {}) {
@@ -51,6 +62,40 @@ async function sb(path, { method = 'GET', headers = {}, body, service = false } 
   const text = await res.text()
   if (!res.ok) throw new Error(`${method} ${path} -> ${res.status} ${text.slice(0, 300)}`)
   return text ? JSON.parse(text) : null
+}
+
+// Exact row count via PostgREST's Content-Range header (Prefer: count=exact).
+async function sbCount(path) {
+  const sep = path.includes('?') ? '&' : '?'
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}${sep}select=id`, {
+    method: 'HEAD',
+    headers: { apikey: SERVICE, Authorization: `Bearer ${SERVICE}`, Prefer: 'count=exact', Range: '0-0' },
+  })
+  const total = (res.headers.get('content-range') || '').split('/')[1]
+  return total && total !== '*' ? parseInt(total, 10) : 0
+}
+
+// Email an alert via Resend. Always logs to the console; emails too when
+// RESEND_API_KEY + ALERT_EMAIL_TO are set. Never throws — a broken alert must
+// not fail the scrape.
+async function sendAlert(subject, body) {
+  console.warn(`\n⚠ ALERT: ${subject}\n${body}`)
+  if (!RESEND_API_KEY || !ALERT_TO) return
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: ALERT_FROM,
+        to: ALERT_TO.split(',').map((s) => s.trim()).filter(Boolean),
+        subject: `[Sensei] ${subject}`,
+        text: body,
+      }),
+    })
+    console.warn(res.ok ? '  (alert email sent)' : `  (alert email failed: ${res.status} ${(await res.text()).slice(0, 140)})`)
+  } catch (e) {
+    console.warn(`  (alert email error: ${e.message.slice(0, 120)})`)
+  }
 }
 
 const num = (x) => {
@@ -461,6 +506,9 @@ async function main() {
   let ok = 0
   let failed = 0
   let seen = 0
+  // Stores that returned products this run — only these get the out-of-stock
+  // sweep, so a store that failed or returned nothing keeps its inventory.
+  const sweepStoreIds = []
   for (let i = 0; i < stores.length; i++) {
     const { id, slug, borough, address, lat } = stores[i]
     console.log(`\n[${i + 1}/${stores.length}] ${slug}`)
@@ -476,12 +524,11 @@ async function main() {
           headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
           body: list,
         })
+        // The out-of-stock sweep is deferred to a single gated step after the
+        // loop (see the 30% drop guard), so a systemic failure can't nuke the
+        // live menu store-by-store before we notice.
+        sweepStoreIds.push(id)
       }
-      await sb(`products?store_id=eq.${id}&last_seen=lt.${runStart}&in_stock=eq.true`, {
-        method: 'PATCH',
-        service: true,
-        body: { in_stock: false },
-      })
       // Backfill the store's real name/address/coordinates from the feed.
       // Curated fields (neighborhood) are never touched; borough only fills
       // in when it's still unknown.
@@ -511,17 +558,104 @@ async function main() {
   }
 
   await browser.close()
+
+  // --- 30% drop guard: protect the live snapshot ---------------------------
+  // The out-of-stock sweep flips unseen items to sold out. If this run saw far
+  // fewer products than the last good run, something broke (a block, a feed
+  // change) — skip the sweep and keep the last snapshot rather than emptying
+  // the menu.
+  let prevSeen = null
+  try {
+    const prev = await sb('pipeline_runs?select=products_seen&order=ran_at.desc&limit=1', { service: true })
+    if (prev && prev.length) prevSeen = prev[0].products_seen
+  } catch {
+    /* first run — no prior to compare against */
+  }
+  const notes = []
+  let swept = false
+  const guardTripped = prevSeen != null && prevSeen > 0 && seen < prevSeen * (1 - DROP_GUARD)
+  if (guardTripped) {
+    notes.push(`GUARD: seen ${seen} vs last ${prevSeen} (>${DROP_GUARD * 100}% drop) — sweep skipped, snapshot kept`)
+  } else if (sweepStoreIds.length) {
+    for (let i = 0; i < sweepStoreIds.length; i += 50) {
+      const ids = sweepStoreIds.slice(i, i + 50).join(',')
+      await sb(`products?store_id=in.(${ids})&last_seen=lt.${runStart}&in_stock=eq.true`, {
+        method: 'PATCH',
+        service: true,
+        body: { in_stock: false },
+      })
+    }
+    swept = true
+  }
+
+  // --- match rate + stale stores -------------------------------------------
+  // Match rate = in-stock rows with clean_brand (normalized), target ≥90%.
+  let matched = 0
+  let inStock = 0
+  let matchRate = null
+  let staleSlugs = []
+  try {
+    inStock = await sbCount('products?in_stock=eq.true')
+    matched = await sbCount('products?in_stock=eq.true&clean_brand=not.is.null')
+    matchRate = inStock ? Math.round((matched / inStock) * 1000) / 10 : null
+  } catch (e) {
+    notes.push(`match-rate query failed: ${e.message.slice(0, 80)}`)
+  }
+  try {
+    const cutoff = new Date(Date.now() - STALE_DAYS * 864e5).toISOString()
+    const recent = await sb(`products?last_seen=gte.${cutoff}&select=store_id`, { service: true })
+    const fresh = new Set((recent || []).map((r) => r.store_id))
+    const active = await sb('stores?active=eq.true&select=slug,id', { service: true })
+    staleSlugs = (active || []).filter((s) => !fresh.has(s.id)).map((s) => s.slug)
+  } catch (e) {
+    notes.push(`stale-store query failed: ${e.message.slice(0, 80)}`)
+  }
+  if (matchRate != null) notes.push(`match ${matchRate}% (${matched}/${inStock})`)
+  if (staleSlugs.length) notes.push(`stale(${staleSlugs.length}): ${staleSlugs.slice(0, 10).join(', ')}${staleSlugs.length > 10 ? '…' : ''}`)
+  notes.push(swept ? 'sweep applied' : guardTripped ? 'sweep skipped' : 'no sweep')
+
   await sb('pipeline_runs', {
     method: 'POST',
     service: true,
-    body: { stores_ok: ok, stores_failed: failed, products_seen: seen, notes: 'local node scrape (api feed)' },
+    body: {
+      stores_ok: ok,
+      stores_failed: failed,
+      products_seen: seen,
+      products_tagged: matched, // in-stock rows with clean_brand (the match count)
+      notes: `local node scrape · ${notes.join(' · ')}`,
+    },
   })
-  console.log(`\nDone: ${ok} ok, ${failed} failed, ${seen} products.`)
+  console.log(`\nDone: ${ok} ok, ${failed} failed, ${seen} products · ${notes.join(' · ')}`)
+
+  // --- alerts --------------------------------------------------------------
+  if (guardTripped) {
+    await sendAlert(
+      'Scrape guard tripped — snapshot kept',
+      `products_seen=${seen} vs last ${prevSeen} (>${DROP_GUARD * 100}% drop). The out-of-stock sweep was skipped to protect the live menu. Check for a Cloudflare block or a Dutchie feed change, then re-run.`,
+    )
+  } else if (ok === 0 || seen === 0) {
+    await sendAlert(
+      'Scrape returned zero changes',
+      `${ok} stores ok, ${failed} failed, ${seen} products seen. Nothing was captured — likely a block or feed change.`,
+    )
+  } else if (failed > ok) {
+    await sendAlert(
+      'Scrape: majority of stores failed',
+      `${failed} failed vs ${ok} ok, ${seen} products seen. Inventory may be partial.`,
+    )
+  }
+  if (matchRate != null && matchRate < MATCH_TARGET) {
+    await sendAlert(
+      'Match rate below target',
+      `Match rate ${matchRate}% (${matched}/${inStock}) is under the ${MATCH_TARGET}% target — normalization may be lagging.`,
+    )
+  }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((e) => {
+  main().catch(async (e) => {
     console.error(e)
+    await sendAlert('Scrape crashed', String((e && e.stack) || e).slice(0, 1500))
     process.exit(1)
   })
 }
