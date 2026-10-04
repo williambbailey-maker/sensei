@@ -2,7 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm --prefix app install",
   "buildCommand": "npm --prefix app run build && cp -r seo/dist/dispensaries seo/dist/neighborhoods seo/dist/brands seo/dist/nyc app/dist/ && cp seo/dist/sitemap.xml seo/dist/robots.txt app/dist/",
-  "outputDirectory": "app/dist",
-  "cleanUrls": true,
-  "trailingSlash": true
+  "outputDirectory": "app/dist"
 }
