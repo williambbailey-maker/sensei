@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  launchd job that runs the nightly scrape. This is a TEMPLATE: __REPO__ is
+  replaced with your repo's absolute path at install time (see README). Install
+  copies it to ~/Library/LaunchAgents/com.sensei.scrape.plist.
+
+  Runs at 3:30am local time. If the Mac is asleep then, launchd runs the missed
+  job once when it next wakes — so inventory still refreshes daily.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.sensei.scrape</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__REPO__/pipeline/scrape-nightly.sh</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>3</integer>
+    <key>Minute</key><integer>30</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>__REPO__/pipeline/logs/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__REPO__/pipeline/logs/launchd.err.log</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
