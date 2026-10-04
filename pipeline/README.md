@@ -76,8 +76,48 @@ Then check the newest `pipeline_runs` row in Supabase — its `notes` should sho
 run with `STORE_LIMIT=0` against a blocked network (or temporarily lower the
 guard) so it reports zero changes.
 
+## Automate it (nightly, on your Mac)
+
+Dutchie's Cloudflare blocks cloud IPs, so the scrape has to run from your Mac.
+`launchd` (macOS's built-in scheduler) runs it each night. Your Mac just needs
+to be **on** — if it's asleep at the scheduled time, the job runs once when it
+next wakes.
+
+**Install (once), from the repo root:**
+
+```bash
+# 1. make the wrapper executable
+chmod +x pipeline/scrape-nightly.sh
+
+# 2. test it runs end-to-end first (watch the browser, check the log)
+bash pipeline/scrape-nightly.sh && tail -n 20 pipeline/logs/scrape-*.log
+
+# 3. install the schedule (fills in your repo path automatically)
+sed "s#__REPO__#$PWD#g" pipeline/com.sensei.scrape.plist > ~/Library/LaunchAgents/com.sensei.scrape.plist
+
+# 4. load it
+launchctl load ~/Library/LaunchAgents/com.sensei.scrape.plist
+
+# 5. (optional) run it right now to confirm the schedule works
+launchctl start com.sensei.scrape
+tail -f pipeline/logs/scrape-*.log     # Ctrl-C to stop watching
+```
+
+Runs at **3:30am local**. To change the time, edit `Hour`/`Minute` in
+`~/Library/LaunchAgents/com.sensei.scrape.plist`, then
+`launchctl unload …` and `launchctl load …` it again.
+
+- **Hide the browser:** set `HEADLESS=1` in `scrape-nightly.sh` (less reliable
+  past Cloudflare — a visible window is the default for that reason).
+- **Stop automation:** `launchctl unload ~/Library/LaunchAgents/com.sensei.scrape.plist`
+- **Logs:** `pipeline/logs/` (git-ignored; last 30 runs kept).
+- **Wake the Mac to run even when asleep** (optional):
+  `sudo pmset repeat wakeorpoweron MTWRFSU 03:25:00`
+
 ## Files
 
 - `scrape.mjs` — the scraper (GraphQL feed capture + Supabase upsert + health).
+- `scrape-nightly.sh` — wrapper launchd runs each night (pull, caffeinate, log).
+- `com.sensei.scrape.plist` — launchd schedule template (`__REPO__` filled at install).
 - `package.json` — Node deps (Playwright).
 - `.env.example` — copy to `.env` and add your key (+ optional alert vars).
