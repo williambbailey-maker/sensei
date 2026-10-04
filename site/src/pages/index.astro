@@ -1,0 +1,47 @@
+---
+import Layout from '../components/Layout.astro'
+import { SEO, SENSEI_APP, dispensaryPath, neighborhoodPath, brandPath, categoryPath, money } from '../lib/site'
+const title = 'Sensei — Every NYC Dispensary Menu, One Place'
+const description = 'Compare prices, potency and pickup across every licensed New York City dispensary. Browse by dispensary, neighborhood, brand or product type.'
+---
+<Layout title={title} description={description}>
+  <p class="eyebrow">New York · Cannabis Discovery</p>
+  <h1>Every NYC dispensary, one place.</h1>
+  <p class="lede">Compare price, potency and pickup across every licensed NYC dispensary — then order where it's right. These are sample SEO landing pages built from live menu data.</p>
+  <section>
+    <a class="cta block" href={SENSEI_APP}>Open Sensei →</a>
+  </section>
+
+  <section>
+    <h2>Dispensaries</h2>
+    <div class="stores">
+      {SEO.dispensaries.map((d: any) => (
+        <a class="storerow glass" href={dispensaryPath(d.slug)}>
+          <span><span class="sname">{d.name}</span><span class="saddr">{d.neighborhood}, {d.borough}</span></span>
+          <span class="sn"><b>{d.in_stock.toLocaleString()}</b>in stock</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Neighborhoods</h2>
+    <div class="chips">
+      {SEO.neighborhoods.map((n: any) => <a class="chip" href={neighborhoodPath(n.slug)}>{n.neighborhood} <span class="c">{n.stores}</span></a>)}
+    </div>
+  </section>
+
+  <section>
+    <h2>Brands</h2>
+    <div class="chips">
+      {SEO.brands.map((b: any) => <a class="chip" href={brandPath(b.slug)}>{b.brand} <span class="c">{b.stores}</span></a>)}
+    </div>
+  </section>
+
+  <section>
+    <h2>By product</h2>
+    <div class="chips">
+      {Object.values(SEO.categories).map((c: any) => <a class="chip" href={categoryPath(c.slug)}>{c.label} <span class="c">{c.in_stock.toLocaleString()}</span></a>)}
+    </div>
+  </section>
+</Layout>

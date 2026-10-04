@@ -1,0 +1,106 @@
+---
+import Layout from '../../components/Layout.astro'
+import MapIsland from '../../components/MapIsland.astro'
+import ProductCard from '../../components/ProductCard.astro'
+import CrossLinks from '../../components/CrossLinks.astro'
+import {
+  SEO, money, categoryLabel, slugify, pointsFor,
+  appBrand, dispensaryPath, appDispensary, neighborhoodPath,
+} from '../../lib/site'
+
+export function getStaticPaths() {
+  return SEO.brands.map((b: any) => ({ params: { slug: b.slug }, props: { b } }))
+}
+const { b } = Astro.props
+const title = `${b.brand} in NYC — ${b.stores} Dispensaries Stocking It | Sensei`
+const description = `Find ${b.brand} at ${b.stores} NYC dispensaries: ${b.in_stock.toLocaleString()} products in stock from ${money(b.min_price)}. See every store stocking ${b.brand} and compare prices on Sensei.`
+const canonical = new URL(`/brands/${b.slug}`, Astro.site).href
+
+const cats = Object.entries(b.categories).sort((a: any, b2: any) => b2[1] - a[1]) as [string, number][]
+const knownStores = new Set(SEO.dispensaries.map((d: any) => d.slug))
+const knownHoods = new Set(SEO.neighborhoods.map((n: any) => n.slug))
+const mapPoints = pointsFor(b.stores_list)
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `NYC dispensaries stocking ${b.brand}`,
+    numberOfItems: b.stores_list.length,
+    itemListElement: b.stores_list.map((s: any, i: number) => ({
+      '@type': 'ListItem', position: i + 1, name: s.name,
+      item: new URL(dispensaryPath(s.slug), Astro.site).href,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Sensei', item: Astro.site?.href },
+      { '@type': 'ListItem', position: 2, name: 'Brands', item: new URL('/brands', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: b.brand, item: canonical },
+    ],
+  },
+]
+---
+<Layout title={title} description={description} jsonld={jsonld}>
+  <p class="crumb"><a href="/">Sensei</a> › Brands › {b.brand}</p>
+  <p class="eyebrow">Brand</p>
+  <h1>{b.brand} in NYC</h1>
+  <div class="prose-slot">{'{prose}'} — intro: who {b.brand} is and what to expect.</div>
+
+  <div class="stats">
+    <div class="stat glass"><span class="n">{b.stores}</span><span class="k label">Stores stock it</span></div>
+    <div class="stat glass"><span class="n">{b.in_stock.toLocaleString()}</span><span class="k label">In stock</span></div>
+    <div class="stat glass"><span class="n">{money(b.min_price)}</span><span class="k label">From</span></div>
+  </div>
+
+  <section>
+    <a class="cta block" href={appBrand(b.brand)}>See every store stocking {b.brand} →</a>
+    <p class="cta-sub">Compare {b.brand} prices across all {b.stores} NYC shops on Sensei.</p>
+  </section>
+
+  <section>
+    <h2>What {b.brand} makes</h2>
+    <div class="chips">
+      {cats.map(([cat, c]) => (
+        <span class="chip">{categoryLabel(cat)} <span class="c">{c}</span></span>
+      ))}
+    </div>
+  </section>
+
+  {mapPoints.length > 0 && (
+    <section>
+      <h2>Where to find it</h2>
+      <MapIsland points={mapPoints} />
+    </section>
+  )}
+
+  <section>
+    <h2>Stores carrying {b.brand}</h2>
+    <div class="stores">
+      {b.stores_list.map((s: any) => (
+        <a class="storerow glass" href={knownStores.has(s.slug) ? dispensaryPath(s.slug) : appDispensary(s.slug)}>
+          <span>
+            <span class="sname">{s.name}</span>
+            <span class="saddr">
+              {knownHoods.has(slugify(s.neighborhood))
+                ? <a href={neighborhoodPath(slugify(s.neighborhood))}>{s.neighborhood}</a>
+                : s.neighborhood}, {s.borough}
+            </span>
+          </span>
+          <span class="sn"><b>{money(s.min_price)}</b>from · {s.n} items</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Popular {b.brand} products</h2>
+    <div class="products">
+      {b.featured.map((p: any) => <ProductCard p={{ ...p, brand: b.brand }} compareLabel="Compare" />)}
+    </div>
+  </section>
+
+  <CrossLinks exclude="brand" />
+</Layout>

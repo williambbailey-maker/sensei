@@ -1,0 +1,47 @@
+---
+// The one interactive island. A dependency-free schematic map: a small client
+// script projects store lat/lng onto an SVG with a subtle street grid and
+// yellow pins. No external tiles — it renders offline and on-brand, and links
+// out to full directions. (Swap for a tiled map later; the data shape is ready.)
+const { points = [], directionsHref } = Astro.props
+const addr = points.length === 1 ? points[0].name : `${points.length} locations`
+---
+<div class="glass mapwrap">
+  <div id="map" data-points={JSON.stringify(points)}></div>
+  <div class="maprow">
+    <span class="addr">{addr}</span>
+    {directionsHref && <a class="secondary" href={directionsHref} target="_blank" rel="noopener">Directions ↗</a>}
+  </div>
+</div>
+<script is:inline>
+  (function () {
+    var el = document.getElementById('map')
+    if (!el) return
+    var pts
+    try { pts = JSON.parse(el.getAttribute('data-points') || '[]') } catch (e) { pts = [] }
+    if (!pts.length) return
+    var W = el.clientWidth || 360, H = 190, PAD = 26
+    var lats = pts.map(function (p) { return p.lat }), lngs = pts.map(function (p) { return p.lng })
+    var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats)
+    var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs)
+    var spanLat = Math.max(maxLat - minLat, 0.012), spanLng = Math.max(maxLng - minLng, 0.012)
+    minLat -= spanLat * 0.35; maxLat += spanLat * 0.35
+    minLng -= spanLng * 0.35; maxLng += spanLng * 0.35
+    var x = function (lng) { return PAD + ((lng - minLng) / (maxLng - minLng)) * (W - 2 * PAD) }
+    var y = function (lat) { return PAD + (1 - (lat - minLat) / (maxLat - minLat)) * (H - 2 * PAD) }
+    var NS = 'http://www.w3.org/2000/svg'
+    var svg = document.createElementNS(NS, 'svg')
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('width', '100%'); svg.setAttribute('height', H)
+    var grid = ''
+    for (var gx = 0; gx <= 6; gx++) grid += '<line x1="' + (gx * W / 6) + '" y1="0" x2="' + (gx * W / 6) + '" y2="' + H + '" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>'
+    for (var gy = 0; gy <= 3; gy++) grid += '<line x1="0" y1="' + (gy * H / 3) + '" x2="' + W + '" y2="' + (gy * H / 3) + '" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>'
+    var pins = ''
+    pts.forEach(function (p) {
+      var cx = x(p.lng), cy = y(p.lat)
+      pins += '<circle cx="' + cx + '" cy="' + cy + '" r="11" fill="rgba(253,224,71,0.18)"/>'
+      pins += '<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="#fde047" stroke="#0a0a0a" stroke-width="1.5"/>'
+    })
+    svg.innerHTML = grid + pins
+    el.appendChild(svg)
+  })()
+</script>

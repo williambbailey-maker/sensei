@@ -1,0 +1,108 @@
+---
+import Layout from '../../components/Layout.astro'
+import ProductCard from '../../components/ProductCard.astro'
+import CrossLinks from '../../components/CrossLinks.astro'
+import {
+  SEO, money, slugify, appCategory, appBrand, appNeighborhood,
+  brandPath, neighborhoodPath, categoryPath,
+} from '../../lib/site'
+
+export function getStaticPaths() {
+  return Object.values(SEO.categories).map((c: any) => ({ params: { category: c.slug }, props: { c } }))
+}
+const { c } = Astro.props
+const title = `${c.label} in NYC — ${c.in_stock.toLocaleString()} in Stock, Prices from ${money(c.min_price)} | Sensei`
+const description = `Compare ${c.label.toLowerCase()} across ${c.stores} NYC dispensaries: ${c.in_stock.toLocaleString()} in stock from ${c.brands} brands, starting at ${money(c.min_price)}. Filter by strain, price and neighborhood on Sensei.`
+const canonical = new URL(`/nyc/${c.slug}`, Astro.site).href
+
+const strainTotal = c.strains.sativa + c.strains.indica + c.strains.hybrid
+const strainRows = [
+  ['Sativa', c.strains.sativa, 'Sativa'],
+  ['Hybrid', c.strains.hybrid, 'Hybrid'],
+  ['Indica', c.strains.indica, 'Indica'],
+] as [string, number, string][]
+const knownBrands = new Set(SEO.brands.map((x: any) => x.slug))
+const knownHoods = new Set(SEO.neighborhoods.map((x: any) => x.slug))
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${c.label} in New York City`,
+    numberOfItems: c.featured.length,
+    itemListElement: c.featured.map((p: any, i: number) => ({
+      '@type': 'ListItem', position: i + 1, name: [p.brand, p.name].filter(Boolean).join(' '),
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Sensei', item: Astro.site?.href },
+      { '@type': 'ListItem', position: 2, name: 'NYC', item: new URL('/nyc', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: c.label, item: canonical },
+    ],
+  },
+]
+---
+<Layout title={title} description={description} jsonld={jsonld}>
+  <p class="crumb"><a href="/">Sensei</a> › NYC › {c.label}</p>
+  <p class="eyebrow">New York City</p>
+  <h1>{c.label} in NYC</h1>
+  <div class="prose-slot">{'{prose}'} — intro: how to shop {c.label.toLowerCase()} across the city.</div>
+
+  <div class="stats">
+    <div class="stat glass"><span class="n">{c.in_stock.toLocaleString()}</span><span class="k label">In stock</span></div>
+    <div class="stat glass"><span class="n">{c.stores}</span><span class="k label">Dispensaries</span></div>
+    <div class="stat glass"><span class="n">{money(c.min_price)}</span><span class="k label">From</span></div>
+  </div>
+
+  <section>
+    <a class="cta block" href={appCategory(c.slug)}>Filter {c.label.toLowerCase()} by price & strain →</a>
+    <p class="cta-sub">{c.brands} brands across {c.stores} shops, ranked for you on Sensei.</p>
+  </section>
+
+  <section>
+    <h2>By strain</h2>
+    <div class="breakdown">
+      {strainRows.map(([label, num, s]) => (
+        <a class="brow" href={appCategory(c.slug, `strain=${s}`)}>
+          <span class="bk">{label}</span>
+          <span class="btrack"><span class="bfill" style={`width:${Math.round((num / strainTotal) * 100)}%`}></span></span>
+          <span class="bn">{num.toLocaleString()}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Top {c.label.toLowerCase()} brands</h2>
+    <div class="chips">
+      {c.top_brands.map((x: any) => (
+        <a class="chip" href={knownBrands.has(slugify(x.brand)) ? brandPath(slugify(x.brand)) : appBrand(x.brand)}>
+          {x.brand} <span class="c">{x.n}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Where it's stocked</h2>
+    <div class="chips">
+      {c.neighborhoods.map((h: any) => (
+        <a class="chip" href={knownHoods.has(h.slug) ? neighborhoodPath(h.slug) : appNeighborhood(h.neighborhood, c.slug)}>
+          {h.neighborhood} <span class="c">{h.n}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Featured {c.label.toLowerCase()}</h2>
+    <div class="products">
+      {c.featured.map((p: any) => <ProductCard p={{ ...p, category: c.slug }} compareLabel="Compare" />)}
+    </div>
+  </section>
+
+  <CrossLinks exclude="category" />
+</Layout>
