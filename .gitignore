@@ -6,3 +6,7 @@ venv/
 
 # OS
 .DS_Store
+
+# Exploratory Astro SEO prototype — not part of the live build (app/ is).
+# Preserved on branch claude/m0-connectivity-workflow-yvpr0x if ever needed.
+site/

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Ico } from './Ico'
 import { addSubscriber } from '../lib/supabase'
+import { track } from '../lib/analytics'
 
 export function Newsletter({ source, compact = false }: { source: string; compact?: boolean }) {
   const [email, setEmail] = useState('')
@@ -12,6 +13,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
     setState('loading')
     try {
       await addSubscriber(email, source)
+      track('signup', { placement: source })
       setState('done')
     } catch {
       setState('error')

@@ -1,5 +1,6 @@
 import { Ico } from './Ico'
 import { sizeLabel, vibeLabel } from '../lib/labels'
+import { track } from '../lib/analytics'
 import type { Filters } from '../lib/types'
 
 // Removable chips for the "soft" signals from vibe search or the journey.
@@ -27,7 +28,10 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
       {chips.map((c, i) => (
         <button
           key={i}
-          onClick={c.clear}
+          onClick={() => {
+            track('chip_tap', { label: c.label })
+            c.clear()
+          }}
           className="flex items-center gap-1.5 rounded-full bg-yellow px-3.5 py-1.5 label text-[11px] text-onyx transition active:scale-95"
         >
           {c.label}

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { formatMiles, haversineMiles } from '../lib/geo'
 import { cleanTitle, prettyStore, vibeLabel } from '../lib/labels'
+import { productKey, track } from '../lib/analytics'
 import type { LatLng, Product } from '../lib/types'
 
 // Potency as a small dot — tone varies, not hue, to stay inside the palette.
@@ -34,6 +35,43 @@ export function ProductCard({
   const [open, setOpen] = useState(false)
   const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown')
   const brand = p.clean_brand ?? p.brand
+
+  // The six mandated properties for every product event. page_type + source
+  // come from the registered super-properties.
+  const evProps = {
+    brand: brand ?? null,
+    product_key: productKey(brand, name),
+    dispensary: p.store?.name ?? p.store?.slug ?? null,
+    neighborhood: p.store?.neighborhood ?? null,
+    category: p.category ?? null,
+  }
+
+  // product_impression — fires once when the card first enters the viewport.
+  const cardRef = useRef<HTMLDivElement | null>(null)
+  const seen = useRef(false)
+  useEffect(() => {
+    const el = cardRef.current
+    if (!el || seen.current) return
+    try {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting && !seen.current) {
+              seen.current = true
+              track('product_impression', evProps)
+              io.disconnect()
+            }
+          }
+        },
+        { threshold: 0.5 },
+      )
+      io.observe(el)
+      return () => io.disconnect()
+    } catch {
+      /* no IntersectionObserver — skip impressions */
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const price = p.price_min != null ? `$${formatPrice(p.price_min)}` : '—'
   const weights = (p.variants?.map((v) => v.weight).filter(Boolean) as string[])
     ?.filter((w) => !/^n\/?a$/i.test(w.trim()))
@@ -70,7 +108,11 @@ export function ProductCard({
     <>
       {/* Compact card */}
       <div
-        onClick={() => setOpen(true)}
+        ref={cardRef}
+        onClick={() => {
+          track('product_view', evProps)
+          setOpen(true)
+        }}
         className="group glass flex h-full cursor-pointer gap-4 rounded-[28px] p-4 shadow-soft-sm transition hover:-translate-y-0.5"
       >
         <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-white/5">
@@ -118,7 +160,10 @@ export function ProductCard({
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    track('menu_click', { ...evProps, url: p.url })
+                  }}
                   className="rounded-full border border-white/20 px-3 py-1 label text-[10px] text-white transition hover:bg-white/10"
                 >
                   View
@@ -128,6 +173,7 @@ export function ProductCard({
                 <button
                   onClick={(e) => {
                     e.stopPropagation()
+                    track('save', evProps)
                     onAdd(p)
                   }}
                   className="rounded-full bg-yellow px-3 py-1 label text-[10px] text-onyx transition active:scale-95"
@@ -229,6 +275,7 @@ export function ProductCard({
                     href={p.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => track('menu_click', { ...evProps, url: p.url })}
                     className="flex-1 rounded-full border border-white/25 px-4 py-2.5 text-center label text-[11px] text-white transition hover:bg-white/10"
                   >
                     View on Dutchie
@@ -237,6 +284,7 @@ export function ProductCard({
                 {onAdd && (
                   <button
                     onClick={() => {
+                      track('save', evProps)
                       onAdd(p)
                       setOpen(false)
                     }}
