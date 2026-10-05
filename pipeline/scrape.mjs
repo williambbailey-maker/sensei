@@ -588,6 +588,17 @@ async function main() {
     swept = true
   }
 
+  // --- normalize new products ----------------------------------------------
+  // Populate clean_brand / clean_name / potency_tier / price_band /
+  // experience_level for anything new this run (deterministic, runs in the DB
+  // via the normalize_products() function). Runs before the match-rate check so
+  // the number reflects fresh data.
+  try {
+    await sb('rpc/normalize_products', { method: 'POST', service: true, body: {} })
+  } catch (e) {
+    notes.push(`normalize failed: ${e.message.slice(0, 80)}`)
+  }
+
   // --- match rate + stale stores -------------------------------------------
   // Match rate = in-stock rows with clean_brand (normalized), target ≥90%.
   let matched = 0

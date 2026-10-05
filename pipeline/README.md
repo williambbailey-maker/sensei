@@ -76,6 +76,28 @@ Then check the newest `pipeline_runs` row in Supabase — its `notes` should sho
 run with `STORE_LIMIT=0` against a blocked network (or temporarily lower the
 guard) so it reports zero changes.
 
+## Normalization (clean brands, tiers)
+
+Dutchie's raw brand/name strings are messy (`STIIIZY`, `Dank By Definition.`,
+casing/punctuation variants). After each scrape, the pipeline runs a
+**deterministic normalization** that fills `clean_brand`, `clean_name`,
+`potency_tier`, `price_band`, and `experience_level`. The app reads the clean
+fields (falling back to raw), and the weekly report's brand attribution depends
+on `clean_brand`.
+
+- The logic lives in a database function (`supabase/normalize_products.sql`),
+  so there's nothing to reimplement — `scrape.mjs` calls it automatically at the
+  end of every run (only touches products missing a field, so it's fast).
+- Re-run it by hand any time:
+
+  ```bash
+  npm run normalize           # incremental — only rows missing a field
+  FULL=1 npm run normalize     # full refresh — re-normalize everything
+  ```
+
+This pass is deterministic and needs no API key. A future enhancement can add a
+Haiku pass for true brand canonicalization (merging variants) and vibe tagging.
+
 ## Automate it (nightly, on your Mac)
 
 Dutchie's Cloudflare blocks cloud IPs, so the scrape has to run from your Mac.
