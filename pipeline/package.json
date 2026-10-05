@@ -5,6 +5,7 @@
   "description": "Local Dutchie scraper — run on your own computer (residential IP).",
   "scripts": {
     "scrape": "node --env-file-if-exists=.env scrape.mjs",
+    "normalize": "node --env-file-if-exists=.env normalize.mjs",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
