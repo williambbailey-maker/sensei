@@ -8,7 +8,17 @@ name: Weekly report
 on:
   schedule:
     - cron: "0 11 * * *" # 11:00 UTC daily (~7am ET)
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      posthog_key:
+        description: "One-off PostHog personal key (overrides the secret for this run)"
+        required: false
+      posthog_project:
+        description: "One-off PostHog project id"
+        required: false
+
+permissions:
+  contents: write
 
 jobs:
   report:
@@ -36,8 +46,8 @@ jobs:
           WINDOW_DAYS: "7"
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
-          POSTHOG_PROJECT_ID: ${{ secrets.POSTHOG_PROJECT_ID }}
+          POSTHOG_API_KEY: ${{ inputs.posthog_key || secrets.POSTHOG_API_KEY }}
+          POSTHOG_PROJECT_ID: ${{ inputs.posthog_project || secrets.POSTHOG_PROJECT_ID }}
           POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
           GSC_SA_JSON: ${{ secrets.GSC_SA_JSON }}
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
@@ -48,3 +58,17 @@ jobs:
         run: |
           python reports/pull.py
           python reports/summarize.py
+
+      - name: Publish snapshot to report-data branch (so it can be read back)
+        if: always()
+        run: |
+          test -f reports/out/week.json || exit 0
+          cp reports/out/week.json /tmp/report-latest.json
+          git config user.name "sensei-report-bot"
+          git config user.email "noreply@anthropic.com"
+          git checkout --orphan report-data 2>/dev/null || git checkout report-data
+          git reset --hard 2>/dev/null || true
+          cp /tmp/report-latest.json report-latest.json
+          git add report-latest.json
+          git commit -m "report snapshot $(date -u +%FT%TZ)" || echo "no change"
+          git push -f origin report-data
