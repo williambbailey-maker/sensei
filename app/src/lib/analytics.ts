@@ -1,14 +1,16 @@
-// Analytics — PostHog instrumentation for the Sensei app.
+// Analytics — instrumentation for the Sensei app.
+//
+// Two sinks, same events:
+//   - Supabase (first-party): one `pageviews` row per page load and one `events`
+//     row per behavior event. Readable straight from the database with no
+//     third-party key — this is what "what are the stats?" reads.
+//   - PostHog: the same events, for its dashboards. Optional; no-op without a key.
 //
 // Every event carries the six properties ANALYTICS.md mandates — `brand`,
 // `product_key`, `dispensary`, `neighborhood`, `page_type`, `source` — with no
-// exceptions. `page_type` and `source` are registered as super-properties so
-// they ride on every capture (including the automatic $pageview); the per-
-// product fields default to null and are overridden on product events.
-//
-// The write key is public by design (it ships in the client bundle and can only
-// write events). It comes from VITE_POSTHOG_KEY; with no key set, every call
-// here is a safe no-op so the app runs untouched until the key is dropped in.
+// exceptions. Identity: a per-tab session id (sessionStorage) and a persistent
+// visitor id (localStorage), so returning people aren't counted as new visitors
+// and reloads don't inflate pageviews.
 import posthog from 'posthog-js'
 import { supabase } from './supabase'
 
@@ -21,6 +23,7 @@ const KEY =
 const HOST = (import.meta.env.VITE_POSTHOG_HOST as string | undefined) || 'https://us.i.posthog.com'
 
 let on = false
+let source = 'direct'
 
 // source ∈ {organic, direct, qr, social, ad}. Derived once at load from the
 // URL (UTM / ?src=qr-<batch>) then the referrer. Anything we can't place as
@@ -58,25 +61,33 @@ export function productKey(brand?: string | null, name?: string | null): string 
   return s || 'unknown'
 }
 
-function sessionId(): string {
+const isBot = () => /bot|crawl|spider|slurp|preview/i.test(navigator.userAgent)
+const device = () => (/Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop')
+
+function storedId(store: Storage, key: string): string {
   try {
-    let s = sessionStorage.getItem('sensei_sid')
-    if (!s) {
-      s = Math.random().toString(36).slice(2) + Date.now().toString(36)
-      sessionStorage.setItem('sensei_sid', s)
+    let v = store.getItem(key)
+    if (!v) {
+      v = Math.random().toString(36).slice(2) + Date.now().toString(36)
+      store.setItem(key, v)
     }
-    return s
+    return v
   } catch {
     return 'na'
   }
 }
+const sessionId = () => storedId(sessionStorage, 'sensei_sid') // per tab
+const visitorId = () => storedId(localStorage, 'sensei_vid') // persistent
 
-// First-party pageview beacon → Supabase (insert-only, no PII). Independent of
-// PostHog, so traffic is always readable straight from the database without a
-// third-party API key. One row per load.
-function beacon(source: string): void {
+// First-party pageview → Supabase. Deduped: one row per page per session per
+// 30 minutes, so reloads and service-worker refreshes don't count twice.
+function beacon(): void {
   try {
-    if (/bot|crawl|spider|slurp|preview/i.test(navigator.userAgent)) return
+    if (isBot()) return
+    const k = 'sensei_pv_' + location.pathname
+    const last = Number(sessionStorage.getItem(k) || 0)
+    if (Date.now() - last < 30 * 60 * 1000) return
+    sessionStorage.setItem(k, String(Date.now()))
     let referrer: string | null = null
     try {
       referrer = document.referrer ? new URL(document.referrer).hostname : null
@@ -91,7 +102,8 @@ function beacon(source: string): void {
         source,
         referrer,
         session_id: sessionId(),
-        device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+        visitor_id: visitorId(),
+        device: device(),
       })
       .then(
         () => undefined,
@@ -103,8 +115,8 @@ function beacon(source: string): void {
 }
 
 export function initAnalytics(): void {
-  const source = deriveSource()
-  beacon(source)
+  source = deriveSource()
+  beacon()
   if (!KEY || KEY.startsWith('__')) return
   posthog.init(KEY, {
     api_host: HOST,
@@ -119,15 +131,38 @@ export function initAnalytics(): void {
 
 type Props = Record<string, unknown>
 
-// Always ship all six properties. page_type + source come from register(); the
-// four per-item fields default to null and are overridden by `props`.
+// Always ship all six properties. The four per-item fields default to null and
+// are overridden by `props`; page_type + source are constant for the app.
 export function track(event: string, props: Props = {}): void {
+  const full: Props = { brand: null, product_key: null, dispensary: null, neighborhood: null, ...props }
+  // Mirror to Supabase first — readable without any third-party key.
+  try {
+    if (!isBot()) {
+      const { brand, product_key, dispensary, neighborhood, category, ...rest } = full
+      void supabase
+        .from('events')
+        .insert({
+          event,
+          path: location.pathname,
+          page_type: 'app',
+          source,
+          session_id: sessionId(),
+          visitor_id: visitorId(),
+          brand: (brand as string | null) ?? null,
+          product_key: (product_key as string | null) ?? null,
+          dispensary: (dispensary as string | null) ?? null,
+          neighborhood: (neighborhood as string | null) ?? null,
+          category: (category as string | null | undefined) ?? null,
+          props: rest,
+        })
+        .then(
+          () => undefined,
+          () => undefined,
+        )
+    }
+  } catch {
+    /* never let analytics break the app */
+  }
   if (!on) return
-  posthog.capture(event, {
-    brand: null,
-    product_key: null,
-    dispensary: null,
-    neighborhood: null,
-    ...props,
-  })
+  posthog.capture(event, full)
 }

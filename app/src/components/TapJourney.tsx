@@ -3,6 +3,7 @@ import { Ico } from './Ico'
 import { requestLocation } from '../lib/geo'
 import { BOROUGHS, BUDGETS, FORMATS, SIZES, STRAINS } from '../lib/labels'
 import { EMPTY_FILTERS, type Filters } from '../lib/types'
+import { track } from '../lib/analytics'
 
 // The core experience: a pure tap-through selection journey rendered as
 // colorblock swatches (alternating blue/orange).
@@ -47,7 +48,10 @@ export function TapJourney({
   const advance = (from: number, draft: Filters) => {
     let n = from + 1
     while (n <= LAST && !stepVisible(n, draft)) n++
-    if (n > LAST) return onDone(draft)
+    if (n > LAST) {
+      track('journey_step', { step: 'done' })
+      return onDone(draft)
+    }
     setStep(n)
   }
   const goBack = (from: number) => {
@@ -60,10 +64,14 @@ export function TapJourney({
   // A selection writes its filter, then advances.
   const pick = (patch: Partial<Filters>) => {
     const draft = { ...f, ...patch }
+    track('journey_step', { step: STEPS[step].toLowerCase(), ...patch })
     setF(draft)
     advance(step, draft)
   }
-  const skip = () => advance(step, f)
+  const skip = () => {
+    track('journey_step', { step: STEPS[step].toLowerCase(), skipped: true })
+    advance(step, f)
+  }
 
   // Location-first: on a successful share, jump straight to results ordered by
   // distance (closest first). We deliberately don't hard-limit to a tight radius
@@ -85,6 +93,7 @@ export function TapJourney({
           borough: null,
           neighborhood: null,
         }
+        track('journey_step', { step: 'location', shared: true })
         setF(draft)
         advance(step, draft)
       },
@@ -123,7 +132,13 @@ export function TapJourney({
             />
           ))}
         </div>
-        <button onClick={() => onDone(f)} className="label text-[12px] text-muted transition hover:text-ink">
+        <button
+          onClick={() => {
+            track('journey_step', { step: 'see_all' })
+            onDone(f)
+          }}
+          className="label text-[12px] text-muted transition hover:text-ink"
+        >
           See all →
         </button>
       </div>

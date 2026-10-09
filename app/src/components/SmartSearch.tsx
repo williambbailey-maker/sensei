@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { buildNeighborhoodIndex, parseQuery } from '../lib/parseQuery'
 import { EMPTY_FILTERS, type Filters } from '../lib/types'
+import { track } from '../lib/analytics'
 
 const EXAMPLES = [
   'sativa pre-rolls under $10 in Manhattan',
@@ -28,6 +29,7 @@ export function SmartSearch({
     const text = q.trim()
     if (!text) return
     const parsed = parseQuery(text, index)
+    track('search', { query: text })
     onSearch({ ...EMPTY_FILTERS, ...parsed })
   }
 
