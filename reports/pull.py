@@ -215,8 +215,24 @@ def main():
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "week.json").write_text(json.dumps(metrics, indent=2, default=str))
+
+    # Headline numbers to the log (so an on-demand run surfaces them directly).
+    print("=== SENSEI REPORT HEADLINE ===")
     print(json.dumps({"sources_ok": metrics["sources_ok"], "errors": metrics["errors"]}, indent=2))
-    print(f"Wrote {OUT / 'week.json'}")
+    t = traffic or {}
+    if traffic:
+        print(f"TRAFFIC ({WINDOW}d): visitors={t.get('visitors')} pageviews={t.get('pageviews')} "
+              f"sessions={t.get('sessions')} by_source={t.get('by_source')} "
+              f"organic_exploratory_rate={t.get('organic_exploratory_rate')}")
+        print(f"TOP PAGES: {t.get('top_pages')}")
+        print(f"TOP BRANDS: {t.get('brands')}")
+    if search:
+        print(f"SEARCH ({WINDOW}d): clicks={search.get('clicks')} impressions={search.get('impressions')} "
+              f"ctr={search.get('ctr')} position={search.get('position')}")
+        print(f"TOP QUERIES: {search.get('top_queries')}")
+    if pipeline:
+        print(f"PIPELINE: {pipeline}")
+    print("=== END HEADLINE ===")
 
 
 if __name__ == "__main__":
