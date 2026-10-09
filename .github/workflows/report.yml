@@ -1,0 +1,50 @@
+name: Weekly report
+
+# Runs in the cloud (open network), so it can reach PostHog + Google Search
+# Console — which the interactive sessions can't. Pulls the stats and stores
+# them in Supabase every day (keeps "what are the stats?" fresh), and emails the
+# summary on Mondays. Manual runs (workflow_dispatch) always email.
+
+on:
+  schedule:
+    - cron: "0 11 * * *" # 11:00 UTC daily (~7am ET)
+  workflow_dispatch: {}
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install -r reports/requirements.txt
+
+      - name: Decide whether to email (Mondays, or manual runs)
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "1" ]; then
+            echo "REPORT_SEND_EMAIL=1" >> "$GITHUB_ENV"
+          else
+            echo "REPORT_SEND_EMAIL=0" >> "$GITHUB_ENV"
+          fi
+
+      - name: Pull + summarize
+        env:
+          WINDOW_DAYS: "7"
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          POSTHOG_PROJECT_ID: ${{ secrets.POSTHOG_PROJECT_ID }}
+          POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
+          GSC_SA_JSON: ${{ secrets.GSC_SA_JSON }}
+          GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          REPORT_EMAIL_TO: ${{ secrets.REPORT_EMAIL_TO }}
+          REPORT_EMAIL_FROM: ${{ secrets.REPORT_EMAIL_FROM }}
+        run: |
+          python reports/pull.py
+          python reports/summarize.py
