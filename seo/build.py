@@ -36,6 +36,14 @@ APP = "https://sensei.nyc"  # the Sensei web app (SPA at the domain root)
 POSTHOG_KEY = os.environ.get("SENSEI_POSTHOG_KEY", "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX")
 POSTHOG_HOST = os.environ.get("SENSEI_POSTHOG_HOST", "https://us.i.posthog.com")
 
+# Supabase — for the first-party pageview beacon. The anon key is public by
+# design (ships in the app bundle; insert-only on pageviews via RLS).
+SUPABASE_URL = os.environ.get("SENSEI_SUPABASE_URL", "https://dywrisybvcorpfhbwgtg.supabase.co")
+SUPABASE_ANON = os.environ.get(
+    "SENSEI_SUPABASE_ANON",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw",
+)
+
 CAT_LABEL = {"pre-rolls": "Pre-Rolls", "vaporizers": "Vapes", "edibles": "Edibles",
              "flower": "Flower", "concentrates": "Concentrates", "tinctures": "Tinctures",
              "topicals": "Topicals"}
@@ -171,12 +179,13 @@ def pkey(brand, name):
 # product_view/compare_view/save/signup have no surface on these pages — they
 # live in the app. See reports/README.md for the full mapping.
 def analytics_js(page_type, ctx):
-    cfg = {"key": POSTHOG_KEY, "host": POSTHOG_HOST, "page_type": page_type}
+    cfg = {"key": POSTHOG_KEY, "host": POSTHOG_HOST, "page_type": page_type,
+           "sb_url": SUPABASE_URL, "sb_key": SUPABASE_ANON}
     for k, v in (ctx or {}).items():
         if v:
             cfg[k] = v
     return """<script>
-(function(){var CFG=%s;if(!CFG.key||CFG.key.indexOf('__')===0)return;
+(function(){var CFG=%s;
 function src(){try{var q=new URLSearchParams(location.search),s=(q.get('src')||'').toLowerCase();
 if(s.indexOf('qr')===0)return'qr';var m=(q.get('utm_medium')||'').toLowerCase(),u=(q.get('utm_source')||'').toLowerCase();
 if(['cpc','ppc','paid','paidsearch','display'].indexOf(m)>=0||/ad/.test(u))return'ad';
@@ -185,9 +194,16 @@ if(h===location.hostname)return'direct';
 if(/(^|\\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\\./.test(h)||h.indexOf('search')>=0)return'organic';
 if(/(instagram|facebook|t\\.co|twitter|x\\.com|reddit|tiktok|linkedin|youtube|pinterest|threads)/.test(h))return'social';
 return'direct';}catch(e){return'direct';}}
+var SRC=src();
+try{if(CFG.sb_url&&CFG.sb_key&&!/bot|crawl|spider|slurp|preview/i.test(navigator.userAgent)){
+var sid;try{sid=sessionStorage.getItem('sensei_sid');if(!sid){sid=Math.random().toString(36).slice(2)+Date.now().toString(36);sessionStorage.setItem('sensei_sid',sid);}}catch(e){sid='na';}
+var ref=null;try{ref=document.referrer?new URL(document.referrer).hostname:null;}catch(e){}
+fetch(CFG.sb_url+'/rest/v1/pageviews',{method:'POST',keepalive:true,headers:{'apikey':CFG.sb_key,'Authorization':'Bearer '+CFG.sb_key,'Content-Type':'application/json','Prefer':'return=minimal'},
+body:JSON.stringify({path:location.pathname,page_type:CFG.page_type,source:SRC,referrer:ref,session_id:sid,device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop',brand:CFG.brand||null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null})}).catch(function(){});}}catch(e){}
+if(!CFG.key||CFG.key.indexOf('__')===0)return;
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister getFeatureFlag isFeatureEnabled".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,person_profiles:'identified_only'});
-var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:src()};
+var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};
 if(CFG.category)base.category=CFG.category;posthog.register(base);
 if(CFG.page_type==='brand')posthog.capture('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||base.brand,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}

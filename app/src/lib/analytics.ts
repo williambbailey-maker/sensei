@@ -10,6 +10,7 @@
 // write events). It comes from VITE_POSTHOG_KEY; with no key set, every call
 // here is a safe no-op so the app runs untouched until the key is dropped in.
 import posthog from 'posthog-js'
+import { supabase } from './supabase'
 
 // The project key is public (write-only, ships in the bundle) — baked as a
 // fallback like the Supabase anon key, so analytics works out of the box. Env
@@ -57,7 +58,53 @@ export function productKey(brand?: string | null, name?: string | null): string 
   return s || 'unknown'
 }
 
+function sessionId(): string {
+  try {
+    let s = sessionStorage.getItem('sensei_sid')
+    if (!s) {
+      s = Math.random().toString(36).slice(2) + Date.now().toString(36)
+      sessionStorage.setItem('sensei_sid', s)
+    }
+    return s
+  } catch {
+    return 'na'
+  }
+}
+
+// First-party pageview beacon → Supabase (insert-only, no PII). Independent of
+// PostHog, so traffic is always readable straight from the database without a
+// third-party API key. One row per load.
+function beacon(source: string): void {
+  try {
+    if (/bot|crawl|spider|slurp|preview/i.test(navigator.userAgent)) return
+    let referrer: string | null = null
+    try {
+      referrer = document.referrer ? new URL(document.referrer).hostname : null
+    } catch {
+      /* ignore */
+    }
+    void supabase
+      .from('pageviews')
+      .insert({
+        path: location.pathname,
+        page_type: 'app',
+        source,
+        referrer,
+        session_id: sessionId(),
+        device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      })
+      .then(
+        () => undefined,
+        () => undefined,
+      )
+  } catch {
+    /* never let analytics break the app */
+  }
+}
+
 export function initAnalytics(): void {
+  const source = deriveSource()
+  beacon(source)
   if (!KEY || KEY.startsWith('__')) return
   posthog.init(KEY, {
     api_host: HOST,
@@ -66,7 +113,7 @@ export function initAnalytics(): void {
     person_profiles: 'identified_only',
   })
   // page_type is 'app' for the whole SPA; source is fixed for the session.
-  posthog.register({ page_type: 'app', source: deriveSource() })
+  posthog.register({ page_type: 'app', source })
   on = true
 }
 
