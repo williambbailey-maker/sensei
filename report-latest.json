@@ -1,0 +1,15 @@
+{
+  "window_days": 7,
+  "generated_at": "2026-10-10T16:09:43.838033+00:00",
+  "traffic": null,
+  "traffic_prev": null,
+  "search": null,
+  "search_prev": null,
+  "pipeline": null,
+  "sources_ok": {
+    "posthog": false,
+    "gsc": false,
+    "supabase": false
+  },
+  "errors": {}
+}
