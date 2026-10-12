@@ -198,17 +198,18 @@ var SRC=src(),BOT=/bot|crawl|spider|slurp|preview/i.test(navigator.userAgent);
 function id(store,k){try{var v=store.getItem(k);if(!v){v=Math.random().toString(36).slice(2)+Date.now().toString(36);store.setItem(k,v);}return v;}catch(e){return'na';}}
 var SID=id(sessionStorage,'sensei_sid'),VID=id(localStorage,'sensei_vid');
 var DEV=/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop';
+var INT=false;try{var mq=new URLSearchParams(location.search).get('me');if(mq==='1')localStorage.setItem('sensei_internal','1');else if(mq==='0')localStorage.removeItem('sensei_internal');INT=localStorage.getItem('sensei_internal')==='1';}catch(e){}
 function sb(table,row){if(BOT||!CFG.sb_url||!CFG.sb_key)return;try{fetch(CFG.sb_url+'/rest/v1/'+table,{method:'POST',keepalive:true,headers:{'apikey':CFG.sb_key,'Authorization':'Bearer '+CFG.sb_key,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)}).catch(function(){});}catch(e){}}
 try{var pk='sensei_pv_'+location.pathname,last=+(sessionStorage.getItem(pk)||0);
 if(Date.now()-last>1800000){sessionStorage.setItem(pk,String(Date.now()));var ref=null;try{ref=document.referrer?new URL(document.referrer).hostname:null;}catch(e){}
-sb('pageviews',{path:location.pathname,page_type:CFG.page_type,source:SRC,referrer:ref,session_id:SID,visitor_id:VID,device:DEV,brand:CFG.brand||null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null});}}catch(e){}
+sb('pageviews',{path:location.pathname,page_type:CFG.page_type,source:SRC,referrer:ref,session_id:SID,visitor_id:VID,device:DEV,internal:INT,brand:CFG.brand||null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null});}}catch(e){}
 var PH=false;
-if(CFG.key&&CFG.key.indexOf('__')!==0){try{
+if(!INT&&CFG.key&&CFG.key.indexOf('__')!==0){try{
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister getFeatureFlag isFeatureEnabled".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,person_profiles:'identified_only'});
 var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};
 if(CFG.category)base.category=CFG.category;posthog.register(base);PH=true;}catch(e){}}
-function ev(name,p){p=p||{};sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
+function ev(name,p){p=p||{};sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}
 try{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){ev('product_impression',cp(x.target));io.unobserve(x.target);}});},{threshold:0.5});
