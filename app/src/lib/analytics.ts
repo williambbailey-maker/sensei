@@ -24,6 +24,7 @@ const HOST = (import.meta.env.VITE_POSTHOG_HOST as string | undefined) || 'https
 
 let on = false
 let source = 'direct'
+let internal = false
 
 // source ∈ {organic, direct, qr, social, ad}. Derived once at load from the
 // URL (UTM / ?src=qr-<batch>) then the referrer. Anything we can't place as
@@ -79,6 +80,20 @@ function storedId(store: Storage, key: string): string {
 const sessionId = () => storedId(sessionStorage, 'sensei_sid') // per tab
 const visitorId = () => storedId(localStorage, 'sensei_vid') // persistent
 
+// Self-exclusion: visiting ?me=1 once flags this browser as internal (our own
+// devices); ?me=0 clears it. Internal rows are still logged but excluded from
+// every stat, along with any earlier rows from the same visitor id.
+function internalFlag(): boolean {
+  try {
+    const me = new URLSearchParams(location.search).get('me')
+    if (me === '1') localStorage.setItem('sensei_internal', '1')
+    else if (me === '0') localStorage.removeItem('sensei_internal')
+    return localStorage.getItem('sensei_internal') === '1'
+  } catch {
+    return false
+  }
+}
+
 // First-party pageview → Supabase. Deduped: one row per page per session per
 // 30 minutes, so reloads and service-worker refreshes don't count twice.
 function beacon(): void {
@@ -104,6 +119,7 @@ function beacon(): void {
         session_id: sessionId(),
         visitor_id: visitorId(),
         device: device(),
+        internal,
       })
       .then(
         () => undefined,
@@ -116,8 +132,10 @@ function beacon(): void {
 
 export function initAnalytics(): void {
   source = deriveSource()
+  internal = internalFlag()
   beacon()
-  if (!KEY || KEY.startsWith('__')) return
+  // Internal devices are logged (flagged) in Supabase but kept out of PostHog.
+  if (internal || !KEY || KEY.startsWith('__')) return
   posthog.init(KEY, {
     api_host: HOST,
     capture_pageview: true,
@@ -153,6 +171,7 @@ export function track(event: string, props: Props = {}): void {
           dispensary: (dispensary as string | null) ?? null,
           neighborhood: (neighborhood as string | null) ?? null,
           category: (category as string | null | undefined) ?? null,
+          internal,
           props: rest,
         })
         .then(
