@@ -1,13 +1,18 @@
 name: Weekly report
 
 # Runs in the cloud (open network), so it can reach PostHog + Google Search
-# Console — which the interactive sessions can't. Pulls the stats and stores
-# them in Supabase every day (keeps "what are the stats?" fresh), and emails the
-# summary on Mondays. Manual runs (workflow_dispatch) always email.
+# Console — which the interactive sessions can't. Pulls the stats, stores them
+# in Supabase (when the service key is set), publishes a snapshot to the
+# report-data branch, and emails the summary. Manual runs always email.
+#
+# Day-to-day "what are the stats?" is served by the first-party beacon
+# (pageviews/events tables + traffic_stats/usage_stats) and needs none of this.
 
 on:
-  schedule:
-    - cron: "0 11 * * *" # 11:00 UTC daily (~7am ET)
+  # Manual-only for now. Without the GitHub secrets (PostHog key, Supabase
+  # service key, GSC JSON) a scheduled run pulls nothing useful, and its
+  # force-push to report-data triggers a failing Vercel preview build each day.
+  # Re-add a schedule (e.g. cron "0 11 * * *") once secrets are in place.
   workflow_dispatch:
     inputs:
       posthog_key:
