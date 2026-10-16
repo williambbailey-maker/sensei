@@ -113,3 +113,18 @@ create policy "public insert subscribers"
 
 -- pipeline_runs: RLS enabled with no policy on purpose — anon has no access;
 -- only the service_role key (pipeline) touches it, and that bypasses RLS.
+
+-- Pipeline health in one call for the weekly report (reports/pull.py).
+create or replace function public.pipeline_stats(stale_days int default 3)
+returns json language sql stable security definer set search_path = public as $$
+  select json_build_object(
+    'in_stock',      (select count(*) from products where in_stock),
+    'matched',       (select count(*) from products where in_stock and clean_brand is not null),
+    'active_stores', (select count(*) from stores where active),
+    'stale_stores',  (select coalesce(json_agg(s.slug order by s.slug), '[]'::json) from stores s
+                      where s.active and not exists (select 1 from products p where p.store_id = s.id
+                        and p.last_seen >= now() - make_interval(days => stale_days)))
+  );
+$$;
+revoke all on function public.pipeline_stats(int) from public;
+grant execute on function public.pipeline_stats(int) to service_role;

@@ -227,21 +227,26 @@ def pipeline_health():
         return None
     runs = sb_get("pipeline_runs?select=ran_at,stores_ok,stores_failed,products_seen,products_tagged,notes&order=ran_at.desc&limit=1")
     last = runs[0] if runs else {}
-    in_stock = sb_count("products?in_stock=eq.true")
-    matched = sb_count("products?in_stock=eq.true&clean_brand=not.is.null")
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%dT%H:%M:%SZ")  # no "+" (URL-unsafe)
-    fresh = {r["store_id"] for r in sb_get(f"products?last_seen=gte.{cutoff}&select=store_id")}
-    active = sb_get("stores?active=eq.true&select=slug,id")
-    stale = [s["slug"] for s in active if s["id"] not in fresh]
+    st = sb_rpc("pipeline_stats", stale_days=3) or {}  # one DB call; counts + stale slugs
+    in_stock = st.get("in_stock") or 0
+    matched = st.get("matched") or 0
+    last_run = last.get("ran_at")
+    days_since = None
+    if last_run:
+        try:
+            days_since = (datetime.now(timezone.utc) - datetime.fromisoformat(last_run.replace("Z", "+00:00"))).days
+        except ValueError:
+            pass
     return {
-        "last_run": last.get("ran_at"),
+        "last_run": last_run,
+        "days_since_last_run": days_since,
         "stores_ok": last.get("stores_ok"),
         "stores_failed": last.get("stores_failed"),
         "products_seen": last.get("products_seen"),
         "in_stock": in_stock,
         "match_rate": round(100 * matched / in_stock, 1) if in_stock else None,
-        "active_stores": len(active),
-        "stale_stores": stale,
+        "active_stores": st.get("active_stores"),
+        "stale_stores": st.get("stale_stores") or [],
     }
 
 

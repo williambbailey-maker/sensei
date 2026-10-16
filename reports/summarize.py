@@ -27,7 +27,7 @@ SERVICE = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 # Tolerate a pasted snippet around the key: keep only the sk-… token.
 _k = os.environ.get("ANTHROPIC_API_KEY", "")
 ANTHROPIC_KEY = next((t for t in _k.replace('"', " ").split() if t.startswith("sk-")), _k.strip())
-MODEL = os.environ.get("REPORT_MODEL") or "claude-haiku-4-5"
+MODEL = os.environ.get("REPORT_MODEL") or "claude-haiku-5-5"
 
 RESEND_KEY = os.environ.get("RESEND_API_KEY", "").strip()
 MAIL_TO = os.environ.get("REPORT_EMAIL_TO", "").strip()
@@ -44,7 +44,7 @@ SYSTEM = (
     "What moved — the biggest 2-3 changes week over week.\n"
     "Search — Google clicks/impressions/position and a notable query, if present.\n"
     "Brands — the brands getting the most attention (impressions/views/menu clicks).\n"
-    "Pipeline — scrape health: last run, match rate, any stale stores.\n"
+    "Pipeline — scrape health: last run and days since, match rate, how many stores are stale (flag loudly if the last run is more than 2 days old).\n"
     "Flag — one thing to watch, or 'Nothing flagged.'\n\n"
     "RULES: Use ONLY numbers present in the JSON. Never invent or estimate. If a "
     "section's data is null or missing, say so in one short clause (e.g. 'Search: "
@@ -63,6 +63,8 @@ def haiku_summary(metrics):
               "messages": [{"role": "user", "content": json.dumps(metrics, default=str)}]},
         timeout=60,
     )
+    if not r.ok:
+        print(f"Anthropic API {r.status_code}: {r.text[:300]}")
     r.raise_for_status()
     return "".join(b.get("text", "") for b in r.json().get("content", [])).strip()
 
