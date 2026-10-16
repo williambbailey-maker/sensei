@@ -32,7 +32,7 @@ so you can add them in stages.
 | `POSTHOG_API_KEY` | PostHog's view of the same traffic (optional cross-check) | no |
 | `POSTHOG_PROJECT_ID` | " | no |
 | `GSC_SA_JSON` | Google search demand (whole service-account JSON) | for search |
-| `ANTHROPIC_API_KEY` | the written summary (Haiku) | for the summary text |
+| `ANTHROPIC_API_KEY` | optional: Haiku prose instead of the built-in template summary | no |
 | `RESEND_API_KEY` | emailing the report | for email |
 | `REPORT_EMAIL_TO` | who gets the email | for email |
 | Optional: `POSTHOG_HOST` (default `https://us.posthog.com`), `GSC_SITE_URL` (default `sc-domain:sensei.nyc`), `REPORT_EMAIL_FROM`, `SUPABASE_URL` | — | no |
@@ -40,7 +40,7 @@ so you can add them in stages.
 **Staging suggestion:**
 1. `SUPABASE_SERVICE_ROLE_KEY` → traffic, behavior, brands + health working.
 2. `GSC_SA_JSON` → adds search demand (service-account steps below).
-3. `ANTHROPIC_API_KEY` → adds the written summary.
+3. (optional) `ANTHROPIC_API_KEY` → Haiku prose instead of the template.
 4. `RESEND_API_KEY` + `REPORT_EMAIL_TO` → turns on the Monday email.
 
 Rotate any key that was ever pasted into chat before storing it here.
