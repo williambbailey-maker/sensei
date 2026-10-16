@@ -32,6 +32,9 @@ PH_PID = os.environ.get("POSTHOG_PROJECT_ID", "").strip()
 PH_HOST = (os.environ.get("POSTHOG_HOST") or "https://us.posthog.com").rstrip("/")
 
 GSC_JSON = os.environ.get("GSC_SA_JSON", "").strip()
+if GSC_JSON and not GSC_JSON.startswith("{"):
+    print("GSC_SA_JSON is set but is not JSON (should start with '{'): re-paste the whole key file.")
+    GSC_JSON = ""
 GSC_SITE = (os.environ.get("GSC_SITE_URL") or "sc-domain:sensei.nyc").strip()
 
 EXPLORATORY = ("product_view", "compare_view", "brand_view", "save", "chip_tap")
@@ -226,7 +229,7 @@ def pipeline_health():
     last = runs[0] if runs else {}
     in_stock = sb_count("products?in_stock=eq.true")
     matched = sb_count("products?in_stock=eq.true&clean_brand=not.is.null")
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=3)).isoformat()
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%dT%H:%M:%SZ")  # no "+" (URL-unsafe)
     fresh = {r["store_id"] for r in sb_get(f"products?last_seen=gte.{cutoff}&select=store_id")}
     active = sb_get("stores?active=eq.true&select=slug,id")
     stale = [s["slug"] for s in active if s["id"] not in fresh]
