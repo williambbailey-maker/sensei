@@ -24,7 +24,9 @@ PROMPT_VERSION = "2026-10-09.1"
 SUPABASE_URL = (os.environ.get("SUPABASE_URL") or "https://dywrisybvcorpfhbwgtg.supabase.co").rstrip("/")
 SERVICE = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 
-ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+# Tolerate a pasted snippet around the key: keep only the sk-… token.
+_k = os.environ.get("ANTHROPIC_API_KEY", "")
+ANTHROPIC_KEY = next((t for t in _k.replace('"', " ").split() if t.startswith("sk-")), _k.strip())
 MODEL = os.environ.get("REPORT_MODEL") or "claude-haiku-4-5"
 
 RESEND_KEY = os.environ.get("RESEND_API_KEY", "").strip()
