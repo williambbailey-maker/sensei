@@ -160,6 +160,65 @@ def sb_get(path):
     return r.json()
 
 
+def sb_rpc(fn, **args):
+    r = requests.post(f"{SUPABASE_URL}/rest/v1/rpc/{fn}",
+                      headers={"apikey": SERVICE, "Authorization": f"Bearer {SERVICE}",
+                               "Content-Type": "application/json"},
+                      json=args, timeout=30)
+    r.raise_for_status()
+    return r.json()
+
+
+def first_party_window(days):
+    """Traffic + behavior + brands from the first-party beacon (pageviews/events
+    tables via traffic_stats()/usage_stats()). Same shape as posthog_window so
+    the summary doesn't care which produced it. Prior window = (2x window) minus
+    (window) on the count fields."""
+    if not SERVICE:
+        return None
+    t = sb_rpc("traffic_stats", days=days) or {}
+    u = sb_rpc("usage_stats", days=days) or {}
+    org = (t.get("by_source") or {}).get("organic", 0)
+    orge = u.get("organic_exploratory_sessions", 0)
+    return {
+        "visitors": t.get("visitors"), "pageviews": t.get("pageviews"), "sessions": t.get("visits"),
+        "by_source": t.get("by_source") or {},
+        "by_page_type": t.get("by_page_type") or {},
+        "devices": t.get("devices") or {},
+        "top_referrers": t.get("top_referrers") or [],
+        "organic_sessions": org,
+        "organic_exploratory_sessions": orge,
+        "organic_exploratory_rate": round(orge / org, 3) if org else None,
+        "exploratory_sessions": u.get("exploratory_sessions"),
+        "active_sessions": u.get("active_sessions"),
+        "menu_clicks": u.get("menu_clicks"), "saves": u.get("saves"),
+        "signups": u.get("signups"), "searches": u.get("searches"),
+        "journey_completed_sessions": u.get("journey_completed_sessions"),
+        "journey_steps": u.get("journey_steps") or [],
+        "top_pages": [{"path": p["path"], "views": p["visits"]} for p in (t.get("top_pages") or [])],
+        "top_searches": u.get("top_searches") or [],
+        "brands": [
+            {"brand": b["brand"], "impressions": b["impressions"],
+             "brand_views": b.get("views", 0), "menu_clicks": b["menu_clicks"]}
+            for b in (u.get("top_brands") or [])
+        ],
+    }
+
+
+def first_party_prev(days):
+    """Prior window, derived: counts over 2x window minus counts over 1x.
+    Distinct-visitor math isn't exact across windows; good enough for deltas."""
+    cur = first_party_window(days)
+    both = first_party_window(days * 2)
+    if not (cur and both):
+        return None
+    keys = ("visitors", "pageviews", "sessions", "organic_sessions",
+            "organic_exploratory_sessions", "menu_clicks", "saves", "signups", "searches")
+    prev = {k: max((both.get(k) or 0) - (cur.get(k) or 0), 0) for k in keys}
+    prev["by_source"] = {s: max(n - (cur["by_source"].get(s, 0)), 0) for s, n in both["by_source"].items()}
+    return prev
+
+
 def pipeline_health():
     if not SERVICE:
         return None
@@ -192,8 +251,12 @@ def safe(fn, *a):
 
 def main():
     errors = {}
-    traffic, errors["posthog"] = safe(posthog_window, WINDOW, 0)
-    traffic_prev, _ = safe(posthog_window, WINDOW * 2, WINDOW)
+    # Traffic: first-party beacon (Supabase) is the source of record — it works
+    # with only the service key. PostHog is a secondary sink, used only when its
+    # keys are set, and kept alongside rather than replacing the first-party view.
+    traffic, errors["first_party"] = safe(first_party_window, WINDOW)
+    traffic_prev, _ = safe(first_party_prev, WINDOW)
+    posthog, errors["posthog"] = safe(posthog_window, WINDOW, 0)
     search, errors["gsc"] = safe(gsc_window, WINDOW + 3, 3)  # GSC lags ~3 days
     search_prev, _ = safe(gsc_window, WINDOW * 2 + 3, WINDOW + 3)
     pipeline, errors["supabase"] = safe(pipeline_health)
@@ -203,11 +266,13 @@ def main():
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "traffic": traffic,
         "traffic_prev": traffic_prev,
+        "posthog": posthog,
         "search": search,
         "search_prev": search_prev,
         "pipeline": pipeline,
         "sources_ok": {
-            "posthog": traffic is not None,
+            "first_party": traffic is not None,
+            "posthog": posthog is not None,
             "gsc": search is not None,
             "supabase": pipeline is not None,
         },

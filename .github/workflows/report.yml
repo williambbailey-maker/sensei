@@ -2,17 +2,16 @@ name: Weekly report
 
 # Runs in the cloud (open network), so it can reach PostHog + Google Search
 # Console — which the interactive sessions can't. Pulls the stats, stores them
-# in Supabase (when the service key is set), publishes a snapshot to the
-# report-data branch, and emails the summary. Manual runs always email.
+# in Supabase (weekly_metrics), and emails the summary. Manual runs always email.
 #
 # Day-to-day "what are the stats?" is served by the first-party beacon
 # (pageviews/events tables + traffic_stats/usage_stats) and needs none of this.
 
 on:
-  # Manual-only for now. Without the GitHub secrets (PostHog key, Supabase
-  # service key, GSC JSON) a scheduled run pulls nothing useful, and its
-  # force-push to report-data triggers a failing Vercel preview build each day.
-  # Re-add a schedule (e.g. cron "0 11 * * *") once secrets are in place.
+  # Daily 11:00 UTC (07:00 ET): pulls + stores. Monday runs also email.
+  # Needs SUPABASE_SERVICE_ROLE_KEY at minimum; other sources are optional.
+  schedule:
+    - cron: "0 11 * * *"
   workflow_dispatch:
     inputs:
       posthog_key:
@@ -23,7 +22,7 @@ on:
         required: false
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   report:
@@ -64,16 +63,3 @@ jobs:
           python reports/pull.py
           python reports/summarize.py
 
-      - name: Publish snapshot to report-data branch (so it can be read back)
-        if: always()
-        run: |
-          test -f reports/out/week.json || exit 0
-          cp reports/out/week.json /tmp/report-latest.json
-          git config user.name "sensei-report-bot"
-          git config user.email "noreply@anthropic.com"
-          git checkout --orphan report-data 2>/dev/null || git checkout report-data
-          git reset --hard 2>/dev/null || true
-          cp /tmp/report-latest.json report-latest.json
-          git add report-latest.json
-          git commit -m "report snapshot $(date -u +%FT%TZ)" || echo "no change"
-          git push -f origin report-data
