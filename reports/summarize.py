@@ -6,8 +6,9 @@ Reads reports/out/week.json, asks Haiku for a short fixed-structure summary,
 upserts the whole thing into Supabase (weekly_metrics) so it can be read back on
 demand ("what are the stats?"), and emails it via Resend if configured.
 
-Storing to Supabase is the important step and always runs; the Haiku summary and
-the email are best-effort (skipped if their keys are absent).
+Storing to Supabase is the important step and always runs. The summary is a
+deterministic template by default (no model, no cost); Haiku is used only if
+ANTHROPIC_API_KEY is set and the call succeeds. Email is sent if Resend is set.
 
 Run after pull.py:  python reports/summarize.py
 """
@@ -69,6 +70,96 @@ def haiku_summary(metrics):
     return "".join(b.get("text", "") for b in r.json().get("content", [])).strip()
 
 
+def _delta(cur, prev):
+    if cur is None:
+        return "n/a"
+    if prev is None:
+        return str(cur)
+    d = cur - prev
+    arrow = "up" if d > 0 else "down" if d < 0 else "flat"
+    return f"{cur} ({arrow} from {prev})" if d else f"{cur} (flat)"
+
+
+def template_summary(m):
+    """Deterministic summary from the metrics JSON — no model, no cost, no
+    invented numbers. Same six sections the Haiku prompt asks for."""
+    t, tp = m.get("traffic") or {}, m.get("traffic_prev") or {}
+    s, sp = m.get("search") or {}, m.get("search_prev") or {}
+    p = m.get("pipeline") or {}
+    w = m.get("window_days", 7)
+    out = []
+
+    # Headline
+    if t:
+        org, orge = t.get("organic_sessions") or 0, t.get("organic_exploratory_sessions") or 0
+        rate = f" ({round(100*orge/org)}%)" if org else ""
+        out.append(f"HEADLINE\n{orge} of {org} organic sessions took an exploratory action{rate}. "
+                   f"Last week: {tp.get('organic_exploratory_sessions') or 0} of {tp.get('organic_sessions') or 0}.")
+    else:
+        out.append("HEADLINE\nTraffic: not connected.")
+
+    # What moved
+    if t:
+        lines = [f"- Visitors {_delta(t.get('visitors'), tp.get('visitors'))}; "
+                 f"organic {_delta((t.get('by_source') or {}).get('organic', 0), (tp.get('by_source') or {}).get('organic', 0))}, "
+                 f"direct {_delta((t.get('by_source') or {}).get('direct', 0), (tp.get('by_source') or {}).get('direct', 0))}."]
+        if s:
+            lines.append(f"- Google impressions {_delta(s.get('impressions'), sp.get('impressions'))}; clicks {_delta(s.get('clicks'), sp.get('clicks'))}.")
+        lines.append(f"- Tap journeys completed: {t.get('journey_completed_sessions') or 0}. "
+                     f"Menu clicks {t.get('menu_clicks') or 0}, saves {t.get('saves') or 0}, signups {t.get('signups') or 0}.")
+        dev = t.get("devices") or {}
+        if dev:
+            lines.append(f"- Devices: mobile {dev.get('mobile', 0)}, desktop {dev.get('desktop', 0)}.")
+        out.append("WHAT MOVED\n" + "\n".join(lines))
+
+    # Search
+    if s:
+        tq = s.get("top_queries") or []
+        q_lines = "; ".join(f"\"{q['query']}\" {q['clicks']} clicks / {q['impressions']} imp" for q in tq[:3]) or "none"
+        pages_clicked = [x for x in (s.get("top_pages") or []) if x.get("clicks")]
+        pg = ", ".join(x["page"].replace("https://", "") for x in pages_clicked[:3]) or "none"
+        out.append(f"SEARCH\n{s.get('impressions')} impressions, {s.get('clicks')} clicks, "
+                   f"CTR {round(100*(s.get('ctr') or 0), 1)}%, avg position {s.get('position')}.\n"
+                   f"Top queries: {q_lines}.\nPages earning clicks: {pg}.")
+    else:
+        out.append("SEARCH\nNot connected.")
+
+    # Brands
+    brands = (t.get("brands") or []) if t else []
+    if brands:
+        b_lines = "\n".join(f"- {b['brand']}: {b['impressions']} imp, {b.get('brand_views', 0)} views, {b['menu_clicks']} menu clicks"
+                             for b in brands[:5])
+        out.append("BRANDS\n" + b_lines)
+    else:
+        out.append("BRANDS\nNo brand events this week.")
+
+    # Pipeline
+    if p:
+        d = p.get("days_since_last_run")
+        stale = p.get("stale_stores") or []
+        out.append(f"PIPELINE\nLast scrape {str(p.get('last_run') or '')[:10]}"
+                   f"{f' ({d} days ago)' if d is not None else ''}. "
+                   f"{p.get('in_stock')} in stock, match rate {p.get('match_rate')}%. "
+                   f"Stale stores: {len(stale)} of {p.get('active_stores')}.")
+    else:
+        out.append("PIPELINE\nNot connected.")
+
+    # Flag
+    flags = []
+    if p and (p.get("days_since_last_run") or 0) > 2:
+        flags.append(f"Scraper has not run in {p['days_since_last_run']} days — menus are stale.")
+    if p and p.get("stale_stores") and p.get("active_stores") and len(p["stale_stores"]) * 2 > p["active_stores"]:
+        flags.append(f"{len(p['stale_stores'])} of {p['active_stores']} stores have no fresh products.")
+    if s and (s.get("impressions") or 0) >= 20 and not any(x.get("clicks") for x in (s.get("top_pages") or []) if "/dispensaries/" in x.get("page", "")):
+        flags.append("Dispensary pages get impressions but no clicks.")
+    errs = m.get("errors") or {}
+    if errs:
+        flags.append("Sources with errors: " + ", ".join(errs))
+    out.append("FLAG\n" + (" ".join(flags) if flags else "Nothing flagged."))
+
+    return f"Sensei weekly — last {w} days\n\n" + "\n\n".join(out)
+
+
 def store(as_of, metrics, summary):
     if not SERVICE:
         print("No SUPABASE_SERVICE_ROLE_KEY — skipping store (the report can't be read back).")
@@ -110,9 +201,12 @@ def main():
     metrics = json.loads((OUT / "week.json").read_text())
     summary = None
     try:
-        summary = haiku_summary(metrics)
+        summary = haiku_summary(metrics)  # optional; only if ANTHROPIC_API_KEY is set
     except Exception as e:  # noqa: BLE001
         print(f"Haiku summary failed: {type(e).__name__}: {str(e)[:160]}")
+    if not summary:
+        summary = template_summary(metrics)
+        print("Using template summary (no model).")
     as_of = datetime.now(timezone.utc).date().isoformat()
     store(as_of, metrics, summary)
     email(summary)
