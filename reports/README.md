@@ -1,7 +1,7 @@
 # Weekly report (Block 3)
 
-Pulls traffic (PostHog), search (Google Search Console) and pipeline health
-(Supabase) into one place, writes it to Supabase so it can be read back on
+Pulls traffic + behavior (first-party beacon in Supabase, PostHog optional),
+search (Google Search Console) and pipeline health (Supabase) into one place, writes it to Supabase so it can be read back on
 demand ("what are the stats?"), and emails a short summary on Mondays.
 
 ## Why it lives in GitHub Actions
@@ -28,9 +28,9 @@ so you can add them in stages.
 
 | Secret | For | Required? |
 |---|---|---|
-| `SUPABASE_SERVICE_ROLE_KEY` | store + read metrics, pipeline health | **Yes** (nothing persists without it) |
-| `POSTHOG_API_KEY` | traffic + brand attribution | for traffic |
-| `POSTHOG_PROJECT_ID` | " | for traffic |
+| `SUPABASE_SERVICE_ROLE_KEY` | traffic, behavior, brands, pipeline health, storing the result | **Yes** (nothing works without it) |
+| `POSTHOG_API_KEY` | PostHog's view of the same traffic (optional cross-check) | no |
+| `POSTHOG_PROJECT_ID` | " | no |
 | `GSC_SA_JSON` | Google search demand (whole service-account JSON) | for search |
 | `ANTHROPIC_API_KEY` | the written summary (Haiku) | for the summary text |
 | `RESEND_API_KEY` | emailing the report | for email |
@@ -38,7 +38,7 @@ so you can add them in stages.
 | Optional: `POSTHOG_HOST` (default `https://us.posthog.com`), `GSC_SITE_URL` (default `sc-domain:sensei.nyc`), `REPORT_EMAIL_FROM`, `SUPABASE_URL` | — | no |
 
 **Staging suggestion:**
-1. `SUPABASE_SERVICE_ROLE_KEY` + `POSTHOG_API_KEY` + `POSTHOG_PROJECT_ID` → traffic + health working.
+1. `SUPABASE_SERVICE_ROLE_KEY` → traffic, behavior, brands + health working.
 2. `GSC_SA_JSON` → adds search demand (service-account steps below).
 3. `ANTHROPIC_API_KEY` → adds the written summary.
 4. `RESEND_API_KEY` + `REPORT_EMAIL_TO` → turns on the Monday email.
