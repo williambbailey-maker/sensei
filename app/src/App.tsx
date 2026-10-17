@@ -7,7 +7,7 @@ import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
-import { fetchDeals, fetchProducts, fetchStores } from './lib/supabase'
+import { fetchDeals, fetchProductsFor, fetchStores } from './lib/supabase'
 import { prettyStore } from './lib/labels'
 import {
   EMPTY_FILTERS,
@@ -31,6 +31,9 @@ export default function App() {
   const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
   const [loadError, setLoadError] = useState(false)
+  // True while the products for the current filter set are being fetched, so
+  // the results screen can say "loading" instead of a false "nothing matched".
+  const [loading, setLoading] = useState(true)
   // Dummy cart — one store at a time, survives reloads on this device.
   const [cart, setCart] = useState<Cart | null>(() => {
     try {
@@ -50,10 +53,31 @@ export default function App() {
   }, [cart])
 
   useEffect(() => {
-    fetchProducts().then(setProducts).catch(() => setLoadError(true))
     fetchStores().then(setStores).catch(() => {})
     fetchDeals().then(setDeals).catch(() => {})
   }, [])
+
+  // Fetch only the products this filter set can match — when results are
+  // requested or refined — instead of the whole catalog up front. Waits for
+  // the (tiny) stores list, which scopes the query by location.
+  useEffect(() => {
+    if (view !== 'results' || stores.length === 0) return
+    let live = true
+    setLoading(true)
+    fetchProductsFor(filters, stores)
+      .then((rows) => {
+        if (live) setProducts(rows)
+      })
+      .catch(() => {
+        if (live) setLoadError(true)
+      })
+      .finally(() => {
+        if (live) setLoading(false)
+      })
+    return () => {
+      live = false
+    }
+  }, [view, filters, stores])
 
   useEffect(() => {
     window.scrollTo({ top: 0 })
@@ -217,6 +241,7 @@ export default function App() {
             onHome={restart}
             onEdit={() => go('journey')}
             onAdd={addToCart}
+            loading={loading}
           />
           <Deals deals={deals} />
           <div className="pb-16" />

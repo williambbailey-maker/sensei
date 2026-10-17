@@ -1,6 +1,7 @@
 export type Variant = { weight: string | null; price: number | null; special_price?: number | null }
 
 export type StoreLite = {
+  id?: string
   name: string | null
   borough: string | null
   neighborhood: string | null
