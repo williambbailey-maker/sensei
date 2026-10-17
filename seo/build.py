@@ -66,6 +66,57 @@ def thc_ok(p):
     t = p.get("thc_pct")
     return c in ("flower", "pre-rolls", "vaporizers", "concentrates") and isinstance(t, (int, float)) and 0 < t <= 100
 
+# ---------- editorial copy ----------
+# Hand-written per-page copy lives in seo/data/copy/*.json, keyed by page slug
+# (dispensary slug, slugified neighborhood/brand name, category key). Every page
+# MUST have an entry — the build refuses to emit a page without one, so a thin
+# or placeholder page can never ship again.
+#   { "<slug>": { "intro": [para, ...], "know": [bullet, ...],
+#                 "faq": [{"q": "...", "a": "..."}, ...] } }
+COPY_DIR = ROOT / "data" / "copy"
+def _load_copy():
+    out = {"dispensary": {}, "neighborhood": {}, "brand": {}, "category": {}}
+    files = {"dispensary": sorted(COPY_DIR.glob("dispensaries-*.json")),
+             "neighborhood": [COPY_DIR / "neighborhoods.json"],
+             "brand": [COPY_DIR / "brands.json"],
+             "category": [COPY_DIR / "categories.json"]}
+    for kind, paths in files.items():
+        for p in paths:
+            for k, v in json.loads(p.read_text()).items():
+                if k in out[kind]:
+                    raise SystemExit(f"duplicate copy for {kind} '{k}' in {p.name}")
+                out[kind][k] = v
+    return out
+COPY = _load_copy()
+
+MIN_INTRO_WORDS, MIN_KNOW, MIN_FAQ = 120, 3, 3
+def get_copy(kind, key, label):
+    c = COPY[kind].get(key)
+    if not c:
+        raise SystemExit(f"missing copy: {kind} '{key}' ({label}) — add it to seo/data/copy/")
+    intro, know, faq = c.get("intro") or [], c.get("know") or [], c.get("faq") or []
+    words = sum(len(p.split()) for p in intro)
+    if words < MIN_INTRO_WORDS or len(know) < MIN_KNOW or len(faq) < MIN_FAQ:
+        raise SystemExit(f"thin copy: {kind} '{key}' — {words} intro words, {len(know)} bullets, {len(faq)} FAQs")
+    for q in faq:
+        if not (q.get("q") and q.get("a")):
+            raise SystemExit(f"bad FAQ entry in {kind} '{key}'")
+    return c
+
+def copy_intro(c):
+    return '<div class="intro">' + "".join(f"<p>{esc(p)}</p>" for p in c["intro"]) + "</div>"
+
+def copy_sections(c, subject):
+    know = "".join(f"<li>{esc(k)}</li>" for k in c["know"])
+    faq = "".join(f'<details class="qa"><summary>{esc(q["q"])}</summary><p>{esc(q["a"])}</p></details>' for q in c["faq"])
+    return (f'<div class="sh">Good to know</div><ul class="know">{know}</ul>'
+            f'<div class="sh">{esc(subject)} FAQ</div><div class="faq">{faq}</div>')
+
+def faq_ld(c):
+    return {"@context": "https://schema.org", "@type": "FAQPage",
+            "mainEntity": [{"@type": "Question", "name": q["q"],
+                            "acceptedAnswer": {"@type": "Answer", "text": q["a"]}} for q in c["faq"]]}
+
 # known page slugs for internal linking
 HOOD_SLUGS = {slugify(n["neighborhood"]): n["neighborhood"] for n in SITE["neighborhoods"]}
 BRAND_SLUGS = {slugify(b["brand"]): b["brand"] for b in SITE["brands"]}
@@ -99,7 +150,19 @@ a{color:inherit;text-decoration:none}
 .eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow);margin:0}
 h1{font-size:33px;font-weight:900;letter-spacing:-.035em;line-height:1.02;margin:8px 0 0}
 .lede{color:var(--mut);font-size:14px;margin:12px 0 0;max-width:60ch}
-.prose{margin-top:14px;padding:12px 14px;border:1px dashed var(--line);border-radius:14px;color:#6a6a6a;font-size:12.5px}
+.intro{margin-top:14px;max-width:62ch}
+.intro p{margin:0 0 12px;font-size:14.5px;line-height:1.6;color:#D4D4D4}
+.intro p:first-child{font-size:15.5px;color:var(--ink)}
+.know{margin:0;padding:0 0 0 18px;max-width:62ch}
+.know li{margin:0 0 8px;font-size:13.5px;line-height:1.5;color:#D4D4D4}
+.know li::marker{color:var(--yellow)}
+.faq{display:flex;flex-direction:column;gap:8px}
+.qa{background:var(--glass);border:1px solid var(--gl);border-radius:16px;padding:0 14px}
+.qa summary{cursor:pointer;list-style:none;padding:13px 0;font-size:14px;font-weight:700;letter-spacing:-.01em;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";color:var(--yellow);font-weight:900;font-size:18px;flex:none}
+.qa[open] summary::after{content:"–"}
+.qa p{margin:0;padding:0 0 14px;font-size:13.5px;line-height:1.55;color:#D4D4D4}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px}
 .stat{background:var(--glass);border:1px solid var(--gl);border-radius:18px;padding:13px 14px}
 .stat .n{font-size:22px;font-weight:900;letter-spacing:-.02em;color:var(--yellow)}
@@ -298,6 +361,8 @@ def build_dispensary(d):
            "areaServed": f"{d.get('borough') or 'New York'}, NY"},
           breadcrumb([("Sensei", "/"), ("Dispensaries", "/dispensaries/"),
                       (d["name"], path)])]
+    cp = get_copy("dispensary", d["slug"], d["name"])
+    ld.append(faq_ld(cp))
     hood_link = f'<a href="/neighborhoods/{hoodslug}/">{esc(d["neighborhood"])}</a>' if hoodslug in HOOD_SLUGS else esc(d.get("neighborhood") or "")
     # brand chips -> brand pages where they exist
     bchips = ""
@@ -312,7 +377,7 @@ def build_dispensary(d):
 <p class="crumb"><a href="/">Sensei</a> › {hood_link} › Dispensary</p>
 <p class="eyebrow">{esc(d.get('neighborhood') or '')} · {esc(d.get('borough') or '')}</p>
 <h1>{esc(d['name'])}</h1>
-<div class="prose">{{prose}} — a line on what this shop is known for.</div>
+{copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{d['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{d['brands']}</span><span class="k">Brands</span></div>
 <div class="stat"><span class="n">{money(d['min_price'])}</span><span class="k">From</span></div></div>
@@ -323,6 +388,7 @@ def build_dispensary(d):
 <div class="sh">What's on the shelf</div>{cats}
 <div class="sh">Top brands here</div><div class="chips">{bchips}</div>
 <div class="sh">Featured right now</div>{feat}
+{copy_sections(cp, d['name'])}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_store=d['slug'], hood=d.get('neighborhood'))}
 """
     write(path, page(title, desc, path, ld, body, "dispensary",
@@ -336,6 +402,8 @@ def build_neighborhood(n):
             f"{n['in_stock']} products in stock. Filter {n['neighborhood']} by category and price on Sensei.")
     ld = [itemlist(f"Dispensaries in {n['neighborhood']}", [s["name"] for s in (n.get("stores_list") or [])]),
           breadcrumb([("Sensei", "/"), ("Neighborhoods", "/neighborhoods/"), (n["neighborhood"], path)])]
+    cp = get_copy("neighborhood", slug, n["neighborhood"])
+    ld.append(faq_ld(cp))
     cats = catbars(n.get("categories") or {},
                    lambda c: (f"/nyc/{c}/" if c in CAT_SLUGS else app_hood(n["neighborhood"], c)))
     stores = ""
@@ -349,7 +417,7 @@ def build_neighborhood(n):
 <p class="crumb"><a href="/">Sensei</a> › {esc(n['borough'])} › Neighborhood</p>
 <p class="eyebrow">{esc(n['borough'])}</p>
 <h1>Weed in {esc(n['neighborhood'])}</h1>
-<div class="prose">{{prose}} — the lay of the land for buying in {esc(n['neighborhood'])}.</div>
+{copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{n['stores']}</span><span class="k">Shops</span></div>
 <div class="stat"><span class="n">{n['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{len(n.get('categories') or {})}</span><span class="k">Categories</span></div></div>
@@ -360,6 +428,7 @@ def build_neighborhood(n):
 <div class="sh">Filter {esc(n['neighborhood'])} by category</div>{cats}
 <div class="sh">Dispensaries in {esc(n['neighborhood'])}</div>{stores}
 <div class="sh">Popular right now</div>{feat}
+{copy_sections(cp, n['neighborhood'])}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_hood=slug)}
 """
     write(path, page(title, desc, path, ld, body, "neighborhood",
@@ -373,7 +442,9 @@ def build_brand(b):
             f"See every store stocking {b['brand']} and compare prices on Sensei.")
     ld = [itemlist(f"NYC dispensaries stocking {b['brand']}", [s["name"] for s in (b.get("stores_list") or [])]),
           breadcrumb([("Sensei", "/"), ("Brands", "/brands/"), (b["brand"], path)])]
-    cchips = "".join(f'<span class="chip">{esc(clabel(c))} <span class="c">{n}</span></span>'
+    cp = get_copy("brand", slug, b["brand"])
+    ld.append(faq_ld(cp))
+    cchips ="".join(f'<span class="chip">{esc(clabel(c))} <span class="c">{n}</span></span>'
                      for c, n in sorted((b.get("categories") or {}).items(), key=lambda kv: -kv[1]))
     stores = ""
     for s in (b.get("stores_list") or []):
@@ -388,7 +459,7 @@ def build_brand(b):
 <p class="crumb"><a href="/">Sensei</a> › Brands › {esc(b['brand'])}</p>
 <p class="eyebrow">Brand</p>
 <h1>{esc(b['brand'])} in NYC</h1>
-<div class="prose">{{prose}} — who {esc(b['brand'])} is and what to expect.</div>
+{copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{b['stores']}</span><span class="k">Stores stock it</span></div>
 <div class="stat"><span class="n">{b['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{money(b['min_price'])}</span><span class="k">From</span></div></div>
@@ -399,6 +470,7 @@ def build_brand(b):
 <div class="sh">What {esc(b['brand'])} makes</div><div class="chips">{cchips}</div>
 <div class="sh">Stores carrying {esc(b['brand'])}</div>{stores}
 <div class="sh">Popular {esc(b['brand'])} products</div>{feat}
+{copy_sections(cp, b['brand'])}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_brand=slug)}
 """
     write(path, page(title, desc, path, ld, body, "brand", {"brand": b["brand"]}))
@@ -411,6 +483,8 @@ def build_category(c):
             f"from {c['brands']} brands, starting at {money(c['min_price'])}. Filter by price and neighborhood on Sensei.")
     ld = [itemlist(f"{label} in New York City", [((p.get('brand') or '') + ' ' + (p.get('name') or '')).strip() for p in (c.get("featured") or [])]),
           breadcrumb([("Sensei", "/"), ("NYC", "/nyc/"), (label, path)])]
+    cp = get_copy("category", cat, label)
+    ld.append(faq_ld(cp))
     bchips = ""
     for x in (c.get("top_brands") or []):
         s = slugify(x["brand"]); href = f"/brands/{s}/" if s in BRAND_SLUGS else app_brand(x["brand"])
@@ -424,7 +498,7 @@ def build_category(c):
 <p class="crumb"><a href="/">Sensei</a> › NYC › {esc(label)}</p>
 <p class="eyebrow">New York City</p>
 <h1>{esc(label)} in NYC</h1>
-<div class="prose">{{prose}} — how to shop {esc(label.lower())} across the city.</div>
+{copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{c['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{c['stores']}</span><span class="k">Dispensaries</span></div>
 <div class="stat"><span class="n">{money(c['min_price'])}</span><span class="k">From</span></div></div>
@@ -435,6 +509,7 @@ def build_category(c):
 <div class="sh">Top {esc(label.lower())} brands</div><div class="chips">{bchips}</div>
 <div class="sh">Where it's stocked</div><div class="chips">{hchips}</div>
 <div class="sh">Featured {esc(label.lower())}</div>{feat}
+{copy_sections(cp, label)}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_cat=cat)}
 """
     write(path, page(title, desc, path, ld, body, "category", {"category": cat}))
@@ -501,6 +576,15 @@ if __name__ == "__main__":
     for c in SITE["categories"]: paths.append(build_category(c))
     build_home(paths)
     build_sitemap(paths)
+    # Hard guard: no page may ship with placeholder text or unrendered braces.
+    bad = []
+    for f in DIST.rglob("index.html"):
+        t = f.read_text()
+        body = t.split("<main", 1)[-1].split("</main>", 1)[0]
+        if "{prose}" in t or "{{" in body or "}}" in body or "lorem ipsum" in t.lower():
+            bad.append(str(f.relative_to(DIST)))
+    if bad:
+        raise SystemExit("placeholder text found in: " + ", ".join(bad))
     print(f"Built {len(paths)} pages → {DIST}")
     print(f"  {len(SITE['dispensaries'])} dispensaries · {len(SITE['neighborhoods'])} neighborhoods · "
           f"{len(SITE['brands'])} brands · {len(SITE['categories'])} categories · home · sitemap · robots")
