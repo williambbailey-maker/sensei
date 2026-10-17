@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
-import type { Deal, Product, StoreLite } from './types'
+import { haversineMiles } from './geo'
+import type { Deal, Filters, Product, StoreLite } from './types'
 
 // The anon key is public by design (it ships in the client bundle and only has
 // RLS-limited read/insert rights). Env vars win; the fallbacks let the app run
@@ -17,43 +18,81 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 const PRODUCT_COLS =
   'id,external_id,name,clean_name,brand,clean_brand,description,brand_description,effects,category,strain_type,thc_pct,cbd_pct,variants,price_min,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng)'
 
-// PostgREST caps each response (typically 1000 rows), so a single request only
-// ever returns a slice of the ~37k in-stock catalog — which made results look
-// sparse once a neighborhood/type was chosen. Page through the whole set: read
-// the first page (with an exact count) to learn the total, then fetch the
-// remaining pages in parallel. A stable id ordering keeps pages from
-// overlapping or skipping rows.
+// PostgREST caps each response at 1000 rows. We used to page through the whole
+// ~37k-row in-stock catalog (~26 MB) on load, and the results screen showed
+// "Nothing matched" until it arrived — fast tappers reached results before
+// the data did. Now we ask the server for only what a filter set can match.
 const PRODUCT_PAGE = 1000
+// Hard cap on rows pulled for one result set. Results shows at most 240 and
+// the client re-ranks whatever comes back, so a few thousand is plenty.
+const MAX_ROWS = 3000
+// "Closest to you" with no radius: draw from the nearest few stores rather
+// than the whole city.
+const NEAREST_STORES = 20
 
-export async function fetchProducts(): Promise<Product[]> {
-  const first = await supabase
-    .from('products')
-    .select(PRODUCT_COLS, { count: 'exact' })
-    .eq('in_stock', true)
-    .order('id', { ascending: true })
-    .range(0, PRODUCT_PAGE - 1)
+// Products for one filter set. Mirrors the hard filters in rankProducts
+// (format, strain, price, THC, location); the soft ones (size, text, vibes,
+// experience) and the final ranking still run on the client.
+export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise<Product[]> {
+  const storeIds = scopeStores(f, stores)
+  if (storeIds && storeIds.length === 0) return []
+
+  const build = (from: number, withCount: boolean) => {
+    let q = supabase
+      .from('products')
+      .select(PRODUCT_COLS, withCount ? { count: 'exact' as const } : undefined)
+      .eq('in_stock', true)
+    if (f.format) q = q.eq('category', f.format)
+    if (f.strain) q = q.eq('strain_type', f.strain)
+    if (f.priceCeiling != null) q = q.lte('price_min', f.priceCeiling)
+    if (f.priceBand) q = q.eq('price_band', f.priceBand)
+    if (f.thcMin != null) q = q.gte('thc_pct', f.thcMin)
+    if (storeIds) q = q.in('store_id', storeIds)
+    // Server order approximates the client's default tiebreak (cheapest first)
+    // so a capped result set keeps the most relevant rows.
+    if (f.sort === 'price-desc') q = q.order('price_min', { ascending: false, nullsFirst: false })
+    else if (f.sort === 'potency') q = q.order('thc_pct', { ascending: false, nullsFirst: false })
+    else q = q.order('price_min', { ascending: true, nullsFirst: false })
+    q = q.order('id', { ascending: true })
+    return q.range(from, from + PRODUCT_PAGE - 1)
+  }
+
+  const first = await build(0, true)
   if (first.error) throw first.error
   const rows = (first.data ?? []) as unknown as Product[]
-  const total = first.count ?? rows.length
+  const total = Math.min(first.count ?? rows.length, MAX_ROWS)
   const pages = Math.ceil(total / PRODUCT_PAGE)
   if (pages <= 1) return rows
 
   const rest = await Promise.all(
-    Array.from({ length: pages - 1 }, (_, i) => {
-      const from = (i + 1) * PRODUCT_PAGE
-      return supabase
-        .from('products')
-        .select(PRODUCT_COLS)
-        .eq('in_stock', true)
-        .order('id', { ascending: true })
-        .range(from, from + PRODUCT_PAGE - 1)
-        .then((r) => {
-          if (r.error) throw r.error
-          return (r.data ?? []) as unknown as Product[]
-        })
-    }),
+    Array.from({ length: pages - 1 }, (_, i) =>
+      build((i + 1) * PRODUCT_PAGE, false).then((r) => {
+        if (r.error) throw r.error
+        return (r.data ?? []) as unknown as Product[]
+      }),
+    ),
   )
   return rows.concat(...rest)
+}
+
+// Which stores a filter set can draw from: a neighborhood, a borough, the
+// stores inside the radius, or the nearest few when sorting by distance.
+// null = no location scoping at all.
+function scopeStores(f: Filters, stores: StoreLite[]): string[] | null {
+  const withId = stores.filter((s): s is StoreLite & { id: string } => !!s.id)
+  if (f.neighborhood) return withId.filter((s) => s.neighborhood === f.neighborhood).map((s) => s.id)
+  if (f.borough) return withId.filter((s) => s.borough === f.borough).map((s) => s.id)
+  if (f.userLoc) {
+    const loc = f.userLoc
+    const near = withId
+      .filter((s) => s.lat != null && s.lng != null)
+      .map((s) => ({ id: s.id, mi: haversineMiles(loc, { lat: s.lat!, lng: s.lng! }) }))
+      .sort((a, b) => a.mi - b.mi)
+    const picked =
+      f.radiusMiles != null ? near.filter((s) => s.mi <= f.radiusMiles!) : near.slice(0, NEAREST_STORES)
+    return picked.map((s) => s.id)
+  }
+  return null
 }
 
 // The stores table is tiny and drives the location UI (borough ->
@@ -61,7 +100,7 @@ export async function fetchProducts(): Promise<Product[]> {
 export async function fetchStores(): Promise<StoreLite[]> {
   const { data, error } = await supabase
     .from('stores')
-    .select('slug,name,borough,neighborhood,lat,lng')
+    .select('id,slug,name,borough,neighborhood,lat,lng')
     .eq('active', true)
   if (error) throw error
   return (data ?? []) as unknown as StoreLite[]

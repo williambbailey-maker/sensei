@@ -15,6 +15,7 @@ export function Results({
   onHome,
   onEdit,
   onAdd,
+  loading = false,
 }: {
   products: Product[]
   filters: Filters
@@ -23,6 +24,7 @@ export function Results({
   onHome: () => void
   onEdit: () => void
   onAdd?: (p: Product) => void
+  loading?: boolean
 }) {
   const ranked = useMemo(() => rankProducts(products, filters), [products, filters])
   // Render a bounded slice so a broad match set (thousands of products) stays
@@ -55,7 +57,9 @@ export function Results({
 
       <p className="eyebrow">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
       <h1 className="display mt-2 text-[clamp(2.25rem,7vw,3.6rem)] text-ink">
-        {ranked.length} match{ranked.length === 1 ? '' : 'es'}
+        {loading && ranked.length === 0
+          ? 'Finding matches…'
+          : `${ranked.length} match${ranked.length === 1 ? '' : 'es'}`}
       </h1>
       <p className="mt-2 text-sm font-semibold text-muted">
         Dial in the details, or clear a chip to widen the search.
@@ -66,7 +70,14 @@ export function Results({
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
-      {ranked.length === 0 ? (
+      {loading && ranked.length === 0 ? (
+        // Products for this filter set are still arriving — never show a
+        // false "nothing matched" while we wait.
+        <div className="mt-10 rounded-3xl border border-dashed border-line bg-panel p-12 text-center">
+          <p className="display text-2xl text-ink">Loading NYC's menus…</p>
+          <p className="mt-2 text-sm font-semibold text-muted">Pulling live prices from every dispensary.</p>
+        </div>
+      ) : ranked.length === 0 ? (
         <div className="mt-10 rounded-3xl border border-dashed border-line bg-panel p-12 text-center">
           <p className="display text-2xl text-ink">Nothing matched.</p>
           <p className="mt-2 text-sm font-semibold text-muted">
