@@ -5,6 +5,7 @@ import { RefineBar } from './RefineBar'
 import { ProductCard } from './ProductCard'
 import { Newsletter } from './Newsletter'
 import { rankProducts } from '../lib/rank'
+import { prettyStore } from '../lib/labels'
 import type { Filters, Product } from '../lib/types'
 
 export function Results({
@@ -32,11 +33,13 @@ export function Results({
   const CAP = 240
   const shown = ranked.slice(0, CAP)
 
-  const where = filters.userLoc
-    ? filters.radiusMiles != null
-      ? `within ${filters.radiusMiles} mi of you`
-      : 'closest to you'
-    : (filters.neighborhood ?? filters.borough)
+  const where = filters.store
+    ? (filters.storeName ?? prettyStore(filters.store))
+    : filters.userLoc
+      ? filters.radiusMiles != null
+        ? `within ${filters.radiusMiles} mi of you`
+        : 'closest to you'
+      : (filters.neighborhood ?? filters.borough)
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">

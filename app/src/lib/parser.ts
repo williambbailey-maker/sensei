@@ -19,6 +19,11 @@ const FORMAT_SYNONYMS: Record<Format, string[]> = {
   'pre-rolls': ['pre roll', 'pre-roll', 'preroll', 'prerolls', 'pre rolls', 'joint', 'joints', 'doobie'],
   vaporizers: ['cart', 'carts', 'vape', 'vapes', 'pen', 'cartridge', 'disposable', 'vaporizer'],
   flower: ['flower', 'bud', 'buds', 'eighth', 'nug', 'nugs', 'ounce'],
+  // Kept to words that only ever mean the category: "resin", "drops" and
+  // "cream" also appear in vape and edible product names.
+  concentrates: ['concentrate', 'concentrates', 'dab', 'dabs', 'wax', 'rosin', 'budder', 'shatter', 'hash'],
+  tinctures: ['tincture', 'tinctures', 'dropper', 'sublingual'],
+  topicals: ['topical', 'topicals', 'balm', 'lotion', 'salve'],
 }
 
 const STRAIN_SYNONYMS: Record<'Indica' | 'Sativa' | 'Hybrid', string[]> = {

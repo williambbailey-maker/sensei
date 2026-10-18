@@ -9,8 +9,10 @@ import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
 import { fetchDeals, fetchProductsFor, fetchStores } from './lib/supabase'
 import { prettyStore } from './lib/labels'
+import { track } from './lib/analytics'
 import {
   EMPTY_FILTERS,
+  filtersFromQuery,
   type Cart,
   type Deal,
   type Filters,
@@ -56,6 +58,26 @@ export default function App() {
     fetchStores().then(setStores).catch(() => {})
     fetchDeals().then(setDeals).catch(() => {})
   }, [])
+
+  // Deep links from the SEO pages (/?brand=… /?store=… /?neighborhood=…
+  // /?category=…) skip the journey and open results with those filters set.
+  // Resolved once the stores list is in, since store and neighborhood hints
+  // are matched against it.
+  const [deepLinked, setDeepLinked] = useState(false)
+  useEffect(() => {
+    if (deepLinked || stores.length === 0) return
+    setDeepLinked(true)
+    const f = filtersFromQuery(window.location.search, stores)
+    if (!f) return
+    setFilters(f)
+    setView('results')
+    track('deep_link', {
+      brand: f.brand,
+      dispensary: f.storeName ?? f.store,
+      neighborhood: f.neighborhood,
+      category: f.format,
+    })
+  }, [stores, deepLinked])
 
   // Fetch only the products this filter set can match — when results are
   // requested or refined — instead of the whole catalog up front. Waits for

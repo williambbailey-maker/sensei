@@ -1,5 +1,5 @@
 import { Ico } from './Ico'
-import { sizeLabel, vibeLabel } from '../lib/labels'
+import { FORMATS, formatLabel, prettyStore, sizeLabel, vibeLabel } from '../lib/labels'
 import { track } from '../lib/analytics'
 import type { Filters } from '../lib/types'
 
@@ -7,6 +7,18 @@ import type { Filters } from '../lib/types'
 export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters) => void }) {
   const chips: { label: string; clear: () => void }[] = []
 
+  // Deep-link filters first: they're the headline of a page arrived at from
+  // a brand or dispensary page, so they should be the first thing to clear.
+  if (f.store)
+    chips.push({
+      label: f.storeName ?? prettyStore(f.store),
+      clear: () => onChange({ ...f, store: null, storeName: null, borough: null, neighborhood: null }),
+    })
+  if (f.brand) chips.push({ label: f.brand, clear: () => onChange({ ...f, brand: null }) })
+  // The three small categories have no option in the product-type select, so
+  // they get a chip; the four journey formats are already visible there.
+  if (f.format && !FORMATS.some((x) => x.key === f.format))
+    chips.push({ label: formatLabel(f.format), clear: () => onChange({ ...f, format: null }) })
   if (f.userLoc)
     chips.push({
       label: `Near me${f.radiusMiles != null ? ` · ${f.radiusMiles} mi` : ''}`,

@@ -63,7 +63,16 @@ export type Vibe =
   | 'body-high'
   | 'balance'
 
-export type Format = 'flower' | 'pre-rolls' | 'vaporizers' | 'edibles'
+// The four journey formats plus the three smaller categories that only arrive
+// via deep links from the SEO pages (/?category=concentrates etc.).
+export type Format =
+  | 'flower'
+  | 'pre-rolls'
+  | 'vaporizers'
+  | 'edibles'
+  | 'concentrates'
+  | 'tinctures'
+  | 'topicals'
 
 export type Strain = 'Indica' | 'Sativa' | 'Hybrid'
 
@@ -90,6 +99,12 @@ export type Filters = {
   neighborhood: string | null
   userLoc: LatLng | null
   radiusMiles: number | null
+  // Exact brand (case-insensitive) and single store (slug). Set by deep links
+  // from the SEO pages — "Find Ruby Farms nearby", "Browse Qube" — and cleared
+  // with a chip like any other filter.
+  brand: string | null
+  store: string | null
+  storeName: string | null
   sort: SortKey
   text: string
 }
@@ -107,6 +122,9 @@ export const EMPTY_FILTERS: Filters = {
   neighborhood: null,
   userLoc: null,
   radiusMiles: null,
+  brand: null,
+  store: null,
+  storeName: null,
   sort: 'match',
   text: '',
 }
@@ -140,8 +158,45 @@ export function hasStructuredFilter(f: Filters): boolean {
     f.size !== null ||
     f.borough !== null ||
     f.neighborhood !== null ||
-    f.userLoc !== null
+    f.userLoc !== null ||
+    f.brand !== null ||
+    f.store !== null
   )
+}
+
+// Build a filter set from the page's query string. The SEO pages deep-link
+// into the app with ?brand=, ?store=, ?neighborhood= and ?category=; any of
+// them present means "skip the journey and show results". Null when none are.
+export function filtersFromQuery(search: string, stores: StoreLite[]): Filters | null {
+  const q = new URLSearchParams(search)
+  const brand = (q.get('brand') ?? '').trim() || null
+  const store = (q.get('store') ?? '').trim() || null
+  const neighborhood = (q.get('neighborhood') ?? '').trim() || null
+  const category = (q.get('category') ?? '').trim().toLowerCase() || null
+  if (!brand && !store && !neighborhood && !category) return null
+
+  const f: Filters = { ...EMPTY_FILTERS, brand }
+  const formats: Format[] = ['flower', 'pre-rolls', 'vaporizers', 'edibles', 'concentrates', 'tinctures', 'topicals']
+  if (category && (formats as string[]).includes(category)) f.format = category as Format
+  if (store) {
+    const s = stores.find((x) => x.slug === store)
+    // Unknown slug: ignore it rather than scoping to nothing.
+    if (s) {
+      f.store = s.slug
+      f.storeName = s.name
+      f.borough = s.borough
+      f.neighborhood = s.neighborhood
+    }
+  } else if (neighborhood) {
+    const s = stores.find((x) => x.neighborhood?.toLowerCase() === neighborhood.toLowerCase())
+    if (s) {
+      f.neighborhood = s.neighborhood
+      f.borough = s.borough
+    }
+  }
+  // Brand and store pages promise "cheapest first" more than a vibe match.
+  if (f.brand || f.store) f.sort = 'price-asc'
+  return f
 }
 
 export function isActive(f: Filters): boolean {

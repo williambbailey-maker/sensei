@@ -75,7 +75,13 @@ export const SORTS: { key: SortKey; label: string }[] = [
 ]
 
 export const vibeLabel = (v: string) => VIBES.find((x) => x.key === v)?.label ?? v
-export const formatLabel = (f: string) => FORMATS.find((x) => x.key === f)?.label ?? f
+const EXTRA_FORMAT_LABELS: Record<string, string> = {
+  concentrates: 'Concentrates',
+  tinctures: 'Tinctures',
+  topicals: 'Topicals',
+}
+export const formatLabel = (f: string) =>
+  FORMATS.find((x) => x.key === f)?.label ?? EXTRA_FORMAT_LABELS[f] ?? f
 export const sortLabel = (s: string) => SORTS.find((x) => x.key === s)?.label ?? s
 
 // Many stores have no display name yet (only a slug). Turn a slug into a

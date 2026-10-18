@@ -47,6 +47,13 @@ export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise
     if (f.priceCeiling != null) q = q.lte('price_min', f.priceCeiling)
     if (f.priceBand) q = q.eq('price_band', f.priceBand)
     if (f.thcMin != null) q = q.gte('thc_pct', f.thcMin)
+    if (f.brand) {
+      // Brand names differ in case between the raw and normalized columns
+      // ("ayrloom" vs "Ayrloom"); ilike with no wildcard is a case-insensitive
+      // equality. Escape the few characters PostgREST treats specially.
+      const v = f.brand.replace(/[%_\\]/g, '\\$&').replace(/[,()"]/g, ' ').trim()
+      q = q.or(`clean_brand.ilike."${v}",brand.ilike."${v}"`)
+    }
     if (storeIds) q = q.in('store_id', storeIds)
     // Server order approximates the client's default tiebreak (cheapest first)
     // so a capped result set keeps the most relevant rows.
@@ -80,6 +87,7 @@ export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise
 // null = no location scoping at all.
 function scopeStores(f: Filters, stores: StoreLite[]): string[] | null {
   const withId = stores.filter((s): s is StoreLite & { id: string } => !!s.id)
+  if (f.store) return withId.filter((s) => s.slug === f.store).map((s) => s.id)
   if (f.neighborhood) return withId.filter((s) => s.neighborhood === f.neighborhood).map((s) => s.id)
   if (f.borough) return withId.filter((s) => s.borough === f.borough).map((s) => s.id)
   if (f.userLoc) {

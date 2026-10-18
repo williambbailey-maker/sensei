@@ -22,6 +22,12 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     if (f.strain && p.strain_type !== f.strain) return false
     if (f.borough && p.store?.borough !== f.borough) return false
     if (f.neighborhood && p.store?.neighborhood !== f.neighborhood) return false
+    if (f.store && p.store?.slug !== f.store) return false
+    if (f.brand) {
+      const want = f.brand.toLowerCase()
+      const have = [p.clean_brand, p.brand].map((b) => (b ?? '').toLowerCase())
+      if (!have.includes(want)) return false
+    }
     if (f.userLoc && f.radiusMiles != null) {
       // Radius mode: stores without coordinates can't qualify.
       const mi = productMiles(p, f)
