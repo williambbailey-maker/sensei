@@ -130,101 +130,145 @@ def app_hood(h, cat=None): return f"{APP}/?neighborhood={quote(h)}" + (f"&catego
 def app_cat(c, extra=""): return f"{APP}/?category={quote(c)}" + (f"&{extra}" if extra else "")
 
 # ---------- shared chrome ----------
-CSS = """
-:root{--yellow:#FDE047;--onyx:#0A0A0A;--charcoal:#171717;--void:#262626;--ink:#fff;--mut:#A3A3A3;
---line:rgba(255,255,255,.14);--glass:rgba(255,255,255,.05);--gl:rgba(255,255,255,.12);
---font:'Inter',ui-sans-serif,system-ui,-apple-system,Arial,sans-serif;}
+CSS = r"""
+:root{--field:#F2C230;--deep:#E3B223;--ink:#141414;--mist:rgba(20,20,20,.62);--line:rgba(20,20,20,.22);--line-strong:rgba(20,20,20,.5);
+--font:'Barlow Condensed',ui-sans-serif,system-ui,sans-serif;--jp:'Noto Sans JP',sans-serif;color-scheme:light}
 *{box-sizing:border-box}
-html{background:var(--onyx)}
-body{margin:0;background:var(--onyx);color:var(--ink);font-family:var(--font);line-height:1.45;-webkit-font-smoothing:antialiased}
+html{background:var(--field)}
+body{margin:0;background:var(--field);color:var(--ink);font-family:var(--font);font-size:14px;font-weight:600;line-height:1.5;text-transform:uppercase;-webkit-font-smoothing:antialiased;position:relative}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:multiply;z-index:1;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .05 0 0 0 .6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
 a{color:inherit;text-decoration:none}
-.shell{max-width:420px;margin:0 auto}
-.hd{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.1);
- position:sticky;top:0;background:rgba(10,10,10,.82);backdrop-filter:blur(14px);z-index:5}
-.wm{font-weight:900;letter-spacing:-.04em;font-size:26px;color:var(--yellow);line-height:1}
-.hd .est{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);
- border:1px solid var(--line);border-radius:999px;padding:5px 11px}
-.wrap{padding:18px}
-.crumb{color:var(--mut);font-size:11px;font-weight:600;margin:0 0 10px}
-.crumb a{color:var(--mut)}
-.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow);margin:0}
-h1{font-size:33px;font-weight:900;letter-spacing:-.035em;line-height:1.02;margin:8px 0 0}
-.lede{color:var(--mut);font-size:14px;margin:12px 0 0;max-width:60ch}
-.intro{margin-top:14px;max-width:62ch}
-.intro p{margin:0 0 12px;font-size:14.5px;line-height:1.6;color:#D4D4D4}
-.intro p:first-child{font-size:15.5px;color:var(--ink)}
-.know{margin:0;padding:0 0 0 18px;max-width:62ch}
-.know li{margin:0 0 8px;font-size:13.5px;line-height:1.5;color:#D4D4D4}
-.know li::marker{color:var(--yellow)}
-.faq{display:flex;flex-direction:column;gap:8px}
-.qa{background:var(--glass);border:1px solid var(--gl);border-radius:16px;padding:0 14px}
-.qa summary{cursor:pointer;list-style:none;padding:13px 0;font-size:14px;font-weight:700;letter-spacing:-.01em;display:flex;justify-content:space-between;gap:12px;align-items:center}
+button{font-family:inherit;text-transform:inherit;cursor:pointer;background:none;border:0;color:inherit;padding:0}
+.shell{max-width:420px;margin:0 auto;position:relative;z-index:2}
+/* roles */
+.mark{font-size:96px;font-weight:700;line-height:.86;letter-spacing:.04em;text-align:center;margin:0}
+.poster{font-size:22px;font-weight:700;letter-spacing:.1em;text-align:center;line-height:1.15;margin:0}
+.label{font-size:15px;font-weight:700;letter-spacing:.08em}
+.meta{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
+.ghost{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--mist);display:inline-block}
+.ghost:hover{color:var(--ink)}
+.body{font-size:14px;font-weight:600;line-height:1.6;color:var(--mist)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px;text-align:center}
+.stat .n,.stat-v{display:block;font-size:22px;font-weight:700;color:var(--ink);line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .k,.stat-k{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-bottom:4px}
+.stat{display:flex;flex-direction:column-reverse}
+.rule{display:flex;align-items:center;justify-content:center;gap:12px;font-size:18px;font-weight:700;letter-spacing:.12em;margin:18px 0}
+.rule::before,.rule::after{content:"";width:30px;height:2px;background:var(--ink);flex:none}
+.kanji{display:flex;justify-content:center;gap:3.6em;font-family:var(--jp);font-weight:500;font-size:30px;line-height:1;text-transform:none}
+.dotcta{display:inline-flex;align-items:center;gap:.5em;font-size:22px;font-weight:700;letter-spacing:.1em;line-height:1.15;color:var(--ink);text-align:center;transition:transform .12s}
+.dotcta::after{content:'\2192'}
+.dotcta:active{transform:translateX(3px)}
+.burger{display:block;width:18px;height:12px;position:relative;flex:none}
+.burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
+.burger::before{top:0}.burger::after{top:7px}
+/* chrome */
+.hd{display:flex;align-items:center;justify-content:space-between;padding:32px 24px 8px;position:sticky;top:0;background:var(--field);z-index:5}
+.wm{font-size:16px;font-weight:700;letter-spacing:.08em}
+.hd .est{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
+.wrap{padding:18px 24px}
+.crumb{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin:0 0 10px;text-align:center}
+.crumb a{color:var(--mist)}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin:0;text-align:center}
+h1{font-size:44px;font-weight:700;letter-spacing:.02em;line-height:1;margin:8px 0 0;text-align:center;text-wrap:balance}
+.lede{font-size:14px;font-weight:600;line-height:1.6;color:var(--mist);margin:12px auto 0;max-width:60ch;text-align:center}
+/* editorial copy — sentence case */
+.intro{margin-top:18px;max-width:62ch;text-transform:none}
+.intro p{margin:0 0 12px;font-size:15px;font-weight:600;line-height:1.6;color:var(--mist);text-transform:none}
+.intro p:first-child{font-size:16px;color:var(--ink)}
+.know{margin:0;padding:0;list-style:none;max-width:62ch}
+.know li{margin:0 0 8px;font-size:14px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none;padding-left:22px;position:relative}
+.know li::before{content:"\2192";position:absolute;left:0;color:var(--ink);font-weight:700}
+.faq{display:flex;flex-direction:column}
+.qa{border-bottom:2px solid var(--line);padding:0}
+.qa summary{cursor:pointer;list-style:none;padding:14px 0;font-size:15px;font-weight:700;letter-spacing:.08em;display:flex;justify-content:space-between;gap:12px;align-items:center}
 .qa summary::-webkit-details-marker{display:none}
-.qa summary::after{content:"+";color:var(--yellow);font-weight:900;font-size:18px;flex:none}
-.qa[open] summary::after{content:"–"}
-.qa p{margin:0;padding:0 0 14px;font-size:13.5px;line-height:1.55;color:#D4D4D4}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px}
-.stat{background:var(--glass);border:1px solid var(--gl);border-radius:18px;padding:13px 14px}
-.stat .n{font-size:22px;font-weight:900;letter-spacing:-.02em;color:var(--yellow)}
-.stat .k{display:block;margin-top:2px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
-.hero{background:var(--yellow);color:var(--onyx);border-radius:30px;border-bottom-right-radius:60px;padding:22px 20px;margin-top:22px}
-.hero .bn{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(10,10,10,.55)}
-.hero h2{font-size:27px;font-weight:900;letter-spacing:-.03em;line-height:1.02;margin:6px 0 8px}
-.hero p{font-size:14px;color:rgba(10,10,10,.8);margin:0 0 16px;font-weight:500}
-.hero p b{color:var(--onyx);font-weight:800}
-.cta{display:inline-block;background:var(--onyx);color:var(--yellow);font-weight:800;font-size:13px;padding:13px 18px;border-radius:999px}
-.sh{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin:30px 0 10px}
-.card{display:flex;gap:13px;align-items:center;background:var(--glass);border:1px solid var(--gl);border-radius:20px;padding:11px 13px;margin-bottom:10px}
-.tile{width:50px;height:50px;border-radius:13px;flex:none;display:grid;place-items:center;font-size:21px;background:var(--void);border:1px solid var(--gl);overflow:hidden}
-.tile img{width:100%;height:100%;object-fit:cover}
+.qa summary::after{content:"+";font-weight:700;font-size:20px;flex:none}
+.qa[open] summary::after{content:"\2013"}
+.qa p{margin:0;padding:0 0 14px;font-size:14px;font-weight:600;line-height:1.55;color:var(--mist);text-transform:none}
+/* hero */
+.hero{text-align:center;padding:28px 0 8px;margin-top:22px}
+.hero .bn{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
+.hero h2{font-size:22px;font-weight:700;letter-spacing:.1em;line-height:1.15;margin:8px 0}
+.hero p{font-size:14px;font-weight:600;line-height:1.6;color:var(--mist);margin:0 auto 16px;max-width:40ch}
+.hero p b{color:var(--ink)}
+.cta{display:inline-flex;align-items:center;gap:.5em;font-size:22px;font-weight:700;letter-spacing:.1em;line-height:1.15;color:var(--ink);transition:transform .12s}
+.cta::after{content:'\2192'}
+.cta:active{transform:translateX(3px)}
+.sh{font-size:22px;font-weight:700;letter-spacing:.1em;text-align:center;line-height:1.15;margin:44px 0 10px}
+/* rows */
+.card{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:2px solid var(--line)}
+.tile{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;border:2px solid var(--ink);background:var(--deep);display:block}
+.tile:empty{background:transparent;border:1px solid var(--line-strong)}
+.tile img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;display:block}
 .card .l{flex:1;min-width:0}
-.card .nm{font-size:14px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card .mt{color:var(--mut);font-size:12px;margin-top:3px}
-.tag{display:inline-block;margin-top:6px;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
- color:var(--yellow);background:rgba(253,224,71,.12);border:1px solid rgba(253,224,71,.35);padding:3px 8px;border-radius:999px}
+.card .nm{font-size:15px;font-weight:700;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .mt{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:2px}
+.tag{display:inline-block;margin-top:2px;margin-right:8px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
+.tag+.tag::before{content:"\00b7\00a0";}
 .card .r{text-align:right;white-space:nowrap}
-.card .pr{font-weight:900;font-size:15px}
-.card .pg{color:var(--mut);font-size:11px;margin-top:1px}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{font-size:12px;font-weight:700;padding:8px 13px;border-radius:999px;background:var(--glass);border:1px solid var(--gl);color:var(--ink)}
-.chip .c{color:var(--mut);font-variant-numeric:tabular-nums}
-.chip.on{background:var(--yellow);color:var(--onyx);border-color:var(--yellow)}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 2px;border-bottom:1px solid var(--line)}
-.row:last-child{border-bottom:0}
-.row .snm{font-size:15px;font-weight:700}
-.row .sd{color:var(--mut);font-size:12px;margin-top:2px}
-.row .sn{color:var(--mut);font-size:11px;white-space:nowrap;text-align:right}
-.row .sn b{display:block;color:var(--yellow);font-size:16px}
-.bars{display:flex;flex-direction:column;gap:8px}
-.bar{display:flex;align-items:center;gap:10px}
-.bar .bk{width:92px;font-size:12px;font-weight:600;flex:none}
-.bar .bt{flex:1;height:8px;background:var(--void);border-radius:999px;overflow:hidden;min-width:0}
-.bar .bf{height:100%;background:var(--yellow)}
-.bar .bn{width:46px;text-align:right;font-size:11px;color:var(--mut);flex:none;font-variant-numeric:tabular-nums}
-.xgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.xl{display:block;background:var(--glass);border:1px solid var(--gl);border-radius:16px;padding:13px 14px}
-.xl .xk{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);font-weight:800}
-.xl .xv{font-size:13px;font-weight:700;margin-top:4px}
-.xl .xd{font-size:11px;color:var(--mut);margin-top:2px}
-.ft{border-top:1px solid var(--line);margin-top:40px;padding:26px 18px 40px;color:#6a6a6a;font-size:11px}
-.ft .wm{font-size:20px;margin-bottom:10px;display:inline-block}
-.back{display:inline-block;color:var(--mut);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:0 0 14px}
-.back:before{content:"← "}
-#ag{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;text-align:center;
- background:rgba(10,10,10,.93);backdrop-filter:blur(10px)}
-#ag .box{max-width:330px}#ag h2{margin:10px 0 0;font-size:22px}#ag p{color:var(--mut);font-size:13px;margin:10px 0 20px}
-#ag .r{display:flex;flex-direction:column;gap:10px}
-#ag button{cursor:pointer;font-family:inherit;border:0;border-radius:999px;padding:13px;font-weight:800;font-size:14px}
-#ag .y{background:var(--yellow);color:var(--onyx)}#ag .n{background:transparent;color:var(--mut);border:1px solid var(--line)}
+.card .pr{font-size:15px;font-weight:700;letter-spacing:.08em;font-variant-numeric:tabular-nums}
+.card .pg{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:1px}
+.chips{display:flex;gap:6px 18px;flex-wrap:wrap}
+.chip{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--mist);border-bottom:2px solid transparent;padding:4px 0}
+.chip .c{font-variant-numeric:tabular-nums;margin-left:4px}
+.chip.on,.chip:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:2px solid var(--line)}
+.row .l{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.row .l::before{content:"\2192";font-weight:700;flex:none;width:14px}
+.row:first-of-type .l::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);margin:0 2px}
+.row .snm{font-size:15px;font-weight:700;letter-spacing:.08em}
+.row .sd{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:2px}
+.row .sn{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);white-space:nowrap;text-align:right}
+.row .sn b{display:block;color:var(--ink);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.bars{display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:2px solid var(--line)}
+.bar .bk{width:96px;font-size:15px;font-weight:700;letter-spacing:.08em;flex:none}
+.bar .bt{flex:1;height:2px;background:var(--line);min-width:0}
+.bar .bf{display:block;height:100%;background:var(--ink)}
+.bar .bn{width:46px;text-align:right;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);flex:none;font-variant-numeric:tabular-nums}
+.xgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+.xl{display:block;padding:14px 0;border-bottom:2px solid var(--line)}
+.xl .xk{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
+.xl .xv{font-size:15px;font-weight:700;letter-spacing:.08em;margin-top:4px}
+.xl .xd{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:2px}
+/* masthead (home + age gate) */
+.mast{text-align:center;padding:16px 0 0}
+.mast .mark{margin-top:24px}
+.mast .poster{margin-top:16px}
+.mast .arrow{display:block;width:100%;height:auto;margin-top:10px}
+.mast .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:-104px;position:relative}
+.mast .cols .label{font-size:20px;line-height:1.2;text-align:center;margin:0}
+.mast .meta{display:block;margin-top:18px;text-align:center}
+.mast .dotcta{margin-top:28px}
+/* footer */
+.ft{border-top:2px solid var(--line);margin-top:48px;padding:28px 24px 44px;text-align:center}
+.ft .poster{margin:0;display:block}
+.ft .label{display:block;color:var(--mist);margin-top:12px;font-size:13px}
+.ft .meta{display:block;margin-top:12px}
+.back{display:inline-block;color:var(--mist);font-size:13px;font-weight:700;letter-spacing:.08em;margin:0 0 14px}
+.back:hover{color:var(--ink)}
+.back:before{content:"\2190 "}
+/* age gate */
+#ag{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;text-align:center;background:var(--field);overflow:auto}
+#ag .box{max-width:330px;width:100%}
+#ag .mark{margin-top:24px}
+#ag .poster{margin-top:16px}
+#ag .meta{display:block;margin-top:12px;text-transform:none;max-width:30ch;margin-left:auto;margin-right:auto}
+#ag .dotcta{margin-top:26px}
+#ag .ghost{display:block;margin-top:18px}
 .ag-ok #ag{display:none}
 """
 
 AGE_GATE = """
 <div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
-<span class="wm" style="font-size:26px;color:var(--yellow);font-weight:900">sensei</span>
-<h2>Are you 21 or older?</h2><p>You must be of legal age to view licensed cannabis products in New York State.</p>
-<div class="r"><button class="y" id="agy" type="button">Yes, I'm 21+</button>
-<button class="n" type="button" onclick="location.href='https://www.google.com'">No</button></div></div></div>
+<div class="kanji"><span>先</span><span>生</span></div>
+<h1 class="mark">Sensei</h1>
+<p class="poster">Are you 21 or older?</p>
+<div class="rule"><span>NY</span></div>
+<span class="meta">You must be 21 or older to view licensed cannabis products in New York State.</span>
+<button class="dotcta" id="agy" type="button">Yes, I'm 21 or older</button>
+<a class="ghost" href="https://www.google.com">I'm under 21</a></div></div>
 <script>(function(){var K='sensei_age_ok';try{if(sessionStorage.getItem(K)==='1')document.documentElement.classList.add('ag-ok')}catch(e){}
 var y=document.getElementById('agy');if(y)y.onclick=function(){document.documentElement.classList.add('ag-ok');try{sessionStorage.setItem(K,'1')}catch(e){}}})();</script>
 <noscript><style>#ag{display:none}</style></noscript>
@@ -287,18 +331,18 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j)}</script>' for j in jsonld)
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="dark"><meta name="theme-color" content="#0A0A0A">
+<meta name="color-scheme" content="light"><meta name="theme-color" content="#F2C230">
 <title>{esc(title)}</title><meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{canon}">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{canon}">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">
 <style>{CSS}</style>{ld}</head><body><div class="shell">
-<header class="hd"><a class="wm" href="/">sensei</a><span class="est">21+ · NYC</span></header>
+<header class="hd"><a class="burger" href="/" aria-label="Home"></a><a class="wm" href="/">Sensei</a><span class="est">21+</span></header>
 <main class="wrap">{body}</main>
-<footer class="ft"><a class="wm" href="/">sensei</a><br>Every licensed NYC dispensary menu, one place. Prices refresh from live menus. Sensei is an independent guide — order on the dispensary's own site. Adults 21+ only.</footer>
+<footer class="ft"><a class="poster" href="/">Sensei.nyc</a><span class="label">Every licensed NYC dispensary menu, one place. Prices refresh from live menus. Sensei is an independent guide — order on the dispensary's own site.</span><span class="meta">21+ only · adults in New York State</span></footer>
 </div>{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """
 
@@ -313,7 +357,7 @@ def itemlist(name, names):
             "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n} for i, n in enumerate(names)]}
 
 def pcard(p):
-    img = f'<img src="{esc(p.get("image_url"))}" alt="" loading="lazy">' if p.get("image_url") else ("💎" if False else "🌿")
+    img = f'<img src="{esc(p.get("image_url"))}" alt="" loading="lazy">' if p.get("image_url") else ""
     tags = []
     if p.get("strain_type"): tags.append(f'<span class="tag">{esc(p["strain_type"])}</span>')
     if thc_ok(p): tags.append(f'<span class="tag">{round(p["thc_pct"])}% THC</span>')
@@ -375,7 +419,7 @@ def build_dispensary(d):
     feat = "".join(pcard(p) for p in (d.get("featured") or [])[:4])
     body = f"""
 <p class="crumb"><a href="/">Sensei</a> › {hood_link} › Dispensary</p>
-<p class="eyebrow">{esc(d.get('neighborhood') or '')} · {esc(d.get('borough') or '')}</p>
+<p class="kicker">{esc(d.get('neighborhood') or '')} · {esc(d.get('borough') or '')}</p>
 <h1>{esc(d['name'])}</h1>
 {copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{d['in_stock']}</span><span class="k">In stock</span></div>
@@ -384,7 +428,7 @@ def build_dispensary(d):
 <div class="hero"><div class="bn">{esc(d.get('neighborhood') or 'NYC')} · live menu</div>
 <h2>Shop {esc(d['name'])} on Sensei</h2>
 <p>Compare every item here against nearby NYC shops — then order where it's cheapest.</p>
-<a class="cta" href="{app_store(d['slug'])}" data-ev="menu" data-dispensary="{esc(d['name'])}">Browse {esc(d['name'])} →</a></div>
+<a class="cta" href="{app_store(d['slug'])}" data-ev="menu" data-dispensary="{esc(d['name'])}">Browse {esc(d['name'])}</a></div>
 <div class="sh">What's on the shelf</div>{cats}
 <div class="sh">Top brands here</div><div class="chips">{bchips}</div>
 <div class="sh">Featured right now</div>{feat}
@@ -415,7 +459,7 @@ def build_neighborhood(n):
     feat = "".join(pcard(p) for p in (n.get("featured") or [])[:4])
     body = f"""
 <p class="crumb"><a href="/">Sensei</a> › {esc(n['borough'])} › Neighborhood</p>
-<p class="eyebrow">{esc(n['borough'])}</p>
+<p class="kicker">{esc(n['borough'])}</p>
 <h1>Weed in {esc(n['neighborhood'])}</h1>
 {copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{n['stores']}</span><span class="k">Shops</span></div>
@@ -424,7 +468,7 @@ def build_neighborhood(n):
 <div class="hero"><div class="bn">{n['stores']} shops · one search</div>
 <h2>Shop all of {esc(n['neighborhood'])} on Sensei</h2>
 <p>Every {esc(n['neighborhood'])} menu in one place, sorted by price and distance.</p>
-<a class="cta" href="{app_hood(n['neighborhood'])}" data-ev="menu">Shop {esc(n['neighborhood'])} →</a></div>
+<a class="cta" href="{app_hood(n['neighborhood'])}" data-ev="menu">Shop {esc(n['neighborhood'])}</a></div>
 <div class="sh">Filter {esc(n['neighborhood'])} by category</div>{cats}
 <div class="sh">Dispensaries in {esc(n['neighborhood'])}</div>{stores}
 <div class="sh">Popular right now</div>{feat}
@@ -457,7 +501,7 @@ def build_brand(b):
     feat = "".join(pcard({**p, "brand": b["brand"]}) for p in (b.get("featured") or [])[:4])
     body = f"""
 <p class="crumb"><a href="/">Sensei</a> › Brands › {esc(b['brand'])}</p>
-<p class="eyebrow">Brand</p>
+<p class="kicker">Brand</p>
 <h1>{esc(b['brand'])} in NYC</h1>
 {copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{b['stores']}</span><span class="k">Stores stock it</span></div>
@@ -466,7 +510,7 @@ def build_brand(b):
 <div class="hero"><div class="bn">Carried at {b['stores']} shops</div>
 <h2>See every store stocking {esc(b['brand'])}</h2>
 <p>Compare {esc(b['brand'])} prices across all {b['stores']} NYC shops on Sensei.</p>
-<a class="cta" href="{app_brand(b['brand'])}" data-ev="menu" data-brand="{esc(b['brand'])}">Find {esc(b['brand'])} nearby →</a></div>
+<a class="cta" href="{app_brand(b['brand'])}" data-ev="menu" data-brand="{esc(b['brand'])}">Find {esc(b['brand'])} nearby</a></div>
 <div class="sh">What {esc(b['brand'])} makes</div><div class="chips">{cchips}</div>
 <div class="sh">Stores carrying {esc(b['brand'])}</div>{stores}
 <div class="sh">Popular {esc(b['brand'])} products</div>{feat}
@@ -496,7 +540,7 @@ def build_category(c):
     feat = "".join(pcard({**p, "category": cat}) for p in (c.get("featured") or [])[:6])
     body = f"""
 <p class="crumb"><a href="/">Sensei</a> › NYC › {esc(label)}</p>
-<p class="eyebrow">New York City</p>
+<p class="kicker">New York City</p>
 <h1>{esc(label)} in NYC</h1>
 {copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{c['in_stock']}</span><span class="k">In stock</span></div>
@@ -505,7 +549,7 @@ def build_category(c):
 <div class="hero"><div class="bn">{c['brands']} brands · {c['stores']} shops</div>
 <h2>Find the best {esc(label.lower())} near you</h2>
 <p>Every NYC {esc(label.lower())} listing, ranked by price and distance on Sensei.</p>
-<a class="cta" href="{app_cat(cat)}" data-ev="menu" data-cat="{esc(cat)}">Browse {esc(label.lower())} →</a></div>
+<a class="cta" href="{app_cat(cat)}" data-ev="menu" data-cat="{esc(cat)}">Browse {esc(label.lower())}</a></div>
 <div class="sh">Top {esc(label.lower())} brands</div><div class="chips">{bchips}</div>
 <div class="sh">Where it's stocked</div><div class="chips">{hchips}</div>
 <div class="sh">Featured {esc(label.lower())}</div>{feat}
@@ -545,13 +589,24 @@ def build_home(paths):
         disp_rows += (f'<a class="row" href="/dispensaries/{d["slug"]}/"><div class="l"><div class="snm">{esc(d["name"])}</div>'
                       f'<div class="sd">{esc(d.get("neighborhood") or "")}, {esc(d.get("borough") or "")}</div></div>'
                       f'<div class="sn"><b>{d["in_stock"]}</b>in stock</div></a>')
+    boroughs = len({d.get("borough") for d in SITE["dispensaries"] if d.get("borough")})
+    products = sum(c["in_stock"] for c in SITE["categories"])
     body = f"""
-<p class="eyebrow">New York · Cannabis Discovery</p>
-<h1>Every NYC dispensary, one place.</h1>
-<p class="lede">Compare price, potency and pickup across every licensed NYC dispensary — then order where it's right.</p>
-<div class="hero"><div class="bn">{len(SITE['dispensaries'])} shops · live menus</div>
-<h2>Open Sensei</h2><p>Search by vibe or by the details, across the whole city.</p>
-<a class="cta" href="{APP}/" data-ev="menu">Launch Sensei →</a></div>
+<div class="mast">
+<div class="kanji"><span>先</span><span>生</span></div>
+<h1 class="mark">Sensei</h1>
+<p class="poster">A guide to New York</p>
+<svg class="arrow" viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M24 20 H296" stroke="#141414" stroke-width="3" fill="none"/>
+<path d="M8 20 l18 -8 l-4 8 l4 8 Z" fill="#141414"/>
+<path d="M312 20 l-18 -8 l4 8 l-4 8 Z" fill="#141414"/>
+<path d="M160 20 V150" stroke="#141414" stroke-width="3" fill="none"/></svg>
+<div class="cols">
+<p class="label">{len(SITE['dispensaries'])} licensed<br>shops<br>live menus</p>
+<p class="label">compare<br>price &amp;<br>potency</p></div>
+<span class="meta">{boroughs} boroughs · {len(SITE['neighborhoods'])} neighborhoods · {products:,} products</span>
+<a class="dotcta" href="{APP}/" data-ev="menu">Find a shop</a>
+</div>
 <div class="sh">By product</div><div class="chips">{cat_chips}</div>
 <div class="sh">Neighborhoods</div><div class="chips">{hood_chips}</div>
 <div class="sh">Brands</div><div class="chips">{brand_chips}</div>
