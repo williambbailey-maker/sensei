@@ -19,11 +19,11 @@ can always be restored cleanly.
   results/detail/cart screens and every SEO page but the home — sit on cream
   `#F7F3EA` with the yellow kept for the action block, footer band and age
   gate), **Barlow Condensed** 600/700
-  throughout with Noto Sans JP for the 先生 kanji pair, `body { text-transform:
-  uppercase }` except editorial copy, descriptions and inputs. No shadows, blur,
+  throughout, `body { text-transform: uppercase }` except editorial copy,
+  descriptions and inputs. No shadows, blur,
   gradients, rounded cards or colors beyond the six tokens; product images are
   the only color and sit on the field with `mix-blend-mode: multiply`. Devices:
-  the masthead (kanji → 96px SENSEI → "A guide to New York" → a sentence-case
+  the masthead (96px SENSEI → "A guide to New York" → a sentence-case
   description → one line of counts), the numbered "Start here" `.ways` block
   (Near me / Pick a borough / Search in your words / See everything, each a
   full-width row with heavy ink rules and an arrow), `.row` lists with 2px rules

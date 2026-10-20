@@ -18,7 +18,6 @@ export default {
     extend: {
       fontFamily: {
         sans: ["'Barlow Condensed'", 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        jp: ["'Noto Sans JP'", 'sans-serif'],
       },
     },
   },

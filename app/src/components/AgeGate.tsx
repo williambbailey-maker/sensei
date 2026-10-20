@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Kanji, Mark } from './Masthead'
+import { Mark } from './Masthead'
 
 const KEY = 'sensei_age_ok'
 
@@ -16,10 +16,7 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   return (
     <div className="sign-surface fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-6 py-10">
       <div className="w-full max-w-sm text-center">
-        <Kanji />
-        <div className="mt-6">
-          <Mark />
-        </div>
+        <Mark />
         <p className="poster mt-4">Are you 21 or older?</p>
         <div className="rule mt-6">
           <span>NY</span>

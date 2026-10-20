@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* The "Sign" system — black condensed caps on mustard paper. Barlow Condensed
-   and Noto Sans JP are loaded via Google Fonts in index.html. */
+   is loaded via Google Fonts in index.html. */
 
 :root {
   color-scheme: light;
@@ -142,14 +142,6 @@ textarea {
   @apply font-bold;
   font-size: 18px;
   letter-spacing: 0.12em;
-}
-
-.kanji {
-  @apply flex justify-center font-jp;
-  gap: 3.6em;
-  font-weight: 500;
-  font-size: 30px;
-  text-transform: none;
 }
 
 /* The one CTA shape: poster text followed by an arrow. */

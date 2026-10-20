@@ -132,7 +132,7 @@ def app_cat(c, extra=""): return f"{APP}/?category={quote(c)}" + (f"&{extra}" if
 # ---------- shared chrome ----------
 CSS = r"""
 :root{--field:#F2C230;--deep:#E3B223;--paper:#F7F3EA;--paper-deep:#ECE6D8;--ink:#141414;--mist:rgba(20,20,20,.62);--line:rgba(20,20,20,.22);--line-strong:rgba(20,20,20,.5);
---font:'Barlow Condensed',ui-sans-serif,system-ui,sans-serif;--jp:'Noto Sans JP',sans-serif;color-scheme:light}
+--font:'Barlow Condensed',ui-sans-serif,system-ui,sans-serif;color-scheme:light}
 *{box-sizing:border-box}
 html{background:var(--field)}
 /* Reading pages (everything but the home) sit on cream; the yellow is kept
@@ -161,7 +161,6 @@ button{font-family:inherit;text-transform:inherit;cursor:pointer;background:none
 .stat{display:flex;flex-direction:column-reverse}
 .rule{display:flex;align-items:center;justify-content:center;gap:12px;font-size:18px;font-weight:700;letter-spacing:.12em;margin:18px 0}
 .rule::before,.rule::after{content:"";width:30px;height:2px;background:var(--ink);flex:none}
-.kanji{display:flex;justify-content:center;gap:3.6em;font-family:var(--jp);font-weight:500;font-size:30px;line-height:1;text-transform:none}
 .dotcta{display:inline-flex;align-items:center;gap:.5em;font-size:22px;font-weight:700;letter-spacing:.1em;line-height:1.15;color:var(--ink);text-align:center;transition:transform .12s}
 .dotcta::after{content:'\2192'}
 .dotcta:active{transform:translateX(3px)}
@@ -274,7 +273,6 @@ h1{font-size:44px;font-weight:700;letter-spacing:.02em;line-height:1;margin:8px 
 
 AGE_GATE = """
 <div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
-<div class="kanji"><span>先</span><span>生</span></div>
 <h1 class="mark">Sensei</h1>
 <p class="poster">Are you 21 or older?</p>
 <div class="rule"><span>NY</span></div>
@@ -351,7 +349,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{canon}">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>{ld}</head><body><div class="shell">
 <header class="hd"><a class="burger" href="/" aria-label="Home"></a><a class="wm" href="/">Sensei</a><span class="est">21+</span></header>
 <main class="wrap">{body}</main>
@@ -606,7 +604,6 @@ def build_home(paths):
     products = sum(c["in_stock"] for c in SITE["categories"])
     body = f"""
 <div class="mast">
-<div class="kanji"><span>先</span><span>生</span></div>
 <h1 class="mark">Sensei</h1>
 <p class="poster">A guide to New York</p>
 <p class="desc">Every licensed dispensary menu in NYC, in one place. Say where you are and what you're after, and we'll show the cheapest and strongest options near you.</p>
