@@ -2,16 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Inter is loaded via Google Fonts in index.html — the geometric sans for the
-   Hyper-Saturated Fluid system. */
+/* The "Sign" system — black condensed caps on mustard paper. Barlow Condensed
+   and Noto Sans JP are loaded via Google Fonts in index.html. */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-/* A deep-onyx void — the fixed dark base of this design. */
 html {
-  background: #0a0a0a;
+  background: #f2c230;
 }
 
 html,
@@ -27,67 +26,291 @@ body {
 }
 
 body {
-  @apply bg-ice font-sans text-ink antialiased;
+  @apply bg-field font-sans text-ink antialiased;
+  text-transform: uppercase;
   font-feature-settings: 'kern' 1;
 }
 
-/* Headline weight: bold, sentence case, tight leading. No forced uppercase —
-   that's what .label/.eyebrow are for. */
-.display {
-  @apply font-display font-extrabold leading-[1.05];
-  letter-spacing: -0.015em;
+/* Paper speckle over everything, fixed and inert. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .05 0 0 0 .6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
 }
 
-/* Bold uppercase UI label — buttons, badges, small controls. */
+/* The preflight resets text-transform on buttons and selects; the sign
+   system wants them in caps like everything else. */
+button,
+select {
+  text-transform: uppercase;
+}
+
+/* Sentence case exceptions: descriptions, disclaimers, input values. */
+.sentence,
+input,
+textarea {
+  text-transform: none;
+}
+
+/* ---------- type roles ---------- */
+
+.mark {
+  @apply text-center font-bold;
+  /* 96px from 320px up; only shrinks on narrower screens. */
+  font-size: min(96px, 30vw);
+  line-height: 0.86;
+  letter-spacing: 0.04em;
+}
+
+.poster {
+  @apply text-center font-bold leading-tight;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+}
+
 .label {
-  @apply font-sans font-bold uppercase tracking-label;
+  @apply font-bold;
+  font-size: 15px;
+  letter-spacing: 0.08em;
 }
 
-.eyebrow {
-  @apply font-sans text-[11px] font-bold uppercase tracking-label text-muted;
+.meta {
+  @apply font-semibold text-mist;
+  font-size: 12px;
+  letter-spacing: 0.08em;
 }
 
-/* Frosted-glass surface — the recurring floating card in the void. */
-.glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+.ghost {
+  @apply font-bold text-mist transition hover:text-ink;
+  font-size: 13px;
+  letter-spacing: 0.08em;
 }
 
-.pill {
-  @apply rounded-full border border-line bg-panel;
+/* Body copy that isn't a role. */
+.copy {
+  @apply font-semibold leading-relaxed text-mist;
+  font-size: 14px;
 }
 
-/* Quiet interactive lift — replaces the old hard offset "pop" shadow with a
-   soft, minimal hover appropriate to the fancy-minimal register. */
-.pop-press {
-  transition:
-    transform 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
-    opacity 0.16s cubic-bezier(0.2, 0.8, 0.2, 1);
+.stats {
+  @apply grid grid-cols-3 gap-4 text-center;
 }
-.pop-press:hover {
-  opacity: 0.86;
+.stat-k {
+  @apply block font-semibold text-mist;
+  font-size: 12px;
+  letter-spacing: 0.08em;
 }
-.pop-press:active {
-  transform: scale(0.98);
-  opacity: 0.75;
+.stat-v {
+  @apply block font-bold text-ink;
+  font-size: 22px;
+  margin-top: 2px;
 }
 
-/* Expanding detail panel — the card "flips" open and grows into a larger view. */
-@keyframes sen-expandIn {
-  0% {
+/* The "—01—" device. */
+.rule {
+  @apply flex items-center justify-center;
+  gap: 12px;
+}
+.rule::before,
+.rule::after {
+  content: '';
+  width: 30px;
+  height: 2px;
+  background: #141414;
+  flex: none;
+}
+.rule > span {
+  @apply font-bold;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+}
+
+.kanji {
+  @apply flex justify-center font-jp;
+  gap: 3.6em;
+  font-weight: 500;
+  font-size: 30px;
+  text-transform: none;
+}
+
+/* The one CTA shape: poster text followed by an arrow. */
+.dotcta {
+  @apply inline-flex items-center justify-center font-bold leading-tight;
+  gap: 0.5em;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  transition: transform 0.12s ease;
+}
+.dotcta::after {
+  content: '\2192';
+}
+.dotcta:active {
+  transform: translateX(3px);
+}
+.dotcta:disabled {
+  opacity: 0.5;
+}
+
+/* ---------- devices ---------- */
+
+/* The only list treatment. */
+.row {
+  @apply flex items-center justify-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 2px solid rgba(20, 20, 20, 0.22);
+}
+.row-l {
+  @apply flex min-w-0 items-center;
+  gap: 12px;
+}
+
+.marker {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid rgba(20, 20, 20, 0.5);
+  background: transparent;
+}
+.marker-on {
+  background: #141414;
+  border-color: #141414;
+}
+
+.thumb {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #141414;
+  background: #e3b223;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+.thumb-empty {
+  border: 1px solid rgba(20, 20, 20, 0.5);
+  background: transparent;
+}
+.thumb-lg {
+  width: 160px;
+  height: 160px;
+}
+
+/* Text input: no box, just an underline. */
+.inp {
+  @apply flex items-center;
+  border-bottom: 2px solid rgba(20, 20, 20, 0.5);
+  padding-bottom: 8px;
+}
+.inp:focus-within {
+  border-bottom-color: #141414;
+}
+.inp input {
+  @apply w-full min-w-0 bg-transparent text-center font-bold text-ink;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+.inp input::placeholder {
+  color: rgba(20, 20, 20, 0.37);
+}
+input:focus {
+  outline: none;
+}
+
+/* Select: text with an underline and a small chevron. */
+.sel {
+  @apply relative inline-block;
+}
+.sel select {
+  @apply appearance-none bg-transparent font-bold text-mist;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0 18px 4px 0;
+  border-bottom: 2px solid rgba(20, 20, 20, 0.35);
+}
+.sel select:focus {
+  outline: none;
+}
+.sel-on select {
+  @apply text-ink;
+  border-bottom-color: #141414;
+}
+.sel svg {
+  @apply pointer-events-none absolute right-0 text-mist;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translateY(-60%);
+}
+.sel-on svg {
+  @apply text-ink;
+}
+.sel option {
+  @apply bg-deep text-ink;
+}
+
+/* Chip / tab: text with an underline. */
+.tab {
+  @apply inline-flex items-center font-bold text-mist transition;
+  gap: 6px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+.tab-on {
+  @apply text-ink;
+  border-bottom-color: #141414;
+}
+
+/* Hamburger: two bars. */
+.burger {
+  @apply block;
+  width: 18px;
+  height: 12px;
+  position: relative;
+}
+.burger::before,
+.burger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: #141414;
+}
+.burger::before {
+  top: 2px;
+}
+.burger::after {
+  top: 9px;
+}
+
+/* Detail panel: slides up on mobile, fades in centered on larger screens. */
+@keyframes sen-sheetIn {
+  from {
+    transform: translateY(24px);
     opacity: 0;
-    transform: perspective(1400px) rotateY(-22deg) scale(0.62);
   }
-  100% {
+  to {
+    transform: translateY(0);
     opacity: 1;
-    transform: perspective(1400px) rotateY(0deg) scale(1);
   }
 }
-.expand-in {
-  animation: sen-expandIn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  transform-origin: center;
+.sheet-in {
+  animation: sen-sheetIn 0.22s ease both;
 }
 @keyframes sen-fadeIn {
   from {
@@ -101,17 +324,13 @@ body {
   animation: sen-fadeIn 0.2s ease both;
 }
 @media (prefers-reduced-motion: reduce) {
-  .expand-in,
+  .sheet-in,
   .fade-in {
     animation: none;
   }
 }
 
-input:focus {
-  outline: none;
-}
-
 ::selection {
-  background: #fde047;
-  color: #0a0a0a;
+  background: #141414;
+  color: #f2c230;
 }

@@ -36,18 +36,19 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
   if (chips.length === 0) return null
 
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2.5">
+    <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
       {chips.map((c, i) => (
         <button
           key={i}
+          type="button"
           onClick={() => {
             track('chip_tap', { label: c.label })
             c.clear()
           }}
-          className="flex items-center gap-1.5 rounded-full bg-yellow px-3.5 py-1.5 label text-[11px] text-onyx transition active:scale-95"
+          className="tab tab-on"
         >
           {c.label}
-          <Ico name="close" className="h-3.5 w-3.5" />
+          <Ico name="close" className="h-3 w-3 text-mist" />
         </button>
       ))}
     </div>

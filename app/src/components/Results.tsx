@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { Ico } from './Ico'
 import { FilterChips } from './FilterChips'
 import { RefineBar } from './RefineBar'
 import { ProductCard } from './ProductCard'
@@ -41,64 +40,54 @@ export function Results({
         : 'closest to you'
       : (filters.neighborhood ?? filters.borough)
 
+  const waiting = loading && ranked.length === 0
+  const count = waiting ? '…' : ranked.length > 999 ? '999+' : String(ranked.length)
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <div className="mb-6 flex items-center justify-between">
-        <button
-          onClick={onHome}
-          className="inline-flex items-center gap-1.5 label text-[12px] text-muted transition hover:text-ink"
-        >
-          <Ico name="back" className="h-4 w-4" /> Home
+    <div className="mx-auto max-w-2xl px-6 py-8">
+      <div className="mb-8 flex items-center justify-between">
+        <button type="button" onClick={onHome} className="ghost">
+          Home
         </button>
-        <button
-          onClick={onEdit}
-          className="rounded-full border border-line px-4 py-1.5 label text-[11px] text-ink transition hover:bg-ice"
-        >
-          Edit journey
+        <button type="button" onClick={onEdit} className="ghost">
+          Edit
         </button>
       </div>
 
-      <p className="eyebrow">{where ? `Results · ${where}` : 'Results · all of New York'}</p>
-      <h1 className="display mt-2 text-[clamp(2.25rem,7vw,3.6rem)] text-ink">
-        {loading && ranked.length === 0
-          ? 'Finding matches…'
-          : `${ranked.length} match${ranked.length === 1 ? '' : 'es'}`}
-      </h1>
-      <p className="mt-2 text-sm font-semibold text-muted">
-        Dial in the details, or clear a chip to widen the search.
+      <h1 className="poster">{where ?? 'All of New York'}</h1>
+      <div className="rule mt-3">
+        <span>{count}</span>
+      </div>
+      <p className="meta mt-3 text-center">
+        {waiting ? 'Pulling live menus' : `${ranked.length.toLocaleString()} match${ranked.length === 1 ? '' : 'es'}`}
       </p>
 
-      <div className="mt-5 rounded-3xl border border-ink bg-panel p-5 shadow-soft-sm">
+      <div className="mt-8">
         <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
 
-      {loading && ranked.length === 0 ? (
+      {waiting ? (
         // Products for this filter set are still arriving — never show a
         // false "nothing matched" while we wait.
-        <div className="mt-10 rounded-3xl border border-dashed border-line bg-panel p-12 text-center">
-          <p className="display text-2xl text-ink">Loading NYC's menus…</p>
-          <p className="mt-2 text-sm font-semibold text-muted">Pulling live prices from every dispensary.</p>
-        </div>
+        <p className="meta mt-14 text-center">Pulling live menus</p>
       ) : ranked.length === 0 ? (
-        <div className="mt-10 rounded-3xl border border-dashed border-line bg-panel p-12 text-center">
-          <p className="display text-2xl text-ink">Nothing matched.</p>
-          <p className="mt-2 text-sm font-semibold text-muted">
-            {filters.userLoc
-              ? 'Try a wider radius, or clear a filter above.'
-              : 'Clear a filter above to widen the search.'}
+        <div className="mt-14 text-center">
+          <p className="poster">Nothing matched</p>
+          <p className="copy mt-3">
+            {filters.userLoc ? 'Try a wider radius, or clear a filter above.' : 'Clear a filter above to widen the search.'}
           </p>
         </div>
       ) : (
         <>
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="mt-6">
             {shown.map((p) => (
               <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onAdd={onAdd} />
             ))}
           </div>
           {ranked.length > CAP && (
-            <p className="mt-6 text-center text-sm font-semibold text-muted">
-              Showing the first {CAP} of {ranked.length.toLocaleString()} — refine above to narrow it down.
+            <p className="meta mt-6 text-center">
+              Showing the first {CAP} of {ranked.length.toLocaleString()}. Refine above to narrow it down.
             </p>
           )}
         </>

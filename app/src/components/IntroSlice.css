@@ -1,11 +1,12 @@
 /* Katana-slice intro. Plays once per browser session (see IntroSlice.tsx),
-   then the sliced wordmark never reappears — the nav/footer logo is plain. */
+   then the sliced wordmark never reappears — the nav/footer logo is plain.
+   Sign system: ink word on the mustard field; the blade and glow are ink. */
 
 .sen-intro {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: #0a0a0a;
+  background: #f2c230;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,23 +41,22 @@
   0% {
     opacity: 0;
     transform: scale(0.95);
-    filter: blur(7px);
   }
   100% {
     opacity: 1;
     transform: scale(1);
-    filter: blur(0);
   }
 }
 
 .sen-intro-word {
   grid-area: 1 / 1;
   display: block;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: clamp(4.32rem, 17.55vw, 11.48rem);
-  letter-spacing: -0.02em;
-  color: #fde047;
+  font-family: 'Barlow Condensed', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(4rem, 20vw, 9rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #141414;
   white-space: nowrap;
   line-height: 1;
   padding: 0 4px;
@@ -93,10 +93,8 @@
   align-self: center;
   justify-self: stretch;
   height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent 2%, #fde047 20%, #fde047 80%, transparent 98%);
+  background: #141414;
   opacity: 0;
-  box-shadow: 0 0 18px 2px rgba(253, 224, 71, 0.9);
   animation: sen-glowPulse 520ms ease-out both;
   animation-delay: 930ms;
 }
@@ -106,11 +104,11 @@
     transform: scaleX(0.3);
   }
   18% {
-    opacity: 1;
+    opacity: 0.6;
     transform: scaleX(1.04);
   }
   45% {
-    opacity: 0.9;
+    opacity: 0.5;
     transform: scaleX(1);
   }
   100% {
@@ -122,7 +120,7 @@
 .sen-flash-screen {
   position: absolute;
   inset: 0;
-  background: #fde047;
+  background: #141414;
   opacity: 0;
   animation: sen-flashPulse 200ms ease-out both;
   animation-delay: 940ms;
@@ -132,7 +130,7 @@
     opacity: 0;
   }
   35% {
-    opacity: 0.22;
+    opacity: 0.12;
   }
   100% {
     opacity: 0;
@@ -176,4 +174,3 @@
     opacity: 0;
   }
 }
-

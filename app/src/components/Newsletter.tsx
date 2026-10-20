@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Ico } from './Ico'
 import { addSubscriber } from '../lib/supabase'
 import { track } from '../lib/analytics'
 
@@ -20,64 +19,31 @@ export function Newsletter({ source, compact = false }: { source: string; compac
     }
   }
 
-  // compact === the footer, which sits on the black band — everything here
-  // needs to read against dark, not light.
   if (state === 'done') {
-    return (
-      <div
-        className={`flex items-center gap-2 rounded-full px-5 py-3 label text-[12px] ${
-          compact ? 'border border-line-dark text-white' : 'border border-line bg-panel text-ink'
-        }`}
-      >
-        <Ico name="check" className="h-4 w-4" /> You're on the list. Talk soon.
-      </div>
-    )
+    return <p className="meta text-center text-ink">You're on the list. Talk soon.</p>
   }
 
   return (
-    <div className={compact ? '' : 'rounded-3xl border border-ink bg-panel p-8 shadow-soft'}>
+    <div className="mx-auto w-full max-w-sm">
       {!compact && (
         <>
-          <p className="eyebrow">Newsletter</p>
-          <h3 className="display mt-2 text-2xl text-ink">The weekly drop</h3>
-          <p className="mb-4 mt-1 text-sm font-semibold text-muted">
-            New deals and standout products, once a week. No spam.
-          </p>
+          <p className="poster">The weekly drop</p>
+          <p className="meta mt-2 text-center">Deals and standouts, once a week. No spam.</p>
         </>
       )}
-      <form onSubmit={submit} className="flex items-center gap-2">
-        <div
-          className={`flex flex-1 items-center gap-2 rounded-full px-4 transition ${
-            compact ? 'border border-line-dark' : 'border border-white/20 bg-white/5 focus-within:bg-white/10'
-          }`}
-        >
-          <Ico name="mail" className={`h-4 w-4 shrink-0 ${compact ? 'text-steel' : 'text-muted'}`} />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            className={`w-full bg-transparent py-2.5 text-sm font-semibold placeholder:text-muted/70 ${
-              compact ? 'text-white' : 'text-ink'
-            }`}
-            aria-label="Email address"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={state === 'loading'}
-          className={`shrink-0 rounded-full px-5 py-2.5 label text-[11px] transition disabled:opacity-50 ${
-            compact ? 'bg-yellow text-onyx hover:opacity-90' : 'bg-yellow text-onyx hover:opacity-90'
-          }`}
-        >
-          {state === 'loading' ? '…' : 'Subscribe'}
+      <form onSubmit={submit} className={`inp gap-4 ${compact ? '' : 'mt-6'}`}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@email.com"
+          aria-label="Email address"
+        />
+        <button type="submit" disabled={state === 'loading'} className="ghost shrink-0 disabled:opacity-50">
+          {state === 'loading' ? '…' : 'Join'}
         </button>
       </form>
-      {state === 'error' && (
-        <p className={`mt-2 label text-[11px] ${compact ? 'text-steel' : 'text-muted'}`}>
-          Something went wrong — try again.
-        </p>
-      )}
+      {state === 'error' && <p className="meta mt-2 text-center">Something went wrong. Try again.</p>}
     </div>
   )
 }

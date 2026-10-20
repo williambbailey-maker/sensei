@@ -34,32 +34,25 @@ export function SmartSearch({
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
+    <div className="mx-auto max-w-2xl px-6 pt-10">
       <form
         onSubmit={(e) => {
           e.preventDefault()
           submit()
         }}
-        className="glass flex items-center gap-2 rounded-full p-2 pl-5 shadow-soft-sm"
+        className="inp gap-4"
       >
-        <span className="shrink-0 text-lg text-yellow">⌕</span>
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder={`Try: ${ex}`}
+          placeholder={ex}
           aria-label="Search the menu in plain language"
-          className="min-w-0 flex-1 bg-transparent py-2.5 text-[15px] font-medium text-ink placeholder:text-muted focus:outline-none"
         />
-        <button
-          type="submit"
-          className="shrink-0 rounded-full bg-yellow px-5 py-2.5 label text-[12px] text-onyx transition active:scale-95"
-        >
-          Search
+        <button type="submit" className="ghost shrink-0">
+          Go
         </button>
       </form>
-      <p className="mt-2 px-2 label text-[10px] text-muted">
-        Type a strain, product, price, borough or neighborhood — or tap through below.
-      </p>
+      <p className="meta mt-3 text-center">Strain, brand, price or neighborhood</p>
     </div>
   )
 }

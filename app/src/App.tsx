@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { IntroSlice } from './components/IntroSlice'
+import { Masthead } from './components/Masthead'
 import { SmartSearch } from './components/SmartSearch'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
@@ -146,7 +147,7 @@ export default function App() {
     return Object.fromEntries(Object.entries(map).map(([b, set]) => [b, [...set].sort()]))
   }, [stores])
 
-  // Store counts drive the swatch-block captions on the location steps.
+  // Store counts drive the captions on the location steps.
   const boroughCounts = useMemo(() => {
     const m: Record<string, number> = {}
     for (const st of stores) if (st.borough) m[st.borough] = (m[st.borough] ?? 0) + 1
@@ -165,41 +166,38 @@ export default function App() {
     go('journey')
   }
 
+  const storeCount = stores.length > 0 ? stores.length : null
+  const boroughTotal = stores.length > 0 ? Object.keys(boroughCounts).length : null
+  const hoodTotal = stores.length > 0 ? Object.keys(neighborhoodCounts).length : null
+  const scrollToJourney = () =>
+    document.getElementById('journey')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
   return (
     <div className="min-h-full">
       <IntroSlice />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      {/* Masthead — pinned to the top (never moves on scroll): the cyber-yellow
-          wordmark floating over a frosted onyx bar. */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-onyx/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6">
-          <button onClick={restart} className="transition active:scale-95">
-            <span className="display text-[64px] font-black leading-[0.9] tracking-tight text-yellow">sensei</span>
-          </button>
-          <span className="hidden rounded-full border border-white/20 px-4 py-1.5 label text-[10px] text-white/80 sm:inline-block">
-            Est. 2026
-          </span>
+      {/* Header: burger left, the name center (the masthead carries it on the
+          journey view), an 18px spacer right so the name stays centered. */}
+      <header className="sticky top-0 z-40 bg-field">
+        <div className="mx-auto flex max-w-2xl items-center justify-between px-6 pb-2 pt-8">
+          <button type="button" onClick={restart} className="burger" aria-label="Home" />
+          <span className={`label ${view === 'journey' ? 'invisible' : ''}`}>Sensei</span>
+          <span className="w-[18px]" aria-hidden="true" />
         </div>
       </header>
 
       {cart && view !== 'cart' && (
-        <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-ink bg-panel px-5 py-3 shadow-soft-sm">
-            <span className="label text-[12px] text-ink">
-              Building a cart · {cart.store.name ?? prettyStore(cart.store.slug)} — this store only
+        <div className="mx-auto max-w-2xl px-6">
+          <div className="row">
+            <span className="meta min-w-0 truncate">
+              Building a cart · {cart.store.name ?? prettyStore(cart.store.slug)} · this store only
             </span>
-            <span className="flex items-center gap-2">
-              <button
-                onClick={() => go('cart')}
-                className="rounded-full bg-yellow px-4 py-1.5 label text-[12px] text-onyx transition hover:bg-sage-deep"
-              >
+            <span className="flex shrink-0 items-center gap-4">
+              <button type="button" onClick={() => go('cart')} className="ghost">
                 View · {cartCount}
               </button>
-              <button
-                onClick={clearCart}
-                className="rounded-full border border-line px-4 py-1.5 label text-[12px] text-ink transition hover:bg-ice"
-              >
+              <button type="button" onClick={clearCart} className="ghost">
                 Clear
               </button>
             </span>
@@ -208,15 +206,19 @@ export default function App() {
       )}
 
       {loadError && (
-        <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
-          <div className="rounded-2xl border border-ink bg-panel px-5 py-3 label text-[12px] text-ink">
-            ⚠ Couldn't reach the menu right now. Check your connection and refresh.
-          </div>
+        <div className="mx-auto max-w-2xl px-6 pt-4">
+          <p className="meta text-ink">Couldn't reach the menu right now. Check your connection and refresh.</p>
         </div>
       )}
 
       {view === 'journey' && (
         <main>
+          <Masthead
+            storeCount={storeCount}
+            boroughs={boroughTotal}
+            neighborhoods={hoodTotal}
+            onFind={scrollToJourney}
+          />
           <SmartSearch
             neighborhoodsByBorough={neighborhoodsByBorough}
             onSearch={(f) => {
@@ -224,20 +226,6 @@ export default function App() {
               go('results')
             }}
           />
-          {/* Liquid hero — a cyber-yellow block that bleeds into the void, with
-              a massive black headline. */}
-          <div className="px-4 pt-4 sm:px-6">
-            <div className="mx-auto max-w-6xl rounded-[40px] rounded-br-[110px] bg-yellow px-7 py-12 sm:px-12 sm:py-16">
-              <p className="label text-[11px] text-onyx/70">New York · Cannabis Discovery</p>
-              <h1 className="display mt-4 max-w-[15ch] text-[clamp(2.7rem,9vw,5rem)] font-black leading-[0.92] tracking-tight text-onyx">
-                Every NYC dispensary, one place.
-              </h1>
-              <p className="mt-6 max-w-md text-[15px] font-medium leading-relaxed text-onyx/70">
-                Compare price, potency &amp; pickup across every licensed NYC dispensary — then order
-                where it's right.
-              </p>
-            </div>
-          </div>
           <TapJourney
             key={journeyKey}
             initial={filters}
@@ -286,39 +274,25 @@ export default function App() {
 
       {cartCount > 0 && view !== 'cart' && (
         <button
+          type="button"
           onClick={() => go('cart')}
-          className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-yellow px-6 py-3.5 label text-[12px] text-onyx shadow-soft-lg transition hover:-translate-y-0.5 active:scale-95"
+          className="label fixed bottom-7 left-1/2 z-40 -translate-x-1/2 border-2 border-ink bg-field px-6 py-2.5 transition active:translate-y-px"
         >
           Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
         </button>
       )}
 
-      <footer className="mt-16 border-t border-white/10 bg-charcoal text-white">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="grid gap-10 sm:grid-cols-[1fr_1fr]">
-            <div>
-              <div className="flex items-center">
-                <span className="display text-2xl font-black text-yellow">sensei</span>
-              </div>
-              <p className="mt-4 max-w-sm text-[15px] font-medium leading-relaxed text-white/80">
-                Every licensed dispensary menu, one place. Compare price, potency and pickup — then
-                order where it's right.
-              </p>
-              <p className="label mt-6 text-[11px] text-white/50">
-                21+ only · Adults in New York State
-              </p>
-              <p className="mt-2 text-[10px] font-medium text-white/30">Build {__BUILD_ID__}</p>
-            </div>
-            <div className="sm:pl-6">
-              <p className="eyebrow text-sage-soft">The weekly drop</p>
-              <p className="mt-2 text-sm font-medium text-white/75">
-                Deals and standouts, once a week. No spam.
-              </p>
-              <div className="mt-4">
-                <Newsletter source="footer" compact />
-              </div>
-            </div>
+      <footer className="mt-16 border-t-2 border-line">
+        <div className="mx-auto max-w-2xl px-6 py-12 text-center">
+          <p className="poster">Sensei.nyc</p>
+          <p className="label mt-4 text-mist">
+            Every licensed dispensary menu, one place. Compare price, potency and pickup, then order where it's right.
+          </p>
+          <p className="meta mt-4">21+ only · adults in New York State</p>
+          <div className="mt-8">
+            <Newsletter source="footer" compact />
           </div>
+          <p className="mt-8 text-[10px] font-semibold text-[rgba(20,20,20,.31)]">Build {__BUILD_ID__}</p>
         </div>
       </footer>
     </div>
