@@ -50,12 +50,15 @@ export function SmartSearch({
           onChange={(e) => setQ(e.target.value)}
           placeholder={ex}
           aria-label="Search the menu in plain language"
+          enterKeyHint="search"
         />
-        <button type="submit" className="ghost shrink-0">
-          Go
-        </button>
       </form>
       <p className="meta mt-3 text-center">Strain, brand, price or neighborhood</p>
+      <div className="mt-5 text-center">
+        <button type="button" onClick={submit} disabled={!q.trim()} className="dotcta">
+          Search
+        </button>
+      </div>
     </div>
   )
 }

@@ -216,9 +216,24 @@ textarea {
   border: 1px solid rgba(20, 20, 20, 0.5);
   background: transparent;
 }
-.thumb-lg {
-  width: 160px;
-  height: 160px;
+/* Product detail: the image takes the top half of the panel. */
+.detail-img {
+  @apply flex w-full items-center justify-center;
+  aspect-ratio: 1 / 1;
+  max-height: 48vh;
+  border: 2px solid #141414;
+  background: var(--deep);
+  padding: 12px;
+}
+.detail-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.detail-img-empty {
+  border: 1px solid rgba(20, 20, 20, 0.5);
+  background: transparent;
 }
 
 /* Text input: no box, just an underline. */

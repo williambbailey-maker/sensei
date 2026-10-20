@@ -149,7 +149,13 @@ export function ProductCard({
               </button>
             </div>
 
-            <div className="mt-6 flex justify-center">{thumb('thumb-lg')}</div>
+            <div className={`detail-img mt-5 ${hasImg ? '' : 'detail-img-empty'}`}>
+              {hasImg ? (
+                <img src={p.image_url!} alt={name} onError={() => setImgOk(false)} />
+              ) : (
+                <span className="meta">No image</span>
+              )}
+            </div>
 
             <h3 className="poster mt-6">{name}</h3>
             {brand && <p className="meta mt-2 text-center">{brand}</p>}
