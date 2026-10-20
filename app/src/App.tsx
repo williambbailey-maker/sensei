@@ -233,10 +233,12 @@ export default function App() {
 
       {/* Header: burger left, the name center (the masthead carries it on the
           journey view), an 18px spacer right so the name stays centered. */}
-      <header className="sticky top-0 z-40 bg-field">
+      <header className="bg-field">
         <div className="mx-auto flex max-w-2xl items-center justify-between px-6 pb-2 pt-8">
           <button type="button" onClick={restart} className="burger" aria-label="Home" />
-          <span className={`label ${home ? 'invisible' : ''}`}>Sensei</span>
+          <span className={`label ${home ? 'invisible' : ''}`} style={{ fontSize: 20 }}>
+            Sensei
+          </span>
           <span className="w-[18px]" aria-hidden="true" />
         </div>
       </header>

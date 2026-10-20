@@ -169,8 +169,8 @@ button{font-family:inherit;text-transform:inherit;cursor:pointer;background:none
 .burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
 .burger::before{top:0}.burger::after{top:7px}
 /* chrome */
-.hd{display:flex;align-items:center;justify-content:space-between;padding:32px 24px 8px;position:sticky;top:0;background:var(--field);z-index:5}
-.wm{font-size:16px;font-weight:700;letter-spacing:.08em}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:32px 24px 8px;background:var(--field)}
+.wm{font-size:21px;font-weight:700;letter-spacing:.08em}
 .hd .est{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
 .wrap{padding:18px 24px}
 .crumb{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin:0 0 10px;text-align:center}
