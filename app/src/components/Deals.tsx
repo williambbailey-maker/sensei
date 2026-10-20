@@ -3,7 +3,7 @@ import type { Deal } from '../lib/types'
 export function Deals({ deals }: { deals: Deal[] }) {
   if (deals.length === 0) return null
   return (
-    <section className="mx-auto max-w-2xl px-6 pt-14">
+    <section id="deals" className="mx-auto max-w-2xl px-6 pt-14">
       <h2 className="poster">Worth a look</h2>
       <div className="rule mt-3">
         <span>{String(deals.length).padStart(2, '0')}</span>

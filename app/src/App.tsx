@@ -4,6 +4,7 @@ import { CartView } from './components/CartView'
 import { IntroSlice } from './components/IntroSlice'
 import { Masthead } from './components/Masthead'
 import { PinnedWay, Ways, type Way } from './components/Ways'
+import { Menu, type MenuTarget } from './components/Menu'
 import { requestLocation } from './lib/geo'
 import { SmartSearch } from './components/SmartSearch'
 import { TapJourney } from './components/TapJourney'
@@ -70,10 +71,18 @@ export default function App() {
   useEffect(() => {
     if (deepLinked || stores.length === 0) return
     setDeepLinked(true)
-    // /?entry=near|borough|search|all — the SEO home's "Start here" rows.
+    // /?entry=near|borough|search|all|deals|cart — the SEO pages' "Start
+    // here" rows and menu.
     const entry = new URLSearchParams(window.location.search).get('entry')
-    if (entry === 'near' || entry === 'borough' || entry === 'search' || entry === 'all') {
-      pickWay(entry)
+    if (
+      entry === 'near' ||
+      entry === 'borough' ||
+      entry === 'search' ||
+      entry === 'all' ||
+      entry === 'deals' ||
+      entry === 'cart'
+    ) {
+      goTo(entry)
       return
     }
     const f = filtersFromQuery(window.location.search, stores)
@@ -113,6 +122,13 @@ export default function App() {
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [view])
+
+  // /#drop (the SEO menu's "weekly drop" row) lands on the footer sign-up.
+  useEffect(() => {
+    if (window.location.hash !== '#drop') return
+    const t = setTimeout(() => document.getElementById('drop')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400)
+    return () => clearTimeout(t)
+  }, [])
 
   // Yellow for the sign screens (home, journey, age gate); cream for the
   // reading screens (results, product detail, cart). See index.css.
@@ -221,6 +237,32 @@ export default function App() {
     go('journey')
   }
 
+  // The menu. Deals = results (all, cheapest first) scrolled to the deals
+  // section once the list has loaded; Cart = the cart, or home if empty.
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrollTo, setScrollTo] = useState<string | null>(null)
+  const goTo = (t: MenuTarget) => {
+    if (t === 'deals') {
+      setFilters({ ...EMPTY_FILTERS, sort: 'price-asc' })
+      setScrollTo('deals')
+      go('results')
+      return
+    }
+    if (t === 'cart') {
+      if (cart) go('cart')
+      else restart()
+      return
+    }
+    pickWay(t)
+  }
+  useEffect(() => {
+    if (!scrollTo || view !== 'results' || loading) return
+    const id = scrollTo
+    setScrollTo(null)
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }, [scrollTo, view, loading])
+  const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : view === 'journey' ? way : null
+
   const storeCount = stores.length > 0 ? stores.length : null
   const boroughTotal = stores.length > 0 ? Object.keys(boroughCounts).length : null
   const hoodTotal = stores.length > 0 ? Object.keys(neighborhoodCounts).length : null
@@ -233,12 +275,30 @@ export default function App() {
 
       {/* Header: burger left, the name center (the masthead carries it on the
           journey view), an 18px spacer right so the name stays centered. */}
+      <Menu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        current={currentItem}
+        storeCount={storeCount}
+        hoodCount={hoodTotal}
+        cart={cart}
+        onGo={goTo}
+      />
+
       <header className="bg-field">
         <div className="mx-auto flex max-w-2xl items-center justify-between px-6 pb-2 pt-8">
-          <button type="button" onClick={restart} className="burger" aria-label="Home" />
-          <span className={`label ${home ? 'invisible' : ''}`} style={{ fontSize: 20 }}>
+          <button
+            type="button"
+            onClick={() => {
+              track('menu_open', {})
+              setMenuOpen(true)
+            }}
+            className="burger"
+            aria-label="Menu"
+          />
+          <button type="button" onClick={restart} className={`label ${home ? 'invisible' : ''}`} style={{ fontSize: 20 }}>
             Sensei
-          </span>
+          </button>
           <span className="w-[18px]" aria-hidden="true" />
         </div>
       </header>
@@ -372,7 +432,7 @@ export default function App() {
             Every licensed dispensary menu, one place. Compare price, potency and pickup, then order where it's right.
           </p>
           <p className="meta mt-4">21+ only · adults in New York State</p>
-          <div className="mt-8">
+          <div id="drop" className="mt-8">
             <Newsletter source="footer" compact />
           </div>
           <p className="mt-8 text-[10px] font-semibold text-[rgba(20,20,20,.31)]">Build {__BUILD_ID__}</p>

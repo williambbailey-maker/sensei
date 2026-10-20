@@ -344,6 +344,65 @@ input:focus {
   padding-right: 24px;
 }
 
+/* The menu sheet: full screen, current surface color, slides in from the left. */
+.menu {
+  @apply fixed inset-0 z-40 overflow-y-auto bg-field px-6 pb-10;
+}
+@keyframes sen-menuIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.menu-in {
+  animation: sen-menuIn 0.18s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-in {
+    animation: none;
+  }
+}
+.mi {
+  @apply flex w-full items-center justify-between text-ink;
+  gap: 16px;
+  padding: 15px 0;
+  border-bottom: 2px solid rgba(20, 20, 20, 0.22);
+}
+.mi-l {
+  @apply flex min-w-0 items-center;
+  gap: 12px;
+}
+.mi-n {
+  @apply font-bold text-mist;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  width: 28px;
+  flex: none;
+}
+.mi-t {
+  @apply block font-bold leading-tight;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+}
+.mi-now .mi-t {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.mi-d {
+  @apply block font-semibold text-mist;
+  margin-top: 2px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.mi-a {
+  @apply font-bold;
+  font-size: 20px;
+  flex: none;
+}
+
 /* Hamburger: two bars. */
 .burger {
   @apply block;
@@ -365,6 +424,19 @@ input:focus {
 }
 .burger::after {
   top: 9px;
+}
+/* Open state: the two bars become an X. */
+.burger-x::before,
+.burger-x::after {
+  top: 5px;
+  left: -2px;
+  width: 22px;
+}
+.burger-x::before {
+  transform: rotate(45deg);
+}
+.burger-x::after {
+  transform: rotate(-45deg);
 }
 
 /* Detail panel: slides up on mobile, fades in centered on larger screens. */

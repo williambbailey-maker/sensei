@@ -269,7 +269,73 @@ h1{font-size:44px;font-weight:700;letter-spacing:.02em;line-height:1;margin:8px 
 #ag .dotcta{margin-top:26px}
 #ag .ghost{display:block;margin-top:18px}
 .ag-ok #ag{display:none}
+/* The menu sheet: full screen in the current surface color, slides in from the left. */
+.burger{border:0;background:none;padding:0;cursor:pointer}
+#menu{position:fixed;inset:0;z-index:80;background:var(--field);overflow:auto;padding:0 24px 40px;display:none}
+html.paper #menu{background:var(--paper)}
+.menu-open #menu{display:block;animation:menuIn .18s ease-out both}
+.menu-open body{overflow:hidden}
+@keyframes menuIn{from{transform:translateX(-100%)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.menu-open #menu{animation:none}}
+#menu .mh{display:flex;align-items:center;justify-content:space-between;padding:32px 0 8px;max-width:420px;margin:0 auto}
+#menu .mb{max-width:420px;margin:0 auto}
+.burger-x::before,.burger-x::after{top:5px;left:-2px;width:22px}
+.burger-x::before{transform:rotate(45deg)}.burger-x::after{transform:rotate(-45deg)}
+#menu .grp{margin-top:26px}
+#menu .rule{margin:0 0 6px}
+.mi{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:2px solid var(--line);color:var(--ink)}
+.mi .ml{display:flex;align-items:center;gap:12px;min-width:0}
+.mi .mn{font-size:14px;font-weight:700;letter-spacing:.08em;width:28px;flex:none;color:var(--mist)}
+.mi .mt{display:block;font-size:20px;font-weight:700;letter-spacing:.08em;line-height:1.1}
+.mi.now .mt{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.mi .md{display:block;margin-top:2px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
+.mi .ma{font-size:20px;font-weight:700;flex:none}
+#menu .about{margin-top:12px;font-size:14px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none}
+#menu .meta{display:block;margin-top:14px}
+/* Index pages (neighborhoods, brands, products). */
+.lede{margin:14px auto 0;max-width:36ch;font-size:16px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none;text-align:center}
 """
+
+def menu_html(path, counts):
+    """The menu sheet, as static HTML on every page. Links into the app with the
+    same ?entry= hints the home's "Start here" rows use."""
+    def row(n, title, desc, href, now=False):
+        return (f'<a class="mi{" now" if now else ""}" href="{href}" data-ev="chip" data-cat="menu:{esc(title.lower())}">'
+                f'<span class="ml"><span class="mn">{n}</span><span><span class="mt">{esc(title)}</span>'
+                f'<span class="md">{esc(desc)}</span></span></span><span class="ma">→</span></a>')
+    stores, hoods, products = counts
+    return f"""
+<div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+<div class="mh"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span><span class="est">21+</span></div>
+<div class="mb">
+<div class="grp"><div class="rule"><span>Find</span></div>
+{row("01", "Near me", "Closest shops first", f"{APP}/?entry=near")}
+{row("02", "Pick a borough", "Manhattan · Brooklyn · Queens", f"{APP}/?entry=borough")}
+{row("03", "Search in your words", "Strain, brand, price or neighborhood", f"{APP}/?entry=search")}
+{row("04", "See everything", f"{products:,} products · cheapest first", f"{APP}/?entry=all")}
+</div>
+<div class="grp"><div class="rule"><span>Browse</span></div>
+{row("05", "Neighborhoods", f"{hoods} areas · {stores} shops", "/neighborhoods/", path == "/neighborhoods/")}
+{row("06", "Brands", "Ayrloom, MFNY, Ruby Farms…", "/brands/", path == "/brands/")}
+{row("07", "Products", "Flower · pre-rolls · vapes · edibles", "/nyc/", path == "/nyc/")}
+{row("08", "Deals", "Worth a look this week", f"{APP}/?entry=deals")}
+</div>
+<div class="grp"><div class="rule"><span>You</span></div>
+{row("09", "Cart", "Open in the app", f"{APP}/?entry=cart")}
+{row("10", "The weekly drop", "Deals and standouts by email", f"{APP}/#drop")}
+</div>
+<div class="grp"><div class="rule"><span>About</span></div>
+<p class="about">Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.</p>
+<span class="meta">21+ only · adults in New York State</span>
+</div></div></div>
+<script>(function(){{var h=document.documentElement,o=document.getElementById('menu-open'),c=document.getElementById('menu-close');
+function open(){{h.classList.add('menu-open');try{{history.pushState({{menu:1}},'')}}catch(e){{}}}}
+function close(){{h.classList.remove('menu-open')}}
+if(o)o.onclick=function(){{open()}};if(c)c.onclick=function(){{close();try{{if(history.state&&history.state.menu)history.back()}}catch(e){{}}}};
+window.addEventListener('popstate',close);document.addEventListener('keydown',function(e){{if(e.key==='Escape')close()}});
+}})();</script>"""
+
+MENU_COUNTS = (len(SITE["dispensaries"]), len(SITE["neighborhoods"]), sum(c["in_stock"] for c in SITE["categories"]))
 
 AGE_GATE = """
 <div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
@@ -351,10 +417,10 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>{ld}</head><body><div class="shell">
-<header class="hd"><a class="burger" href="/" aria-label="Home"></a><a class="wm" href="/">Sensei</a><span class="est">21+</span></header>
+<header class="hd"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a><span class="est">21+</span></header>
 <main class="wrap">{body}</main>
 <footer class="ft"><a class="poster" href="/">Sensei.nyc</a><span class="label">Every licensed NYC dispensary menu, one place. Prices refresh from live menus. Sensei is an independent guide — order on the dispensary's own site.</span><span class="meta">21+ only · adults in New York State</span></footer>
-</div>{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
+</div>{menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """
 
 def breadcrumb(items):
@@ -625,6 +691,48 @@ def build_home(paths):
 """
     write("/", page(title, desc, "/", [breadcrumb([("Sensei", "/")])], body, "home", None))
 
+# ---------- index pages (the menu's Browse group) ----------
+def _index(path, title, h1, lede, rows, crumb_name, exclude):
+    desc = lede
+    ld = [itemlist(h1, [r[0] for r in rows]), breadcrumb([("Sensei", "/"), (crumb_name, path)])]
+    body_rows = "".join(
+        f'<a class="row" href="{href}"><div class="l"><div><div class="snm">{esc(name)}</div>'
+        f'<div class="sd">{esc(sub)}</div></div></div><div class="sn"><b>{n}</b>{esc(unit)}</div></a>'
+        for name, sub, n, unit, href in rows)
+    body = f"""
+<p class="crumb"><a href="/">Sensei</a> › {esc(crumb_name)}</p>
+<h1>{esc(h1)}</h1>
+<p class="lede">{esc(lede)}</p>
+<div class="sh">{len(rows)} {esc(crumb_name.lower())}</div>{body_rows}
+<div class="sh">Explore Sensei</div>{crosslinks(**exclude)}
+"""
+    write(path, page(title, desc, path, ld, body, "index", None))
+    return path
+
+def build_index_neighborhoods():
+    rows = [(n["neighborhood"], f"{n['borough']} · {n['stores']} shop{'s' if n['stores'] != 1 else ''}", n["in_stock"], "in stock",
+             f"/neighborhoods/{slugify(n['neighborhood'])}/") for n in TOP_HOODS]
+    return _index("/neighborhoods/", "NYC Dispensaries by Neighborhood | Sensei", "Neighborhoods",
+                  "Every part of the city with a licensed dispensary, from Midtown's seven shops to the two in Park Slope. "
+                  "Each page lists the shops, what they stock, and what is cheapest there right now.",
+                  rows, "Neighborhoods", {"exclude_hood": "__none__"})
+
+def build_index_brands():
+    rows = [(b["brand"], f"{b['stores']} stores stock it", b["in_stock"], "in stock", f"/brands/{slugify(b['brand'])}/")
+            for b in sorted(SITE["brands"], key=lambda b: -b["stores"])]
+    return _index("/brands/", "Cannabis Brands in NYC | Sensei", "Brands",
+                  "The most widely stocked brands on New York's licensed menus, from Ayrloom at nearly every shop to Good Tide "
+                  "at a few dozen. Each page shows every store carrying the brand and where it is cheapest.",
+                  rows, "Brands", {"exclude_brand": "__none__"})
+
+def build_index_categories():
+    rows = [(clabel(c["category"]), f"{c['brands']} brands · {c['stores']} shops", c["in_stock"], "in stock", f"/nyc/{c['category']}/")
+            for c in sorted(SITE["categories"], key=lambda c: -c["in_stock"])]
+    return _index("/nyc/", "Flower, Pre-Rolls, Vapes & Edibles in NYC | Sensei", "Products",
+                  "Every product type sold at New York's licensed dispensaries, with the brands that lead each one and the "
+                  "neighborhoods where the selection runs deepest.",
+                  rows, "Products", {"exclude_cat": "__none__"})
+
 def build_sitemap(paths):
     today = SITE["generatedAt"]
     urls = "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{today}</lastmod></url>" for p in paths)
@@ -640,6 +748,9 @@ if __name__ == "__main__":
     for n in SITE["neighborhoods"]: paths.append(build_neighborhood(n))
     for b in SITE["brands"]: paths.append(build_brand(b))
     for c in SITE["categories"]: paths.append(build_category(c))
+    paths.append(build_index_neighborhoods())
+    paths.append(build_index_brands())
+    paths.append(build_index_categories())
     build_home(paths)
     build_sitemap(paths)
     # Hard guard: no page may ship with placeholder text or unrendered braces.

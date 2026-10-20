@@ -1,0 +1,184 @@
+import { useEffect, useRef } from 'react'
+import { Newsletter } from './Newsletter'
+import { track } from '../lib/analytics'
+import { prettyStore } from '../lib/labels'
+import type { Way } from './Ways'
+import type { Cart } from '../lib/types'
+
+// What a menu row does: one of the four ways in, or a screen in the app.
+export type MenuTarget = Way | 'deals' | 'cart'
+
+type Item = {
+  n: string
+  title: string
+  desc: string
+  target?: MenuTarget
+  href?: string
+}
+
+// The menu: a full-screen sheet in the current surface color, four groups of
+// numbered rows. The numbers continue 01–04 from the home screen so the four
+// ways in keep the same numbers everywhere.
+export function Menu({
+  open,
+  onClose,
+  current,
+  storeCount,
+  hoodCount,
+  cart,
+  onGo,
+}: {
+  open: boolean
+  onClose: () => void
+  current: MenuTarget | null
+  storeCount: number | null
+  hoodCount: number | null
+  cart: Cart | null
+  onGo: (t: MenuTarget) => void
+}) {
+  // Body scroll lock, Escape, and the browser back button all close it. The
+  // close handler is read through a ref so a new function identity on each
+  // render doesn't re-run (and un-push) the history entry.
+  const closeRef = useRef(onClose)
+  closeRef.current = onClose
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeRef.current()
+    const onPop = () => closeRef.current()
+    window.addEventListener('keydown', onKey)
+    try {
+      history.pushState({ menu: true }, '')
+      window.addEventListener('popstate', onPop)
+    } catch {
+      /* history unavailable — Escape and the X still work */
+    }
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('popstate', onPop)
+      try {
+        if (history.state?.menu) history.back()
+      } catch {
+        /* ignore */
+      }
+    }
+  }, [open])
+
+  if (!open) return null
+
+  const cartCount = cart?.items.reduce((n, i) => n + i.qty, 0) ?? 0
+  const cartDesc = cart
+    ? `${cartCount} item${cartCount === 1 ? '' : 's'} · ${cart.store.name ?? prettyStore(cart.store.slug)}`
+    : 'Empty'
+
+  const groups: { title: string; items: Item[] }[] = [
+    {
+      title: 'Find',
+      items: [
+        { n: '01', title: 'Near me', desc: 'Closest shops first', target: 'near' },
+        { n: '02', title: 'Pick a borough', desc: 'Manhattan · Brooklyn · Queens', target: 'borough' },
+        { n: '03', title: 'Search in your words', desc: 'Strain, brand, price or neighborhood', target: 'search' },
+        { n: '04', title: 'See everything', desc: 'Every product · cheapest first', target: 'all' },
+      ],
+    },
+    {
+      title: 'Browse',
+      items: [
+        {
+          n: '05',
+          title: 'Neighborhoods',
+          desc: `${hoodCount ?? '—'} areas · ${storeCount ?? '—'} shops`,
+          href: '/neighborhoods/',
+        },
+        { n: '06', title: 'Brands', desc: 'Ayrloom, MFNY, Ruby Farms…', href: '/brands/' },
+        { n: '07', title: 'Products', desc: 'Flower · pre-rolls · vapes · edibles', href: '/nyc/' },
+        { n: '08', title: 'Deals', desc: 'Worth a look this week', target: 'deals' },
+      ],
+    },
+    {
+      title: 'You',
+      items: [{ n: '09', title: 'Cart', desc: cartDesc, target: 'cart' }],
+    },
+  ]
+
+  const pick = (it: Item) => {
+    track('menu_pick', { item: it.title.toLowerCase() })
+    if (it.target) {
+      onClose()
+      if (it.target !== current) onGo(it.target)
+    }
+  }
+
+  return (
+    <div className="menu menu-in" role="dialog" aria-modal="true" aria-label="Menu">
+      <div className="mx-auto max-w-2xl">
+        <div className="flex items-center justify-between pb-2 pt-8">
+          <button type="button" onClick={onClose} className="burger burger-x" aria-label="Close menu" />
+          <span className="label" style={{ fontSize: 20 }}>
+            Sensei
+          </span>
+          <span className="meta">21+</span>
+        </div>
+
+        {groups.map((g) => (
+          <div key={g.title} className="mt-7">
+            <div className="rule">
+              <span>{g.title}</span>
+            </div>
+            <div className="mt-1">
+              {g.items.map((it) => {
+                const inner = (
+                  <>
+                    <span className="mi-l">
+                      <span className="mi-n">{it.n}</span>
+                      <span className="min-w-0 text-left">
+                        <span className="mi-t">{it.title}</span>
+                        <span className="mi-d">{it.desc}</span>
+                      </span>
+                    </span>
+                    <span className="mi-a" aria-hidden="true">
+                      →
+                    </span>
+                  </>
+                )
+                const cls = `mi ${it.target && it.target === current ? 'mi-now' : ''}`
+                return it.href ? (
+                  <a key={it.n} href={it.href} className={cls} onClick={() => track('menu_pick', { item: it.title.toLowerCase() })}>
+                    {inner}
+                  </a>
+                ) : (
+                  <button key={it.n} type="button" className={cls} onClick={() => pick(it)}>
+                    {inner}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        ))}
+
+        <div className="mt-7">
+          <div className="rule">
+            <span>The weekly drop</span>
+          </div>
+          <p className="meta mt-2 text-center">Deals and standouts by email. No spam.</p>
+          <div className="mt-4">
+            <Newsletter source="menu" compact />
+          </div>
+        </div>
+
+        <div className="mt-7">
+          <div className="rule">
+            <span>About</span>
+          </div>
+          <p className="copy sentence mt-3">
+            Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each
+            shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.
+          </p>
+          <p className="meta mt-4">21+ only · adults in New York State</p>
+        </div>
+      </div>
+    </div>
+  )
+}
