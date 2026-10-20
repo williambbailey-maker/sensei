@@ -208,6 +208,48 @@ textarea {
   border: 1px solid rgba(20, 20, 20, 0.5);
   background: transparent;
 }
+/* Product detail: the deck position line, and a one-time sideways nudge on
+   first open so the swipe is discoverable without a button. */
+.swipe {
+  @apply flex items-center justify-center;
+  gap: 14px;
+}
+.swipe-a {
+  @apply font-bold;
+  font-size: 18px;
+  line-height: 1;
+}
+.swipe-off {
+  opacity: 0.25;
+}
+@keyframes sen-sheetNudge {
+  0% {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  35% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(-22px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.sheet-nudge {
+  animation: sen-sheetNudge 0.9s ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-nudge {
+    animation: none;
+  }
+}
+
 /* Product detail: the image takes the top half of the panel. */
 .detail-img {
   @apply flex w-full items-center justify-center;
