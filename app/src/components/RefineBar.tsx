@@ -16,7 +16,7 @@ export function RefineBar({
   const sorts = f.userLoc ? SORTS : SORTS.filter((s) => s.key !== 'distance')
 
   return (
-    <div className="flex flex-wrap items-center gap-2.5">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
       {f.userLoc ? (
         <Select
           label="Distance"
@@ -104,28 +104,16 @@ function Select({
   active: boolean
 }) {
   return (
-    <label className="relative">
+    <label className={`sel ${active ? 'sel-on' : ''}`}>
       <span className="sr-only">{label}</span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`appearance-none rounded-full border px-4 py-2 pr-8 label text-[11px] backdrop-blur-xl transition focus:outline-none ${
-          active ? 'border-yellow bg-yellow text-onyx' : 'border-white/20 bg-white/10 text-white hover:bg-white/15'
-        }`}
-      >
+      <select value={value} onChange={(e) => onChange(e.target.value)}>
         {options.map((o) => (
-          <option key={o.value} value={o.value} className="bg-charcoal text-white">
+          <option key={o.value} value={o.value}>
             {o.label}
           </option>
         ))}
       </select>
-      <svg
-        className={`pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 ${active ? 'text-onyx' : 'text-white'}`}
-        viewBox="0 0 12 12"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      >
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
         <path d="M3 4.5 6 7.5 9 4.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </label>
