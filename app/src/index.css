@@ -275,6 +275,54 @@ input:focus {
   border-bottom-color: #141414;
 }
 
+/* The ways-in block: heavy rules, numbered rows, one arrow each. */
+.ways {
+  border-top: 2px solid #141414;
+}
+.way {
+  @apply flex w-full items-center justify-between text-ink;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 2px solid #141414;
+}
+.way:disabled {
+  opacity: 0.6;
+}
+.way-l {
+  @apply flex min-w-0 items-center;
+  gap: 14px;
+}
+.way-n {
+  @apply font-bold;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  width: 30px;
+  flex: none;
+}
+.way-t {
+  @apply block font-bold leading-tight;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+}
+.way-d {
+  @apply block font-semibold text-mist;
+  margin-top: 3px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.way-a {
+  @apply font-bold;
+  font-size: 24px;
+  flex: none;
+}
+/* The picked row, pinned on the next screen. */
+.way-on {
+  background: #e3b223;
+  margin: 0 -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
 /* Hamburger: two bars. */
 .burger {
   @apply block;

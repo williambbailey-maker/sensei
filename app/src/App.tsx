@@ -3,6 +3,8 @@ import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { IntroSlice } from './components/IntroSlice'
 import { Masthead } from './components/Masthead'
+import { PinnedWay, Ways, type Way } from './components/Ways'
+import { requestLocation } from './lib/geo'
 import { SmartSearch } from './components/SmartSearch'
 import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
@@ -68,6 +70,12 @@ export default function App() {
   useEffect(() => {
     if (deepLinked || stores.length === 0) return
     setDeepLinked(true)
+    // /?entry=near|borough|search|all — the SEO home's "Start here" rows.
+    const entry = new URLSearchParams(window.location.search).get('entry')
+    if (entry === 'near' || entry === 'borough' || entry === 'search' || entry === 'all') {
+      pickWay(entry)
+      return
+    }
     const f = filtersFromQuery(window.location.search, stores)
     if (!f) return
     setFilters(f)
@@ -159,9 +167,45 @@ export default function App() {
     return m
   }, [stores])
 
+  // Which of the four ways in was picked. null = the home screen (masthead +
+  // the "Start here" block); 'borough' and 'search' open the journey screen
+  // with that row pinned; 'near' and 'all' go straight to results.
+  const [way, setWay] = useState<Way | null>(null)
+  const [locating, setLocating] = useState(false)
+  const [wayError, setWayError] = useState('')
+  const pickWay = (w: Way) => {
+    setWayError('')
+    track('journey_step', { step: 'entry', entry: w })
+    if (w === 'near') {
+      setLocating(true)
+      requestLocation(
+        (loc) => {
+          setLocating(false)
+          setFilters({ ...EMPTY_FILTERS, userLoc: loc, radiusMiles: null, sort: 'distance' })
+          go('results')
+        },
+        (msg) => {
+          setLocating(false)
+          setWayError(msg)
+        },
+      )
+      return
+    }
+    if (w === 'all') {
+      setFilters({ ...EMPTY_FILTERS, sort: 'price-asc' })
+      go('results')
+      return
+    }
+    setWay(w)
+    setJourneyKey((k) => k + 1)
+    go('journey')
+  }
+
   // Start a fresh journey from the top.
   const restart = () => {
     setFilters(EMPTY_FILTERS)
+    setWay(null)
+    setWayError('')
     setJourneyKey((k) => k + 1)
     go('journey')
   }
@@ -169,8 +213,7 @@ export default function App() {
   const storeCount = stores.length > 0 ? stores.length : null
   const boroughTotal = stores.length > 0 ? Object.keys(boroughCounts).length : null
   const hoodTotal = stores.length > 0 ? Object.keys(neighborhoodCounts).length : null
-  const scrollToJourney = () =>
-    document.getElementById('journey')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const home = view === 'journey' && way === null
 
   return (
     <div className="min-h-full">
@@ -182,7 +225,7 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-field">
         <div className="mx-auto flex max-w-2xl items-center justify-between px-6 pb-2 pt-8">
           <button type="button" onClick={restart} className="burger" aria-label="Home" />
-          <span className={`label ${view === 'journey' ? 'invisible' : ''}`}>Sensei</span>
+          <span className={`label ${home ? 'invisible' : ''}`}>Sensei</span>
           <span className="w-[18px]" aria-hidden="true" />
         </div>
       </header>
@@ -211,21 +254,34 @@ export default function App() {
         </div>
       )}
 
-      {view === 'journey' && (
+      {home && (
         <main>
-          <Masthead
-            storeCount={storeCount}
-            boroughs={boroughTotal}
-            neighborhoods={hoodTotal}
-            onFind={scrollToJourney}
+          <Masthead storeCount={storeCount} boroughs={boroughTotal} neighborhoods={hoodTotal} />
+          <Ways onPick={pickWay} busy={locating ? 'near' : null} error={wayError} />
+        </main>
+      )}
+
+      {view === 'journey' && way !== null && (
+        <main>
+          <PinnedWay
+            way={way}
+            next={way === 'search' ? 'Then refine on the results screen' : 'Then neighborhood · product · strain · budget'}
           />
-          <SmartSearch
-            neighborhoodsByBorough={neighborhoodsByBorough}
-            onSearch={(f) => {
-              setFilters(f)
-              go('results')
-            }}
-          />
+          {way === 'search' && (
+            <SmartSearch
+              autoFocus
+              neighborhoodsByBorough={neighborhoodsByBorough}
+              onSearch={(f) => {
+                setFilters(f)
+                go('results')
+              }}
+            />
+          )}
+          {way === 'search' && (
+            <div className="rule mt-10">
+              <span>Or</span>
+            </div>
+          )}
           <TapJourney
             key={journeyKey}
             initial={filters}
@@ -238,6 +294,20 @@ export default function App() {
             }}
             onClose={restart}
           />
+          {way === 'borough' && (
+            <>
+              <div className="rule">
+                <span>Or</span>
+              </div>
+              <SmartSearch
+                neighborhoodsByBorough={neighborhoodsByBorough}
+                onSearch={(f) => {
+                  setFilters(f)
+                  go('results')
+                }}
+              />
+            </>
+          )}
         </main>
       )}
 

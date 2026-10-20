@@ -236,11 +236,17 @@ h1{font-size:44px;font-weight:700;letter-spacing:.02em;line-height:1;margin:8px 
 .mast{text-align:center;padding:16px 0 0}
 .mast .mark{margin-top:24px}
 .mast .poster{margin-top:16px}
-.mast .arrow{display:block;width:100%;height:auto;margin-top:10px}
-.mast .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:-104px;position:relative}
-.mast .cols .label{font-size:20px;line-height:1.2;text-align:center;margin:0}
-.mast .meta{display:block;margin-top:18px;text-align:center}
-.mast .dotcta{margin-top:28px}
+.mast .desc{margin:14px auto 0;max-width:34ch;font-size:14px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none;text-align:center}
+.mast .meta{display:block;margin-top:22px;text-align:center}
+.ways{margin-top:22px;border-top:2px solid var(--ink)}
+.way{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:2px solid var(--ink);color:var(--ink)}
+.way .wl{display:flex;align-items:center;gap:14px;min-width:0}
+.way .wn{font-size:20px;font-weight:700;letter-spacing:.08em;width:30px;flex:none}
+.way .wt{display:block;font-size:20px;font-weight:700;letter-spacing:.08em;line-height:1.1}
+.way .wd{display:block;margin-top:3px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
+.way .wa{font-size:24px;font-weight:700;flex:none}
+.start .rule{margin-top:34px}
+.start .meta{display:block;text-align:center;margin-top:-6px}
 /* footer */
 .ft{border-top:2px solid var(--line);margin-top:48px;padding:28px 24px 44px;text-align:center}
 .ft .poster{margin:0;display:block}
@@ -596,17 +602,18 @@ def build_home(paths):
 <div class="kanji"><span>先</span><span>生</span></div>
 <h1 class="mark">Sensei</h1>
 <p class="poster">A guide to New York</p>
-<svg class="arrow" viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-<path d="M24 20 H296" stroke="#141414" stroke-width="3" fill="none"/>
-<path d="M8 20 l18 -8 l-4 8 l4 8 Z" fill="#141414"/>
-<path d="M312 20 l-18 -8 l4 8 l-4 8 Z" fill="#141414"/>
-<path d="M160 20 V150" stroke="#141414" stroke-width="3" fill="none"/></svg>
-<div class="cols">
-<p class="label">{len(SITE['dispensaries'])} licensed<br>shops<br>live menus</p>
-<p class="label">compare<br>price &amp;<br>potency</p></div>
-<span class="meta">{boroughs} boroughs · {len(SITE['neighborhoods'])} neighborhoods · {products:,} products</span>
-<a class="dotcta" href="{APP}/" data-ev="menu">Find a shop</a>
+<p class="desc">Every licensed dispensary menu in NYC, in one place. Say where you are and what you're after, and we'll show the cheapest and strongest options near you.</p>
+<span class="meta">{len(SITE['dispensaries'])} licensed shops · {boroughs} boroughs · {len(SITE['neighborhoods'])} neighborhoods</span>
 </div>
+<div class="start">
+<div class="rule"><span>Start here</span></div>
+<span class="meta">Four ways in. Pick one.</span>
+<div class="ways">
+<a class="way" href="{APP}/?entry=near" data-ev="menu"><span class="wl"><span class="wn">01</span><span><span class="wt">Near me</span><span class="wd">Share location · closest shops first</span></span></span><span class="wa">→</span></a>
+<a class="way" href="{APP}/?entry=borough" data-ev="menu"><span class="wl"><span class="wn">02</span><span><span class="wt">Pick a borough</span><span class="wd">Manhattan · Brooklyn · Queens</span></span></span><span class="wa">→</span></a>
+<a class="way" href="{APP}/?entry=search" data-ev="menu"><span class="wl"><span class="wn">03</span><span><span class="wt">Search in your words</span><span class="wd">"Sativa pre-rolls under $10"</span></span></span><span class="wa">→</span></a>
+<a class="way" href="{APP}/?entry=all" data-ev="menu"><span class="wl"><span class="wn">04</span><span><span class="wt">See everything</span><span class="wd">{products:,} products · cheapest first</span></span></span><span class="wa">→</span></a>
+</div></div>
 <div class="sh">By product</div><div class="chips">{cat_chips}</div>
 <div class="sh">Neighborhoods</div><div class="chips">{hood_chips}</div>
 <div class="sh">Brands</div><div class="chips">{brand_chips}</div>

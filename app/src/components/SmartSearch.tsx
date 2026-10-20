@@ -16,9 +16,11 @@ const EXAMPLES = [
 export function SmartSearch({
   neighborhoodsByBorough,
   onSearch,
+  autoFocus = false,
 }: {
   neighborhoodsByBorough: Record<string, string[]>
   onSearch: (f: Filters) => void
+  autoFocus?: boolean
 }) {
   const [q, setQ] = useState('')
   const index = useMemo(() => buildNeighborhoodIndex(neighborhoodsByBorough), [neighborhoodsByBorough])
@@ -34,7 +36,7 @@ export function SmartSearch({
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 pt-10">
+    <div className="mx-auto max-w-2xl px-6 pt-8">
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -43,6 +45,7 @@ export function SmartSearch({
         className="inp gap-4"
       >
         <input
+          autoFocus={autoFocus}
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder={ex}

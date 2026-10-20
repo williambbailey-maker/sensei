@@ -20,8 +20,10 @@ can always be restored cleanly.
   uppercase }` except editorial copy, descriptions and inputs. No shadows, blur,
   gradients, rounded cards or colors beyond the six tokens; product images are
   the only color and sit on the field with `mix-blend-mode: multiply`. Devices:
-  the masthead (kanji → 96px SENSEI → "A guide to New York" → double-headed arrow
-  with a center divider → two three-line columns), `.row` lists with 2px rules
+  the masthead (kanji → 96px SENSEI → "A guide to New York" → a sentence-case
+  description → one line of counts), the numbered "Start here" `.ways` block
+  (Near me / Pick a borough / Search in your words / See everything, each a
+  full-width row with heavy ink rules and an arrow), `.row` lists with 2px rules
   and a 10px marker circle, 44px circle `.thumb`s, underlined inputs/selects/tabs,
   the `—01—` `.rule`, and exactly one `.dotcta` (poster text + →) per screen with
   everything else a `.ghost` text button. Same system on the SEO pages via

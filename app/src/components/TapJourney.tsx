@@ -133,13 +133,7 @@ export function TapJourney({
       </div>
 
       {step === 0 && (
-        <Step n={currentPos + 1} title="Where are you" hint="Share your location for what's closest, or pick a borough">
-          <div className="mb-6 text-center">
-            <button type="button" onClick={locate} disabled={locating} className="dotcta">
-              {locating ? 'Locating' : 'Share my location'}
-            </button>
-            {locError && <p className="meta mt-3 text-ink">{locError}</p>}
-          </div>
+        <Step n={currentPos + 1} title="Where are you" hint="Tap a borough. Every step after this is skippable">
           {BOROUGHS.map((b) => (
             <Option
               key={b}
@@ -210,10 +204,16 @@ export function TapJourney({
         </Step>
       )}
 
-      <div className="mt-8 text-center">
+      <div className="mt-8 flex flex-col items-center gap-4">
         <button type="button" onClick={skip} className="ghost">
           {step < LAST ? 'Skip this step' : 'Show my products'}
         </button>
+        {step === 0 && (
+          <button type="button" onClick={locate} disabled={locating} className="ghost">
+            {locating ? 'Locating' : 'Or share my location'}
+          </button>
+        )}
+        {locError && <p className="meta text-ink">{locError}</p>}
       </div>
     </div>
   )
