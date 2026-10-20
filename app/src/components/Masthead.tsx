@@ -19,11 +19,11 @@ export function Masthead({
     <section className="mx-auto max-w-2xl px-6 pt-10 text-center">
       <Mark />
       <p className="poster mt-4">A guide to New York</p>
-      <p className="copy sentence mx-auto mt-4 max-w-[34ch] text-center">
+      <p className="copy sentence mx-auto mt-4 max-w-[36ch] text-center" style={{ fontSize: 16 }}>
         Every licensed dispensary menu in NYC, in one place. Say where you are and what you're after, and
         we'll show the cheapest and strongest options near you.
       </p>
-      <p className="meta mt-6">
+      <p className="meta mt-6" style={{ fontSize: 14 }}>
         {storeCount ?? '—'} licensed shops · {boroughs ?? '—'} boroughs · {neighborhoods ?? '—'} neighborhoods
       </p>
     </section>

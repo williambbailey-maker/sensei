@@ -33,7 +33,9 @@ export function Ways({
       <div className="rule mt-8">
         <span>Start here</span>
       </div>
-      <p className="meta mt-2 text-center">Four ways in. Pick one.</p>
+      <p className="meta mt-2 text-center" style={{ fontSize: 14 }}>
+        Four ways in. Pick one.
+      </p>
       {error && <p className="meta mt-2 text-center text-ink">{error}</p>}
       <div className="ways mt-6">
         {WAYS.map((w, i) => (

@@ -328,7 +328,7 @@ input:focus {
 .way-d {
   @apply block font-semibold text-mist;
   margin-top: 3px;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.08em;
 }
 .way-a {
