@@ -6,8 +6,10 @@ export default {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      field: '#F2C230', // page background, everywhere
-      deep: '#E3B223', // inputs, options, modal panels, image placeholders
+      // field/deep are CSS variables so the reading screens (results, cart)
+      // can swap the yellow for cream; see index.css.
+      field: 'var(--field)', // page background
+      deep: 'var(--deep)', // inputs, options, modal panels, image placeholders
       ink: '#141414', // all type, rules, arrows, the marker
       mist: 'rgba(20,20,20,.62)', // secondary type
       line: 'rgba(20,20,20,.22)', // 2px row rules

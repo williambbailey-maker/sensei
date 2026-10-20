@@ -15,7 +15,10 @@ can always be restored cleanly.
 
 - **sign-barlow** — branch `sign-barlow`. The "Sign" system: black condensed
   caps on mustard paper (`#F2C230` field / `#141414` ink, with `deep`, `mist`,
-  `line`, `line-strong` as the only other tokens), **Barlow Condensed** 600/700
+  `line`, `line-strong` as the only other tokens; reading surfaces — the app's
+  results/detail/cart screens and every SEO page but the home — sit on cream
+  `#F7F3EA` with the yellow kept for the action block, footer band and age
+  gate), **Barlow Condensed** 600/700
   throughout with Noto Sans JP for the 先生 kanji pair, `body { text-transform:
   uppercase }` except editorial copy, descriptions and inputs. No shadows, blur,
   gradients, rounded cards or colors beyond the six tokens; product images are

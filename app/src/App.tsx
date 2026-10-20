@@ -114,6 +114,17 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }, [view])
 
+  // Yellow for the sign screens (home, journey, age gate); cream for the
+  // reading screens (results, product detail, cart). See index.css.
+  useEffect(() => {
+    const root = document.documentElement
+    if (view === 'journey') delete root.dataset.surface
+    else root.dataset.surface = 'paper'
+    return () => {
+      delete root.dataset.surface
+    }
+  }, [view])
+
   const go = (v: View) => setView(v)
 
   const scopedProducts = useMemo(

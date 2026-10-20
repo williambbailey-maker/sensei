@@ -6,7 +6,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: #f2c230;
+  background: var(--field, #f2c230);
   display: flex;
   align-items: center;
   justify-content: center;

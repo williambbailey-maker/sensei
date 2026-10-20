@@ -14,7 +14,7 @@ export function useAgeGate(): [boolean, () => void] {
 
 export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-field px-6 py-10">
+    <div className="sign-surface fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-6 py-10">
       <div className="w-full max-w-sm text-center">
         <Kanji />
         <div className="mt-6">

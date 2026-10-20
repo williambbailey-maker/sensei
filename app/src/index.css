@@ -7,9 +7,23 @@
 
 :root {
   color-scheme: light;
+  --field: #f2c230;
+  --deep: #e3b223;
+}
+
+/* Sign screens (home, journey, age gate) are yellow; reading screens
+   (results, product detail, cart) sit on cream. App sets data-surface. */
+html[data-surface='paper'] {
+  --field: #f7f3ea;
+  --deep: #ece6d8;
 }
 
 html {
+  background: var(--field);
+}
+
+/* Always yellow, whatever surface the screen behind it uses (the age gate). */
+.sign-surface {
   background: #f2c230;
 }
 
@@ -190,7 +204,7 @@ textarea {
   overflow: hidden;
   border-radius: 50%;
   border: 2px solid #141414;
-  background: #e3b223;
+  background: var(--deep);
 }
 .thumb img {
   width: 100%;
@@ -317,7 +331,7 @@ input:focus {
 }
 /* The picked row, pinned on the next screen. */
 .way-on {
-  background: #e3b223;
+  background: var(--deep);
   margin: 0 -24px;
   padding-left: 24px;
   padding-right: 24px;
@@ -380,5 +394,5 @@ input:focus {
 
 ::selection {
   background: #141414;
-  color: #f2c230;
+  color: var(--field);
 }
