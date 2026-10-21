@@ -566,6 +566,8 @@ select:focus {
 /* ---------- product detail sheet ---------- */
 .sheet {
   @apply fixed inset-0 z-50 flex flex-col overflow-y-auto bg-field;
+  touch-action: pan-y;
+  will-change: transform;
 }
 @keyframes sen-sheetIn {
   from {
@@ -602,6 +604,55 @@ select:focus {
 .sheet-nudge {
   animation: sen-sheetNudge 0.9s ease both;
 }
+/* Deck motion: the next card slides in from the side you swiped toward; a
+   bump is the short shove at the end of the deck. */
+@keyframes sen-enterR {
+  from {
+    transform: translateX(110%) rotate(4deg);
+  }
+  to {
+    transform: translateX(0) rotate(0);
+  }
+}
+@keyframes sen-enterL {
+  from {
+    transform: translateX(-110%) rotate(-4deg);
+  }
+  to {
+    transform: translateX(0) rotate(0);
+  }
+}
+.sheet-enter-r {
+  animation: sen-enterR 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: 50% 120%;
+}
+.sheet-enter-l {
+  animation: sen-enterL 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: 50% 120%;
+}
+@keyframes sen-bump {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-14px);
+  }
+  70% {
+    transform: translateX(8px);
+  }
+}
+.sheet-bump {
+  animation: sen-bump 0.26s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-enter-r,
+  .sheet-enter-l,
+  .sheet-bump {
+    animation: none;
+  }
+}
+
 .swipe {
   @apply flex items-center justify-center;
   gap: 14px;

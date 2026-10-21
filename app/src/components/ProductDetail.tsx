@@ -38,15 +38,14 @@ export function ProductDetail({
   // leaving the results.
   const closeRef = useRef(onClose)
   closeRef.current = onClose
-  const stepRef = useRef(onStep)
-  stepRef.current = onStep
+  const flyRef = useRef<(d: 1 | -1) => void>(() => {})
   useEffect(() => {
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeRef.current()
-      else if (e.key === 'ArrowRight') stepRef.current(1)
-      else if (e.key === 'ArrowLeft') stepRef.current(-1)
+      else if (e.key === 'ArrowRight') flyRef.current(1)
+      else if (e.key === 'ArrowLeft') flyRef.current(-1)
     }
     const onPop = () => closeRef.current()
     window.addEventListener('keydown', onKey)
@@ -68,9 +67,15 @@ export function ProductDetail({
     }
   }, [])
 
-  // Horizontal swipe: a clear sideways gesture, not a vertical scroll.
-  const touch = useRef<{ x: number; y: number } | null>(null)
+  // Horizontal swipe, deck-style: the card follows the finger 1:1 with a
+  // little tilt, flies off when released past the threshold (or flung), and
+  // the next card slides in from the other side. Short drags spring back.
+  const touch = useRef<{ x: number; y: number; t: number; lastX: number; lastT: number } | null>(null)
   const [dx, setDx] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  // 0 = at rest; ±1 = flying off in that direction; 'bump' = at the end of the deck.
+  const [fly, setFly] = useState<0 | 1 | -1 | 'bump'>(0)
+  const dirRef = useRef<0 | 1 | -1>(0)
   // First open in this session: the sheet nudges sideways once so the swipe
   // is discoverable without a button.
   const [nudge] = useState(() => {
@@ -82,29 +87,78 @@ export function ProductDetail({
     }
     return true
   })
+  const canStep = (dir: 1 | -1) => (dir === 1 ? index < total - 1 : index > 0)
+  const flyTo = (dir: 1 | -1) => {
+    if (fly !== 0) return
+    if (!canStep(dir)) {
+      setDx(0)
+      setFly('bump')
+      setTimeout(() => setFly(0), 260)
+      return
+    }
+    setFly(dir)
+    setTimeout(() => {
+      dirRef.current = dir
+      setFly(0)
+      setDx(0)
+      onStep(dir)
+    }, 230)
+  }
+  flyRef.current = flyTo
   const onTouchStart = (e: React.TouchEvent) => {
     const t = e.touches[0]
     // A swipe that starts in the left third is "back", handled by the app;
     // product swipes start anywhere else.
-    touch.current = t.clientX <= window.innerWidth / 3 ? null : { x: t.clientX, y: t.clientY }
+    if (t.clientX <= window.innerWidth / 3 || fly !== 0) {
+      touch.current = null
+      return
+    }
+    touch.current = { x: t.clientX, y: t.clientY, t: Date.now(), lastX: t.clientX, lastT: Date.now() }
   }
   const onTouchMove = (e: React.TouchEvent) => {
-    if (!touch.current) return
+    const s = touch.current
+    if (!s) return
     const t = e.touches[0]
-    const mx = t.clientX - touch.current.x
-    const my = t.clientY - touch.current.y
-    if (Math.abs(mx) > 12 && Math.abs(mx) > Math.abs(my) * 1.5) setDx(Math.max(-80, Math.min(80, mx * 0.4)))
+    const mx = t.clientX - s.x
+    const my = t.clientY - s.y
+    s.lastX = t.clientX
+    s.lastT = Date.now()
+    if (!dragging && Math.abs(mx) > 10 && Math.abs(mx) > Math.abs(my) * 1.3) setDragging(true)
+    if (dragging || (Math.abs(mx) > 10 && Math.abs(mx) > Math.abs(my) * 1.3)) {
+      // Resist at the ends of the deck so the card feels held.
+      const dir = mx < 0 ? 1 : -1
+      setDx(canStep(dir) ? mx : mx * 0.3)
+    }
   }
   const onTouchEnd = (e: React.TouchEvent) => {
-    const start = touch.current
+    const s = touch.current
     touch.current = null
-    setDx(0)
-    if (!start) return
+    const wasDragging = dragging
+    setDragging(false)
+    if (!s) return
     const t = e.changedTouches[0]
-    const mx = t.clientX - start.x
-    const my = t.clientY - start.y
-    if (Math.abs(mx) < 60 || Math.abs(mx) < Math.abs(my) * 1.5) return
-    onStep(mx < 0 ? 1 : -1)
+    const mx = t.clientX - s.x
+    const my = t.clientY - s.y
+    // Velocity from the last few pixels: a quick flick counts even if short.
+    const vx = (t.clientX - s.lastX) / Math.max(1, Date.now() - s.lastT)
+    const sideways = Math.abs(mx) > Math.abs(my) * 1.3
+    const far = Math.abs(mx) > Math.min(140, window.innerWidth * 0.35)
+    const flick = Math.abs(vx) > 0.5 && Math.abs(mx) > 30
+    if (wasDragging && sideways && (far || flick)) {
+      flyTo(mx < 0 ? 1 : -1)
+      return
+    }
+    setDx(0)
+  }
+  // Where the card is right now: dragging follows the finger; flying goes
+  // off-screen; a bump is a short shove; otherwise at rest.
+  const W = typeof window !== 'undefined' ? window.innerWidth : 400
+  const x = fly === 1 ? -W * 1.15 : fly === -1 ? W * 1.15 : fly === 'bump' ? 0 : dx
+  const tilt = fly === 'bump' ? 0 : fly === 1 || fly === -1 ? (fly === 1 ? -6 : 6) : dx / 40
+  const sheetStyle: React.CSSProperties = {
+    transform: x || tilt ? `translateX(${x}px) rotate(${tilt}deg)` : undefined,
+    transformOrigin: '50% 120%',
+    transition: dragging ? 'none' : fly === 1 || fly === -1 ? 'transform .23s cubic-bezier(.4,0,1,1)' : 'transform .32s cubic-bezier(.2,.8,.2,1)',
   }
 
   const sheetRef = useRef<HTMLDivElement | null>(null)
@@ -117,19 +171,20 @@ export function ProductDetail({
   const hasImg = !!p.image_url && imgOk
   const pad = (n: number) => String(n).padStart(2, '0')
   const firstId = useRef(p.id)
-  const entrance = nudge && firstId.current === p.id ? 'sheet-nudge' : 'sheet-in'
+  const entrance =
+    dirRef.current === 1 ? 'sheet-enter-r' : dirRef.current === -1 ? 'sheet-enter-l' : nudge && firstId.current === p.id ? 'sheet-nudge' : 'sheet-in'
 
   return (
     <div
       ref={sheetRef}
       key={p.id}
-      className={`sheet ${entrance}`}
+      className={`sheet ${entrance} ${fly === 'bump' ? 'sheet-bump' : ''}`}
       role="dialog"
       aria-modal="true"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      style={{ transform: dx ? `translateX(${dx}px)` : undefined, transition: dx ? 'none' : 'transform .18s ease' }}
+      style={sheetStyle}
     >
       <div className="wrap" style={{ paddingBottom: 60 }}>
         <div className="top">
