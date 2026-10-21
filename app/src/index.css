@@ -239,6 +239,7 @@ select:focus {
 }
 .bullets-sm {
   gap: 8px;
+  justify-content: center;
 }
 .bullets-sm .mb {
   width: 26px;

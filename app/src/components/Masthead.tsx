@@ -19,16 +19,15 @@ export function Bullets() {
   )
 }
 
-// The footer sign-off: six small bullets spelling SENSEI in their line
-// colors (S shuttle grey, E blue, N yellow; there is no I line, so it takes
-// the 1/2/3 red).
+// The footer sign-off: six small bullets spelling SENSEI, centered, each in
+// a different line color (orange, blue, yellow, green, purple, red).
 export function SenseiBullets() {
   const letters: { l: string; c: string; dark?: boolean }[] = [
-    { l: 'S', c: 'var(--s)' },
+    { l: 'S', c: 'var(--o)' },
     { l: 'E', c: 'var(--b)' },
     { l: 'N', c: 'var(--y)', dark: true },
-    { l: 'S', c: 'var(--s)' },
-    { l: 'E', c: 'var(--b)' },
+    { l: 'S', c: 'var(--g)' },
+    { l: 'E', c: 'var(--v)' },
     { l: 'I', c: 'var(--r)' },
   ]
   return (
