@@ -516,9 +516,8 @@ export default function App() {
         </div>
         <SenseiBullets />
         <p className="foot">
-          <b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to
-          each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change
-          the order of results.
+          <b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is
+          not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.
         </p>
       </footer>
     </div>
