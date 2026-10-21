@@ -116,9 +116,8 @@ export function Menu({
         <div className="top">
           <span className="flex items-center gap-3">
             <button type="button" onClick={onClose} className="burger burger-x" aria-label="Close menu" />
-            Sensei
+            <span className="wm">Sensei</span>
           </span>
-          <span className="dim">21+ · New York City</span>
         </div>
 
         {groups.map((g) => (

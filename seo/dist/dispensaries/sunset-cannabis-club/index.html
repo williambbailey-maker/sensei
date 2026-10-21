@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--field:#0B0B0B;--deep:#1E1E1E;--ink:#FFFFFF;--mist:rgba(255,255,255,.6);--line:rgba(255,255,255,.16);--line-strong:rgba(255,255,255,.4);
---r:#EE352E;--g:#00933C;--b:#0039A6;--y:#FCCC0A;--o:#FF6319;--gr:#A7A9AC;--v:#B933AD;--lg:#6CBE45;
+--r:#EE352E;--g:#00933C;--b:#0039A6;--y:#FCCC0A;--o:#FF6319;--gr:#A7A9AC;--v:#B933AD;--lg:#6CBE45;--t:#00ADD0;--s:#808183;
 --font:"Helvetica Neue",Helvetica,Inter,Arial,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--field);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
@@ -24,7 +24,7 @@ button{font-family:inherit;font-size:inherit;letter-spacing:inherit;cursor:point
 .top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0;font-size:14px;font-weight:700}
 .top .tl{display:flex;align-items:center;gap:12px}
 .top .tr{font-weight:400;color:var(--mist)}
-.wm{font-size:14px;font-weight:700}
+.wm{font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
 .burger{display:block;width:18px;height:12px;position:relative;flex:none}
 .burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
 .burger::before{top:1px}.burger::after{top:8px}
@@ -54,7 +54,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .stat .n{color:var(--ink)}
 /* line bullets + routes (the only colors) */
 .bullets{display:flex;gap:10px;margin:34px 0 0}
-.mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:21px;color:#fff;letter-spacing:-.03em;flex:none}
+.mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:24px;color:#fff;letter-spacing:-.03em;flex:none}
 .mb.y{color:#111}
 .mb.s{width:30px;height:30px;font-size:15px}
 .shops .row:nth-child(8n+1) .mb.s{background:var(--r)}
@@ -176,7 +176,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 </style><script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": "Sunset Cannabis Co", "url": "https://sensei.nyc/dispensaries/sunset-cannabis-club/", "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/vaporizer-stock-1-v1.jpg", "address": {"@type": "PostalAddress", "streetAddress": "512 55th Street", "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.642, "longitude": -74.009}, "areaServed": "Brooklyn, NY"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Sensei", "item": "https://sensei.nyc/"}, {"@type": "ListItem", "position": 2, "name": "Dispensaries", "item": "https://sensei.nyc/dispensaries/"}, {"@type": "ListItem", "position": 3, "name": "Sunset Cannabis Co", "item": "https://sensei.nyc/dispensaries/sunset-cannabis-club/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is there another licensed dispensary near Sunset Park?", "acceptedAnswer": {"@type": "Answer", "text": "Not in Sunset Park itself. The closest shops we track are Be. and Verdi in Park Slope and Grow Together and High Tidez in Coney Island. Sunset Cannabis Co is the local option for the neighborhood and nearby Bay Ridge."}}, {"@type": "Question", "name": "What does Hashtag Honey make?", "acceptedAnswer": {"@type": "Answer", "text": "Hashtag Honey is a New York brand focused on infused pre-rolls and flower. With 43 listings it is the deepest line at Sunset Cannabis Co, so this is a good place to see most of its range."}}, {"@type": "Question", "name": "Why is the cheapest item under a dollar?", "acceptedAnswer": {"@type": "Answer", "text": "That listing is a STIIIZY vape battery, which the shop sells as an accessory. The lowest-priced actual cannabis product at last check was a 10 mg Ayrloom drink at $5.31 before tax."}}]}</script></head><body>
 <div class="bar"></div>
 <div class="wrap">
-<div class="top"><span class="tl"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a></span><span class="tr">21+ · Brooklyn</span></div>
+<div class="top"><span class="tl"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a></span></div>
 <main>
 <p class="crumb"><a href="/">Sensei</a> › Sunset Park › Dispensary</p>
 <p class="kicker">Sunset Park · Brooklyn</p>
@@ -201,12 +201,12 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
 <div class="strip"></div>
 <div class="mbody">
-<div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span><span class="tr">21+ · New York City</span></div>
+<div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span></div>
 <div class="grp"><div class="k">Find</div>
-<a class="mi" href="https://sensei.nyc/?near=1" data-ev="chip" data-cat="menu:near me"><span class="ml"><span class="mb s" style="background:var(--r)">N</span><span><span class="mt">Near me</span><span class="md">Closest shops first</span></span></span><span class="ma">→</span></a>
-<a class="mi" href="https://sensei.nyc/?entry=borough" data-ev="chip" data-cat="menu:pick a borough"><span class="ml"><span class="mb s" style="background:var(--b)">B</span><span><span class="mt">Pick a borough</span><span class="md">Manhattan · Brooklyn · Queens</span></span></span><span class="ma">→</span></a>
-<a class="mi" href="https://sensei.nyc/?entry=search" data-ev="chip" data-cat="menu:search in your words"><span class="ml"><span class="mb s" style="background:var(--g)">S</span><span><span class="mt">Search in your words</span><span class="md">Strain, brand, price or neighborhood</span></span></span><span class="ma">→</span></a>
-<a class="mi" href="https://sensei.nyc/?entry=all" data-ev="chip" data-cat="menu:see everything"><span class="ml"><span class="mb s y" style="background:var(--y)">E</span><span><span class="mt">See everything</span><span class="md">35,760 products · cheapest first</span></span></span><span class="ma">→</span></a>
+<a class="mi" href="https://sensei.nyc/?near=1" data-ev="chip" data-cat="menu:near me"><span class="ml"><span class="mb s y" style="background:var(--y)">N</span><span><span class="mt">Near me</span><span class="md">Closest shops first</span></span></span><span class="ma">→</span></a>
+<a class="mi" href="https://sensei.nyc/?entry=borough" data-ev="chip" data-cat="menu:pick a borough"><span class="ml"><span class="mb s" style="background:var(--o)">B</span><span><span class="mt">Pick a borough</span><span class="md">Manhattan · Brooklyn · Queens</span></span></span><span class="ma">→</span></a>
+<a class="mi" href="https://sensei.nyc/?entry=search" data-ev="chip" data-cat="menu:search in your words"><span class="ml"><span class="mb s" style="background:var(--s)">S</span><span><span class="mt">Search in your words</span><span class="md">Strain, brand, price or neighborhood</span></span></span><span class="ma">→</span></a>
+<a class="mi" href="https://sensei.nyc/?entry=all" data-ev="chip" data-cat="menu:see everything"><span class="ml"><span class="mb s" style="background:var(--b)">E</span><span><span class="mt">See everything</span><span class="md">35,760 products · cheapest first</span></span></span><span class="ma">→</span></a>
 </div>
 <div class="grp"><div class="k">Browse</div>
 <a class="mi" href="/neighborhoods/" data-ev="chip" data-cat="menu:neighborhoods"><span class="ml"><span><span class="mt">Neighborhoods</span><span class="md">18 areas · 67 shops</span></span></span><span class="ma">→</span></a>
@@ -229,7 +229,7 @@ if(o)o.onclick=function(){open()};if(c)c.onclick=function(){close();try{if(histo
 window.addEventListener('popstate',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
 })();</script>
 <div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="strip"></div><div class="box">
-<div class="top"><span class="tl"><span class="wm">Sensei</span></span><span class="tr">21+ · New York City</span></div>
+<div class="top"><span class="tl"><span class="wm">Sensei</span></span></div>
 <h1 class="mark">Are you<br>21 or<br>older?</h1>
 <p class="lede">Cannabis products are for adults 21 and over in New York State.</p>
 <button class="cta" id="agy" type="button"><span>Yes, I'm 21 or older</span><span>→</span></button>

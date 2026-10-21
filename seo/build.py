@@ -132,7 +132,7 @@ def app_cat(c, extra=""): return f"{APP}/?category={quote(c)}" + (f"&{extra}" if
 # ---------- shared chrome ----------
 CSS = r"""
 :root{--field:#0B0B0B;--deep:#1E1E1E;--ink:#FFFFFF;--mist:rgba(255,255,255,.6);--line:rgba(255,255,255,.16);--line-strong:rgba(255,255,255,.4);
---r:#EE352E;--g:#00933C;--b:#0039A6;--y:#FCCC0A;--o:#FF6319;--gr:#A7A9AC;--v:#B933AD;--lg:#6CBE45;
+--r:#EE352E;--g:#00933C;--b:#0039A6;--y:#FCCC0A;--o:#FF6319;--gr:#A7A9AC;--v:#B933AD;--lg:#6CBE45;--t:#00ADD0;--s:#808183;
 --font:"Helvetica Neue",Helvetica,Inter,Arial,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--field);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
@@ -146,7 +146,7 @@ button{font-family:inherit;font-size:inherit;letter-spacing:inherit;cursor:point
 .top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0;font-size:14px;font-weight:700}
 .top .tl{display:flex;align-items:center;gap:12px}
 .top .tr{font-weight:400;color:var(--mist)}
-.wm{font-size:14px;font-weight:700}
+.wm{font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
 .burger{display:block;width:18px;height:12px;position:relative;flex:none}
 .burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
 .burger::before{top:1px}.burger::after{top:8px}
@@ -176,7 +176,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .stat .n{color:var(--ink)}
 /* line bullets + routes (the only colors) */
 .bullets{display:flex;gap:10px;margin:34px 0 0}
-.mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:21px;color:#fff;letter-spacing:-.03em;flex:none}
+.mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:24px;color:#fff;letter-spacing:-.03em;flex:none}
 .mb.y{color:#111}
 .mb.s{width:30px;height:30px;font-size:15px}
 .shops .row:nth-child(8n+1) .mb.s{background:var(--r)}
@@ -302,7 +302,7 @@ def menu_html(path, counts):
     same ?entry= hints the home's "Start here" rows use."""
     # The Find rows carry the same lettered line bullets as the app's home;
     # other rows have no marker.
-    colors = {"N": ("var(--r)", ""), "B": ("var(--b)", ""), "S": ("var(--g)", ""), "E": ("var(--y)", " y")}
+    colors = {"N": ("var(--y)", " y"), "B": ("var(--o)", ""), "S": ("var(--s)", ""), "E": ("var(--b)", "")}
     def row(n, title, desc, href, now=False):
         bullet = ""
         if n in colors:
@@ -316,7 +316,7 @@ def menu_html(path, counts):
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
 <div class="strip"></div>
 <div class="mbody">
-<div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span><span class="tr">21+ · New York City</span></div>
+<div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span></div>
 <div class="grp"><div class="k">Find</div>
 {row("N", "Near me", "Closest shops first", f"{APP}/?near=1")}
 {row("B", "Pick a borough", "Manhattan · Brooklyn · Queens", f"{APP}/?entry=borough")}
@@ -348,7 +348,7 @@ MENU_COUNTS = (len(SITE["dispensaries"]), len(SITE["neighborhoods"]), sum(c["in_
 
 AGE_GATE = """
 <div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="strip"></div><div class="box">
-<div class="top"><span class="tl"><span class="wm">Sensei</span></span><span class="tr">21+ · New York City</span></div>
+<div class="top"><span class="tl"><span class="wm">Sensei</span></span></div>
 <h1 class="mark">Are you<br>21 or<br>older?</h1>
 <p class="lede">Cannabis products are for adults 21 and over in New York State.</p>
 <button class="cta" id="agy" type="button"><span>Yes, I'm 21 or older</span><span>→</span></button>
@@ -430,7 +430,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <style>{CSS}</style>{ld}</head><body>
 <div class="bar"></div>
 <div class="wrap">
-<div class="top"><span class="tl"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a></span><span class="tr">21+ · {esc(place)}</span></div>
+<div class="top"><span class="tl"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a></span></div>
 <main>{body}</main>
 <div class="exit"><a href="/">↑ Exit to menus</a><span>Updated nightly</span></div>
 <footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc</footer>
@@ -701,7 +701,7 @@ def build_home(paths):
     body = f"""
 <h1>Every<br>menu.<br>One stop.</h1>
 <p class="lede">All {n_shops} licensed dispensaries in New York, compared nightly. Price and potency as labeled.</p>
-<div class="bullets"><span class="mb" style="background:var(--r)">T</span><span class="mb" style="background:var(--b)">H</span><span class="mb" style="background:var(--g)">C</span></div>
+<div class="bullets"><span class="mb" style="background:var(--t)">T</span><span class="mb" style="background:var(--b)">H</span><span class="mb" style="background:var(--b)">C</span></div>
 <a class="cta" href="{APP}/?near=1" data-ev="menu"><span>Shops near me</span><span>→</span></a>
 <div class="stats"><div><b>{n_shops}</b><span>licensed shops</span></div><div><b>{products_k}</b><span>items in stock</span></div><div><b>{n_hoods}</b><span>neighborhoods</span></div></div>
 <div class="rule"></div>

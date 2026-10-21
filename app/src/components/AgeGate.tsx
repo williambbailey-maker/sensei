@@ -18,8 +18,7 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
       <div style={{ height: 10, background: '#fff' }} />
       <div className="wrap pb-16">
         <div className="top">
-          <span>Sensei</span>
-          <span className="dim">21+ · New York City</span>
+          <span className="wm">Sensei</span>
         </div>
         <h1 className="mark" style={{ marginTop: 54 }}>
           Are you

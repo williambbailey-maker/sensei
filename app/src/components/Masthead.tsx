@@ -1,17 +1,18 @@
 // The hero, exactly as design/subway-landing.html: headline, lede, six line
 // bullets, the one white CTA, three stats. The age gate reuses Bullets.
 
-// Three line bullets that spell THC.
+// Three line bullets that spell THC, in their real line colors: T is the
+// Second Avenue turquoise, H and C the Eighth Avenue blue.
 export function Bullets() {
   return (
     <div className="bullets" aria-hidden="true">
-      <span className="mb" style={{ background: 'var(--r)' }}>
+      <span className="mb" style={{ background: 'var(--t)' }}>
         T
       </span>
       <span className="mb" style={{ background: 'var(--b)' }}>
         H
       </span>
-      <span className="mb" style={{ background: 'var(--g)' }}>
+      <span className="mb" style={{ background: 'var(--b)' }}>
         C
       </span>
     </div>
@@ -27,16 +28,10 @@ export function Masthead({
   storeCount,
   productCount,
   neighborhoods,
-  onNear,
-  locating,
-  error,
 }: {
   storeCount: number | null
   productCount: number | null
   neighborhoods: number | null
-  onNear: () => void
-  locating: boolean
-  error?: string
 }) {
   const n = storeCount == null ? 'All' : `All ${storeCount}`
   return (
@@ -54,11 +49,7 @@ export function Masthead({
       <div style={{ marginTop: 34 }}>
         <Bullets />
       </div>
-      <button type="button" onClick={onNear} disabled={locating} className="cta" style={{ marginTop: 28 }}>
-        <span>{locating ? 'Locating' : 'Shops near me'}</span>
-      </button>
-      {error && <p className="meta mt-3">{error}</p>}
-      <div className="stats" style={{ marginTop: 30 }}>
+      <div className="stats" style={{ marginTop: 34 }}>
         <div>
           <span className="stat-v">{storeCount ?? '—'}</span>
           <span className="stat-k">licensed shops</span>

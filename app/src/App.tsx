@@ -290,11 +290,10 @@ export default function App() {
               className="burger"
               aria-label="Menu"
             />
-            <button type="button" onClick={restart} className="font-bold">
+            <button type="button" onClick={restart} className="wm">
               Sensei
             </button>
           </span>
-          <span className="dim">21+ · New York City</span>
         </div>
       </header>
 
@@ -324,15 +323,8 @@ export default function App() {
 
       {view === 'journey' && (
         <main>
-          <Masthead
-            storeCount={storeCount}
-            productCount={productCount}
-            neighborhoods={hoodTotal}
-            onNear={() => pickWay('near')}
-            locating={locating}
-            error={wayError}
-          />
-          <Ways onPick={pickWay} busy={locating ? 'near' : null} />
+          <Masthead storeCount={storeCount} productCount={productCount} neighborhoods={hoodTotal} />
+          <Ways onPick={pickWay} busy={locating ? 'near' : null} error={wayError} />
           <SmartSearch
             neighborhoodsByBorough={neighborhoodsByBorough}
             onSearch={(f) => {
