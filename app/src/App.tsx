@@ -184,16 +184,14 @@ export default function App() {
   }, [stores])
 
   // The ways in. "Near me" asks for location and opens results closest
-  // first; "Pick a borough" scrolls to the journey; "Search" focuses the
-  // search field; "See everything" opens results, all, cheapest first.
+  // first; "Pick a borough" opens the journey screen; "Search" opens the
+  // search screen; "See everything" opens results, all, cheapest first.
+  // `way` is which of the two screens is showing; null is the home.
+  const [way, setWay] = useState<'borough' | 'search' | null>(null)
   const [locating, setLocating] = useState(false)
   const [wayError, setWayError] = useState('')
-  const scrollTo = (id: string, focus = false) =>
-    requestAnimationFrame(() => {
-      const el = document.getElementById(id)
-      el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      if (focus) (document.getElementById('search-input') as HTMLInputElement | null)?.focus()
-    })
+  const scrollTo = (id: string) =>
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   const pickWay = (w: Way) => {
     setWayError('')
     track('journey_step', { step: 'entry', entry: w })
@@ -217,18 +215,17 @@ export default function App() {
       go('results')
       return
     }
-    if (view !== 'journey') {
-      setFilters(EMPTY_FILTERS)
-      setJourneyKey((k) => k + 1)
-      go('journey')
-    }
-    setTimeout(() => scrollTo(w === 'search' ? 'search' : 'journey', w === 'search'), 50)
+    setFilters(EMPTY_FILTERS)
+    setJourneyKey((k) => k + 1)
+    setWay(w)
+    go('journey')
   }
 
-  // Start a fresh journey from the top.
+  // Back to the home.
   const restart = () => {
     setFilters(EMPTY_FILTERS)
     setWayError('')
+    setWay(null)
     setJourneyKey((k) => k + 1)
     go('journey')
   }
@@ -257,7 +254,7 @@ export default function App() {
     setPendingScroll(null)
     scrollTo(id)
   }, [pendingScroll, view, loading])
-  const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : null
+  const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : view === 'journey' ? way : null
 
   const storeCount = stores.length > 0 ? stores.length : null
   const hoodTotal = stores.length > 0 ? Object.keys(neighborhoodCounts).length : null
@@ -321,17 +318,41 @@ export default function App() {
         </div>
       )}
 
-      {view === 'journey' && (
+      {view === 'journey' && way === null && (
         <main>
           <Masthead storeCount={storeCount} productCount={productCount} neighborhoods={hoodTotal} />
           <Ways onPick={pickWay} busy={locating ? 'near' : null} error={wayError} />
+        </main>
+      )}
+
+      {view === 'journey' && way === 'search' && (
+        <main>
+          <div className="wrap" style={{ paddingTop: 28 }}>
+            <div className="flex items-center justify-between">
+              <button type="button" onClick={restart} className="ghost">
+                Home
+              </button>
+              <button type="button" onClick={() => pickWay('borough')} className="ghost">
+                Pick a borough instead
+              </button>
+            </div>
+            <h1 className="poster" style={{ marginTop: 26 }}>
+              Search in your words
+            </h1>
+          </div>
           <SmartSearch
+            autoFocus
             neighborhoodsByBorough={neighborhoodsByBorough}
             onSearch={(f) => {
               setFilters(f)
               go('results')
             }}
           />
+        </main>
+      )}
+
+      {view === 'journey' && way === 'borough' && (
+        <main>
           <TapJourney
             key={journeyKey}
             initial={filters}
@@ -355,7 +376,10 @@ export default function App() {
             neighborhoodsByBorough={neighborhoodsByBorough}
             onChange={setFilters}
             onHome={restart}
-            onEdit={() => go('journey')}
+            onEdit={() => {
+              setWay('borough')
+              go('journey')
+            }}
             onAdd={addToCart}
             loading={loading}
           />

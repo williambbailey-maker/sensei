@@ -112,7 +112,7 @@ export function TapJourney({
   const shops = (n: number | undefined) => (n ? `${n} shop${n === 1 ? '' : 's'}` : undefined)
 
   return (
-    <div id="journey" className="wrap" style={{ paddingTop: 40 }}>
+    <div id="journey" className="wrap" style={{ paddingTop: 28 }}>
       <div className="flex items-center justify-between">
         <button type="button" onClick={() => goBack(step)} className="ghost">
           {step === 0 ? 'Home' : 'Back'}
