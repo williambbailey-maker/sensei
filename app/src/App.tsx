@@ -507,9 +507,12 @@ export default function App() {
           <b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to
           each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change
           the order of results.
-          <br />
-          <br />
-          sensei.nyc · hello@sensei.nyc
+        </p>
+        <p className="contact">
+          <a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a>
+          <a href="#" aria-label="Instagram" className="ig" onClick={(e) => e.preventDefault()}>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
         </p>
         <SenseiBullets />
       </footer>

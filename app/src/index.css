@@ -481,6 +481,19 @@ select:focus {
 .foot b {
   color: #fff;
 }
+/* The contact line: email centered, Instagram beside it. */
+.contact {
+  @apply flex items-center justify-center;
+  gap: 16px;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+.contact .ig {
+  display: inline-flex;
+  color: #fff;
+}
 
 /* The one-time "swipe back" hint under the header. */
 .back-hint {
