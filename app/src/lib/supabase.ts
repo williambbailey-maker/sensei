@@ -82,12 +82,15 @@ export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise
   return rows.concat(...rest)
 }
 
-// How many products are in stock across the city — the hero's "items in
-// stock" stat. A head-only count; no rows come back.
-export async function fetchProductCount(): Promise<number | null> {
-  const { count, error } = await supabase.from('products').select('id', { count: 'exact', head: true }).eq('in_stock', true)
+// The site's headline numbers, computed in the database (site_stats) from
+// one definition used everywhere, the SEO pages included: a shop is an
+// active store with at least one item in stock; neighborhoods are those with
+// such a shop; items are in-stock products at those shops.
+export type SiteStats = { shops: number; neighborhoods: number; in_stock: number }
+export async function fetchSiteStats(): Promise<SiteStats> {
+  const { data, error } = await supabase.rpc('site_stats')
   if (error) throw error
-  return count
+  return data as SiteStats
 }
 
 // Which stores a filter set can draw from: a neighborhood, a borough, the
@@ -115,9 +118,10 @@ function scopeStores(f: Filters, stores: StoreLite[]): string[] | null {
 // neighborhood chips) — independent of whichever product rows we sampled.
 export async function fetchStores(): Promise<StoreLite[]> {
   const { data, error } = await supabase
-    .from('stores')
+    // live_stores = active stores with at least one item in stock, so the
+    // journey and filters never offer a shop with nothing to show.
+    .from('live_stores')
     .select('id,slug,name,borough,neighborhood,lat,lng')
-    .eq('active', true)
   if (error) throw error
   return (data ?? []) as unknown as StoreLite[]
 }

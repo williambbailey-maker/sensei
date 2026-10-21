@@ -509,6 +509,12 @@ select:focus {
   margin-top: 8px;
 }
 
+/* Results: "Load more" under the list (25 at a time). */
+.load-more {
+  margin-top: 28px;
+  max-width: 420px;
+}
+
 /* Google Maps directions link (product detail), same as the SEO pages. */
 .dir {
   font-size: 14px;

@@ -10,7 +10,7 @@ import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
-import { fetchDeals, fetchProductCount, fetchProductsFor, fetchStores } from './lib/supabase'
+import { fetchDeals, fetchProductsFor, fetchSiteStats, fetchStores, type SiteStats } from './lib/supabase'
 import { prettyStore } from './lib/labels'
 import { track } from './lib/analytics'
 import {
@@ -35,7 +35,7 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
-  const [productCount, setProductCount] = useState<number | null>(null)
+  const [siteStats, setSiteStats] = useState<SiteStats | null>(null)
   const [loadError, setLoadError] = useState(false)
   // True while the products for the current filter set are being fetched, so
   // the results screen can say "loading" instead of a false "nothing matched".
@@ -61,7 +61,7 @@ export default function App() {
   useEffect(() => {
     fetchStores().then(setStores).catch(() => {})
     fetchDeals().then(setDeals).catch(() => {})
-    fetchProductCount().then(setProductCount).catch(() => {})
+    fetchSiteStats().then(setSiteStats).catch(() => {})
   }, [])
 
   // Deep links from the SEO pages (/?brand=… /?store=… /?neighborhood=…
@@ -339,8 +339,11 @@ export default function App() {
   }, [pendingScroll, view, loading])
   const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : view === 'journey' ? way : null
 
-  const storeCount = stores.length > 0 ? stores.length : null
-  const hoodTotal = stores.length > 0 ? Object.keys(neighborhoodCounts).length : null
+  // Headline numbers come from site_stats; the store list (same definition)
+  // is the fallback while it loads.
+  const storeCount = siteStats?.shops ?? (stores.length > 0 ? stores.length : null)
+  const hoodTotal = siteStats?.neighborhoods ?? (stores.length > 0 ? Object.keys(neighborhoodCounts).length : null)
+  const productCount = siteStats?.in_stock ?? null
 
   return (
     <div className="min-h-full">

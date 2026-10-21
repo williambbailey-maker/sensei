@@ -28,10 +28,15 @@ export function Results({
   loading?: boolean
 }) {
   const ranked = useMemo(() => rankProducts(products, filters), [products, filters])
-  // Render a bounded slice so a broad match set (thousands of products) stays
-  // smooth; the heading still reports the true total.
-  const CAP = 240
-  const shown = ranked.slice(0, CAP)
+  // Show 25 at a time with a "Load more" button; the heading still reports
+  // the true total. A new search or filter (a new ranked list) starts back at
+  // 25: the limit is remembered per ranked list, so there's no flash of the
+  // old length on the first render.
+  const PAGE = 25
+  const [lim, setLim] = useState<{ list: Product[]; n: number }>({ list: ranked, n: PAGE })
+  const limit = lim.list === ranked ? lim.n : PAGE
+  const showUpTo = useCallback((n: number) => setLim({ list: ranked, n }), [ranked])
+  const shown = useMemo(() => ranked.slice(0, limit), [ranked, limit])
 
   const where = filters.store
     ? (filters.storeName ?? prettyStore(filters.store))
@@ -57,14 +62,16 @@ export function Results({
       setOpenIndex((i) => {
         if (i == null) return i
         const n = i + delta
-        if (n < 0 || n >= shown.length) return i
-        track('product_view', { ...eventProps(shown[n]), via: 'swipe' })
+        if (n < 0 || n >= ranked.length) return i
+        // Swiping past the last loaded card loads the next 25 behind it.
+        if (n >= limit) showUpTo(limit + PAGE)
+        track('product_view', { ...eventProps(ranked[n]), via: 'swipe' })
         return n
       })
     },
-    [shown],
+    [ranked, limit, showUpTo],
   )
-  const openProductItem = openIndex != null ? shown[openIndex] : null
+  const openProductItem = openIndex != null ? ranked[openIndex] : null
 
   // "Also at N shops" / "Lowest nearby": the same product (brand + name) across
   // the loaded result set, which already spans every shop in scope.
@@ -128,7 +135,7 @@ export function Results({
             <ProductDetail
               p={openProductItem}
               index={openIndex}
-              total={shown.length}
+              total={ranked.length}
               userLoc={filters.userLoc}
               alsoAt={same.shops}
               lowest={same.lowest}
@@ -137,10 +144,22 @@ export function Results({
               onAdd={onAdd}
             />
           )}
-          {ranked.length > CAP && (
-            <p className="meta" style={{ marginTop: 20 }}>
-              Showing the first {CAP} of {ranked.length.toLocaleString()}. Refine above to narrow it down.
-            </p>
+          {shown.length < ranked.length && (
+            <div className="load-more">
+              <button
+                type="button"
+                className="cta ghost"
+                onClick={() => {
+                  track('load_more', { shown: shown.length, total: ranked.length })
+                  showUpTo(limit + PAGE)
+                }}
+              >
+                <span>Load more</span>
+              </button>
+              <p className="meta" style={{ marginTop: 10 }}>
+                Showing {shown.length.toLocaleString()} of {ranked.length.toLocaleString()}
+              </p>
+            </div>
           )}
         </>
       )}
