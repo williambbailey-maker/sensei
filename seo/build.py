@@ -213,9 +213,10 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .notice.drop .ghost{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--mist);cursor:pointer}
 .bullets.sm{gap:8px;margin-top:24px}.bullets.sm .mb{width:26px;height:26px;font-size:13px}
 .ft{margin:34px 0 0;font-size:12px;color:var(--mist);line-height:1.6}
-.ft .contact{display:flex;align-items:center;justify-content:center;gap:16px;margin:24px 0 0;font-size:14px;font-weight:700;color:var(--ink)}
+.ft .contact{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;margin:28px 0 0;font-size:14px;font-weight:700;color:var(--ink)}
 .ft .contact a{color:var(--ink);text-decoration:none}
-.ft .contact .ig{display:inline-flex}
+.ft .contact span{font-weight:400;color:var(--mist)}
+.ft .contact .ig{display:inline-flex;margin-top:8px}
 .ft b{color:var(--ink)}
 /* page heads */
 .crumb{font-size:13px;font-weight:400;color:var(--mist);margin:30px 0 0}
@@ -449,7 +450,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <p class="dd ok" id="drop-ok" hidden>You're on the list. The first drop lands next week.</p>
 </div>
 <footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.
-<p class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></p>
+<div class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="tel:+12125550100">(212) 555-0100</a><span>420 Broadway, New York, NY 10010</span><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="bullets sm" aria-label="Sensei"><span class="mb" style="background:var(--s)">S</span><span class="mb" style="background:var(--b)">E</span><span class="mb y" style="background:var(--y)">N</span><span class="mb" style="background:var(--s)">S</span><span class="mb" style="background:var(--b)">E</span><span class="mb" style="background:var(--r)">I</span></div></footer>
 </div>{menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """

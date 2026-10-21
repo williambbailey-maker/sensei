@@ -508,12 +508,14 @@ export default function App() {
           each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change
           the order of results.
         </p>
-        <p className="contact">
+        <div className="contact">
           <a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a>
+          <a href="tel:+12125550100">(212) 555-0100</a>
+          <span>420 Broadway, New York, NY 10010</span>
           <a href="#" aria-label="Instagram" className="ig" onClick={(e) => e.preventDefault()}>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
-        </p>
+        </div>
         <SenseiBullets />
       </footer>
     </div>

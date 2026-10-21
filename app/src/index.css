@@ -483,16 +483,21 @@ select:focus {
 }
 /* The contact line: email centered, Instagram beside it. */
 .contact {
-  @apply flex items-center justify-center;
-  gap: 16px;
-  margin-top: 24px;
+  @apply flex flex-col items-center text-center;
+  gap: 8px;
+  margin-top: 28px;
   font-size: 14px;
   font-weight: 700;
   color: #fff;
 }
+.contact span {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
 .contact .ig {
   display: inline-flex;
   color: #fff;
+  margin-top: 8px;
 }
 
 /* The one-time "swipe back" hint under the header. */
