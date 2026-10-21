@@ -19,6 +19,29 @@ export function Bullets() {
   )
 }
 
+// The footer sign-off: six small bullets spelling SENSEI in their line
+// colors (S shuttle grey, E blue, N yellow; there is no I line, so it takes
+// the 1/2/3 red).
+export function SenseiBullets() {
+  const letters: { l: string; c: string; dark?: boolean }[] = [
+    { l: 'S', c: 'var(--s)' },
+    { l: 'E', c: 'var(--b)' },
+    { l: 'N', c: 'var(--y)', dark: true },
+    { l: 'S', c: 'var(--s)' },
+    { l: 'E', c: 'var(--b)' },
+    { l: 'I', c: 'var(--r)' },
+  ]
+  return (
+    <div className="bullets bullets-sm" aria-label="Sensei" style={{ marginTop: 24 }}>
+      {letters.map((x, i) => (
+        <span key={i} className={`mb ${x.dark ? 'y' : ''}`} style={{ background: x.c }}>
+          {x.l}
+        </span>
+      ))}
+    </div>
+  )
+}
+
 function short(n: number | null): string {
   if (n == null) return '—'
   return n >= 1000 ? `${Math.round(n / 1000)}k` : String(n)

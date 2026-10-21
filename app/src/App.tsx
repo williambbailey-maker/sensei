@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
-import { Masthead } from './components/Masthead'
+import { Masthead, SenseiBullets } from './components/Masthead'
 import { Ways, type Way } from './components/Ways'
 import { Menu, type MenuTarget } from './components/Menu'
 import { requestLocation } from './lib/geo'
@@ -500,8 +500,7 @@ export default function App() {
       )}
 
       <footer className="wrap" style={{ paddingBottom: 60 }}>
-        <div className="rule" />
-        <div id="drop" style={{ marginTop: 34 }}>
+        <div id="drop" className="notice" style={{ marginTop: 40 }}>
           <Newsletter source="footer" compact />
         </div>
         <p className="foot">
@@ -512,6 +511,7 @@ export default function App() {
           <br />
           sensei.nyc · hello@sensei.nyc
         </p>
+        <SenseiBullets />
       </footer>
     </div>
   )

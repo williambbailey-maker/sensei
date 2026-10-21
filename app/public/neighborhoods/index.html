@@ -81,6 +81,15 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .board{margin:18px 0 0;border-top:2px solid var(--ink)}
 .board a,.board div{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;letter-spacing:-.02em}
 .board span:last-child{font-weight:400;color:var(--mist);font-size:13px}
+.notice.drop{margin-top:40px}
+.notice.drop .k{margin:0}
+.notice.drop .dd{margin:6px 0 0;font-size:13px;color:var(--mist);line-height:1.5}
+.notice.drop .inp{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--line-strong);padding-bottom:10px;margin-top:14px}
+.notice.drop .inp:focus-within{border-bottom-color:var(--ink)}
+.notice.drop input{flex:1;min-width:0;background:none;border:0;color:var(--ink);font:inherit;font-size:17px;outline:none}
+.notice.drop input::placeholder{color:var(--mist)}
+.notice.drop .ghost{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--mist);cursor:pointer}
+.bullets.sm{gap:8px;margin-top:24px}.bullets.sm .mb{width:26px;height:26px;font-size:13px}
 .ft{margin:34px 0 0;font-size:12px;color:var(--mist);line-height:1.6}
 .ft b{color:var(--ink)}
 /* page heads */
@@ -182,7 +191,14 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 <div class="sh">Explore Sensei</div><div class="xgrid"><a class="xl" href="/dispensaries/qube-manhattan/"><span class="xk">Dispensary</span><div class="xv">Qube - Manhattan</div><div class="xd">Midtown, Manhattan</div></a><a class="xl" href="/neighborhoods/midtown/"><span class="xk">Neighborhood</span><div class="xv">Midtown</div><div class="xd">7 shops · Manhattan</div></a><a class="xl" href="/brands/ayrloom/"><span class="xk">Brand</span><div class="xv">ayrloom</div><div class="xd">63 stores stock it</div></a><a class="xl" href="/nyc/concentrates/"><span class="xk">Category</span><div class="xv">Concentrates</div><div class="xd">1323 across NYC</div></a></div>
 </main>
 <div class="rule"></div>
-<footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc</footer>
+<div class="notice drop" id="drop">
+<div class="k">Get the weekly drop<small>a mailing list</small></div>
+<p class="dd">Deals and standouts by email, once a week. No account, no spam, leave any time.</p>
+<form class="inp" id="drop-form"><input type="email" name="email" placeholder="Your email for the weekly drop" aria-label="Email address for the weekly drop mailing list" autocomplete="email" required><button type="submit" class="ghost">Join the list</button></form>
+<p class="dd ok" id="drop-ok" hidden>You're on the list. The first drop lands next week.</p>
+</div>
+<footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc
+<div class="bullets sm" aria-label="Sensei"><span class="mb" style="background:var(--s)">S</span><span class="mb" style="background:var(--b)">E</span><span class="mb y" style="background:var(--y)">N</span><span class="mb" style="background:var(--s)">S</span><span class="mb" style="background:var(--b)">E</span><span class="mb" style="background:var(--r)">I</span></div></footer>
 </div>
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
 <div class="mbody">
@@ -248,6 +264,7 @@ posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,
 var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};
 if(CFG.category)base.category=CFG.category;posthog.register(base);PH=true;}catch(e){}}
 function ev(name,p){p=p||{};sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
+var df=document.getElementById('drop-form');if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}
 try{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){ev('product_impression',cp(x.target));io.unobserve(x.target);}});},{threshold:0.5});

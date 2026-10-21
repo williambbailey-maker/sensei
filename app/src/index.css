@@ -237,6 +237,20 @@ select:focus {
   height: 30px;
   font-size: 15px;
 }
+.bullets-sm {
+  gap: 8px;
+}
+.bullets-sm .mb {
+  width: 26px;
+  height: 26px;
+  font-size: 13px;
+}
+
+/* The notice box (the mailing list in the footer). */
+.notice {
+  border: 2px solid #fff;
+  padding: 18px 20px;
+}
 
 /* The only list treatment: hairline rows. */
 .row {
