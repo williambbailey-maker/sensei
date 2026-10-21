@@ -112,7 +112,7 @@ export function TapJourney({
   const shops = (n: number | undefined) => (n ? `${n} shop${n === 1 ? '' : 's'}` : undefined)
 
   return (
-    <div id="journey" className="wrap" style={{ paddingTop: 28 }}>
+    <div id="journey" className="wrap" style={{ paddingTop: 36 }}>
       <div className="flex items-center justify-between">
         <button type="button" onClick={() => goBack(step)} className="ghost">
           {step === 0 ? 'Home' : 'Back'}
@@ -204,7 +204,7 @@ export function TapJourney({
         </Step>
       )}
 
-      <div className="mt-7 flex flex-col items-start gap-4">
+      <div className="flex flex-col items-start gap-5" style={{ marginTop: 40 }}>
         <button type="button" onClick={skip} className="ghost">
           {step < LAST ? 'Skip this step' : 'Show my products'}
         </button>
@@ -222,10 +222,10 @@ export function TapJourney({
 function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="poster" style={{ marginTop: 18 }}>
+      <h2 className="poster" style={{ marginTop: 40 }}>
         {title}
       </h2>
-      <p className="meta" style={{ marginTop: 10, marginBottom: 14 }}>
+      <p className="meta" style={{ marginTop: 14, marginBottom: 26 }}>
         {hint}
       </p>
       {children}

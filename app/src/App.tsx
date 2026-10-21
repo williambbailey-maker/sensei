@@ -499,8 +499,8 @@ export default function App() {
         </button>
       )}
 
-      <footer className="wrap" style={{ paddingBottom: 60 }}>
-        <div id="drop" className="notice" style={{ marginTop: 40 }}>
+      <footer className="wrap" style={{ paddingBottom: 80 }}>
+        <div id="drop" className="notice" style={{ marginTop: 96 }}>
           <Newsletter source="footer" compact />
         </div>
         <p className="foot">
