@@ -1,18 +1,18 @@
 // The hero, exactly as design/subway-landing.html: headline, lede, six line
 // bullets, the one white CTA, three stats. The age gate reuses Bullets.
 
-// Three line bullets that spell THC, in their real line colors: T is the
-// Second Avenue turquoise, H and C the Eighth Avenue blue.
+// Three line bullets that spell THC, in three greens: the Lexington Avenue
+// green, the Crosstown light green, and a deep green between them.
 export function Bullets() {
   return (
     <div className="bullets" aria-hidden="true">
-      <span className="mb" style={{ background: 'var(--t)' }}>
+      <span className="mb" style={{ background: '#00933C' }}>
         T
       </span>
-      <span className="mb" style={{ background: 'var(--b)' }}>
+      <span className="mb" style={{ background: '#6CBE45' }}>
         H
       </span>
-      <span className="mb" style={{ background: 'var(--b)' }}>
+      <span className="mb" style={{ background: '#1B5E3A' }}>
         C
       </span>
     </div>

@@ -701,7 +701,7 @@ def build_home(paths):
     body = f"""
 <h1>Every<br>menu.<br>One stop.</h1>
 <p class="lede">All {n_shops} licensed dispensaries in New York, compared nightly. Price and potency as labeled.</p>
-<div class="bullets"><span class="mb" style="background:var(--t)">T</span><span class="mb" style="background:var(--b)">H</span><span class="mb" style="background:var(--b)">C</span></div>
+<div class="bullets"><span class="mb" style="background:#00933C">T</span><span class="mb" style="background:#6CBE45">H</span><span class="mb" style="background:#1B5E3A">C</span></div>
 <a class="cta" href="{APP}/?near=1" data-ev="menu"><span>Shops near me</span><span>→</span></a>
 <div class="stats"><div><b>{n_shops}</b><span>licensed shops</span></div><div><b>{products_k}</b><span>items in stock</span></div><div><b>{n_hoods}</b><span>neighborhoods</span></div></div>
 <div class="rule"></div>
