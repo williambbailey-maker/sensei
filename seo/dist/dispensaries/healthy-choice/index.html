@@ -1,180 +1,183 @@
-<!doctype html><html lang="en" class="paper"><head><meta charset="utf-8">
+<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light"><meta name="theme-color" content="#F2C230">
+<meta name="color-scheme" content="dark"><meta name="theme-color" content="#0B0B0B">
 <title>Broadway Strains — Cannabis Menu, Prices &amp; Deals | Sensei</title><meta name="description" content="Broadway Strains in Harlem &amp; Washington Heights: 498 products in stock from 83 brands, from $4.95. Compare prices across NYC dispensaries on Sensei.">
 <link rel="canonical" href="https://sensei.nyc/dispensaries/healthy-choice/">
 <meta property="og:type" content="website"><meta property="og:title" content="Broadway Strains — Cannabis Menu, Prices &amp; Deals | Sensei">
 <meta property="og:description" content="Broadway Strains in Harlem &amp; Washington Heights: 498 products in stock from 83 brands, from $4.95. Compare prices across NYC dispensaries on Sensei."><meta property="og:url" content="https://sensei.nyc/dispensaries/healthy-choice/">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--field:#F2C230;--deep:#E3B223;--paper:#F7F3EA;--paper-deep:#ECE6D8;--ink:#141414;--mist:rgba(20,20,20,.62);--line:rgba(20,20,20,.22);--line-strong:rgba(20,20,20,.5);
---font:'Barlow Condensed',ui-sans-serif,system-ui,sans-serif;color-scheme:light}
+:root{--field:#0B0B0B;--deep:#1E1E1E;--ink:#FFFFFF;--mist:rgba(255,255,255,.6);--line:rgba(255,255,255,.16);--line-strong:rgba(255,255,255,.4);
+--r:#EE352E;--g:#00933C;--b:#0039A6;--y:#FCCC0A;--o:#FF6319;--gr:#A7A9AC;--v:#B933AD;--lg:#6CBE45;
+--font:"Helvetica Neue",Helvetica,Inter,Arial,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 *{box-sizing:border-box}
-html{background:var(--field)}
-/* Reading pages (everything but the home) sit on cream; the yellow is kept
-   for the one action block, the footer band and the age gate. */
-html.paper,html.paper body,html.paper .hd{background:var(--paper)}
-html.paper .tile{background:var(--paper-deep)}
-html.paper .hero{background:var(--field);margin:28px -24px 0;padding:28px 24px 32px}
-html.paper .ft{background:var(--field);border-top:0}
-body{margin:0;background:var(--field);color:var(--ink);font-family:var(--font);font-size:14px;font-weight:600;line-height:1.5;text-transform:uppercase;-webkit-font-smoothing:antialiased;position:relative}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:multiply;z-index:1;
- background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .05 0 0 0 .6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
+html,body{margin:0;background:var(--field);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+body{font-size:15px;line-height:1.4}
 a{color:inherit;text-decoration:none}
-button{font-family:inherit;text-transform:inherit;cursor:pointer;background:none;border:0;color:inherit;padding:0}
-.shell{max-width:420px;margin:0 auto;position:relative;z-index:2}
-/* roles */
-.mark{font-size:96px;font-weight:700;line-height:.86;letter-spacing:.04em;text-align:center;margin:0}
-.poster{font-size:22px;font-weight:700;letter-spacing:.1em;text-align:center;line-height:1.15;margin:0}
-.label{font-size:15px;font-weight:700;letter-spacing:.08em}
-.meta{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
-.ghost{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--mist);display:inline-block}
-.ghost:hover{color:var(--ink)}
-.body{font-size:14px;font-weight:600;line-height:1.6;color:var(--mist)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px;text-align:center}
-.stat .n,.stat-v{display:block;font-size:22px;font-weight:700;color:var(--ink);line-height:1.1;font-variant-numeric:tabular-nums}
-.stat .k,.stat-k{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-bottom:4px}
-.stat{display:flex;flex-direction:column-reverse}
-.rule{display:flex;align-items:center;justify-content:center;gap:12px;font-size:18px;font-weight:700;letter-spacing:.12em;margin:18px 0}
-.rule::before,.rule::after{content:"";width:30px;height:2px;background:var(--ink);flex:none}
-.dotcta{display:inline-flex;align-items:center;gap:.5em;font-size:22px;font-weight:700;letter-spacing:.1em;line-height:1.15;color:var(--ink);text-align:center;transition:transform .12s}
-.dotcta::after{content:'\2192'}
-.dotcta:active{transform:translateX(3px)}
+button{font-family:inherit;font-size:inherit;letter-spacing:inherit;cursor:pointer;background:none;border:0;color:inherit;padding:0;text-align:left}
+.wrap{max-width:520px;margin:0 auto;padding:0 28px 60px}
+@media (min-width:700px){.wrap{max-width:560px}}
+/* chrome */
+.bar{height:10px;background:var(--ink);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0;font-size:14px;font-weight:700}
+.top .tl{display:flex;align-items:center;gap:12px}
+.top .tr{font-weight:400;color:var(--mist)}
+.wm{font-size:14px;font-weight:700}
 .burger{display:block;width:18px;height:12px;position:relative;flex:none}
 .burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
-.burger::before{top:0}.burger::after{top:7px}
-/* chrome */
-.hd{display:flex;align-items:center;justify-content:space-between;padding:32px 24px 8px;background:var(--field)}
-.wm{font-size:21px;font-weight:700;letter-spacing:.08em}
-.hd .est{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
-.wrap{padding:18px 24px}
-.crumb{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin:0 0 10px;text-align:center}
+.burger::before{top:1px}.burger::after{top:8px}
+.burger-x::before,.burger-x::after{top:5px;left:-2px;width:22px}
+.burger-x::before{transform:rotate(45deg)}.burger-x::after{transform:rotate(-45deg)}
+/* roles */
+.mark{font-size:clamp(64px,19vw,88px);font-weight:700;letter-spacing:-.05em;line-height:.9;margin:54px 0 0}
+.lede{font-size:21px;font-weight:400;line-height:1.3;margin:22px 0 0;max-width:22ch;letter-spacing:-.015em}
+.lede.sm{font-size:17px;max-width:34ch;margin-top:14px}
+.poster,h1{font-size:32px;font-weight:700;letter-spacing:-.03em;line-height:1;margin:14px 0 0}
+main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-height:.9;margin:54px 0 0}
+.label{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.meta{font-size:13px;font-weight:400;color:var(--mist)}
+.ghost{font-size:14px;font-weight:400;color:var(--mist);display:inline-block}
+.ghost:hover{color:var(--ink)}
+.k{font-size:13px;font-weight:700;margin:26px 0 0}
+.k small{font-weight:400;color:var(--mist);margin-left:10px;font-size:12px}
+.rule{height:2px;background:var(--ink);margin:40px 0 0}
+.hair{height:1px;background:var(--line)}
+.cta{display:flex;justify-content:space-between;align-items:center;width:100%;background:var(--ink);color:#111;padding:18px 20px;font-size:19px;font-weight:700;letter-spacing:-.025em;margin:28px 0 0}
+.cta span:last-child{font-size:26px;font-weight:400;line-height:1}
+.cta.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:30px 0 0;gap:18px}
+.stats b,.stat .n{display:block;font-size:40px;font-weight:700;letter-spacing:-.05em;line-height:1}
+.stats span,.stat .k{display:block;font-size:13px;color:var(--mist);margin-top:6px;font-weight:400}
+.stat{display:flex;flex-direction:column}
+.stat .n{color:var(--ink)}
+/* line bullets + routes (the only colors) */
+.bullets{display:flex;gap:10px;margin:34px 0 0}
+.mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:21px;color:#fff;letter-spacing:-.03em;flex:none}
+.mb.y{color:#111}
+.mb.s{width:30px;height:30px;font-size:15px}
+.shops .row:nth-child(8n+1) .mb.s{background:var(--r)}
+.shops .row:nth-child(8n+2) .mb.s{background:var(--g)}
+.shops .row:nth-child(8n+3) .mb.s{background:var(--b)}
+.shops .row:nth-child(8n+4) .mb.s{background:var(--y);color:#111}
+.shops .row:nth-child(8n+5) .mb.s{background:var(--o)}
+.shops .row:nth-child(8n+6) .mb.s{background:var(--gr)}
+.shops .row:nth-child(8n+7) .mb.s{background:var(--v)}
+.shops .row:nth-child(8n+8) .mb.s{background:var(--lg)}
+.route{position:relative;margin:26px 0 0;padding-left:34px}
+.route:before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:6px;background:var(--line-color,#EE352E);border-radius:3px}
+.stop{position:relative;display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;text-decoration:none;color:var(--ink)}
+.stop:before{content:"";position:absolute;left:-30px;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:var(--ink);border:3px solid var(--field);box-shadow:0 0 0 2px var(--ink)}
+.stop .n{font-size:19px;font-weight:700;letter-spacing:-.025em}
+.stop .c{font-size:13px;color:var(--mist);font-weight:400}
+.stop.xfer:before{width:18px;height:18px;left:-32px}
+.notice{border:2px solid var(--ink);padding:18px 20px;margin:28px 0 0}
+.notice h3{margin:0;font-size:16px;font-weight:700}
+.notice ol{margin:12px 0 0;padding:0;list-style:none}
+.notice li{display:flex;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.35}
+.notice li b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#111;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.board{margin:18px 0 0;border-top:2px solid var(--ink)}
+.board a,.board div{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;letter-spacing:-.02em}
+.board span:last-child{font-weight:400;color:var(--mist);font-size:13px}
+.exit{display:flex;align-items:center;justify-content:space-between;margin:40px 0 0;padding:16px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);font-size:15px;font-weight:700}
+.exit span:last-child{font-weight:400;color:var(--mist)}
+.ft{margin:34px 0 0;font-size:12px;color:var(--mist);line-height:1.6}
+.ft b{color:var(--ink)}
+/* page heads */
+.crumb{font-size:13px;font-weight:400;color:var(--mist);margin:30px 0 0}
 .crumb a{color:var(--mist)}
-.kicker{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin:0;text-align:center}
-h1{font-size:44px;font-weight:700;letter-spacing:.02em;line-height:1;margin:8px 0 0;text-align:center;text-wrap:balance}
-.lede{font-size:14px;font-weight:600;line-height:1.6;color:var(--mist);margin:12px auto 0;max-width:60ch;text-align:center}
-/* editorial copy — sentence case */
-.intro{margin-top:18px;max-width:62ch;text-transform:none}
-.intro p{margin:0 0 12px;font-size:15px;font-weight:600;line-height:1.6;color:var(--mist);text-transform:none}
-.intro p:first-child{font-size:16px;color:var(--ink)}
-.know{margin:0;padding:0;list-style:none;max-width:62ch}
-.know li{margin:0 0 8px;font-size:14px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none;padding-left:22px;position:relative}
-.know li::before{content:"\2192";position:absolute;left:0;color:var(--ink);font-weight:700}
-.faq{display:flex;flex-direction:column}
-.qa{border-bottom:2px solid var(--line);padding:0}
-.qa summary{cursor:pointer;list-style:none;padding:14px 0;font-size:15px;font-weight:700;letter-spacing:.08em;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.kicker{font-size:13px;font-weight:700;margin:26px 0 0}
+.kicker+h1{margin-top:12px}
+/* editorial copy */
+.intro{margin-top:22px}
+.intro p{margin:0 0 12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--ink)}
+.intro p:first-child{font-size:17px;line-height:1.35;letter-spacing:-.015em;margin-bottom:16px}
+.know{margin:14px 0 0;padding:0;list-style:none}
+.know li{margin:0 0 8px;font-size:15px;font-weight:400;line-height:1.45;padding-left:22px;position:relative}
+.know li::before{content:"\2192";position:absolute;left:0;font-weight:700}
+.faq{display:flex;flex-direction:column;margin-top:8px}
+.qa{border-bottom:1px solid var(--line)}
+.qa summary{cursor:pointer;list-style:none;padding:14px 0;font-size:16px;font-weight:700;letter-spacing:-.02em;display:flex;justify-content:space-between;gap:12px;align-items:center}
 .qa summary::-webkit-details-marker{display:none}
-.qa summary::after{content:"+";font-weight:700;font-size:20px;flex:none}
+.qa summary::after{content:"+";font-weight:400;font-size:22px;flex:none;color:var(--mist)}
 .qa[open] summary::after{content:"\2013"}
-.qa p{margin:0;padding:0 0 14px;font-size:14px;font-weight:600;line-height:1.55;color:var(--mist);text-transform:none}
-/* hero */
-.hero{text-align:center;padding:28px 0 8px;margin-top:22px}
-.hero .bn{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
-.hero h2{font-size:22px;font-weight:700;letter-spacing:.1em;line-height:1.15;margin:8px 0}
-.hero p{font-size:14px;font-weight:600;line-height:1.6;color:var(--mist);margin:0 auto 16px;max-width:40ch}
-.hero p b{color:var(--ink)}
-.cta{display:inline-flex;align-items:center;gap:.5em;font-size:22px;font-weight:700;letter-spacing:.1em;line-height:1.15;color:var(--ink);transition:transform .12s}
-.cta::after{content:'\2192'}
-.cta:active{transform:translateX(3px)}
-.sh{font-size:22px;font-weight:700;letter-spacing:.1em;text-align:center;line-height:1.15;margin:44px 0 10px}
-/* rows */
-.card{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:2px solid var(--line)}
-.tile{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;border:2px solid var(--ink);background:var(--deep);display:block}
-.tile:empty{background:transparent;border:1px solid var(--line-strong)}
-.tile img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;display:block}
+.qa p{margin:0;padding:0 0 14px;font-size:15px;font-weight:400;line-height:1.55;color:var(--mist)}
+/* hero: rule, kicker, title, line, the one white CTA */
+.hero{margin-top:40px;border-top:2px solid var(--ink)}
+.hero .bn{font-size:13px;font-weight:700;margin:26px 0 0}
+.hero h2{font-size:32px;font-weight:700;letter-spacing:-.03em;line-height:1;margin:14px 0 0}
+.hero p{font-size:15px;color:var(--mist);margin:12px 0 0;line-height:1.45}
+/* section heads: a 2px rule, then a kicker */
+.sh{font-size:13px;font-weight:700;margin:40px 0 0}
+.sh::before{content:"";display:block;height:2px;background:var(--ink);margin-bottom:26px}
+.sh+.card,.sh+.shops,.sh+.bars,.sh+.chips,.sh+.xgrid,.sh+.faq,.sh+.know{margin-top:14px}
+/* product rows */
+.card{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)}
+.tile{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;border:1px solid var(--line);background:var(--deep);display:block}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
 .card .l{flex:1;min-width:0}
-.card .nm{font-size:15px;font-weight:700;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card .mt{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:2px}
-.tag{display:inline-block;margin-top:2px;margin-right:8px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
-.tag+.tag::before{content:"\00b7\00a0";}
+.card .nm{font-size:17px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .mt{font-size:13px;color:var(--mist);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card .r{text-align:right;white-space:nowrap}
-.card .pr{font-size:15px;font-weight:700;letter-spacing:.08em;font-variant-numeric:tabular-nums}
-.card .pg{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:1px}
-.chips{display:flex;gap:6px 18px;flex-wrap:wrap}
-.chip{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--mist);border-bottom:2px solid transparent;padding:4px 0}
-.chip .c{font-variant-numeric:tabular-nums;margin-left:4px}
+.card .pr{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.card .pg{font-size:13px;color:var(--mist)}
+/* tabs: one scrolling row, scrollbar hidden */
+.chips{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{font-size:13px;font-weight:400;color:var(--mist);border-bottom:2px solid transparent;padding:6px 0;white-space:nowrap;flex:none}
+.chip .c{margin-left:4px}
 .chip.on,.chip:hover{color:var(--ink);border-bottom-color:var(--ink)}
-.row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:2px solid var(--line)}
-.row .l{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
-.row .l::before{content:"\2192";font-weight:700;flex:none;width:14px}
-.row:first-of-type .l::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);margin:0 2px}
-.row .snm{font-size:15px;font-weight:700;letter-spacing:.08em}
-.row .sd{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:2px}
-.row .sn{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);white-space:nowrap;text-align:right}
-.row .sn b{display:block;color:var(--ink);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+/* shop rows: 30px line bullet with the initial */
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.row .l{display:flex;align-items:center;gap:14px;min-width:0;flex:1}
+.row .snm{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.row .sd{font-size:13px;color:var(--mist);margin-top:2px}
+.row .sn{font-size:13px;color:var(--mist);white-space:nowrap;text-align:right}
+.row .sn b{display:block;color:var(--ink);font-size:17px;font-weight:700;letter-spacing:-.02em}
+/* category bars */
 .bars{display:flex;flex-direction:column}
-.bar{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:2px solid var(--line)}
-.bar .bk{width:96px;font-size:15px;font-weight:700;letter-spacing:.08em;flex:none}
-.bar .bt{flex:1;height:2px;background:var(--line);min-width:0}
-.bar .bf{display:block;height:100%;background:var(--ink)}
-.bar .bn{width:46px;text-align:right;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);flex:none;font-variant-numeric:tabular-nums}
+.brow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.brow .bk{width:96px;font-size:15px;font-weight:700;letter-spacing:-.02em;flex:none}
+.brow .bt{flex:1;height:2px;background:var(--line);min-width:0}
+.brow .bf{display:block;height:100%;background:var(--ink)}
+.brow .bn{width:46px;text-align:right;font-size:13px;color:var(--mist);flex:none}
+/* spec grid */
 .xgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
-.xl{display:block;padding:14px 0;border-bottom:2px solid var(--line)}
-.xl .xk{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
-.xl .xv{font-size:15px;font-weight:700;letter-spacing:.08em;margin-top:4px}
-.xl .xd{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist);margin-top:2px}
-/* masthead (home + age gate) */
-.mast{text-align:center;padding:16px 0 0}
-.mast .mark{margin-top:24px}
-.mast .poster{margin-top:16px}
-.mast .desc{margin:14px auto 0;max-width:36ch;font-size:16px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none;text-align:center}
-.mast .meta{display:block;margin-top:22px;text-align:center;font-size:14px}
-.ways{margin-top:22px;border-top:2px solid var(--ink)}
-.way{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:2px solid var(--ink);color:var(--ink)}
-.way .wl{display:flex;align-items:center;gap:14px;min-width:0}
-.way .wn{font-size:20px;font-weight:700;letter-spacing:.08em;width:30px;flex:none}
-.way .wt{display:block;font-size:20px;font-weight:700;letter-spacing:.08em;line-height:1.1}
-.way .wd{display:block;margin-top:3px;font-size:14px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
-.way .wa{font-size:24px;font-weight:700;flex:none}
-.start .rule{margin-top:34px}
-.start .meta{display:block;text-align:center;margin-top:-6px;font-size:14px}
-/* footer */
-.ft{border-top:2px solid var(--line);margin-top:48px;padding:28px 24px 44px;text-align:center}
-.ft .poster{margin:0;display:block}
-.ft .label{display:block;color:var(--mist);margin-top:12px;font-size:13px}
-.ft .meta{display:block;margin-top:12px}
-.back{display:inline-block;color:var(--mist);font-size:13px;font-weight:700;letter-spacing:.08em;margin:0 0 14px}
-.back:hover{color:var(--ink)}
-.back:before{content:"\2190 "}
+.xl{display:block;padding:12px 0;border-bottom:1px solid var(--line)}
+.xl .xk{font-size:11px;color:var(--mist)}
+.xl .xv{font-size:17px;font-weight:700;letter-spacing:-.02em;margin-top:4px}
+.xl .xd{font-size:13px;color:var(--mist);margin-top:2px}
 /* age gate */
-#ag{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;text-align:center;background:var(--field);overflow:auto}
-#ag .box{max-width:330px;width:100%}
-#ag .mark{margin-top:24px}
-#ag .poster{margin-top:16px}
-#ag .meta{display:block;margin-top:12px;text-transform:none;max-width:30ch;margin-left:auto;margin-right:auto}
-#ag .dotcta{margin-top:26px}
-#ag .ghost{display:block;margin-top:18px}
+#ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:auto}
+#ag .strip{height:10px;background:var(--ink)}
+#ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
+#ag .cta{margin-top:34px}
+#ag .ghost{display:block;margin-top:22px}
 .ag-ok #ag{display:none}
-/* The menu sheet: full screen in the current surface color, slides in from the left. */
-.burger{border:0;background:none;padding:0;cursor:pointer}
-#menu{position:fixed;inset:0;z-index:80;background:var(--field);overflow:auto;padding:0 24px 40px;display:none}
-html.paper #menu{background:var(--paper)}
+/* menu: full-screen sheet, slides in from the left */
+#menu{position:fixed;inset:0;z-index:80;background:var(--field);overflow:auto;display:none}
+#menu .strip{height:10px;background:var(--ink)}
+#menu .mbody{max-width:520px;margin:0 auto;padding:0 28px 40px}
 .menu-open #menu{display:block;animation:menuIn .18s ease-out both}
 .menu-open body{overflow:hidden}
 @keyframes menuIn{from{transform:translateX(-100%)}to{transform:none}}
 @media (prefers-reduced-motion:reduce){.menu-open #menu{animation:none}}
-#menu .mh{display:flex;align-items:center;justify-content:space-between;padding:32px 0 8px;max-width:420px;margin:0 auto}
-#menu .mb{max-width:420px;margin:0 auto}
-.burger-x::before,.burger-x::after{top:5px;left:-2px;width:22px}
-.burger-x::before{transform:rotate(45deg)}.burger-x::after{transform:rotate(-45deg)}
-#menu .grp{margin-top:26px}
-#menu .rule{margin:0 0 6px}
-.mi{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:2px solid var(--line);color:var(--ink)}
+#menu .grp{margin-top:8px}
+.mi{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);color:var(--ink)}
 .mi .ml{display:flex;align-items:center;gap:12px;min-width:0}
-.mi .mn{font-size:14px;font-weight:700;letter-spacing:.08em;width:28px;flex:none;color:var(--mist)}
-.mi .mt{display:block;font-size:20px;font-weight:700;letter-spacing:.08em;line-height:1.1}
+.mi .mn{font-size:13px;width:28px;flex:none;color:var(--mist)}
+.mi .mt{display:block;font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .mi.now .mt{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
-.mi .md{display:block;margin-top:2px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mist)}
-.mi .ma{font-size:20px;font-weight:700;flex:none}
-#menu .about{margin-top:12px;font-size:14px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none}
+.mi .md{display:block;margin-top:2px;font-size:13px;color:var(--mist)}
+.mi .ma{font-size:20px;font-weight:400;flex:none}
+#menu .about{margin-top:12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--mist)}
 #menu .meta{display:block;margin-top:14px}
-/* Index pages (neighborhoods, brands, products). */
-.lede{margin:14px auto 0;max-width:36ch;font-size:16px;font-weight:600;line-height:1.5;color:var(--mist);text-transform:none;text-align:center}
-</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": "Broadway Strains", "url": "https://sensei.nyc/dispensaries/healthy-choice/", "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/edibles-stock-gummies-v1.jpg", "address": {"@type": "PostalAddress", "streetAddress": "3858 Broadway", "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.834, "longitude": -73.944}, "areaServed": "Manhattan, NY"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Sensei", "item": "https://sensei.nyc/"}, {"@type": "ListItem", "position": 2, "name": "Dispensaries", "item": "https://sensei.nyc/dispensaries/"}, {"@type": "ListItem", "position": 3, "name": "Broadway Strains", "item": "https://sensei.nyc/dispensaries/healthy-choice/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Broadway Strains a good flower shop?", "acceptedAnswer": {"@type": "Answer", "text": "It is the best in upper Manhattan by count. With 146 flower listings it has more loose flower than any other licensed shop we track in Harlem or Washington Heights, with Hashtag Honey and Ruby Farms among the main growers stocked."}}, {"@type": "Question", "name": "What are the hours at Broadway Strains?", "acceptedAnswer": {"@type": "Answer", "text": "Sensei does not track hours. Check the shop's Dutchie menu or Google listing before you go, since licensed dispensaries in New York set their own schedules and may change them seasonally."}}, {"@type": "Question", "name": "Can I buy here with an out-of-state ID?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Any valid government-issued photo ID showing you are 21 or older works at licensed New York dispensaries, including out-of-state driver's licenses and passports. You do not need to be a New York resident."}}]}</script></head><body><div class="shell">
-<header class="hd"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a><span class="est">21+</span></header>
-<main class="wrap">
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": "Broadway Strains", "url": "https://sensei.nyc/dispensaries/healthy-choice/", "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/edibles-stock-gummies-v1.jpg", "address": {"@type": "PostalAddress", "streetAddress": "3858 Broadway", "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.834, "longitude": -73.944}, "areaServed": "Manhattan, NY"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Sensei", "item": "https://sensei.nyc/"}, {"@type": "ListItem", "position": 2, "name": "Dispensaries", "item": "https://sensei.nyc/dispensaries/"}, {"@type": "ListItem", "position": 3, "name": "Broadway Strains", "item": "https://sensei.nyc/dispensaries/healthy-choice/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Broadway Strains a good flower shop?", "acceptedAnswer": {"@type": "Answer", "text": "It is the best in upper Manhattan by count. With 146 flower listings it has more loose flower than any other licensed shop we track in Harlem or Washington Heights, with Hashtag Honey and Ruby Farms among the main growers stocked."}}, {"@type": "Question", "name": "What are the hours at Broadway Strains?", "acceptedAnswer": {"@type": "Answer", "text": "Sensei does not track hours. Check the shop's Dutchie menu or Google listing before you go, since licensed dispensaries in New York set their own schedules and may change them seasonally."}}, {"@type": "Question", "name": "Can I buy here with an out-of-state ID?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Any valid government-issued photo ID showing you are 21 or older works at licensed New York dispensaries, including out-of-state driver's licenses and passports. You do not need to be a New York resident."}}]}</script></head><body>
+<div class="bar"></div>
+<div class="wrap">
+<div class="top"><span class="tl"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a></span><span class="tr">21+ · Manhattan</span></div>
+<main>
 <p class="crumb"><a href="/">Sensei</a> › <a href="/neighborhoods/harlem-washington-heights/">Harlem &amp; Washington Heights</a> › Dispensary</p>
 <p class="kicker">Harlem &amp; Washington Heights · Manhattan</p>
 <h1>Broadway Strains</h1>
@@ -185,37 +188,39 @@ html.paper #menu{background:var(--paper)}
 <div class="hero"><div class="bn">Harlem &amp; Washington Heights · live menu</div>
 <h2>Shop Broadway Strains on Sensei</h2>
 <p>Compare every item here against nearby NYC shops — then order where it's cheapest.</p>
-<a class="cta" href="https://sensei.nyc/?store=healthy-choice" data-ev="menu" data-dispensary="Broadway Strains">Browse Broadway Strains</a></div>
-<div class="sh">What's on the shelf</div><div class="bars"><a class="bar" href="/nyc/flower/" data-ev="chip" data-cat="flower"><span class="bk">Flower</span><span class="bt"><span class="bf" style="width:100%"></span></span><span class="bn">146</span></a><a class="bar" href="/nyc/vaporizers/" data-ev="chip" data-cat="vaporizers"><span class="bk">Vapes</span><span class="bt"><span class="bf" style="width:86%"></span></span><span class="bn">125</span></a><a class="bar" href="/nyc/edibles/" data-ev="chip" data-cat="edibles"><span class="bk">Edibles</span><span class="bt"><span class="bf" style="width:71%"></span></span><span class="bn">103</span></a><a class="bar" href="/nyc/pre-rolls/" data-ev="chip" data-cat="pre-rolls"><span class="bk">Pre-Rolls</span><span class="bt"><span class="bf" style="width:68%"></span></span><span class="bn">100</span></a><a class="bar" href="/nyc/concentrates/" data-ev="chip" data-cat="concentrates"><span class="bk">Concentrates</span><span class="bt"><span class="bf" style="width:10%"></span></span><span class="bn">15</span></a><a class="bar" href="/nyc/tinctures/" data-ev="chip" data-cat="tinctures"><span class="bk">Tinctures</span><span class="bt"><span class="bf" style="width:4%"></span></span><span class="bn">6</span></a><a class="bar" href="/nyc/topicals/" data-ev="chip" data-cat="topicals"><span class="bk">Topicals</span><span class="bt"><span class="bf" style="width:2%"></span></span><span class="bn">3</span></a></div>
+<a class="cta" href="https://sensei.nyc/?store=healthy-choice" data-ev="menu" data-dispensary="Broadway Strains"><span>Browse Broadway Strains</span><span>→</span></a></div>
+<div class="sh">What's on the shelf</div><div class="bars"><a class="brow" href="/nyc/flower/" data-ev="chip" data-cat="flower"><span class="bk">Flower</span><span class="bt"><span class="bf" style="width:100%"></span></span><span class="bn">146</span></a><a class="brow" href="/nyc/vaporizers/" data-ev="chip" data-cat="vaporizers"><span class="bk">Vapes</span><span class="bt"><span class="bf" style="width:86%"></span></span><span class="bn">125</span></a><a class="brow" href="/nyc/edibles/" data-ev="chip" data-cat="edibles"><span class="bk">Edibles</span><span class="bt"><span class="bf" style="width:71%"></span></span><span class="bn">103</span></a><a class="brow" href="/nyc/pre-rolls/" data-ev="chip" data-cat="pre-rolls"><span class="bk">Pre-Rolls</span><span class="bt"><span class="bf" style="width:68%"></span></span><span class="bn">100</span></a><a class="brow" href="/nyc/concentrates/" data-ev="chip" data-cat="concentrates"><span class="bk">Concentrates</span><span class="bt"><span class="bf" style="width:10%"></span></span><span class="bn">15</span></a><a class="brow" href="/nyc/tinctures/" data-ev="chip" data-cat="tinctures"><span class="bk">Tinctures</span><span class="bt"><span class="bf" style="width:4%"></span></span><span class="bn">6</span></a><a class="brow" href="/nyc/topicals/" data-ev="chip" data-cat="topicals"><span class="bk">Topicals</span><span class="bt"><span class="bf" style="width:2%"></span></span><span class="bn">3</span></a></div>
 <div class="sh">Top brands here</div><div class="chips"><a class="chip" href="/brands/ayrloom/" data-ev="chip" data-brand="ayrloom">ayrloom <span class="c">30</span></a><a class="chip" href="https://sensei.nyc/?brand=Hashtag%20Honey" data-ev="chip" data-brand="Hashtag Honey">Hashtag Honey <span class="c">24</span></a><a class="chip" href="/brands/mfny/" data-ev="chip" data-brand="MFNY">MFNY <span class="c">21</span></a><a class="chip" href="/brands/ruby-farms/" data-ev="chip" data-brand="Ruby Farms">Ruby Farms <span class="c">21</span></a><a class="chip" href="/brands/jaunty/" data-ev="chip" data-brand="Jaunty">Jaunty <span class="c">21</span></a><a class="chip" href="https://sensei.nyc/?brand=Jetpacks" data-ev="chip" data-brand="Jetpacks">Jetpacks <span class="c">16</span></a></div>
-<div class="sh">Featured right now</div><div class="card" data-ev="product" data-brand="MFNY" data-product-key="mfny-mfny-cherry-lime-x-o2-og-kush-live-resin-gummies-3pk-i" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/edibles-stock-gummies-v1.jpg" alt="" loading="lazy"></span><div class="l"><div class="nm">MFNY | Cherry Lime x O2 OG Kush Live Resin Gummies | 3pk (I)</div><div class="mt">MFNY</div><div><span class="tag">Indica</span><span class="tag">Edibles</span></div></div><div class="r"><div class="pr">$4.95</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="MFNY" data-product-key="mfny-mfny-peach-x-oishii-live-resin-gummies-3pk-i" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/edibles-stock-gummies-v1.jpg" alt="" loading="lazy"></span><div class="l"><div class="nm">MFNY | Peach X Oishii | Live Resin Gummies | 3pk (I)</div><div class="mt">MFNY</div><div><span class="tag">Indica</span><span class="tag">Edibles</span></div></div><div class="r"><div class="pr">$4.95</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="High Peaks" data-product-key="high-peaks-high-peaks-sparkling-strawberry-lemonade-2-1-10mg-thc-5mg-cbd" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/e57774d0a209d4ff15a911bf71fdb73f" alt="" loading="lazy"></span><div class="l"><div class="nm">High Peaks | Sparkling Strawberry Lemonade 2:1 | 10mg THC : 5mg CBD</div><div class="mt">High Peaks</div><div><span class="tag">Hybrid</span><span class="tag">Edibles</span></div></div><div class="r"><div class="pr">$5</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="Jaunty" data-product-key="jaunty-dreamberry-gummies-1-1-1-thc-cbd-cbn-20mg-2pk" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/a06f30846ee5c211ed0af15a3ad7c1c4" alt="" loading="lazy"></span><div class="l"><div class="nm">Dreamberry Gummies | 1:1:1 | THC:CBD:CBN |20mg | 2pk</div><div class="mt">Jaunty</div><div><span class="tag">Indica</span><span class="tag">Edibles</span></div></div><div class="r"><div class="pr">$5</div><div class="pg">from</div></div></div>
+<div class="sh">Featured right now</div><div class="card" data-ev="product" data-brand="MFNY" data-product-key="mfny-mfny-cherry-lime-x-o2-og-kush-live-resin-gummies-3pk-i" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/edibles-stock-gummies-v1.jpg" alt="" loading="lazy"></span><div class="l"><div class="nm">MFNY | Cherry Lime x O2 OG Kush Live Resin Gummies | 3pk (I)</div><div class="mt">MFNY · Indica · Edibles</div></div><div class="r"><div class="pr">$4.95</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="MFNY" data-product-key="mfny-mfny-peach-x-oishii-live-resin-gummies-3pk-i" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/edibles-stock-gummies-v1.jpg" alt="" loading="lazy"></span><div class="l"><div class="nm">MFNY | Peach X Oishii | Live Resin Gummies | 3pk (I)</div><div class="mt">MFNY · Indica · Edibles</div></div><div class="r"><div class="pr">$4.95</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="High Peaks" data-product-key="high-peaks-high-peaks-sparkling-strawberry-lemonade-2-1-10mg-thc-5mg-cbd" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/e57774d0a209d4ff15a911bf71fdb73f" alt="" loading="lazy"></span><div class="l"><div class="nm">High Peaks | Sparkling Strawberry Lemonade 2:1 | 10mg THC : 5mg CBD</div><div class="mt">High Peaks · Hybrid · Edibles</div></div><div class="r"><div class="pr">$5</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="Jaunty" data-product-key="jaunty-dreamberry-gummies-1-1-1-thc-cbd-cbn-20mg-2pk" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/a06f30846ee5c211ed0af15a3ad7c1c4" alt="" loading="lazy"></span><div class="l"><div class="nm">Dreamberry Gummies | 1:1:1 | THC:CBD:CBN |20mg | 2pk</div><div class="mt">Jaunty · Indica · Edibles</div></div><div class="r"><div class="pr">$5</div><div class="pg">from</div></div></div>
 <div class="sh">Good to know</div><ul class="know"><li>About 500 products from 83 brands; flower (146) is the largest category, unusual for Manhattan.</li><li>Ayrloom, Hashtag Honey, MFNY, Ruby Farms and Jaunty are the deepest brands.</li><li>Entry price is $4.95 for MFNY live resin gummies; $5 for High Peaks and Jaunty.</li><li>Nearest licensed alternative is Gotham Buds on 125th Street in Harlem.</li></ul><div class="sh">Broadway Strains FAQ</div><div class="faq"><details class="qa"><summary>Is Broadway Strains a good flower shop?</summary><p>It is the best in upper Manhattan by count. With 146 flower listings it has more loose flower than any other licensed shop we track in Harlem or Washington Heights, with Hashtag Honey and Ruby Farms among the main growers stocked.</p></details><details class="qa"><summary>What are the hours at Broadway Strains?</summary><p>Sensei does not track hours. Check the shop's Dutchie menu or Google listing before you go, since licensed dispensaries in New York set their own schedules and may change them seasonally.</p></details><details class="qa"><summary>Can I buy here with an out-of-state ID?</summary><p>Yes. Any valid government-issued photo ID showing you are 21 or older works at licensed New York dispensaries, including out-of-state driver's licenses and passports. You do not need to be a New York resident.</p></details></div>
 <div class="sh">Explore Sensei</div><div class="xgrid"><a class="xl" href="/dispensaries/qube-manhattan/"><span class="xk">Dispensary</span><div class="xv">Qube - Manhattan</div><div class="xd">Midtown, Manhattan</div></a><a class="xl" href="/neighborhoods/midtown/"><span class="xk">Neighborhood</span><div class="xv">Midtown</div><div class="xd">7 shops · Manhattan</div></a><a class="xl" href="/brands/ayrloom/"><span class="xk">Brand</span><div class="xv">ayrloom</div><div class="xd">63 stores stock it</div></a><a class="xl" href="/nyc/concentrates/"><span class="xk">Category</span><div class="xv">Concentrates</div><div class="xd">1323 across NYC</div></a></div>
 </main>
-<footer class="ft"><a class="poster" href="/">Sensei.nyc</a><span class="label">Every licensed NYC dispensary menu, one place. Prices refresh from live menus. Sensei is an independent guide — order on the dispensary's own site.</span><span class="meta">21+ only · adults in New York State</span></footer>
+<div class="exit"><a href="/">↑ Exit to menus</a><span>Updated nightly</span></div>
+<footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc</footer>
 </div>
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
-<div class="mh"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span><span class="est">21+</span></div>
-<div class="mb">
-<div class="grp"><div class="rule"><span>Find</span></div>
-<a class="mi" href="https://sensei.nyc/?entry=near" data-ev="chip" data-cat="menu:near me"><span class="ml"><span class="mn">01</span><span><span class="mt">Near me</span><span class="md">Closest shops first</span></span></span><span class="ma">→</span></a>
+<div class="strip"></div>
+<div class="mbody">
+<div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span><span class="tr">21+ · New York City</span></div>
+<div class="grp"><div class="k">Find</div>
+<a class="mi" href="https://sensei.nyc/?near=1" data-ev="chip" data-cat="menu:near me"><span class="ml"><span class="mn">01</span><span><span class="mt">Near me</span><span class="md">Closest shops first</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/?entry=borough" data-ev="chip" data-cat="menu:pick a borough"><span class="ml"><span class="mn">02</span><span><span class="mt">Pick a borough</span><span class="md">Manhattan · Brooklyn · Queens</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/?entry=search" data-ev="chip" data-cat="menu:search in your words"><span class="ml"><span class="mn">03</span><span><span class="mt">Search in your words</span><span class="md">Strain, brand, price or neighborhood</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/?entry=all" data-ev="chip" data-cat="menu:see everything"><span class="ml"><span class="mn">04</span><span><span class="mt">See everything</span><span class="md">35,760 products · cheapest first</span></span></span><span class="ma">→</span></a>
 </div>
-<div class="grp"><div class="rule"><span>Browse</span></div>
+<div class="grp"><div class="k">Browse</div>
 <a class="mi" href="/neighborhoods/" data-ev="chip" data-cat="menu:neighborhoods"><span class="ml"><span class="mn">05</span><span><span class="mt">Neighborhoods</span><span class="md">18 areas · 67 shops</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="/brands/" data-ev="chip" data-cat="menu:brands"><span class="ml"><span class="mn">06</span><span><span class="mt">Brands</span><span class="md">Ayrloom, MFNY, Ruby Farms…</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="/nyc/" data-ev="chip" data-cat="menu:products"><span class="ml"><span class="mn">07</span><span><span class="mt">Products</span><span class="md">Flower · pre-rolls · vapes · edibles</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/?entry=deals" data-ev="chip" data-cat="menu:deals"><span class="ml"><span class="mn">08</span><span><span class="mt">Deals</span><span class="md">Worth a look this week</span></span></span><span class="ma">→</span></a>
 </div>
-<div class="grp"><div class="rule"><span>You</span></div>
+<div class="grp"><div class="k">You</div>
 <a class="mi" href="https://sensei.nyc/?entry=cart" data-ev="chip" data-cat="menu:cart"><span class="ml"><span class="mn">09</span><span><span class="mt">Cart</span><span class="md">Open in the app</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/#drop" data-ev="chip" data-cat="menu:the weekly drop"><span class="ml"><span class="mn">10</span><span><span class="mt">The weekly drop</span><span class="md">Deals and standouts by email</span></span></span><span class="ma">→</span></a>
 </div>
-<div class="grp"><div class="rule"><span>About</span></div>
+<div class="grp"><div class="k">About</div>
 <p class="about">Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.</p>
-<span class="meta">21+ only · adults in New York State</span>
+<span class="meta">21+ · adults in New York State</span>
 </div></div></div>
 <script>(function(){var h=document.documentElement,o=document.getElementById('menu-open'),c=document.getElementById('menu-close');
 function open(){h.classList.add('menu-open');try{history.pushState({menu:1},'')}catch(e){}}
@@ -223,12 +228,11 @@ function close(){h.classList.remove('menu-open')}
 if(o)o.onclick=function(){open()};if(c)c.onclick=function(){close();try{if(history.state&&history.state.menu)history.back()}catch(e){}};
 window.addEventListener('popstate',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
 })();</script>
-<div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
-<h1 class="mark">Sensei</h1>
-<p class="poster">Are you 21 or older?</p>
-<div class="rule"><span>NY</span></div>
-<span class="meta">You must be 21 or older to view licensed cannabis products in New York State.</span>
-<button class="dotcta" id="agy" type="button">Yes, I'm 21 or older</button>
+<div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="strip"></div><div class="box">
+<div class="top"><span class="tl"><span class="wm">Sensei</span></span><span class="tr">21+ · New York City</span></div>
+<h1 class="mark">Are you<br>21 or<br>older?</h1>
+<p class="lede">Cannabis products are for adults 21 and over in New York State.</p>
+<button class="cta" id="agy" type="button"><span>Yes, I'm 21 or older</span><span>→</span></button>
 <a class="ghost" href="https://www.google.com">I'm under 21</a></div></div>
 <script>(function(){var K='sensei_age_ok';try{if(sessionStorage.getItem(K)==='1')document.documentElement.classList.add('ag-ok')}catch(e){}
 var y=document.getElementById('agy');if(y)y.onclick=function(){document.documentElement.classList.add('ag-ok');try{sessionStorage.setItem(K,'1')}catch(e){}}})();</script>
