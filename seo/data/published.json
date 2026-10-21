@@ -60,6 +60,11 @@
   "store": "alta-lower-manhattan",
   "type": "dispensary"
  },
+ "/dispensaries/astoria-bud-boutique/": {
+  "hood": "astoria",
+  "store": "dominica62",
+  "type": "dispensary"
+ },
  "/dispensaries/baiked/": {
   "hood": "midtown",
   "store": "baiked",
@@ -73,6 +78,11 @@
  "/dispensaries/blazinup/": {
   "hood": "chelsea-flatiron",
   "store": "blazinup",
+  "type": "dispensary"
+ },
+ "/dispensaries/broadway-strains/": {
+  "hood": "harlem-washington-heights",
+  "store": "healthy-choice",
   "type": "dispensary"
  },
  "/dispensaries/brooklyn-bourne/": {
@@ -100,9 +110,19 @@
   "store": "buzzy-ny",
   "type": "dispensary"
  },
+ "/dispensaries/by-any-other-name/": {
+  "hood": "clinton-hill",
+  "store": "xander-legacy",
+  "type": "dispensary"
+ },
  "/dispensaries/cannaisseur/": {
   "hood": "chelsea-flatiron",
   "store": "cannaisseur",
+  "type": "dispensary"
+ },
+ "/dispensaries/cannavita/": {
+  "hood": "astoria",
+  "store": "green-jungle",
   "type": "dispensary"
  },
  "/dispensaries/case-management/": {
@@ -175,6 +195,11 @@
   "store": "gotham-chelsea",
   "type": "dispensary"
  },
+ "/dispensaries/gotham-domino/": {
+  "hood": "williamsburg",
+  "store": "hybrid-nyc",
+  "type": "dispensary"
+ },
  "/dispensaries/gotham-nyc-3rd-st/": {
   "hood": "east-west-village",
   "store": "gotham-nyc-3rd-st",
@@ -220,6 +245,11 @@
   "store": "healthy-choice",
   "type": "dispensary"
  },
+ "/dispensaries/high-tidez/": {
+  "hood": "coney-island",
+  "store": "cbj-retail",
+  "type": "dispensary"
+ },
  "/dispensaries/highest-standards-fidi/": {
   "hood": "fidi",
   "store": "highest-standards-fidi",
@@ -240,6 +270,11 @@
   "store": "mighty-lucky",
   "type": "dispensary"
  },
+ "/dispensaries/nicklz/": {
+  "hood": "midtown",
+  "store": "baiked",
+  "type": "dispensary"
+ },
  "/dispensaries/ny-canna-co-5th-ave/": {
   "hood": "midtown",
   "store": "ny-canna-co-5th-ave",
@@ -250,6 +285,11 @@
   "store": "organic-relief-leaf",
   "type": "dispensary"
  },
+ "/dispensaries/poppin/": {
+  "hood": "chelsea-flatiron",
+  "store": "cannaisseur",
+  "type": "dispensary"
+ },
  "/dispensaries/pryzm/": {
   "hood": "east-west-village",
   "store": "pryzm",
@@ -258,6 +298,11 @@
  "/dispensaries/purple-buds-inc-recreational/": {
   "hood": "jackson-heights",
   "store": "purple-buds-inc-recreational",
+  "type": "dispensary"
+ },
+ "/dispensaries/quality-control-ny/": {
+  "hood": "sheepshead-bay",
+  "store": "case-management",
   "type": "dispensary"
  },
  "/dispensaries/qube-manhattan/": {
@@ -295,6 +340,11 @@
   "store": "stoop",
   "type": "dispensary"
  },
+ "/dispensaries/stoops-flatiron/": {
+  "hood": "chelsea-flatiron",
+  "store": "stoop",
+  "type": "dispensary"
+ },
  "/dispensaries/sunflower-dispensary-retail/": {
   "hood": "williamsburg",
   "store": "sunflower-dispensary-retail",
@@ -303,6 +353,11 @@
  "/dispensaries/sunset-cannabis-club/": {
   "hood": "sunset-park",
   "store": "sunset-cannabis-club",
+  "type": "dispensary"
+ },
+ "/dispensaries/superfly/": {
+  "hood": "upper-west-side",
+  "store": "afny",
   "type": "dispensary"
  },
  "/dispensaries/sweet-life-nyc/": {
@@ -325,6 +380,11 @@
   "store": "terp-bros-astoria",
   "type": "dispensary"
  },
+ "/dispensaries/the-alchemy-chelsea/": {
+  "hood": "chelsea-flatiron",
+  "store": "blazinup",
+  "type": "dispensary"
+ },
  "/dispensaries/the-daily-green/": {
   "hood": "midtown",
   "store": "the-daily-green",
@@ -343,6 +403,36 @@
  "/dispensaries/the-flowery-east-village/": {
   "hood": "east-west-village",
   "store": "the-flowery-east-village",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-flowery-upper-west-side/": {
+  "hood": "upper-west-side",
+  "store": "twenty-one-thirty",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-flowery-west-village/": {
+  "hood": "east-west-village",
+  "store": "weedkraft",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-garden-club/": {
+  "hood": "brooklyn-heights-downtown",
+  "store": "dizzpensary",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-travel-agency-downtown-brooklyn/": {
+  "hood": "brooklyn-heights-downtown",
+  "store": "gmdss-llc",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-travel-agency-soho/": {
+  "hood": "soho",
+  "store": "tango-hotel-charlie-ventures",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-travel-agency-union-square/": {
+  "hood": "gramercy-union-square",
+  "store": "the-doe-store",
   "type": "dispensary"
  },
  "/dispensaries/torches-nyc/": {
@@ -378,6 +468,11 @@
  "/dispensaries/weedkraft/": {
   "hood": "east-west-village",
   "store": "weedkraft",
+  "type": "dispensary"
+ },
+ "/dispensaries/weedside/": {
+  "hood": "woodside",
+  "store": "kiki-buddz",
   "type": "dispensary"
  },
  "/dispensaries/xander-legacy/": {

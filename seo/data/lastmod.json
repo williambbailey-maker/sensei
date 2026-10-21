@@ -9,63 +9,63 @@
  },
  "/brands/ayrloom/": {
   "date": "2026-10-21",
-  "hash": "42112623072ad702"
+  "hash": "680b9d5291eab58c"
  },
  "/brands/camino/": {
   "date": "2026-10-21",
-  "hash": "8fe978c2d31cdd3b"
+  "hash": "19f40f293a76ec40"
  },
  "/brands/cannabals/": {
   "date": "2026-10-21",
-  "hash": "cc429259684d3ea0"
+  "hash": "4df7239dc1478b44"
  },
  "/brands/dank-by-definition/": {
   "date": "2026-10-21",
-  "hash": "aa9d93beb51a7d4e"
+  "hash": "13bfd5d55aba6419"
  },
  "/brands/eaton-botanicals/": {
   "date": "2026-10-21",
-  "hash": "37ce2c43400239bf"
+  "hash": "8646f4f87eb691d1"
  },
  "/brands/fernway/": {
   "date": "2026-10-21",
-  "hash": "a554a0db0fa5a569"
+  "hash": "8c3abb1466a66604"
  },
  "/brands/florist-farms/": {
   "date": "2026-10-21",
-  "hash": "54929f036383c814"
+  "hash": "5305548d884ccee5"
  },
  "/brands/good-tide/": {
   "date": "2026-10-21",
-  "hash": "4e3b9ba72b4657c7"
+  "hash": "a73060b86c7dcaac"
  },
  "/brands/gr-n/": {
   "date": "2026-10-21",
-  "hash": "b830b0f95a1852f6"
+  "hash": "7799aec212cc01b8"
  },
  "/brands/jaunty/": {
   "date": "2026-10-21",
-  "hash": "26da1fa817ee4515"
+  "hash": "94c90921adfc92b8"
  },
  "/brands/jetty-extracts/": {
   "date": "2026-10-21",
-  "hash": "abc63acef5e01816"
+  "hash": "3eb1f3cf6a9b9bcd"
  },
  "/brands/mfny/": {
   "date": "2026-10-21",
-  "hash": "bdd7783bcb547c61"
+  "hash": "cede9627be9e6a48"
  },
  "/brands/off-hours/": {
   "date": "2026-10-21",
-  "hash": "b1076bc25a182149"
+  "hash": "004a4afe8bd9bb05"
  },
  "/brands/ruby-farms/": {
   "date": "2026-10-21",
-  "hash": "43677ca5833a38e0"
+  "hash": "c933e7e448871037"
  },
  "/brands/wyld/": {
   "date": "2026-10-21",
-  "hash": "c498b8b75101bbc6"
+  "hash": "ec160d15dff28875"
  },
  "/dispensaries/afny/": {
   "date": "2026-10-21",
@@ -74,6 +74,10 @@
  "/dispensaries/alta-lower-manhattan/": {
   "date": "2026-10-21",
   "hash": "7d2b0cdf37c2018a"
+ },
+ "/dispensaries/astoria-bud-boutique/": {
+  "date": "2026-10-21",
+  "hash": "067b76a03e473991"
  },
  "/dispensaries/baiked/": {
   "date": "2026-10-21",
@@ -86,6 +90,10 @@
  "/dispensaries/blazinup/": {
   "date": "2026-10-21",
   "hash": "fbc9b09b5c33813f"
+ },
+ "/dispensaries/broadway-strains/": {
+  "date": "2026-10-21",
+  "hash": "f06acc07c4f670ef"
  },
  "/dispensaries/brooklyn-bourne/": {
   "date": "2026-10-21",
@@ -107,9 +115,17 @@
   "date": "2026-10-21",
   "hash": "55daac026c150aec"
  },
+ "/dispensaries/by-any-other-name/": {
+  "date": "2026-10-21",
+  "hash": "7c18ddcb65ddf8e3"
+ },
  "/dispensaries/cannaisseur/": {
   "date": "2026-10-21",
   "hash": "77b80479282ade20"
+ },
+ "/dispensaries/cannavita/": {
+  "date": "2026-10-21",
+  "hash": "e41b9d79382ec420"
  },
  "/dispensaries/case-management/": {
   "date": "2026-10-21",
@@ -167,6 +183,10 @@
   "date": "2026-10-21",
   "hash": "1f9e2e807aa848b9"
  },
+ "/dispensaries/gotham-domino/": {
+  "date": "2026-10-21",
+  "hash": "b6770f93c8ca9729"
+ },
  "/dispensaries/gotham-nyc-3rd-st/": {
   "date": "2026-10-21",
   "hash": "212391595206abcd"
@@ -203,6 +223,10 @@
   "date": "2026-10-21",
   "hash": "f06acc07c4f670ef"
  },
+ "/dispensaries/high-tidez/": {
+  "date": "2026-10-21",
+  "hash": "f3abdcf29325c7c3"
+ },
  "/dispensaries/highest-standards-fidi/": {
   "date": "2026-10-21",
   "hash": "a2a2202a1a4554f4"
@@ -219,6 +243,10 @@
   "date": "2026-10-21",
   "hash": "b33344f11e4f3b6b"
  },
+ "/dispensaries/nicklz/": {
+  "date": "2026-10-21",
+  "hash": "a70898c13d7a0c46"
+ },
  "/dispensaries/ny-canna-co-5th-ave/": {
   "date": "2026-10-21",
   "hash": "d102b4315fb5f8ce"
@@ -227,6 +255,10 @@
   "date": "2026-10-21",
   "hash": "dcbcba12798d1531"
  },
+ "/dispensaries/poppin/": {
+  "date": "2026-10-21",
+  "hash": "77b80479282ade20"
+ },
  "/dispensaries/pryzm/": {
   "date": "2026-10-21",
   "hash": "36c7415997deab89"
@@ -234,6 +266,10 @@
  "/dispensaries/purple-buds-inc-recreational/": {
   "date": "2026-10-21",
   "hash": "33d79a1d1a39666a"
+ },
+ "/dispensaries/quality-control-ny/": {
+  "date": "2026-10-21",
+  "hash": "8093c7939efc231e"
  },
  "/dispensaries/qube-manhattan/": {
   "date": "2026-10-21",
@@ -263,6 +299,10 @@
   "date": "2026-10-21",
   "hash": "6ee0bf85d1df86ad"
  },
+ "/dispensaries/stoops-flatiron/": {
+  "date": "2026-10-21",
+  "hash": "6ee0bf85d1df86ad"
+ },
  "/dispensaries/sunflower-dispensary-retail/": {
   "date": "2026-10-21",
   "hash": "685a68589c26ad13"
@@ -270,6 +310,10 @@
  "/dispensaries/sunset-cannabis-club/": {
   "date": "2026-10-21",
   "hash": "024e33e2dcfcc774"
+ },
+ "/dispensaries/superfly/": {
+  "date": "2026-10-21",
+  "hash": "2f3af934fb0d1b83"
  },
  "/dispensaries/sweet-life-nyc/": {
   "date": "2026-10-21",
@@ -287,6 +331,10 @@
   "date": "2026-10-21",
   "hash": "d30f1689eeaf0699"
  },
+ "/dispensaries/the-alchemy-chelsea/": {
+  "date": "2026-10-21",
+  "hash": "fbc9b09b5c33813f"
+ },
  "/dispensaries/the-daily-green/": {
   "date": "2026-10-21",
   "hash": "2938da0a4a5234f0"
@@ -302,6 +350,30 @@
  "/dispensaries/the-flowery-east-village/": {
   "date": "2026-10-21",
   "hash": "ab5e19b80826502f"
+ },
+ "/dispensaries/the-flowery-upper-west-side/": {
+  "date": "2026-10-21",
+  "hash": "12bf709ca86e12d6"
+ },
+ "/dispensaries/the-flowery-west-village/": {
+  "date": "2026-10-21",
+  "hash": "44a758515b1ee9f1"
+ },
+ "/dispensaries/the-garden-club/": {
+  "date": "2026-10-21",
+  "hash": "19e11ddaf525326d"
+ },
+ "/dispensaries/the-travel-agency-downtown-brooklyn/": {
+  "date": "2026-10-21",
+  "hash": "5aaa0cb4dcc66dab"
+ },
+ "/dispensaries/the-travel-agency-soho/": {
+  "date": "2026-10-21",
+  "hash": "23e052c77bbe1bfb"
+ },
+ "/dispensaries/the-travel-agency-union-square/": {
+  "date": "2026-10-21",
+  "hash": "9fdb8121c8e59104"
  },
  "/dispensaries/torches-nyc/": {
   "date": "2026-10-21",
@@ -331,6 +403,10 @@
   "date": "2026-10-21",
   "hash": "44a758515b1ee9f1"
  },
+ "/dispensaries/weedside/": {
+  "date": "2026-10-21",
+  "hash": "7de32c286f189077"
+ },
  "/dispensaries/xander-legacy/": {
   "date": "2026-10-21",
   "hash": "7c18ddcb65ddf8e3"
@@ -341,11 +417,11 @@
  },
  "/neighborhoods/astoria/": {
   "date": "2026-10-21",
-  "hash": "fd5275ebebc18f51"
+  "hash": "5fe9018dccd28214"
  },
  "/neighborhoods/brooklyn-heights-downtown/": {
   "date": "2026-10-21",
-  "hash": "3e9f31d5c829193b"
+  "hash": "1450ab1e5d4e2290"
  },
  "/neighborhoods/bushwick/": {
   "date": "2026-10-21",
@@ -353,7 +429,7 @@
  },
  "/neighborhoods/chelsea-flatiron/": {
   "date": "2026-10-21",
-  "hash": "9f1be4e19939836f"
+  "hash": "72f1ab32fd97bff7"
  },
  "/neighborhoods/chinatown-les/": {
   "date": "2026-10-21",
@@ -361,11 +437,11 @@
  },
  "/neighborhoods/coney-island/": {
   "date": "2026-10-21",
-  "hash": "c93a117b84e56e38"
+  "hash": "48ea6c140332dba4"
  },
  "/neighborhoods/east-west-village/": {
   "date": "2026-10-21",
-  "hash": "9f3b3b80c5f13090"
+  "hash": "7b3fbee7cac7251b"
  },
  "/neighborhoods/fidi/": {
   "date": "2026-10-21",
@@ -373,11 +449,11 @@
  },
  "/neighborhoods/gramercy-union-square/": {
   "date": "2026-10-21",
-  "hash": "f54a0bae0f098924"
+  "hash": "4cb636ce8508a07f"
  },
  "/neighborhoods/harlem-washington-heights/": {
   "date": "2026-10-21",
-  "hash": "46e366a048f5bdb3"
+  "hash": "c8d5780582e1d2b5"
  },
  "/neighborhoods/jackson-heights/": {
   "date": "2026-10-21",
@@ -385,7 +461,7 @@
  },
  "/neighborhoods/midtown/": {
   "date": "2026-10-21",
-  "hash": "922f86be3e451091"
+  "hash": "64cacc05762d1b65"
  },
  "/neighborhoods/park-slope/": {
   "date": "2026-10-21",
@@ -393,11 +469,11 @@
  },
  "/neighborhoods/sheepshead-bay/": {
   "date": "2026-10-21",
-  "hash": "e771e50e03470a95"
+  "hash": "5a9a49ae76d911e4"
  },
  "/neighborhoods/soho/": {
   "date": "2026-10-21",
-  "hash": "6e7983afa2d49911"
+  "hash": "efc60cfb8b01156e"
  },
  "/neighborhoods/upper-east-side/": {
   "date": "2026-10-21",
@@ -405,11 +481,11 @@
  },
  "/neighborhoods/upper-west-side/": {
   "date": "2026-10-21",
-  "hash": "b6c479a621124968"
+  "hash": "d4bfb4e0e29a1cc4"
  },
  "/neighborhoods/williamsburg/": {
   "date": "2026-10-21",
-  "hash": "cbcba6dbfee6f024"
+  "hash": "f14e14cc8c7e3877"
  },
  "/nyc/": {
   "date": "2026-10-21",

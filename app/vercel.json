@@ -2,5 +2,197 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/dispensaries/afny/",
+      "destination": "/dispensaries/superfly/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/afny",
+      "destination": "/dispensaries/superfly/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/baiked/",
+      "destination": "/dispensaries/nicklz/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/baiked",
+      "destination": "/dispensaries/nicklz/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/blazinup/",
+      "destination": "/dispensaries/the-alchemy-chelsea/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/blazinup",
+      "destination": "/dispensaries/the-alchemy-chelsea/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/cannaisseur/",
+      "destination": "/dispensaries/poppin/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/cannaisseur",
+      "destination": "/dispensaries/poppin/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/case-management/",
+      "destination": "/dispensaries/quality-control-ny/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/case-management",
+      "destination": "/dispensaries/quality-control-ny/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/cbj-retail/",
+      "destination": "/dispensaries/high-tidez/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/cbj-retail",
+      "destination": "/dispensaries/high-tidez/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/dizzpensary/",
+      "destination": "/dispensaries/the-garden-club/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/dizzpensary",
+      "destination": "/dispensaries/the-garden-club/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/dominica62/",
+      "destination": "/dispensaries/astoria-bud-boutique/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/dominica62",
+      "destination": "/dispensaries/astoria-bud-boutique/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/gmdss-llc/",
+      "destination": "/dispensaries/the-travel-agency-downtown-brooklyn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/gmdss-llc",
+      "destination": "/dispensaries/the-travel-agency-downtown-brooklyn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/green-jungle/",
+      "destination": "/dispensaries/cannavita/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/green-jungle",
+      "destination": "/dispensaries/cannavita/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/healthy-choice/",
+      "destination": "/dispensaries/broadway-strains/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/healthy-choice",
+      "destination": "/dispensaries/broadway-strains/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/hybrid-nyc/",
+      "destination": "/dispensaries/gotham-domino/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/hybrid-nyc",
+      "destination": "/dispensaries/gotham-domino/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/kiki-buddz/",
+      "destination": "/dispensaries/weedside/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/kiki-buddz",
+      "destination": "/dispensaries/weedside/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/stoop/",
+      "destination": "/dispensaries/stoops-flatiron/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/stoop",
+      "destination": "/dispensaries/stoops-flatiron/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/tango-hotel-charlie-ventures/",
+      "destination": "/dispensaries/the-travel-agency-soho/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/tango-hotel-charlie-ventures",
+      "destination": "/dispensaries/the-travel-agency-soho/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/the-doe-store/",
+      "destination": "/dispensaries/the-travel-agency-union-square/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/the-doe-store",
+      "destination": "/dispensaries/the-travel-agency-union-square/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/twenty-one-thirty/",
+      "destination": "/dispensaries/the-flowery-upper-west-side/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/twenty-one-thirty",
+      "destination": "/dispensaries/the-flowery-upper-west-side/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/weedkraft/",
+      "destination": "/dispensaries/the-flowery-west-village/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/weedkraft",
+      "destination": "/dispensaries/the-flowery-west-village/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/xander-legacy/",
+      "destination": "/dispensaries/by-any-other-name/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/xander-legacy",
+      "destination": "/dispensaries/by-any-other-name/",
+      "statusCode": 301
+    }
+  ]
 }

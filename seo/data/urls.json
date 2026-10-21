@@ -1,0 +1,24 @@
+{
+ "_note": "Public dispensary URLs. Key: database slug (Dutchie's; the scraper and app links use it). Value: the public URL slug. Approved Oct 21. A URL is permanent once published; changing one here adds a 301 automatically.",
+ "dispensary_slugs": {
+  "afny": "superfly",
+  "baiked": "nicklz",
+  "blazinup": "the-alchemy-chelsea",
+  "cannaisseur": "poppin",
+  "case-management": "quality-control-ny",
+  "cbj-retail": "high-tidez",
+  "dizzpensary": "the-garden-club",
+  "dominica62": "astoria-bud-boutique",
+  "gmdss-llc": "the-travel-agency-downtown-brooklyn",
+  "green-jungle": "cannavita",
+  "healthy-choice": "broadway-strains",
+  "hybrid-nyc": "gotham-domino",
+  "kiki-buddz": "weedside",
+  "stoop": "stoops-flatiron",
+  "tango-hotel-charlie-ventures": "the-travel-agency-soho",
+  "the-doe-store": "the-travel-agency-union-square",
+  "twenty-one-thirty": "the-flowery-upper-west-side",
+  "weedkraft": "the-flowery-west-village",
+  "xander-legacy": "by-any-other-name"
+ }
+}
