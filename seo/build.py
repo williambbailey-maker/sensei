@@ -287,7 +287,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .xl .xd{font-size:13px;color:var(--mist);margin-top:2px}
 /* age gate */
 #ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:hidden;touch-action:none}
-#ag #ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
+#ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
 #ag .cta{margin-top:34px}
 #ag .ghost{display:block;margin-top:22px}
 .ag-ok #ag{display:none}
@@ -310,6 +310,33 @@ html:not(.ag-ok) body{overflow:hidden}
 .mi .ma{font-size:20px;font-weight:400;flex:none}
 #menu .about{margin-top:12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--mist)}
 #menu .meta{display:block;margin-top:14px}
+/* ---------- desktop (900px and up) ----------
+   Phones keep the single column. Desktop widens to a 1160px frame: detail
+   pages split into a reading column and a sticky sidebar (stats + the app
+   link), index lists run two columns, the footer and menu spread out. */
+@media (min-width:900px){
+.wrap{max-width:1160px;padding:0 48px 96px}
+main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
+.poster,h1{font-size:52px}
+.lede.sm{font-size:19px;max-width:52ch}
+.lay{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"lead side" "rest side";column-gap:80px;align-items:start}
+.lead{grid-area:lead}.rest{grid-area:rest}
+.side{grid-area:side;position:sticky;top:28px;padding-top:30px}
+.side .stats{margin-top:0}
+.side .hero{margin-top:34px}
+.intro p{font-size:16px}.intro p:first-child{font-size:19px}
+.shops{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:56px}
+.end{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:88px;align-items:center}
+.end .notice.drop{margin-top:96px}
+.end .ft{display:contents}
+.end .ft .contact{grid-column:2;grid-row:1;margin-top:96px}
+.end .ft .bullets,.end .ft .legal{grid-column:1/-1}
+.end .ft .bullets{margin-top:56px}
+.end .ft .legal{max-width:720px;justify-self:center;font-size:12px;color:var(--mist);line-height:1.6}
+#ag .box{max-width:820px;padding:0 48px 60px}
+#menu .mbody{max-width:1160px;padding:0 48px 56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:48px;align-items:start}
+#menu .mbody>.top{grid-column:1/-1}
+}
 """
 
 def menu_html(path, counts):
@@ -451,6 +478,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>{body}</main>
 <div class="rule"></div>
+<div class="end">
 <div class="notice drop" id="drop">
 <div class="k">Get the weekly drop<small>a mailing list</small></div>
 <p class="dd">Deals and standouts by email, once a week. No account, no spam, leave any time.</p>
@@ -460,6 +488,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="tel:+12125550100">(212) 555-0100</a><span>420 Broadway, New York, NY 10010</span><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="bullets sm" aria-label="Sensei"><span class="mb" style="background:var(--o)">S</span><span class="mb" style="background:var(--b)">E</span><span class="mb y" style="background:var(--y)">N</span><span class="mb" style="background:var(--g)">S</span><span class="mb" style="background:var(--v)">E</span><span class="mb" style="background:var(--r)">I</span></div>
 <p class="legal"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.</p></footer>
+</div>
 </div>{menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """
 
@@ -549,23 +578,25 @@ def build_dispensary(d):
                    lambda c: (f"/nyc/{c}/" if c in CAT_SLUGS else app_cat(c, f"store={d['slug']}")))
     feat = "".join(pcard(p) for p in (d.get("featured") or [])[:4])
     body = f"""
+<div class="lay"><div class="lead">
 <p class="crumb"><a href="/">Sensei</a> › {hood_link} › Dispensary</p>
 <p class="kicker">{esc(d.get('neighborhood') or '')} · {esc(d.get('borough') or '')}</p>
 <h1>{esc(d['name'])}</h1>
 <p class="addr">{f'<span>{esc(full_addr)}</span>' if full_addr else ''}<a class="dir" href="{esc(maps)}" target="_blank" rel="noopener" data-ev="directions" data-dispensary="{esc(d['name'])}">Directions in Google Maps →</a></p>
 {copy_intro(cp)}
-<div class="stats"><div class="stat"><span class="n">{d['in_stock']}</span><span class="k">In stock</span></div>
+</div><aside class="side"><div class="stats"><div class="stat"><span class="n">{d['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{d['brands']}</span><span class="k">Brands</span></div>
 <div class="stat"><span class="n">{money(d['min_price'])}</span><span class="k">From</span></div></div>
 <div class="hero"><div class="bn">{esc(d.get('neighborhood') or 'NYC')} · live menu</div>
 <h2>Shop {esc(d['name'])} on Sensei</h2>
 <p>Compare every item here against nearby NYC shops — then order where it's cheapest.</p>
-<a class="cta" href="{app_store(d['slug'])}" data-ev="menu" data-dispensary="{esc(d['name'])}"><span>Browse {esc(d['name'])}</span><span>→</span></a></div>
-<div class="sh">What's on the shelf</div>{cats}
+<a class="cta" href="{app_store(d['slug'])}" data-ev="menu" data-dispensary="{esc(d['name'])}"><span>Browse {esc(d['name'])}</span><span>→</span></a></div></aside>
+<div class="rest"><div class="sh">What's on the shelf</div>{cats}
 <div class="sh">Top brands here</div><div class="chips">{bchips}</div>
 <div class="sh">Featured right now</div>{feat}
 {copy_sections(cp, d['name'])}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_store=d['slug'], hood=d.get('neighborhood'))}
+</div></div>
 """
     write(path, page(title, desc, path, ld, body, "dispensary",
                      {"dispensary": d["name"], "neighborhood": d.get("neighborhood"), "borough": d.get("borough")}))
@@ -591,22 +622,24 @@ def build_neighborhood(n):
     stores = f'<div class="shops">{stores}</div>'
     feat = "".join(pcard(p) for p in (n.get("featured") or [])[:4])
     body = f"""
+<div class="lay"><div class="lead">
 <p class="crumb"><a href="/">Sensei</a> › {esc(n['borough'])} › Neighborhood</p>
 <p class="kicker">{esc(n['borough'])}</p>
 <h1>Weed in {esc(n['neighborhood'])}</h1>
 {copy_intro(cp)}
-<div class="stats"><div class="stat"><span class="n">{n['stores']}</span><span class="k">Shops</span></div>
+</div><aside class="side"><div class="stats"><div class="stat"><span class="n">{n['stores']}</span><span class="k">Shops</span></div>
 <div class="stat"><span class="n">{n['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{len(n.get('categories') or {})}</span><span class="k">Categories</span></div></div>
 <div class="hero"><div class="bn">{n['stores']} shops · one search</div>
 <h2>Shop all of {esc(n['neighborhood'])} on Sensei</h2>
 <p>Every {esc(n['neighborhood'])} menu in one place, sorted by price and distance.</p>
-<a class="cta" href="{app_hood(n['neighborhood'])}" data-ev="menu"><span>Shop {esc(n['neighborhood'])}</span><span>→</span></a></div>
-<div class="sh">Filter {esc(n['neighborhood'])} by category</div>{cats}
+<a class="cta" href="{app_hood(n['neighborhood'])}" data-ev="menu"><span>Shop {esc(n['neighborhood'])}</span><span>→</span></a></div></aside>
+<div class="rest"><div class="sh">Filter {esc(n['neighborhood'])} by category</div>{cats}
 <div class="sh">Dispensaries in {esc(n['neighborhood'])}</div>{stores}
 <div class="sh">Popular right now</div>{feat}
 {copy_sections(cp, n['neighborhood'])}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_hood=slug)}
+</div></div>
 """
     write(path, page(title, desc, path, ld, body, "neighborhood",
                      {"neighborhood": n["neighborhood"], "borough": n.get("borough")}))
@@ -634,22 +667,24 @@ def build_brand(b):
     stores = f'<div class="shops">{stores}</div>'
     feat = "".join(pcard({**p, "brand": b["brand"]}) for p in (b.get("featured") or [])[:4])
     body = f"""
+<div class="lay"><div class="lead">
 <p class="crumb"><a href="/">Sensei</a> › Brands › {esc(b['brand'])}</p>
 <p class="kicker">Brand</p>
 <h1>{esc(b['brand'])} in NYC</h1>
 {copy_intro(cp)}
-<div class="stats"><div class="stat"><span class="n">{b['stores']}</span><span class="k">Stores stock it</span></div>
+</div><aside class="side"><div class="stats"><div class="stat"><span class="n">{b['stores']}</span><span class="k">Stores stock it</span></div>
 <div class="stat"><span class="n">{b['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{money(b['min_price'])}</span><span class="k">From</span></div></div>
 <div class="hero"><div class="bn">Carried at {b['stores']} shops</div>
 <h2>See every store stocking {esc(b['brand'])}</h2>
 <p>Compare {esc(b['brand'])} prices across all {b['stores']} NYC shops on Sensei.</p>
-<a class="cta" href="{app_brand(b['brand'])}" data-ev="menu" data-brand="{esc(b['brand'])}"><span>Find {esc(b['brand'])} nearby</span><span>→</span></a></div>
-<div class="sh">What {esc(b['brand'])} makes</div><div class="chips">{cchips}</div>
+<a class="cta" href="{app_brand(b['brand'])}" data-ev="menu" data-brand="{esc(b['brand'])}"><span>Find {esc(b['brand'])} nearby</span><span>→</span></a></div></aside>
+<div class="rest"><div class="sh">What {esc(b['brand'])} makes</div><div class="chips">{cchips}</div>
 <div class="sh">Stores carrying {esc(b['brand'])}</div>{stores}
 <div class="sh">Popular {esc(b['brand'])} products</div>{feat}
 {copy_sections(cp, b['brand'])}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_brand=slug)}
+</div></div>
 """
     write(path, page(title, desc, path, ld, body, "brand", {"brand": b["brand"]}))
     return path
@@ -673,22 +708,24 @@ def build_category(c):
         hchips += f'<a class="chip" href="{href}" data-ev="chip" data-hood="{esc(h["neighborhood"])}">{esc(h["neighborhood"])} <span class="c">{h["n"]}</span></a>'
     feat = "".join(pcard({**p, "category": cat}) for p in (c.get("featured") or [])[:6])
     body = f"""
+<div class="lay"><div class="lead">
 <p class="crumb"><a href="/">Sensei</a> › NYC › {esc(label)}</p>
 <p class="kicker">New York City</p>
 <h1>{esc(label)} in NYC</h1>
 {copy_intro(cp)}
-<div class="stats"><div class="stat"><span class="n">{c['in_stock']}</span><span class="k">In stock</span></div>
+</div><aside class="side"><div class="stats"><div class="stat"><span class="n">{c['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{c['stores']}</span><span class="k">Dispensaries</span></div>
 <div class="stat"><span class="n">{money(c['min_price'])}</span><span class="k">From</span></div></div>
 <div class="hero"><div class="bn">{c['brands']} brands · {c['stores']} shops</div>
 <h2>Find the best {esc(label.lower())} near you</h2>
 <p>Every NYC {esc(label.lower())} listing, ranked by price and distance on Sensei.</p>
-<a class="cta" href="{app_cat(cat)}" data-ev="menu" data-cat="{esc(cat)}"><span>Browse {esc(label.lower())}</span><span>→</span></a></div>
-<div class="sh">Top {esc(label.lower())} brands</div><div class="chips">{bchips}</div>
+<a class="cta" href="{app_cat(cat)}" data-ev="menu" data-cat="{esc(cat)}"><span>Browse {esc(label.lower())}</span><span>→</span></a></div></aside>
+<div class="rest"><div class="sh">Top {esc(label.lower())} brands</div><div class="chips">{bchips}</div>
 <div class="sh">Where it's stocked</div><div class="chips">{hchips}</div>
 <div class="sh">Featured {esc(label.lower())}</div>{feat}
 {copy_sections(cp, label)}
 <div class="sh">Explore Sensei</div>{crosslinks(exclude_cat=cat)}
+</div></div>
 """
     write(path, page(title, desc, path, ld, body, "category", {"category": cat}))
     return path

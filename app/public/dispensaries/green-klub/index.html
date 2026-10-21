@@ -169,7 +169,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .xl .xd{font-size:13px;color:var(--mist);margin-top:2px}
 /* age gate */
 #ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:hidden;touch-action:none}
-#ag #ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
+#ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
 #ag .cta{margin-top:34px}
 #ag .ghost{display:block;margin-top:22px}
 .ag-ok #ag{display:none}
@@ -192,29 +192,59 @@ html:not(.ag-ok) body{overflow:hidden}
 .mi .ma{font-size:20px;font-weight:400;flex:none}
 #menu .about{margin-top:12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--mist)}
 #menu .meta{display:block;margin-top:14px}
+/* ---------- desktop (900px and up) ----------
+   Phones keep the single column. Desktop widens to a 1160px frame: detail
+   pages split into a reading column and a sticky sidebar (stats + the app
+   link), index lists run two columns, the footer and menu spread out. */
+@media (min-width:900px){
+.wrap{max-width:1160px;padding:0 48px 96px}
+main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
+.poster,h1{font-size:52px}
+.lede.sm{font-size:19px;max-width:52ch}
+.lay{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"lead side" "rest side";column-gap:80px;align-items:start}
+.lead{grid-area:lead}.rest{grid-area:rest}
+.side{grid-area:side;position:sticky;top:28px;padding-top:30px}
+.side .stats{margin-top:0}
+.side .hero{margin-top:34px}
+.intro p{font-size:16px}.intro p:first-child{font-size:19px}
+.shops{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:56px}
+.end{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:88px;align-items:center}
+.end .notice.drop{margin-top:96px}
+.end .ft{display:contents}
+.end .ft .contact{grid-column:2;grid-row:1;margin-top:96px}
+.end .ft .bullets,.end .ft .legal{grid-column:1/-1}
+.end .ft .bullets{margin-top:56px}
+.end .ft .legal{max-width:720px;justify-self:center;font-size:12px;color:var(--mist);line-height:1.6}
+#ag .box{max-width:820px;padding:0 48px 60px}
+#menu .mbody{max-width:1160px;padding:0 48px 56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:48px;align-items:start}
+#menu .mbody>.top{grid-column:1/-1}
+}
 </style><script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": "Green Klub", "url": "https://sensei.nyc/dispensaries/green-klub/", "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/Edibles.jpg", "address": {"@type": "PostalAddress", "streetAddress": "108 South Street", "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.707, "longitude": -74.002}, "hasMap": "https://www.google.com/maps/dir/?api=1&destination=Green%20Klub%2C%20108%20South%20Street%2C%20New%20York%2C%20NY%2010038", "areaServed": "Manhattan, NY"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Sensei", "item": "https://sensei.nyc/"}, {"@type": "ListItem", "position": 2, "name": "Dispensaries", "item": "https://sensei.nyc/dispensaries/"}, {"@type": "ListItem", "position": 3, "name": "Green Klub", "item": "https://sensei.nyc/dispensaries/green-klub/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Dumbo Electric?", "acceptedAnswer": {"@type": "Answer", "text": "A Brooklyn-based New York cannabis brand that Green Klub stocks more deeply than any other label, at 28 products. It covers pre-rolls and flower, which is where most of Green Klub's non-edible depth sits."}}, {"@type": "Question", "name": "Is Green Klub near the Seaport?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. South Street runs along the East River, and the shop is a few blocks south of Pier 17 and the Seaport district, and a short walk from Fulton Street."}}, {"@type": "Question", "name": "How does it compare to Highest Standards?", "acceptedAnswer": {"@type": "Answer", "text": "Highest Standards lists about 770 products against Green Klub's 300, with a much larger vape and flower selection. Green Klub has the deeper edible shelf for its size and is closer to the river and the Brooklyn Bridge approaches."}}]}</script></head><body>
 <div class="wrap">
 <div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>
+<div class="lay"><div class="lead">
 <p class="crumb"><a href="/">Sensei</a> › <a href="/neighborhoods/fidi/">FiDi</a> › Dispensary</p>
 <p class="kicker">FiDi · Manhattan</p>
 <h1>Green Klub</h1>
 <p class="addr"><span>108 South Street, New York, NY 10038</span><a class="dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Green%20Klub%2C%20108%20South%20Street%2C%20New%20York%2C%20NY%2010038" target="_blank" rel="noopener" data-ev="directions" data-dispensary="Green Klub">Directions in Google Maps →</a></p>
 <div class="intro"><p>Green Klub is at 108 South Street in the Financial District, on the East River side near the Seaport and a short walk from the Fulton Street transit hub. It is the smaller of the two licensed dispensaries we track in FiDi, with about 300 products from 49 brands. Edibles dominate at 113 listings, followed by 94 pre-rolls, then a modest 42 vapes and 31 flower options, with 12 concentrates.</p><p>The brand list is unusual. Dumbo Electric, a Brooklyn label, is the deepest at 28 products, with Grön, Lion Order, Off Hours, Hashtag Honey and LEVEL following. The entry price is $5 for LEVEL's Energy and Slumber five-milligram protab two-packs, with Cycling Frog seltzers in black currant and ruby grapefruit at $6. Highest Standards on the west side of FiDi lists more than twice as many products, so Green Klub is the pick for the Seaport side and for edibles and pre-rolls rather than vapes or flower.</p></div>
-<div class="stats"><div class="stat"><span class="n">293</span><span class="k">In stock</span></div>
+</div><aside class="side"><div class="stats"><div class="stat"><span class="n">293</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">51</span><span class="k">Brands</span></div>
 <div class="stat"><span class="n">$3</span><span class="k">From</span></div></div>
 <div class="hero"><div class="bn">FiDi · live menu</div>
 <h2>Shop Green Klub on Sensei</h2>
 <p>Compare every item here against nearby NYC shops — then order where it's cheapest.</p>
-<a class="cta" href="https://sensei.nyc/?store=green-klub" data-ev="menu" data-dispensary="Green Klub"><span>Browse Green Klub</span><span>→</span></a></div>
-<div class="sh">What's on the shelf</div><div class="bars"><a class="brow" href="/nyc/edibles/" data-ev="chip" data-cat="edibles"><span class="bk">Edibles</span><span class="bt"><span class="bf" style="width:100%"></span></span><span class="bn">116</span></a><a class="brow" href="/nyc/pre-rolls/" data-ev="chip" data-cat="pre-rolls"><span class="bk">Pre-Rolls</span><span class="bt"><span class="bf" style="width:56%"></span></span><span class="bn">65</span></a><a class="brow" href="/nyc/vaporizers/" data-ev="chip" data-cat="vaporizers"><span class="bk">Vapes</span><span class="bt"><span class="bf" style="width:42%"></span></span><span class="bn">49</span></a><a class="brow" href="/nyc/flower/" data-ev="chip" data-cat="flower"><span class="bk">Flower</span><span class="bt"><span class="bf" style="width:38%"></span></span><span class="bn">44</span></a><a class="brow" href="/nyc/concentrates/" data-ev="chip" data-cat="concentrates"><span class="bk">Concentrates</span><span class="bt"><span class="bf" style="width:11%"></span></span><span class="bn">13</span></a><a class="brow" href="/nyc/tinctures/" data-ev="chip" data-cat="tinctures"><span class="bk">Tinctures</span><span class="bt"><span class="bf" style="width:5%"></span></span><span class="bn">6</span></a></div>
+<a class="cta" href="https://sensei.nyc/?store=green-klub" data-ev="menu" data-dispensary="Green Klub"><span>Browse Green Klub</span><span>→</span></a></div></aside>
+<div class="rest"><div class="sh">What's on the shelf</div><div class="bars"><a class="brow" href="/nyc/edibles/" data-ev="chip" data-cat="edibles"><span class="bk">Edibles</span><span class="bt"><span class="bf" style="width:100%"></span></span><span class="bn">116</span></a><a class="brow" href="/nyc/pre-rolls/" data-ev="chip" data-cat="pre-rolls"><span class="bk">Pre-Rolls</span><span class="bt"><span class="bf" style="width:56%"></span></span><span class="bn">65</span></a><a class="brow" href="/nyc/vaporizers/" data-ev="chip" data-cat="vaporizers"><span class="bk">Vapes</span><span class="bt"><span class="bf" style="width:42%"></span></span><span class="bn">49</span></a><a class="brow" href="/nyc/flower/" data-ev="chip" data-cat="flower"><span class="bk">Flower</span><span class="bt"><span class="bf" style="width:38%"></span></span><span class="bn">44</span></a><a class="brow" href="/nyc/concentrates/" data-ev="chip" data-cat="concentrates"><span class="bk">Concentrates</span><span class="bt"><span class="bf" style="width:11%"></span></span><span class="bn">13</span></a><a class="brow" href="/nyc/tinctures/" data-ev="chip" data-cat="tinctures"><span class="bk">Tinctures</span><span class="bt"><span class="bf" style="width:5%"></span></span><span class="bn">6</span></a></div>
 <div class="sh">Top brands here</div><div class="chips"><a class="chip" href="https://sensei.nyc/?brand=Dumbo%20Electric" data-ev="chip" data-brand="Dumbo Electric">Dumbo Electric <span class="c">29</span></a><a class="chip" href="https://sensei.nyc/?brand=Moon%20Dust" data-ev="chip" data-brand="Moon Dust">Moon Dust <span class="c">18</span></a><a class="chip" href="/brands/mfny/" data-ev="chip" data-brand="MFNY">MFNY <span class="c">17</span></a><a class="chip" href="https://sensei.nyc/?brand=ElectraLeaf" data-ev="chip" data-brand="ElectraLeaf">ElectraLeaf <span class="c">16</span></a><a class="chip" href="/brands/gr-n/" data-ev="chip" data-brand="Grön">Grön <span class="c">16</span></a><a class="chip" href="/brands/off-hours/" data-ev="chip" data-brand="Off Hours">Off Hours <span class="c">14</span></a></div>
 <div class="sh">Featured right now</div><div class="card" data-ev="product" data-brand="" data-product-key="gatorade" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/Edibles.jpg" alt="" loading="lazy"></span><div class="l"><div class="nm">Gatorade</div><div class="mt">Edibles</div></div><div class="r"><div class="pr">$3</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="San Pelligrino " data-product-key="san-pelligrino-san-pelligrino-seltzer" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/5e26b57eb357a864d72849bf50a7c922" alt="" loading="lazy"></span><div class="l"><div class="nm">San Pelligrino Seltzer</div><div class="mt">San Pelligrino  · Edibles</div></div><div class="r"><div class="pr">$3</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="LEVEL" data-product-key="level-level-5-protab-energy-5mg-2pk-thc-tablet" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/bf4a8edc2871c6846d6495889b8998d7" alt="" loading="lazy"></span><div class="l"><div class="nm">LEVEL 5 Protab Energy | 5mg | 2pk THC Tablet</div><div class="mt">LEVEL · Sativa · Edibles</div></div><div class="r"><div class="pr">$5</div><div class="pg">from</div></div></div><div class="card" data-ev="product" data-brand="LEVEL" data-product-key="level-level-5-protab-slumber-5mg-2pk-thc-tablets" data-category="edibles"><span class="tile"><img src="https://s3-us-west-2.amazonaws.com/dutchie-images/ccf7f31d55efc712f4c5c271de3a5f10" alt="" loading="lazy"></span><div class="l"><div class="nm">LEVEL 5 Protab Slumber | 5mg | 2pk THC Tablets</div><div class="mt">LEVEL · Indica · Edibles</div></div><div class="r"><div class="pr">$5</div><div class="pg">from</div></div></div>
 <div class="sh">Good to know</div><ul class="know"><li>About 300 products from 49 brands; edibles (113) and pre-rolls (94) are the core.</li><li>Dumbo Electric is the top brand at 28 products, with Grön and Lion Order behind.</li><li>Entry price is $5 for LEVEL protabs; Cycling Frog seltzers are $6.</li><li>Highest Standards, across FiDi, is the larger licensed alternative.</li></ul><div class="sh">Green Klub FAQ</div><div class="faq"><details class="qa"><summary>What is Dumbo Electric?</summary><p>A Brooklyn-based New York cannabis brand that Green Klub stocks more deeply than any other label, at 28 products. It covers pre-rolls and flower, which is where most of Green Klub's non-edible depth sits.</p></details><details class="qa"><summary>Is Green Klub near the Seaport?</summary><p>Yes. South Street runs along the East River, and the shop is a few blocks south of Pier 17 and the Seaport district, and a short walk from Fulton Street.</p></details><details class="qa"><summary>How does it compare to Highest Standards?</summary><p>Highest Standards lists about 770 products against Green Klub's 300, with a much larger vape and flower selection. Green Klub has the deeper edible shelf for its size and is closer to the river and the Brooklyn Bridge approaches.</p></details></div>
 <div class="sh">Explore Sensei</div><div class="xgrid"><a class="xl" href="/dispensaries/qube-manhattan/"><span class="xk">Dispensary</span><div class="xv">Qube - Manhattan</div><div class="xd">Midtown, Manhattan</div></a><a class="xl" href="/neighborhoods/midtown/"><span class="xk">Neighborhood</span><div class="xv">Midtown</div><div class="xd">7 shops · Manhattan</div></a><a class="xl" href="/brands/ayrloom/"><span class="xk">Brand</span><div class="xv">ayrloom</div><div class="xd">63 stores stock it</div></a><a class="xl" href="/nyc/concentrates/"><span class="xk">Category</span><div class="xv">Concentrates</div><div class="xd">1342 across NYC</div></a></div>
+</div></div>
 </main>
 <div class="rule"></div>
+<div class="end">
 <div class="notice drop" id="drop">
 <div class="k">Get the weekly drop<small>a mailing list</small></div>
 <p class="dd">Deals and standouts by email, once a week. No account, no spam, leave any time.</p>
@@ -224,6 +254,7 @@ html:not(.ag-ok) body{overflow:hidden}
 <footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="tel:+12125550100">(212) 555-0100</a><span>420 Broadway, New York, NY 10010</span><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="bullets sm" aria-label="Sensei"><span class="mb" style="background:var(--o)">S</span><span class="mb" style="background:var(--b)">E</span><span class="mb y" style="background:var(--y)">N</span><span class="mb" style="background:var(--g)">S</span><span class="mb" style="background:var(--v)">E</span><span class="mb" style="background:var(--r)">I</span></div>
 <p class="legal"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.</p></footer>
+</div>
 </div>
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
 <div class="mbody">

@@ -227,10 +227,15 @@ export function ProductDetail({
           </span>
         </div>
 
+        {/* One column on phones; image left, details right on desktop. */}
+        <div className="detail-grid">
+        <div className="detail-media">
         <div className={`detail-img mt-5 ${hasImg ? '' : 'items-center'}`}>
           {hasImg ? <img src={p.image_url!} alt={name} onError={() => setImgOk(false)} /> : <span className="meta">No image</span>}
         </div>
+        </div>
 
+        <div className="detail-info">
         <h3 className="poster" style={{ marginTop: 22 }}>
           {name}
         </h3>
@@ -340,6 +345,8 @@ export function ProductDetail({
             </button>
           </div>
         )}
+        </div>
+        </div>
       </div>
     </div>
   )

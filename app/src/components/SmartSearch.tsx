@@ -36,7 +36,7 @@ export function SmartSearch({
   }
 
   return (
-    <div id="search" className="wrap" style={{ paddingTop: 34 }}>
+    <div id="search" className="wrap wrap-mid" style={{ paddingTop: 34 }}>
       <form
         onSubmit={(e) => {
           e.preventDefault()

@@ -20,7 +20,7 @@ export function CartView({
   const menuUrl = `https://dutchie.com/dispensary/${cart.store.slug}`
 
   return (
-    <div className="wrap" style={{ paddingTop: 28 }}>
+    <div className="wrap wrap-mid" style={{ paddingTop: 28 }}>
       <div className="flex items-center justify-between">
         <button type="button" onClick={onBack} className="ghost">
           Keep shopping

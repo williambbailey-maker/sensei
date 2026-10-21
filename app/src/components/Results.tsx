@@ -119,7 +119,7 @@ export function Results({
         </div>
       ) : (
         <>
-          <div style={{ marginTop: 20 }}>
+          <div className="results-list" style={{ marginTop: 20 }}>
             {shown.map((p) => (
               <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onOpen={openProduct} />
             ))}

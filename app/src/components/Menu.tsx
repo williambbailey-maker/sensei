@@ -119,6 +119,7 @@ export function Menu({
           </button>
         </div>
 
+        <div className="menu-groups">
         {groups.map((g) => (
           <div key={g.title}>
             <p className="k" style={{ marginTop: 30 }}>
@@ -158,23 +159,29 @@ export function Menu({
             </div>
           </div>
         ))}
-
-        <p className="k" style={{ marginTop: 30 }}>
-          The weekly drop
-          <small>deals and standouts by email</small>
-        </p>
-        <div className="mt-3">
-          <Newsletter source="menu" compact />
         </div>
 
-        <p className="k" style={{ marginTop: 30 }}>
-          About
-        </p>
-        <p className="copy mt-2" style={{ color: 'rgba(255,255,255,.6)' }}>
-          Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each
-          shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.
-        </p>
-        <p className="meta mt-4">21+ only · adults in New York State</p>
+        <div className="menu-extra">
+          <div>
+            <p className="k" style={{ marginTop: 30 }}>
+              The weekly drop
+              <small>deals and standouts by email</small>
+            </p>
+            <div className="mt-3">
+              <Newsletter source="menu" compact />
+            </div>
+          </div>
+          <div>
+            <p className="k" style={{ marginTop: 30 }}>
+              About
+            </p>
+            <p className="copy mt-2" style={{ color: 'rgba(255,255,255,.6)' }}>
+              Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each
+              shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.
+            </p>
+            <p className="meta mt-4">21+ only · adults in New York State</p>
+          </div>
+        </div>
       </div>
     </div>
   )

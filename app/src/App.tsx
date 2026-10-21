@@ -410,7 +410,7 @@ export default function App() {
       )}
 
       {view === 'journey' && way === null && (
-        <main>
+        <main className="home-grid">
           <Masthead storeCount={storeCount} productCount={productCount} neighborhoods={hoodTotal} />
           <Ways onPick={goTo} busy={locating ? 'near' : null} error={wayError} />
         </main>
@@ -418,7 +418,7 @@ export default function App() {
 
       {view === 'journey' && way === 'search' && (
         <main>
-          <div className="wrap" style={{ paddingTop: 28 }}>
+          <div className="wrap wrap-mid" style={{ paddingTop: 28 }}>
             <div className="flex items-center justify-between">
               <button type="button" onClick={restart} className="ghost">
                 Home
@@ -502,8 +502,8 @@ export default function App() {
         </button>
       )}
 
-      <footer className="wrap" style={{ paddingBottom: 80 }}>
-        <div id="drop" className="notice" style={{ marginTop: 96 }}>
+      <footer className="wrap site-foot" style={{ paddingTop: 96, paddingBottom: 80 }}>
+        <div id="drop" className="notice">
           <Newsletter source="footer" compact />
         </div>
         <div className="contact">
