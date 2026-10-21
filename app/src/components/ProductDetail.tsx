@@ -199,15 +199,29 @@ export function ProductDetail({
           <span>In stock · as of last refresh</span>
         </div>
 
-        <div className="swipe mt-3 justify-start">
-          <span className={`swipe-a ${index === 0 ? 'swipe-off' : ''}`} aria-hidden="true">
-            ←
-          </span>
+        <div className="deck-nav mt-3">
           <span className="meta">
-            {pad(index + 1)} / {total > 999 ? '999+' : pad(total)} · swipe for next
+            {pad(index + 1)} / {total > 999 ? '999+' : pad(total)}
           </span>
-          <span className={`swipe-a ${index >= total - 1 ? 'swipe-off' : ''}`} aria-hidden="true">
-            →
+          <span className="deck-btns">
+            <button
+              type="button"
+              onClick={() => flyTo(-1)}
+              disabled={index === 0}
+              className="deck-btn"
+              aria-label="Previous product"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={() => flyTo(1)}
+              disabled={index >= total - 1}
+              className="deck-btn"
+              aria-label="Next product"
+            >
+              →
+            </button>
           </span>
         </div>
 
