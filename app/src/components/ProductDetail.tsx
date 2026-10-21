@@ -33,21 +33,40 @@ export function ProductDetail({
   const evProps = eventProps(p)
   const { name, brand, price, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
 
-  // Lock body scroll; Escape closes; arrow keys step.
+  // Lock body scroll; Escape closes; arrow keys step. The panel is a history
+  // entry, so the back button (or an edge swipe) closes it rather than
+  // leaving the results.
+  const closeRef = useRef(onClose)
+  closeRef.current = onClose
+  const stepRef = useRef(onStep)
+  stepRef.current = onStep
   useEffect(() => {
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-      else if (e.key === 'ArrowRight') onStep(1)
-      else if (e.key === 'ArrowLeft') onStep(-1)
+      if (e.key === 'Escape') closeRef.current()
+      else if (e.key === 'ArrowRight') stepRef.current(1)
+      else if (e.key === 'ArrowLeft') stepRef.current(-1)
     }
+    const onPop = () => closeRef.current()
     window.addEventListener('keydown', onKey)
+    try {
+      history.pushState({ detail: true }, '')
+      window.addEventListener('popstate', onPop)
+    } catch {
+      /* history unavailable */
+    }
     return () => {
       document.body.style.overflow = prev
       window.removeEventListener('keydown', onKey)
+      window.removeEventListener('popstate', onPop)
+      try {
+        if (history.state?.detail) history.back()
+      } catch {
+        /* ignore */
+      }
     }
-  }, [onClose, onStep])
+  }, [])
 
   // Horizontal swipe: a clear sideways gesture, not a vertical scroll.
   const touch = useRef<{ x: number; y: number } | null>(null)
@@ -65,7 +84,8 @@ export function ProductDetail({
   })
   const onTouchStart = (e: React.TouchEvent) => {
     const t = e.touches[0]
-    touch.current = { x: t.clientX, y: t.clientY }
+    // A swipe that starts at the left edge is "back", handled by the app.
+    touch.current = t.clientX <= 24 ? null : { x: t.clientX, y: t.clientY }
   }
   const onTouchMove = (e: React.TouchEvent) => {
     if (!touch.current) return

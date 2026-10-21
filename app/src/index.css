@@ -468,6 +468,31 @@ select:focus {
   color: #fff;
 }
 
+/* The one-time "swipe back" hint under the header. */
+.back-hint {
+  @apply flex items-center;
+  gap: 8px;
+}
+@keyframes sen-hintArrow {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-6px);
+  }
+}
+.back-hint-arrow {
+  display: inline-block;
+  color: #fff;
+  animation: sen-hintArrow 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .back-hint-arrow {
+    animation: none;
+  }
+}
+
 /* ---------- the menu sheet ---------- */
 .menu {
   @apply fixed inset-0 z-40 overflow-y-auto bg-field;
