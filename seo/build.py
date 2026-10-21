@@ -780,7 +780,7 @@ def crosslinks(exclude_store=None, exclude_hood=None, exclude_brand=None, exclud
 def build_home(paths):
     """The home, one-for-one with design/subway-landing.html, live numbers in."""
     title = "Sensei — every licensed cannabis menu in NYC"
-    desc = ("Stop checking menus one shop at a time. Every licensed dispensary in New York, side by side: price, THC and distance, updated nightly. "
+    desc = ("One search across New York's licensed dispensaries. See who has it, what it costs and how far it is. "
             "Browse by neighborhood, brand or product type.")
     n_shops = STATS["shops"]
     products = STATS["in_stock"]
@@ -806,7 +806,7 @@ def build_home(paths):
         for b in sorted(SITE["brands"], key=lambda b: -b["stores"])[:5])
     body = f"""
 <h1>Every<br>menu.<br>One stop.</h1>
-<p class="lede">Stop checking menus one shop at a time. Every licensed dispensary in New York, side by side: price, THC and distance, updated nightly.</p>
+<p class="lede">One search across New York's licensed dispensaries. See who has it, what it costs and how far it is.</p>
 <div class="bullets"><span class="mb" style="background:#00933C">T</span><span class="mb" style="background:#6CBE45">H</span><span class="mb" style="background:#1B5E3A">C</span></div>
 <a class="cta" href="{APP}/?near=1" data-ev="menu"><span>Shops near me</span><span>→</span></a>
 <div class="stats"><div><b>{n_shops}</b><span>licensed shops</span></div><div><b>{products_k}</b><span>items in stock</span></div><div><b>{n_hoods}</b><span>neighborhoods</span></div></div>
@@ -984,7 +984,7 @@ def home_block():
                      for b in sorted(SITE["brands"], key=lambda b: -b["stores"]))
     return (f'<div class="seo-home">\n'
             f'<h1>Every menu. One stop.</h1>\n'
-            f'<p>Stop checking menus one shop at a time. Every licensed dispensary in New York, side by side: price, THC and distance. '
+            f"<p>One search across New York's licensed dispensaries. See who has it, what it costs and how far it is. "
             f'{n_shops} licensed shops across {n_hoods} neighborhoods in Manhattan, Brooklyn and Queens.</p>\n'
             f'<h2>Browse</h2><ul><li><a href="/neighborhoods/">Dispensaries by neighborhood</a></li>'
             f'<li><a href="/brands/">Cannabis brands in NYC</a></li><li><a href="/nyc/">Flower, pre-rolls, vapes and edibles</a></li></ul>\n'

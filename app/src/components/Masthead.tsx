@@ -67,8 +67,7 @@ export function Masthead({
         One stop.
       </h1>
       <p className="lede" style={{ marginTop: 22 }}>
-        Stop checking menus one shop at a time. Every licensed dispensary in New York, side by side: price, THC
-        and distance, updated nightly.
+        One search across New York's licensed dispensaries. See who has it, what it costs and how far it is.
       </p>
       <div style={{ marginTop: 34 }}>
         <Bullets />
