@@ -434,7 +434,11 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
     place = ctx.pop("borough", None) or "New York City"
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="dark"><meta name="theme-color" content="#0B0B0B">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
 <title>{esc(title)}</title><meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{canon}">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
