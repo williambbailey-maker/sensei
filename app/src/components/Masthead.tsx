@@ -1,26 +1,18 @@
 // The hero, exactly as design/subway-landing.html: headline, lede, six line
 // bullets, the one white CTA, three stats. The age gate reuses Bullets.
 
+// Three line bullets that spell THC.
 export function Bullets() {
   return (
     <div className="bullets" aria-hidden="true">
       <span className="mb" style={{ background: 'var(--r)' }}>
-        1
+        T
       </span>
       <span className="mb" style={{ background: 'var(--b)' }}>
-        A
+        H
       </span>
       <span className="mb" style={{ background: 'var(--g)' }}>
-        6
-      </span>
-      <span className="mb" style={{ background: 'var(--gr)' }}>
-        L
-      </span>
-      <span className="mb y" style={{ background: 'var(--y)' }}>
-        N
-      </span>
-      <span className="mb" style={{ background: 'var(--o)' }}>
-        F
+        C
       </span>
     </div>
   )

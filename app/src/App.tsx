@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
-import { IntroSlice } from './components/IntroSlice'
 import { Masthead } from './components/Masthead'
 import { Ways, type Way } from './components/Ways'
 import { Menu, type MenuTarget } from './components/Menu'
@@ -265,7 +264,6 @@ export default function App() {
 
   return (
     <div className="min-h-full">
-      <IntroSlice />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
       <Menu

@@ -2,23 +2,23 @@ import { useEffect, useRef } from 'react'
 import { Newsletter } from './Newsletter'
 import { track } from '../lib/analytics'
 import { prettyStore } from '../lib/labels'
-import type { Way } from './Ways'
+import { WAYS, type Way } from './Ways'
 import type { Cart } from '../lib/types'
 
 // What a menu row does: one of the four ways in, or a screen in the app.
 export type MenuTarget = Way | 'deals' | 'cart'
 
 type Item = {
-  n: string
+  n?: string
+  bullet?: { letter: string; color: string; dark?: boolean }
   title: string
   desc: string
   target?: MenuTarget
   href?: string
 }
 
-// The menu: a full-screen sheet on the field, four groups of numbered rows.
-// The numbers continue 01–04 from the home screen so the four ways in keep
-// the same numbers everywhere.
+// The menu: a full-screen sheet on the field, four groups of rows. The Find
+// group carries the same lettered line bullets as the home screen.
 export function Menu({
   open,
   onClose,
@@ -76,30 +76,29 @@ export function Menu({
   const groups: { title: string; items: Item[] }[] = [
     {
       title: 'Find',
-      items: [
-        { n: '01', title: 'Near me', desc: 'Closest shops first', target: 'near' },
-        { n: '02', title: 'Pick a borough', desc: 'Manhattan · Brooklyn · Queens', target: 'borough' },
-        { n: '03', title: 'Search in your words', desc: 'Strain, brand, price or neighborhood', target: 'search' },
-        { n: '04', title: 'See everything', desc: 'Every product · cheapest first', target: 'all' },
-      ],
+      items: WAYS.map((w) => ({
+        bullet: { letter: w.letter, color: w.color, dark: w.dark },
+        title: w.title,
+        desc: w.key === 'search' ? 'Strain, brand, price or neighborhood' : w.desc,
+        target: w.key,
+      })),
     },
     {
       title: 'Browse',
       items: [
         {
-          n: '05',
           title: 'Neighborhoods',
           desc: `${hoodCount ?? '—'} areas · ${storeCount ?? '—'} shops`,
           href: '/neighborhoods/',
         },
-        { n: '06', title: 'Brands', desc: 'Ayrloom, MFNY, Ruby Farms…', href: '/brands/' },
-        { n: '07', title: 'Products', desc: 'Flower · pre-rolls · vapes · edibles', href: '/nyc/' },
-        { n: '08', title: 'Deals', desc: 'Worth a look this week', target: 'deals' },
+        { title: 'Brands', desc: 'Ayrloom, MFNY, Ruby Farms…', href: '/brands/' },
+        { title: 'Products', desc: 'Flower · pre-rolls · vapes · edibles', href: '/nyc/' },
+        { title: 'Deals', desc: 'Worth a look this week', target: 'deals' },
       ],
     },
     {
       title: 'You',
-      items: [{ n: '09', title: 'Cart', desc: cartDesc, target: 'cart' }],
+      items: [{ title: 'Cart', desc: cartDesc, target: 'cart' }],
     },
   ]
 
@@ -132,7 +131,11 @@ export function Menu({
                 const inner = (
                   <>
                     <span className="mi-l">
-                      <span className="mi-n">{it.n}</span>
+                      {it.bullet && (
+                        <span className={`mb s ${it.bullet.dark ? 'y' : ''}`} style={{ background: it.bullet.color }}>
+                          {it.bullet.letter}
+                        </span>
+                      )}
                       <span className="min-w-0">
                         <span className="mi-t">{it.title}</span>
                         <span className="mi-d">{it.desc}</span>
@@ -145,11 +148,11 @@ export function Menu({
                 )
                 const cls = `mi ${it.target && it.target === current ? 'mi-now' : ''}`
                 return it.href ? (
-                  <a key={it.n} href={it.href} className={cls} onClick={() => track('menu_pick', { item: it.title.toLowerCase() })}>
+                  <a key={it.title} href={it.href} className={cls} onClick={() => track('menu_pick', { item: it.title.toLowerCase() })}>
                     {inner}
                   </a>
                 ) : (
-                  <button key={it.n} type="button" className={cls} onClick={() => pick(it)}>
+                  <button key={it.title} type="button" className={cls} onClick={() => pick(it)}>
                     {inner}
                   </button>
                 )

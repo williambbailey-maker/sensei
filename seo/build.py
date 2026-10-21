@@ -300,9 +300,16 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 def menu_html(path, counts):
     """The menu sheet, as static HTML on every page. Links into the app with the
     same ?entry= hints the home's "Start here" rows use."""
+    # The Find rows carry the same lettered line bullets as the app's home;
+    # other rows have no marker.
+    colors = {"N": ("var(--r)", ""), "B": ("var(--b)", ""), "S": ("var(--g)", ""), "E": ("var(--y)", " y")}
     def row(n, title, desc, href, now=False):
+        bullet = ""
+        if n in colors:
+            bg, y = colors[n]
+            bullet = f'<span class="mb s{y}" style="background:{bg}">{n}</span>'
         return (f'<a class="mi{" now" if now else ""}" href="{href}" data-ev="chip" data-cat="menu:{esc(title.lower())}">'
-                f'<span class="ml"><span class="mn">{n}</span><span><span class="mt">{esc(title)}</span>'
+                f'<span class="ml">{bullet}<span><span class="mt">{esc(title)}</span>'
                 f'<span class="md">{esc(desc)}</span></span></span><span class="ma">→</span></a>')
     stores, hoods, products = counts
     return f"""
@@ -311,20 +318,20 @@ def menu_html(path, counts):
 <div class="mbody">
 <div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span><span class="tr">21+ · New York City</span></div>
 <div class="grp"><div class="k">Find</div>
-{row("01", "Near me", "Closest shops first", f"{APP}/?near=1")}
-{row("02", "Pick a borough", "Manhattan · Brooklyn · Queens", f"{APP}/?entry=borough")}
-{row("03", "Search in your words", "Strain, brand, price or neighborhood", f"{APP}/?entry=search")}
-{row("04", "See everything", f"{products:,} products · cheapest first", f"{APP}/?entry=all")}
+{row("N", "Near me", "Closest shops first", f"{APP}/?near=1")}
+{row("B", "Pick a borough", "Manhattan · Brooklyn · Queens", f"{APP}/?entry=borough")}
+{row("S", "Search in your words", "Strain, brand, price or neighborhood", f"{APP}/?entry=search")}
+{row("E", "See everything", f"{products:,} products · cheapest first", f"{APP}/?entry=all")}
 </div>
 <div class="grp"><div class="k">Browse</div>
-{row("05", "Neighborhoods", f"{hoods} areas · {stores} shops", "/neighborhoods/", path == "/neighborhoods/")}
-{row("06", "Brands", "Ayrloom, MFNY, Ruby Farms…", "/brands/", path == "/brands/")}
-{row("07", "Products", "Flower · pre-rolls · vapes · edibles", "/nyc/", path == "/nyc/")}
-{row("08", "Deals", "Worth a look this week", f"{APP}/?entry=deals")}
+{row("", "Neighborhoods", f"{hoods} areas · {stores} shops", "/neighborhoods/", path == "/neighborhoods/")}
+{row("", "Brands", "Ayrloom, MFNY, Ruby Farms…", "/brands/", path == "/brands/")}
+{row("", "Products", "Flower · pre-rolls · vapes · edibles", "/nyc/", path == "/nyc/")}
+{row("", "Deals", "Worth a look this week", f"{APP}/?entry=deals")}
 </div>
 <div class="grp"><div class="k">You</div>
-{row("09", "Cart", "Open in the app", f"{APP}/?entry=cart")}
-{row("10", "The weekly drop", "Deals and standouts by email", f"{APP}/#drop")}
+{row("", "Cart", "Open in the app", f"{APP}/?entry=cart")}
+{row("", "The weekly drop", "Deals and standouts by email", f"{APP}/#drop")}
 </div>
 <div class="grp"><div class="k">About</div>
 <p class="about">Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.</p>
@@ -694,7 +701,7 @@ def build_home(paths):
     body = f"""
 <h1>Every<br>menu.<br>One stop.</h1>
 <p class="lede">All {n_shops} licensed dispensaries in New York, compared nightly. Price and potency as labeled.</p>
-<div class="bullets"><span class="mb" style="background:var(--r)">1</span><span class="mb" style="background:var(--b)">A</span><span class="mb" style="background:var(--g)">6</span><span class="mb" style="background:var(--gr)">L</span><span class="mb y" style="background:var(--y)">N</span><span class="mb" style="background:var(--o)">F</span></div>
+<div class="bullets"><span class="mb" style="background:var(--r)">T</span><span class="mb" style="background:var(--b)">H</span><span class="mb" style="background:var(--g)">C</span></div>
 <a class="cta" href="{APP}/?near=1" data-ev="menu"><span>Shops near me</span><span>→</span></a>
 <div class="stats"><div><b>{n_shops}</b><span>licensed shops</span></div><div><b>{products_k}</b><span>items in stock</span></div><div><b>{n_hoods}</b><span>neighborhoods</span></div></div>
 <div class="rule"></div>
