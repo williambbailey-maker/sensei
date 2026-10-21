@@ -208,7 +208,7 @@ select:focus {
 
 /* Line bullets. */
 .bullets {
-  @apply flex;
+  @apply flex justify-center;
   gap: 12px;
 }
 .bullets .mb {

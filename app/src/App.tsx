@@ -499,12 +499,7 @@ export default function App() {
       )}
 
       <footer className="wrap" style={{ paddingBottom: 60 }}>
-        <div className="exit">
-          <button type="button" onClick={restart}>
-            ↑ Exit to menus
-          </button>
-          <span className="dim">Updated nightly</span>
-        </div>
+        <div className="rule" />
         <div id="drop" style={{ marginTop: 34 }}>
           <Newsletter source="footer" compact />
         </div>
@@ -515,9 +510,6 @@ export default function App() {
           <br />
           <br />
           sensei.nyc · hello@sensei.nyc
-        </p>
-        <p className="meta" style={{ marginTop: 18, fontSize: 11 }}>
-          Build {__BUILD_ID__}
         </p>
       </footer>
     </div>

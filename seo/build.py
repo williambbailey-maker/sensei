@@ -175,7 +175,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .stat{display:flex;flex-direction:column}
 .stat .n{color:var(--ink)}
 /* line bullets + routes (the only colors) */
-.bullets{display:flex;gap:10px;margin:34px 0 0}
+.bullets{display:flex;justify-content:center;gap:12px;margin:34px 0 0}
 .bullets .mb{width:50px;height:50px;font-size:30px}
 .mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:24px;color:#fff;letter-spacing:-.03em;flex:none}
 .mb.y{color:#111}
@@ -203,8 +203,6 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .board{margin:18px 0 0;border-top:2px solid var(--ink)}
 .board a,.board div{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;letter-spacing:-.02em}
 .board span:last-child{font-weight:400;color:var(--mist);font-size:13px}
-.exit{display:flex;align-items:center;justify-content:space-between;margin:40px 0 0;padding:16px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);font-size:15px;font-weight:700}
-.exit span:last-child{font-weight:400;color:var(--mist)}
 .ft{margin:34px 0 0;font-size:12px;color:var(--mist);line-height:1.6}
 .ft b{color:var(--ink)}
 /* page heads */
@@ -430,7 +428,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <div class="wrap">
 <div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>{body}</main>
-<div class="exit"><a href="/">↑ Exit to menus</a><span>Updated nightly</span></div>
+<div class="rule"></div>
 <footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc</footer>
 </div>{menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """
