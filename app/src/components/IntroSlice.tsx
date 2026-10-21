@@ -51,12 +51,12 @@ export function IntroSlice() {
       </div>
       <div className="sen-blade">
         <svg viewBox="-60 0 470 40" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          {/* An ink blade on the field: the edge is the paper showing through. */}
-          <path d="M -6,20 Q170,4 400,16 L400,24 Q170,32 -6,20 Z" fill="#141414" />
-          <path d="M -6,20 Q170,4 400,16" stroke="#F2C230" strokeWidth="1.1" fill="none" opacity="0.7" />
-          <rect x="-16" y="12" width="10" height="16" fill="#141414" />
-          <rect x="-56" y="14.5" width="42" height="11" fill="#141414" />
-          <line x1="-50" y1="20" x2="-20" y2="20" stroke="#F2C230" strokeWidth="1" opacity="0.5" />
+          {/* A white blade on the field: the edge is the field showing through. */}
+          <path d="M -6,20 Q170,4 400,16 L400,24 Q170,32 -6,20 Z" fill="#FFFFFF" />
+          <path d="M -6,20 Q170,4 400,16" stroke="#0B0B0B" strokeWidth="1.1" fill="none" opacity="0.7" />
+          <rect x="-16" y="12" width="10" height="16" fill="#FFFFFF" />
+          <rect x="-56" y="14.5" width="42" height="11" fill="#FFFFFF" />
+          <line x1="-50" y1="20" x2="-20" y2="20" stroke="#0B0B0B" strokeWidth="1" opacity="0.5" />
         </svg>
       </div>
       <div className="sen-flash-screen" />

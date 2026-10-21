@@ -2,22 +2,21 @@
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
-    // The "Sign" system: six tokens, one face. Everything else is layout.
+    // Subway signage: six tokens. The eight MTA line colors live only in the
+    // .mb bullets and .route lines, as CSS variables in index.css.
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      // field/deep are CSS variables so the reading screens (results, cart)
-      // can swap the yellow for cream; see index.css.
-      field: 'var(--field)', // page background
-      deep: 'var(--deep)', // inputs, options, modal panels, image placeholders
-      ink: '#141414', // all type, rules, arrows, the marker
-      mist: 'rgba(20,20,20,.62)', // secondary type
-      line: 'rgba(20,20,20,.22)', // 2px row rules
-      'line-strong': 'rgba(20,20,20,.5)', // input underlines, outline markers
+      field: '#0B0B0B', // page background
+      deep: '#1E1E1E', // image placeholders, option backgrounds, scrim
+      ink: '#FFFFFF', // all type, rules, CTA bar, marker
+      mist: 'rgba(255,255,255,.6)', // secondary type
+      line: 'rgba(255,255,255,.16)', // 1px hairlines
+      'line-strong': 'rgba(255,255,255,.4)', // input underlines
     },
     extend: {
       fontFamily: {
-        sans: ["'Barlow Condensed'", 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ["'Helvetica Neue'", 'Helvetica', 'Inter', 'Arial', 'sans-serif'],
       },
     },
   },

@@ -20,18 +20,18 @@ export function Newsletter({ source, compact = false }: { source: string; compac
   }
 
   if (state === 'done') {
-    return <p className="meta text-center text-ink">You're on the list. Talk soon.</p>
+    return <p className="meta text-ink">You're on the list. Talk soon.</p>
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm">
+    <div>
       {!compact && (
         <>
-          <p className="poster">The weekly drop</p>
-          <p className="meta mt-2 text-center">Deals and standouts, once a week. No spam.</p>
+          <p className="k">The weekly drop</p>
+          <p className="meta mt-1">Deals and standouts, once a week. No spam.</p>
         </>
       )}
-      <form onSubmit={submit} className={`inp gap-4 ${compact ? '' : 'mt-6'}`}>
+      <form onSubmit={submit} className={`inp ${compact ? '' : 'mt-4'}`}>
         <input
           type="email"
           value={email}
@@ -43,7 +43,7 @@ export function Newsletter({ source, compact = false }: { source: string; compac
           {state === 'loading' ? '…' : 'Join'}
         </button>
       </form>
-      {state === 'error' && <p className="meta mt-2 text-center">Something went wrong. Try again.</p>}
+      {state === 'error' && <p className="meta mt-2">Something went wrong. Try again.</p>}
     </div>
   )
 }

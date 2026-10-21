@@ -1,15 +1,15 @@
 import { BOROUGHS } from '../lib/labels'
 
-// The four ways in, as one conspicuous block under the masthead. Each row is
-// a full-width tap target with heavy rules, a number, a title, a one-line
-// description and an arrow.
+// The ways in. The hero's white CTA is "Shops near me" (01), so the
+// "Start here" block lists the other three as numbered line bullets; the
+// menu lists all four with the same numbers.
 export type Way = 'near' | 'borough' | 'search' | 'all'
 
-const WAYS: { key: Way; title: string; desc: string }[] = [
-  { key: 'near', title: 'Near me', desc: 'Share location · closest shops first' },
-  { key: 'borough', title: 'Pick a borough', desc: BOROUGHS.join(' · ') },
-  { key: 'search', title: 'Search in your words', desc: '"Sativa pre-rolls under $10"' },
-  { key: 'all', title: 'See everything', desc: 'Every product · cheapest first' },
+const WAYS: { key: Way; title: string; desc: string; color: string; dark?: boolean }[] = [
+  { key: 'near', title: 'Near me', desc: 'Closest shops first', color: 'var(--r)' },
+  { key: 'borough', title: 'Pick a borough', desc: BOROUGHS.join(' · '), color: 'var(--b)' },
+  { key: 'search', title: 'Search in your words', desc: '"Sativa pre-rolls under $10"', color: 'var(--g)' },
+  { key: 'all', title: 'See everything', desc: 'Every product · cheapest first', color: 'var(--y)', dark: true },
 ]
 
 export function wayIndex(key: Way): string {
@@ -19,31 +19,23 @@ export function wayTitle(key: Way): string {
   return WAYS.find((w) => w.key === key)?.title ?? ''
 }
 
-export function Ways({
-  onPick,
-  busy,
-  error,
-}: {
-  onPick: (w: Way) => void
-  busy?: Way | null
-  error?: string
-}) {
+export function Ways({ onPick, busy }: { onPick: (w: Way) => void; busy?: Way | null }) {
   return (
-    <section className="mx-auto max-w-2xl px-6">
-      <div className="rule mt-8">
-        <span>Start here</span>
-      </div>
-      <p className="meta mt-2 text-center" style={{ fontSize: 14 }}>
-        Four ways in. Pick one.
+    <section className="wrap">
+      <div className="rule" />
+      <p className="k" style={{ marginTop: 26 }}>
+        Start here
+        <small>three more ways in</small>
       </p>
-      {error && <p className="meta mt-2 text-center text-ink">{error}</p>}
-      <div className="ways mt-6">
-        {WAYS.map((w, i) => (
+      <div className="ways" style={{ marginTop: 14 }}>
+        {WAYS.filter((w) => w.key !== 'near').map((w, i) => (
           <button key={w.key} type="button" onClick={() => onPick(w.key)} disabled={busy != null} className="way">
             <span className="way-l">
-              <span className="way-n">{String(i + 1).padStart(2, '0')}</span>
-              <span className="min-w-0 text-left">
-                <span className="way-t">{busy === w.key ? 'Locating' : w.title}</span>
+              <span className={`mb s ${w.dark ? 'y' : ''}`} style={{ background: w.color }}>
+                {i + 2}
+              </span>
+              <span className="min-w-0">
+                <span className="way-t">{w.title}</span>
                 <span className="way-d">{w.desc}</span>
               </span>
             </span>
@@ -54,28 +46,5 @@ export function Ways({
         ))}
       </div>
     </section>
-  )
-}
-
-// The row you picked, pinned at the top of the next screen so the path stays
-// visible. `next` spells out what follows.
-export function PinnedWay({ way, next }: { way: Way; next: string }) {
-  return (
-    <div className="mx-auto max-w-2xl px-6">
-      <div className="ways">
-        <div className="way way-on">
-          <span className="way-l">
-            <span className="way-n">{wayIndex(way)}</span>
-            <span className="min-w-0 text-left">
-              <span className="way-t">{wayTitle(way)}</span>
-              <span className="way-d">{next}</span>
-            </span>
-          </span>
-          <span className="way-a" aria-hidden="true">
-            ↓
-          </span>
-        </div>
-      </div>
-    </div>
   )
 }

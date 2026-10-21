@@ -16,9 +16,9 @@ type Item = {
   href?: string
 }
 
-// The menu: a full-screen sheet in the current surface color, four groups of
-// numbered rows. The numbers continue 01–04 from the home screen so the four
-// ways in keep the same numbers everywhere.
+// The menu: a full-screen sheet on the field, four groups of numbered rows.
+// The numbers continue 01–04 from the home screen so the four ways in keep
+// the same numbers everywhere.
 export function Menu({
   open,
   onClose,
@@ -113,27 +113,27 @@ export function Menu({
 
   return (
     <div className="menu menu-in" role="dialog" aria-modal="true" aria-label="Menu">
-      <div className="mx-auto max-w-2xl">
-        <div className="flex items-center justify-between pb-2 pt-8">
-          <button type="button" onClick={onClose} className="burger burger-x" aria-label="Close menu" />
-          <span className="label" style={{ fontSize: 20 }}>
+      <div className="wrap" style={{ padding: 0 }}>
+        <div className="top">
+          <span className="flex items-center gap-3">
+            <button type="button" onClick={onClose} className="burger burger-x" aria-label="Close menu" />
             Sensei
           </span>
-          <span className="meta">21+</span>
+          <span className="dim">21+ · New York City</span>
         </div>
 
         {groups.map((g) => (
-          <div key={g.title} className="mt-7">
-            <div className="rule">
-              <span>{g.title}</span>
-            </div>
-            <div className="mt-1">
+          <div key={g.title}>
+            <p className="k" style={{ marginTop: 30 }}>
+              {g.title}
+            </p>
+            <div className="mt-2" style={{ borderTop: '2px solid #fff' }}>
               {g.items.map((it) => {
                 const inner = (
                   <>
                     <span className="mi-l">
                       <span className="mi-n">{it.n}</span>
-                      <span className="min-w-0 text-left">
+                      <span className="min-w-0">
                         <span className="mi-t">{it.title}</span>
                         <span className="mi-d">{it.desc}</span>
                       </span>
@@ -158,26 +158,22 @@ export function Menu({
           </div>
         ))}
 
-        <div className="mt-7">
-          <div className="rule">
-            <span>The weekly drop</span>
-          </div>
-          <p className="meta mt-2 text-center">Deals and standouts by email. No spam.</p>
-          <div className="mt-4">
-            <Newsletter source="menu" compact />
-          </div>
+        <p className="k" style={{ marginTop: 30 }}>
+          The weekly drop
+          <small>deals and standouts by email</small>
+        </p>
+        <div className="mt-3">
+          <Newsletter source="menu" compact />
         </div>
 
-        <div className="mt-7">
-          <div className="rule">
-            <span>About</span>
-          </div>
-          <p className="copy sentence mt-3">
-            Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each
-            shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.
-          </p>
-          <p className="meta mt-4">21+ only · adults in New York State</p>
-        </div>
+        <p className="k" style={{ marginTop: 30 }}>
+          About
+        </p>
+        <p className="copy mt-2" style={{ color: 'rgba(255,255,255,.6)' }}>
+          Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each
+          shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.
+        </p>
+        <p className="meta mt-4">21+ only · adults in New York State</p>
       </div>
     </div>
   )

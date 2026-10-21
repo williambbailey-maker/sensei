@@ -1,31 +1,85 @@
-// The sign masthead: the mark, a subtitle, a short description of what
-// Sensei does, and one line of real counts. Used on the home view; the age
-// gate reuses the top of the stack.
+// The hero, exactly as design/subway-landing.html: headline, lede, six line
+// bullets, the one white CTA, three stats. The age gate reuses Bullets.
 
-export function Mark() {
-  return <h1 className="mark">Sensei</h1>
+export function Bullets() {
+  return (
+    <div className="bullets" aria-hidden="true">
+      <span className="mb" style={{ background: 'var(--r)' }}>
+        1
+      </span>
+      <span className="mb" style={{ background: 'var(--b)' }}>
+        A
+      </span>
+      <span className="mb" style={{ background: 'var(--g)' }}>
+        6
+      </span>
+      <span className="mb" style={{ background: 'var(--gr)' }}>
+        L
+      </span>
+      <span className="mb y" style={{ background: 'var(--y)' }}>
+        N
+      </span>
+      <span className="mb" style={{ background: 'var(--o)' }}>
+        F
+      </span>
+    </div>
+  )
+}
+
+function short(n: number | null): string {
+  if (n == null) return '—'
+  return n >= 1000 ? `${Math.round(n / 1000)}k` : String(n)
 }
 
 export function Masthead({
   storeCount,
-  boroughs,
+  productCount,
   neighborhoods,
+  onNear,
+  locating,
+  error,
 }: {
   storeCount: number | null
-  boroughs: number | null
+  productCount: number | null
   neighborhoods: number | null
+  onNear: () => void
+  locating: boolean
+  error?: string
 }) {
+  const n = storeCount == null ? 'All' : `All ${storeCount}`
   return (
-    <section className="mx-auto max-w-2xl px-6 pt-10 text-center">
-      <Mark />
-      <p className="poster mt-4">A guide to New York</p>
-      <p className="copy sentence mx-auto mt-4 max-w-[36ch] text-center" style={{ fontSize: 16 }}>
-        Every licensed dispensary menu in NYC, in one place. Say where you are and what you're after, and
-        we'll show the cheapest and strongest options near you.
+    <section className="wrap">
+      <h1 className="mark" style={{ marginTop: 54 }}>
+        Every
+        <br />
+        menu.
+        <br />
+        One stop.
+      </h1>
+      <p className="lede" style={{ marginTop: 22 }}>
+        {n} licensed dispensaries in New York, compared nightly. Price and potency as labeled.
       </p>
-      <p className="meta mt-6" style={{ fontSize: 14 }}>
-        {storeCount ?? '—'} licensed shops · {boroughs ?? '—'} boroughs · {neighborhoods ?? '—'} neighborhoods
-      </p>
+      <div style={{ marginTop: 34 }}>
+        <Bullets />
+      </div>
+      <button type="button" onClick={onNear} disabled={locating} className="cta" style={{ marginTop: 28 }}>
+        <span>{locating ? 'Locating' : 'Shops near me'}</span>
+      </button>
+      {error && <p className="meta mt-3">{error}</p>}
+      <div className="stats" style={{ marginTop: 30 }}>
+        <div>
+          <span className="stat-v">{storeCount ?? '—'}</span>
+          <span className="stat-k">licensed shops</span>
+        </div>
+        <div>
+          <span className="stat-v">{short(productCount)}</span>
+          <span className="stat-k">items in stock</span>
+        </div>
+        <div>
+          <span className="stat-v">{neighborhoods ?? '—'}</span>
+          <span className="stat-k">neighborhoods</span>
+        </div>
+      </div>
     </section>
   )
 }

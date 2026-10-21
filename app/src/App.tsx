@@ -3,7 +3,7 @@ import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { IntroSlice } from './components/IntroSlice'
 import { Masthead } from './components/Masthead'
-import { PinnedWay, Ways, type Way } from './components/Ways'
+import { Ways, type Way } from './components/Ways'
 import { Menu, type MenuTarget } from './components/Menu'
 import { requestLocation } from './lib/geo'
 import { SmartSearch } from './components/SmartSearch'
@@ -11,7 +11,7 @@ import { TapJourney } from './components/TapJourney'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
-import { fetchDeals, fetchProductsFor, fetchStores } from './lib/supabase'
+import { fetchDeals, fetchProductCount, fetchProductsFor, fetchStores } from './lib/supabase'
 import { prettyStore } from './lib/labels'
 import { track } from './lib/analytics'
 import {
@@ -36,6 +36,7 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
+  const [productCount, setProductCount] = useState<number | null>(null)
   const [loadError, setLoadError] = useState(false)
   // True while the products for the current filter set are being fetched, so
   // the results screen can say "loading" instead of a false "nothing matched".
@@ -61,19 +62,19 @@ export default function App() {
   useEffect(() => {
     fetchStores().then(setStores).catch(() => {})
     fetchDeals().then(setDeals).catch(() => {})
+    fetchProductCount().then(setProductCount).catch(() => {})
   }, [])
 
   // Deep links from the SEO pages (/?brand=… /?store=… /?neighborhood=…
-  // /?category=…) skip the journey and open results with those filters set.
-  // Resolved once the stores list is in, since store and neighborhood hints
-  // are matched against it.
+  // /?category=… /?entry=… /?near=1) skip the journey and open results with
+  // those filters set. Resolved once the stores list is in, since store and
+  // neighborhood hints are matched against it.
   const [deepLinked, setDeepLinked] = useState(false)
   useEffect(() => {
     if (deepLinked || stores.length === 0) return
     setDeepLinked(true)
-    // /?entry=near|borough|search|all|deals|cart — the SEO pages' "Start
-    // here" rows and menu.
-    const entry = new URLSearchParams(window.location.search).get('entry')
+    const q = new URLSearchParams(window.location.search)
+    const entry = q.get('near') === '1' ? 'near' : q.get('entry')
     if (
       entry === 'near' ||
       entry === 'borough' ||
@@ -130,17 +131,6 @@ export default function App() {
     return () => clearTimeout(t)
   }, [])
 
-  // Yellow for the sign screens (home, journey, age gate); cream for the
-  // reading screens (results, product detail, cart). See index.css.
-  useEffect(() => {
-    const root = document.documentElement
-    if (view === 'journey') delete root.dataset.surface
-    else root.dataset.surface = 'paper'
-    return () => {
-      delete root.dataset.surface
-    }
-  }, [view])
-
   const go = (v: View) => setView(v)
 
   const scopedProducts = useMemo(
@@ -194,12 +184,17 @@ export default function App() {
     return m
   }, [stores])
 
-  // Which of the four ways in was picked. null = the home screen (masthead +
-  // the "Start here" block); 'borough' and 'search' open the journey screen
-  // with that row pinned; 'near' and 'all' go straight to results.
-  const [way, setWay] = useState<Way | null>(null)
+  // The ways in. "Near me" asks for location and opens results closest
+  // first; "Pick a borough" scrolls to the journey; "Search" focuses the
+  // search field; "See everything" opens results, all, cheapest first.
   const [locating, setLocating] = useState(false)
   const [wayError, setWayError] = useState('')
+  const scrollTo = (id: string, focus = false) =>
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id)
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (focus) (document.getElementById('search-input') as HTMLInputElement | null)?.focus()
+    })
   const pickWay = (w: Way) => {
     setWayError('')
     track('journey_step', { step: 'entry', entry: w })
@@ -223,15 +218,17 @@ export default function App() {
       go('results')
       return
     }
-    setWay(w)
-    setJourneyKey((k) => k + 1)
-    go('journey')
+    if (view !== 'journey') {
+      setFilters(EMPTY_FILTERS)
+      setJourneyKey((k) => k + 1)
+      go('journey')
+    }
+    setTimeout(() => scrollTo(w === 'search' ? 'search' : 'journey', w === 'search'), 50)
   }
 
   // Start a fresh journey from the top.
   const restart = () => {
     setFilters(EMPTY_FILTERS)
-    setWay(null)
     setWayError('')
     setJourneyKey((k) => k + 1)
     go('journey')
@@ -240,11 +237,11 @@ export default function App() {
   // The menu. Deals = results (all, cheapest first) scrolled to the deals
   // section once the list has loaded; Cart = the cart, or home if empty.
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrollTo, setScrollTo] = useState<string | null>(null)
+  const [pendingScroll, setPendingScroll] = useState<string | null>(null)
   const goTo = (t: MenuTarget) => {
     if (t === 'deals') {
       setFilters({ ...EMPTY_FILTERS, sort: 'price-asc' })
-      setScrollTo('deals')
+      setPendingScroll('deals')
       go('results')
       return
     }
@@ -256,25 +253,21 @@ export default function App() {
     pickWay(t)
   }
   useEffect(() => {
-    if (!scrollTo || view !== 'results' || loading) return
-    const id = scrollTo
-    setScrollTo(null)
-    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
-  }, [scrollTo, view, loading])
-  const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : view === 'journey' ? way : null
+    if (!pendingScroll || view !== 'results' || loading) return
+    const id = pendingScroll
+    setPendingScroll(null)
+    scrollTo(id)
+  }, [pendingScroll, view, loading])
+  const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : null
 
   const storeCount = stores.length > 0 ? stores.length : null
-  const boroughTotal = stores.length > 0 ? Object.keys(boroughCounts).length : null
   const hoodTotal = stores.length > 0 ? Object.keys(neighborhoodCounts).length : null
-  const home = view === 'journey' && way === null
 
   return (
     <div className="min-h-full">
       <IntroSlice />
       {!ageOk && <AgeGate onConfirm={confirmAge} />}
 
-      {/* Header: burger left, the name center (the masthead carries it on the
-          journey view), an 18px spacer right so the name stays centered. */}
       <Menu
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
@@ -285,26 +278,30 @@ export default function App() {
         onGo={goTo}
       />
 
-      <header className="bg-field">
-        <div className="mx-auto flex max-w-2xl items-center justify-between px-6 pb-2 pt-8">
-          <button
-            type="button"
-            onClick={() => {
-              track('menu_open', {})
-              setMenuOpen(true)
-            }}
-            className="burger"
-            aria-label="Menu"
-          />
-          <button type="button" onClick={restart} className={`label ${home ? 'invisible' : ''}`} style={{ fontSize: 20 }}>
-            Sensei
-          </button>
-          <span className="w-[18px]" aria-hidden="true" />
+      {/* The 10px white bar, then "Sensei" and the age line. */}
+      <div className="bar" />
+      <header className="wrap">
+        <div className="top">
+          <span className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                track('menu_open', {})
+                setMenuOpen(true)
+              }}
+              className="burger"
+              aria-label="Menu"
+            />
+            <button type="button" onClick={restart} className="font-bold">
+              Sensei
+            </button>
+          </span>
+          <span className="dim">21+ · New York City</span>
         </div>
       </header>
 
       {cart && view !== 'cart' && (
-        <div className="mx-auto max-w-2xl px-6">
+        <div className="wrap">
           <div className="row">
             <span className="meta min-w-0 truncate">
               Building a cart · {cart.store.name ?? prettyStore(cart.store.slug)} · this store only
@@ -322,39 +319,29 @@ export default function App() {
       )}
 
       {loadError && (
-        <div className="mx-auto max-w-2xl px-6 pt-4">
+        <div className="wrap pt-4">
           <p className="meta text-ink">Couldn't reach the menu right now. Check your connection and refresh.</p>
         </div>
       )}
 
-      {home && (
+      {view === 'journey' && (
         <main>
-          <Masthead storeCount={storeCount} boroughs={boroughTotal} neighborhoods={hoodTotal} />
-          <Ways onPick={pickWay} busy={locating ? 'near' : null} error={wayError} />
-        </main>
-      )}
-
-      {view === 'journey' && way !== null && (
-        <main>
-          <PinnedWay
-            way={way}
-            next={way === 'search' ? 'Then refine on the results screen' : 'Then neighborhood · product · strain · budget'}
+          <Masthead
+            storeCount={storeCount}
+            productCount={productCount}
+            neighborhoods={hoodTotal}
+            onNear={() => pickWay('near')}
+            locating={locating}
+            error={wayError}
           />
-          {way === 'search' && (
-            <SmartSearch
-              autoFocus
-              neighborhoodsByBorough={neighborhoodsByBorough}
-              onSearch={(f) => {
-                setFilters(f)
-                go('results')
-              }}
-            />
-          )}
-          {way === 'search' && (
-            <div className="rule mt-10">
-              <span>Or</span>
-            </div>
-          )}
+          <Ways onPick={pickWay} busy={locating ? 'near' : null} />
+          <SmartSearch
+            neighborhoodsByBorough={neighborhoodsByBorough}
+            onSearch={(f) => {
+              setFilters(f)
+              go('results')
+            }}
+          />
           <TapJourney
             key={journeyKey}
             initial={filters}
@@ -367,20 +354,6 @@ export default function App() {
             }}
             onClose={restart}
           />
-          {way === 'borough' && (
-            <>
-              <div className="rule">
-                <span>Or</span>
-              </div>
-              <SmartSearch
-                neighborhoodsByBorough={neighborhoodsByBorough}
-                onSearch={(f) => {
-                  setFilters(f)
-                  go('results')
-                }}
-              />
-            </>
-          )}
         </main>
       )}
 
@@ -397,7 +370,6 @@ export default function App() {
             loading={loading}
           />
           <Deals deals={deals} />
-          <div className="pb-16" />
         </main>
       )}
 
@@ -419,24 +391,33 @@ export default function App() {
         <button
           type="button"
           onClick={() => go('cart')}
-          className="label fixed bottom-7 left-1/2 z-40 -translate-x-1/2 border-2 border-ink bg-field px-6 py-2.5 transition active:translate-y-px"
+          className="label fixed bottom-7 left-1/2 z-30 -translate-x-1/2 border-2 border-ink bg-field px-6 py-2.5"
         >
           Cart · {cartCount} · ${cartTotal.toFixed(2).replace(/\.00$/, '')}
         </button>
       )}
 
-      <footer className="mt-16 border-t-2 border-line">
-        <div className="mx-auto max-w-2xl px-6 py-12 text-center">
-          <p className="poster">Sensei.nyc</p>
-          <p className="label mt-4 text-mist">
-            Every licensed dispensary menu, one place. Compare price, potency and pickup, then order where it's right.
-          </p>
-          <p className="meta mt-4">21+ only · adults in New York State</p>
-          <div id="drop" className="mt-8">
-            <Newsletter source="footer" compact />
-          </div>
-          <p className="mt-8 text-[10px] font-semibold text-[rgba(20,20,20,.31)]">Build {__BUILD_ID__}</p>
+      <footer className="wrap" style={{ paddingBottom: 60 }}>
+        <div className="exit">
+          <button type="button" onClick={restart}>
+            ↑ Exit to menus
+          </button>
+          <span className="dim">Updated nightly</span>
         </div>
+        <div id="drop" style={{ marginTop: 34 }}>
+          <Newsletter source="footer" compact />
+        </div>
+        <p className="foot">
+          <b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to
+          each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change
+          the order of results.
+          <br />
+          <br />
+          sensei.nyc · hello@sensei.nyc
+        </p>
+        <p className="meta" style={{ marginTop: 18, fontSize: 11 }}>
+          Build {__BUILD_ID__}
+        </p>
       </footer>
     </div>
   )

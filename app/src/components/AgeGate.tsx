@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Mark } from './Masthead'
 
 const KEY = 'sensei_age_ok'
 
@@ -14,20 +13,28 @@ export function useAgeGate(): [boolean, () => void] {
 
 export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   return (
-    <div className="sign-surface fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-6 py-10">
-      <div className="w-full max-w-sm text-center">
-        <Mark />
-        <p className="poster mt-4">Are you 21 or older?</p>
-        <div className="rule mt-6">
-          <span>NY</span>
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-field">
+      {/* A 10px white strip like .bar, without being a second .bar in the DOM. */}
+      <div style={{ height: 10, background: '#fff' }} />
+      <div className="wrap pb-16">
+        <div className="top">
+          <span>Sensei</span>
+          <span className="dim">21+ · New York City</span>
         </div>
-        <p className="meta mt-4">Cannabis products are for adult use only in New York State.</p>
-        <div className="mt-8">
-          <button type="button" onClick={onConfirm} className="dotcta">
-            Yes, I'm 21 or older
-          </button>
-        </div>
-        <a href="https://www.google.com" className="ghost mt-5 inline-block">
+        <h1 className="mark" style={{ marginTop: 54 }}>
+          Are you
+          <br />
+          21 or
+          <br />
+          older?
+        </h1>
+        <p className="lede" style={{ marginTop: 22 }}>
+          Cannabis products are for adults 21 and over in New York State.
+        </p>
+        <button type="button" onClick={onConfirm} className="cta" style={{ marginTop: 34 }}>
+          <span>Yes, I'm 21 or older</span>
+        </button>
+        <a href="https://www.google.com" className="ghost mt-6 inline-block">
           I'm under 21
         </a>
       </div>
