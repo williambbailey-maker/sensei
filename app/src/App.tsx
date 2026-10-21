@@ -243,7 +243,8 @@ export default function App() {
     let start: { x: number; y: number } | null = null
     const onStart = (e: TouchEvent) => {
       const t = e.touches[0]
-      start = t.clientX <= 24 ? { x: t.clientX, y: t.clientY } : null
+      // Anywhere in the left third of the screen counts as the start zone.
+      start = t.clientX <= window.innerWidth / 3 ? { x: t.clientX, y: t.clientY } : null
     }
     const onEnd = (e: TouchEvent) => {
       if (!start) return
@@ -376,7 +377,7 @@ export default function App() {
             <span className="back-hint-arrow" aria-hidden="true">
               ←
             </span>
-            Swipe in from the left edge to go back
+            Swipe right from the left side to go back
           </p>
         )}
       </header>

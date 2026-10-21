@@ -84,8 +84,9 @@ export function ProductDetail({
   })
   const onTouchStart = (e: React.TouchEvent) => {
     const t = e.touches[0]
-    // A swipe that starts at the left edge is "back", handled by the app.
-    touch.current = t.clientX <= 24 ? null : { x: t.clientX, y: t.clientY }
+    // A swipe that starts in the left third is "back", handled by the app;
+    // product swipes start anywhere else.
+    touch.current = t.clientX <= window.innerWidth / 3 ? null : { x: t.clientX, y: t.clientY }
   }
   const onTouchMove = (e: React.TouchEvent) => {
     if (!touch.current) return
