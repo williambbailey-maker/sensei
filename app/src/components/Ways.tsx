@@ -24,9 +24,6 @@ export function Ways({ onPick, busy, error }: { onPick: (w: WayKey) => void; bus
       <h2 className="poster" style={{ marginTop: 30, textAlign: 'center' }}>
         Start here
       </h2>
-      <p className="meta text-center" style={{ marginTop: 10 }}>
-        Four ways in
-      </p>
       {error && (
         <p className="meta text-center text-ink" style={{ marginTop: 8 }}>
           {error}
