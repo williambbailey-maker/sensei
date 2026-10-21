@@ -33,7 +33,6 @@ export function Masthead({
   productCount: number | null
   neighborhoods: number | null
 }) {
-  const n = storeCount == null ? 'All' : `All ${storeCount}`
   return (
     <section className="wrap">
       <h1 className="mark" style={{ marginTop: 54 }}>
@@ -44,7 +43,8 @@ export function Masthead({
         One stop.
       </h1>
       <p className="lede" style={{ marginTop: 22 }}>
-        {n} licensed dispensaries in New York, compared nightly. Price and potency as labeled.
+        Stop checking menus one shop at a time. Every licensed dispensary in New York, side by side: price, THC
+        and distance, updated nightly.
       </p>
       <div style={{ marginTop: 34 }}>
         <Bullets />
