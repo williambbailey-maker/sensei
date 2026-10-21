@@ -10,7 +10,6 @@ export const WAYS: { key: WayKey; letter: string; title: string; desc: string; c
   { key: 'near', letter: 'N', title: 'Shops near me', desc: 'Share location · closest shops first', color: 'var(--y)', dark: true },
   { key: 'borough', letter: 'B', title: 'Pick a borough', desc: BOROUGHS.join(' · '), color: 'var(--o)' },
   { key: 'search', letter: 'S', title: 'Search in your words', desc: '"Sativa pre-rolls under $10"', color: 'var(--s)' },
-  { key: 'all', letter: 'E', title: 'See everything', desc: 'Every product · cheapest first', color: 'var(--b)' },
   { key: 'deals', letter: 'D', title: 'Deals', desc: 'Worth a look this week', color: 'var(--o)' },
 ]
 
@@ -26,7 +25,7 @@ export function Ways({ onPick, busy, error }: { onPick: (w: WayKey) => void; bus
         Start here
       </h2>
       <p className="meta text-center" style={{ marginTop: 10 }}>
-        Five ways in
+        Four ways in
       </p>
       {error && (
         <p className="meta text-center text-ink" style={{ marginTop: 8 }}>

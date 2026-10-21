@@ -327,7 +327,6 @@ def menu_html(path, counts):
 {row("N", "Shops near me", "Share location · closest shops first", f"{APP}/?near=1")}
 {row("B", "Pick a borough", "Manhattan · Brooklyn · Queens", f"{APP}/?entry=borough")}
 {row("S", "Search in your words", "Strain, brand, price or neighborhood", f"{APP}/?entry=search")}
-{row("E", "See everything", f"{products:,} products · cheapest first", f"{APP}/?entry=all")}
 </div>
 <div class="grp"><div class="k">Browse</div>
 {row("", "Neighborhoods", f"{hoods} areas · {stores} shops", "/neighborhoods/", path == "/neighborhoods/")}
