@@ -175,7 +175,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .stat{display:flex;flex-direction:column}
 .stat .n{color:var(--ink)}
 /* line bullets + routes (the only colors) */
-.bullets{display:flex;justify-content:center;gap:12px;margin:34px 0 0}
+.bullets{display:flex;gap:12px;margin:34px 0 0}
 .bullets .mb{width:50px;height:50px;font-size:30px}
 .mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:24px;color:#fff;letter-spacing:-.03em;flex:none}
 .mb.y{color:#111}
