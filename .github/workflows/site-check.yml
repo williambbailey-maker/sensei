@@ -1,0 +1,72 @@
+name: Live site check
+
+# Runs in the cloud (open network) and reports what sensei.nyc is actually
+# serving right now: which build, the icon tags, the footer disclaimer, the
+# desktop layout and the service worker cache version. The interactive
+# sessions can't reach the live domain, so this is how they verify a deploy.
+# Read-only: fetches public URLs, changes nothing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: "Host to check"
+        required: false
+        default: "sensei.nyc"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      HOST: ${{ github.event.inputs.host || 'sensei.nyc' }}
+    steps:
+      - name: DNS
+        run: |
+          echo "== $HOST"; dig +short "$HOST" A; dig +short "$HOST" CNAME
+          echo "== www.$HOST"; dig +short "www.$HOST" A; dig +short "www.$HOST" CNAME
+
+      - name: Home page
+        run: |
+          set +e
+          B="https://$HOST"
+          C='-sS -H Cache-Control:no-cache -H Pragma:no-cache'
+          echo "== headers /"
+          curl $C -D - -o home.html "$B/" | grep -iE '^(HTTP|age|cache-control|x-vercel-id|x-vercel-cache|last-modified|etag|server|date)'
+          echo "== head icon/theme tags"
+          grep -oE '<link rel="(icon|apple-touch-icon|manifest)"[^>]*>|<meta name="theme-color"[^>]*>' home.html
+          echo "== app bundles"
+          grep -oE '/assets/[^"]+\.(js|css)' home.html | sort -u | tee assets.txt
+          for a in $(cat assets.txt); do curl $C -o "$(basename $a)" "$B$a"; done
+          echo "== markers in bundles"
+          echo "new disclaimer (not affiliated):  $(cat index-*.js 2>/dev/null | grep -c 'not affiliated with any dispensary')"
+          echo "old disclaimer (New York State):  $(cat index-*.js 2>/dev/null | grep -c 'is a guide for adults 21 and over in New York State')"
+          echo "desktop layout (home-grid css):   $(cat index-*.css 2>/dev/null | grep -c 'home-grid')"
+          echo "directions link in app:           $(cat index-*.js 2>/dev/null | grep -c 'Directions in Google Maps')"
+
+      - name: SEO page
+        run: |
+          set +e
+          B="https://$HOST"
+          C='-sS -H Cache-Control:no-cache -H Pragma:no-cache'
+          curl $C -D - -o seo.html "$B/dispensaries/qube-manhattan/" | grep -iE '^(HTTP|age|x-vercel-cache|last-modified)'
+          echo "new disclaimer:   $(grep -c 'not affiliated with any dispensary' seo.html)"
+          echo "old disclaimer:   $(grep -c 'is a guide for adults 21 and over in New York State' seo.html)"
+          echo "desktop sidebar:  $(grep -c 'class="lay"' seo.html)"
+          echo "directions link:  $(grep -c 'Directions in Google Maps' seo.html)"
+          echo "new icon tags:    $(grep -c 'href="/apple-touch-icon.png"' seo.html)"
+
+      - name: Icons, manifest, service worker
+        run: |
+          set +e
+          B="https://$HOST"
+          C='-sS -H Cache-Control:no-cache -H Pragma:no-cache'
+          for p in /favicon.ico /favicon.svg /apple-touch-icon.png /icon-192.png /icon-512.png /icon-maskable-512.png /manifest.webmanifest /sw.js; do
+            curl $C -o /dev/null -w "%{http_code}  %{content_type}  %{size_download}B  $p\n" "$B$p"
+          done
+          echo "== favicon.svg starts with"; curl $C "$B/favicon.svg" | head -c 160; echo
+          echo "== manifest"; curl $C "$B/manifest.webmanifest"; echo
+          echo "== service worker cache id"; curl $C "$B/sw.js" | grep -oE 'setCacheNameDetails\(\{[^}]*\}\)|cleanupOutdatedCaches' | sort -u
