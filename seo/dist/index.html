@@ -102,6 +102,8 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .crumb a{color:var(--mist)}
 .kicker{font-size:13px;font-weight:700;margin:26px 0 0}
 .kicker+h1{margin-top:12px}
+.addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
+.addr .dir{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 /* editorial copy */
 .intro{margin-top:22px}
 .intro p{margin:0 0 12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--ink)}
@@ -295,6 +297,7 @@ try{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isI
 document.querySelectorAll('.card[data-ev="product"]').forEach(function(el){io.observe(el);});}catch(e){}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-ev]');if(!a)return;var t=a.getAttribute('data-ev');
 if(t==='chip')ev('chip_tap',{brand:a.getAttribute('data-brand')||null,neighborhood:a.getAttribute('data-hood')||null,category:a.getAttribute('data-cat')||null,label:(a.textContent||'').trim()});
+else if(t==='directions')ev('directions_click',{dispensary:a.getAttribute('data-dispensary')||CFG.dispensary||null,url:a.getAttribute('href')||null});
 else if(t==='menu')ev('menu_click',{brand:a.getAttribute('data-brand')||CFG.brand||null,dispensary:a.getAttribute('data-dispensary')||CFG.dispensary||null,url:a.getAttribute('href')||null});},true);
 })();
 </script></body></html>

@@ -224,6 +224,8 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .crumb a{color:var(--mist)}
 .kicker{font-size:13px;font-weight:700;margin:26px 0 0}
 .kicker+h1{margin-top:12px}
+.addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
+.addr .dir{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 /* editorial copy */
 .intro{margin-top:22px}
 .intro p{margin:0 0 12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--ink)}
@@ -419,6 +421,7 @@ try{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isI
 document.querySelectorAll('.card[data-ev="product"]').forEach(function(el){io.observe(el);});}catch(e){}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-ev]');if(!a)return;var t=a.getAttribute('data-ev');
 if(t==='chip')ev('chip_tap',{brand:a.getAttribute('data-brand')||null,neighborhood:a.getAttribute('data-hood')||null,category:a.getAttribute('data-cat')||null,label:(a.textContent||'').trim()});
+else if(t==='directions')ev('directions_click',{dispensary:a.getAttribute('data-dispensary')||CFG.dispensary||null,url:a.getAttribute('href')||null});
 else if(t==='menu')ev('menu_click',{brand:a.getAttribute('data-brand')||CFG.brand||null,dispensary:a.getAttribute('data-dispensary')||CFG.dispensary||null,url:a.getAttribute('href')||null});},true);
 })();
 </script>""" % json.dumps(cfg)
@@ -499,6 +502,17 @@ def catbars(cats, link_fn):
     return f'<div class="bars">{rows}</div>'
 
 # ---------- page builders ----------
+def directions_url(name, address, lat, lng):
+    """Google Maps directions to the shop. Name + address resolves to the
+    business listing; coordinates are the fallback when there's no address."""
+    if address:
+        dest = f"{name}, {address}"
+    elif lat is not None and lng is not None:
+        dest = f"{lat},{lng}"
+    else:
+        dest = f"{name}, New York, NY"
+    return "https://www.google.com/maps/dir/?api=1&destination=" + quote(dest)
+
 def build_dispensary(d):
     path = f"/dispensaries/{d['slug']}/"
     hoodslug = slugify(d["neighborhood"]) if d.get("neighborhood") else None
@@ -509,9 +523,12 @@ def build_dispensary(d):
     street = (d.get("address") or "").split(",")
     addr = {"@type": "PostalAddress", "streetAddress": street[0].strip() if street else None,
             "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}
+    full_addr = re.sub(r",\s*USA$", "", (d.get("address") or "").strip())
+    maps = directions_url(d["name"], full_addr, d.get("lat"), d.get("lng"))
     ld = [{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": d["name"],
            "url": SITE_URL + path, "image": (d["featured"] or [{}])[0].get("image_url"),
            "address": addr, "geo": {"@type": "GeoCoordinates", "latitude": d.get("lat"), "longitude": d.get("lng")},
+           "hasMap": maps,
            "areaServed": f"{d.get('borough') or 'New York'}, NY"},
           breadcrumb([("Sensei", "/"), ("Dispensaries", "/dispensaries/"),
                       (d["name"], path)])]
@@ -531,6 +548,7 @@ def build_dispensary(d):
 <p class="crumb"><a href="/">Sensei</a> › {hood_link} › Dispensary</p>
 <p class="kicker">{esc(d.get('neighborhood') or '')} · {esc(d.get('borough') or '')}</p>
 <h1>{esc(d['name'])}</h1>
+<p class="addr">{f'<span>{esc(full_addr)}</span>' if full_addr else ''}<a class="dir" href="{esc(maps)}" target="_blank" rel="noopener" data-ev="directions" data-dispensary="{esc(d['name'])}">Directions in Google Maps →</a></p>
 {copy_intro(cp)}
 <div class="stats"><div class="stat"><span class="n">{d['in_stock']}</span><span class="k">In stock</span></div>
 <div class="stat"><span class="n">{d['brands']}</span><span class="k">Brands</span></div>
