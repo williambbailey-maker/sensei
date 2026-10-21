@@ -1,22 +1,24 @@
 import { BOROUGHS } from '../lib/labels'
 
-// The four ways in, as lettered line bullets in their real MTA colors
+// The ways in, as lettered line bullets in their real MTA colors
 // (letters, not numbers: they are doors, not steps). The menu's Find group
 // uses the same bullets.
 export type Way = 'near' | 'borough' | 'search' | 'all'
+export type WayKey = Way | 'deals'
 
-export const WAYS: { key: Way; letter: string; title: string; desc: string; color: string; dark?: boolean }[] = [
+export const WAYS: { key: WayKey; letter: string; title: string; desc: string; color: string; dark?: boolean }[] = [
   { key: 'near', letter: 'N', title: 'Shops near me', desc: 'Share location · closest shops first', color: 'var(--y)', dark: true },
   { key: 'borough', letter: 'B', title: 'Pick a borough', desc: BOROUGHS.join(' · '), color: 'var(--o)' },
   { key: 'search', letter: 'S', title: 'Search in your words', desc: '"Sativa pre-rolls under $10"', color: 'var(--s)' },
   { key: 'all', letter: 'E', title: 'See everything', desc: 'Every product · cheapest first', color: 'var(--b)' },
+  { key: 'deals', letter: 'D', title: 'Deals', desc: 'Worth a look this week', color: 'var(--o)' },
 ]
 
-export function wayTitle(key: Way): string {
+export function wayTitle(key: WayKey): string {
   return WAYS.find((w) => w.key === key)?.title ?? ''
 }
 
-export function Ways({ onPick, busy, error }: { onPick: (w: Way) => void; busy?: Way | null; error?: string }) {
+export function Ways({ onPick, busy, error }: { onPick: (w: WayKey) => void; busy?: WayKey | null; error?: string }) {
   return (
     <section className="wrap">
       <div className="rule" />
@@ -24,7 +26,7 @@ export function Ways({ onPick, busy, error }: { onPick: (w: Way) => void; busy?:
         Start here
       </h2>
       <p className="meta text-center" style={{ marginTop: 10 }}>
-        Four ways in
+        Five ways in
       </p>
       {error && (
         <p className="meta text-center text-ink" style={{ marginTop: 8 }}>

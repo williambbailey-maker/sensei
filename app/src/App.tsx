@@ -409,7 +409,7 @@ export default function App() {
       {view === 'journey' && way === null && (
         <main>
           <Masthead storeCount={storeCount} productCount={productCount} neighborhoods={hoodTotal} />
-          <Ways onPick={pickWay} busy={locating ? 'near' : null} error={wayError} />
+          <Ways onPick={goTo} busy={locating ? 'near' : null} error={wayError} />
         </main>
       )}
 

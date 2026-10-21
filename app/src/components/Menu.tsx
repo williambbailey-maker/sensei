@@ -93,7 +93,6 @@ export function Menu({
         },
         { title: 'Brands', desc: 'Ayrloom, MFNY, Ruby Farms…', href: '/brands/' },
         { title: 'Products', desc: 'Flower · pre-rolls · vapes · edibles', href: '/nyc/' },
-        { title: 'Deals', desc: 'Worth a look this week', target: 'deals' },
       ],
     },
     {
