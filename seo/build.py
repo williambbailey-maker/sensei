@@ -513,7 +513,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <form class="inp" id="drop-form"><input type="email" name="email" placeholder="Your email for the weekly drop" aria-label="Email address for the weekly drop mailing list" autocomplete="email" required><button type="submit" class="ghost">Join the list</button></form>
 <p class="dd ok" id="drop-ok" hidden>You're on the list. The first drop lands next week.</p>
 </div>
-<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="tel:+12125550100">(212) 555-0100</a><span>420 Broadway, New York, NY 10010</span><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
+<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="foot-mark" aria-label="Sensei NYC"><span class="wm">Sensei</span><div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div></div>
 <p class="legal"><b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.</p></footer>
 </div>
@@ -784,7 +784,7 @@ def build_home(paths):
             "Browse by neighborhood, brand or product type.")
     n_shops = STATS["shops"]
     products = STATS["in_stock"]
-    products_k = f"{round(products / 1000)}k" if products >= 1000 else str(products)
+    products_k = f"{products // 1000}k+" if products >= 1000 else f"{products // 10 * 10}+"  # approximate, never overstates
     n_hoods = STATS["neighborhoods"]
     # Route groups: "Downtown & Brooklyn" = lower Manhattan + Brooklyn, by the
     # TOP_HOODS order; "Uptown & Queens" = the next four elsewhere. The two
@@ -1026,6 +1026,9 @@ if __name__ == "__main__":
     block = home_block()
     write_home_block(block)
     lastmod, changed = update_lastmod(paths, block)
+    # The app's fallback for its headline numbers until the live count answers.
+    (ROOT.parent / "app" / "src" / "lib" / "snapshotStats.json").write_text(
+        json.dumps({**STATS, "as_of": SITE.get("generatedAt")}, indent=1) + "\n")
     build_sitemap(paths, lastmod)
     # Hard guard: no page may ship with placeholder text or unrendered braces.
     bad = []

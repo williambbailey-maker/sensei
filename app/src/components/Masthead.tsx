@@ -41,9 +41,11 @@ export function FooterMark() {
   )
 }
 
-function short(n: number | null): string {
-  if (n == null) return '—'
-  return n >= 1000 ? `${Math.round(n / 1000)}k` : String(n)
+// Item counts move every refresh, so the home shows them approximately and
+// never overstates: 35,751 -> "35k+".
+function approx(n: number | null): string {
+  if (n == null || n <= 0) return '—'
+  return n >= 1000 ? `${Math.floor(n / 1000)}k+` : `${Math.floor(n / 10) * 10}+`
 }
 
 export function Masthead({
@@ -77,7 +79,7 @@ export function Masthead({
           <span className="stat-k">licensed shops</span>
         </div>
         <div>
-          <span className="stat-v">{short(productCount)}</span>
+          <span className="stat-v">{approx(productCount)}</span>
           <span className="stat-k">items in stock</span>
         </div>
         <div>
