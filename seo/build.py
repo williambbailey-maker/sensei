@@ -279,11 +279,12 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .xl .xv{font-size:17px;font-weight:700;letter-spacing:-.02em;margin-top:4px}
 .xl .xd{font-size:13px;color:var(--mist);margin-top:2px}
 /* age gate */
-#ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:auto}
+#ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:hidden;touch-action:none}
 #ag #ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
 #ag .cta{margin-top:34px}
 #ag .ghost{display:block;margin-top:22px}
 .ag-ok #ag{display:none}
+html:not(.ag-ok) body{overflow:hidden}
 /* menu: full-screen sheet, slides in from the left */
 #menu{position:fixed;inset:0;z-index:80;background:var(--field);overflow:auto;display:none}
 #menu .mbody{max-width:520px;margin:0 auto;padding:0 28px 40px}

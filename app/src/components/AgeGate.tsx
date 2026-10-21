@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const KEY = 'sensei_age_ok'
 
@@ -12,8 +12,16 @@ export function useAgeGate(): [boolean, () => void] {
 }
 
 export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
+  // Nothing behind the gate is reachable, so the page must not scroll.
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [])
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-field">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-field" style={{ touchAction: 'none' }}>
       <div className="wrap pb-16">
         <div className="top">
           <span className="wm">Sensei</span>
