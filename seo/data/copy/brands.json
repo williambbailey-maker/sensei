@@ -1,14 +1,14 @@
 {
   "ayrloom": {
     "intro": [
-      "Ayrloom is the most widely stocked cannabis brand in New York City. It is carried at 63 of the 67 licensed dispensaries we track, with about 1,400 products on shelves, more than any other label. The brand comes from the family behind the Beak & Skiff apple orchard in central New York, which explains the line: cider-style drinks, gummies and a long list of 2:1 and 1:1 THC-to-CBD beverages in flavors like Honeycrisp, cranberry apple, lemonade, root beer and vanilla cola.",
-      "Edibles are the core at 618 listings, mostly drinks and gummies, followed by 403 vapes, 150 pre-rolls, 123 tinctures and 101 topicals. That tincture and topical depth is why Ayrloom tops both of those categories citywide. Prices start at $3.39, and the single-serve 10-milligram drinks run $5 to $6 at most shops, which makes them the most common entry-level item on New York menus. The deepest Ayrloom runs are at NY Canna Co in Midtown with 49 products, Quality Control in Sheepshead Bay with 47 and The Flowery Upper West Side with 43."
+      "Ayrloom is the most widely stocked cannabis brand in New York City. It is carried at {shops} of the {city.shops} licensed dispensaries we track, with about {in_stock|about} products on shelves, more than any other label. The brand comes from the family behind the Beak & Skiff apple orchard in central New York, which explains the line: cider-style drinks, gummies and a long list of 2:1 and 1:1 THC-to-CBD beverages in flavors like Honeycrisp, cranberry apple, lemonade, root beer and vanilla cola.",
+      "Edibles are the core at {cat.edibles} listings, mostly drinks and gummies, followed by {cat.vaporizers} vapes, {cat.pre-rolls} pre-rolls, {cat.tinctures} tinctures and {cat.topicals} topicals. That tincture and topical depth is why Ayrloom tops both of those categories citywide. Prices start at {min_price}, and the single-serve 10-milligram drinks cost only a few dollars at most shops, which makes them the most common entry-level item on New York menus. Deep Ayrloom runs are at NY Canna Co in Midtown, Quality Control in Sheepshead Bay with {shop.case-management} products and The Flowery Upper West Side with {shop.twenty-one-thirty}."
     ],
     "know": [
-      "Carried at 63 of 67 licensed shops we track, with about 1,400 products, the most of any brand.",
-      "Edibles (618) lead, mostly drinks and gummies; 403 vapes, 123 tinctures and 101 topicals.",
-      "Single-serve 2:1 drinks at $5 to $6 are the most common entry-level item in the city.",
-      "Deepest runs: NY Canna Co (49), Quality Control (47), The Flowery UWS (43), Twenty8gramz and ENFLOR (41)."
+      "Carried at {shops} of {city.shops} licensed shops we track, with about {in_stock|about} products, the most of any brand.",
+      "Edibles ({cat.edibles}) lead, mostly drinks and gummies; {cat.vaporizers} vapes, {cat.tinctures} tinctures and {cat.topicals} topicals.",
+      "Single-serve 2:1 drinks at a few dollars each are the most common entry-level item in the city.",
+      "Deep runs: NY Canna Co, Quality Control ({shop.case-management}), The Flowery UWS ({shop.twenty-one-thirty}), Twenty8gramz and ENFLOR ({shop.enflor})."
     ],
     "faq": [
       {
@@ -21,20 +21,20 @@
       },
       {
         "q": "Where can I find the most Ayrloom products?",
-        "a": "NY Canna Co on 5th Avenue in Midtown lists 49, Quality Control in Sheepshead Bay 47 and The Flowery Upper West Side 43. Almost every licensed shop carries at least the drinks."
+        "a": "NY Canna Co on 5th Avenue in Midtown, Quality Control in Sheepshead Bay ({shop.case-management} products) and The Flowery Upper West Side ({shop.twenty-one-thirty}) carry deep runs. Almost every licensed shop carries at least the drinks."
       }
     ]
   },
   "camino": {
     "intro": [
-      "Camino is the gummy line from Kiva Confections, the California edibles company, produced under license in New York. It is one of the most widely stocked edible brands in the city, carried at 59 of the 67 licensed dispensaries we track with about 595 products, every one of them an edible. The line is organized by intended effect, with names like Balance, Bliss, Energy and Sleep, and each is a 10- or 20-count tin of flavored gummies or chews.",
-      "Prices start at $20.80, with most tins between $28 and $34 before tax, so Camino is a mid-priced option rather than an entry-level one. The deepest selections are at The Travel Agency Downtown Brooklyn with 20 products, and Culture House in Midtown and The Flowery Upper West Side with 19 each, followed by The Travel Agency SoHo, PRYZM and NY Canna Co. Because Camino is so widely carried, it is a useful price comparison: the same tin can vary by several dollars across shops a few blocks apart."
+      "Camino is the gummy line from Kiva Confections, the California edibles company, produced under license in New York. It is one of the most widely stocked edible brands in the city, carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products, every one of them an edible. The line is organized by intended effect, with names like Balance, Bliss, Energy and Sleep, and each is a 10- or 20-count tin of flavored gummies or chews.",
+      "Prices start at {min_price}, with the average tin about {avg_price} before tax, so Camino is a mid-priced option rather than an entry-level one. The deepest selections are at The Travel Agency Downtown Brooklyn with {shop.gmdss-llc} products and Culture House in Midtown with {shop.culture-house}, followed by The Flowery Upper West Side, The Travel Agency SoHo, PRYZM and NY Canna Co. Because Camino is so widely carried, it is a useful price comparison: the same tin can vary by several dollars across shops a few blocks apart."
     ],
     "know": [
-      "Carried at 59 of 67 licensed shops; about 595 products, all edibles.",
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products, all edibles.",
       "Organized by effect: Balance (1:1 THC to CBD), Bliss, Energy, Sleep and others.",
-      "Prices start at $20.80; most tins are $28 to $34 before tax.",
-      "Deepest runs: The Travel Agency Downtown Brooklyn (20), Culture House (19), The Flowery UWS (19)."
+      "Prices start at {min_price}; the average tin is about {avg_price} before tax.",
+      "Deepest runs: The Travel Agency Downtown Brooklyn ({shop.gmdss-llc}), Culture House ({shop.culture-house}), The Flowery UWS ({shop.twenty-one-thirty})."
     ],
     "faq": [
       {
@@ -47,20 +47,20 @@
       },
       {
         "q": "Why does the same Camino tin cost different amounts at different shops?",
-        "a": "Each licensed dispensary sets its own prices. In our data, Camino tins range from about $28 to $37 for comparable products depending on the store. Sensei shows the pre-tax menu price at every shop so you can compare."
+        "a": "Each licensed dispensary sets its own prices. In our data, comparable Camino tins vary by several dollars depending on the store. Sensei shows the pre-tax menu price at every shop so you can compare."
       }
     ]
   },
   "off-hours": {
     "intro": [
-      "Off Hours is a New York edibles and vape brand carried at 59 of the 67 licensed dispensaries we track, with about 640 products on shelves. The line is built around effect-named gummies, with names like Awaken, Euphoric and Dialed, each in a 10-count pack at 10 milligrams per piece, plus a growing set of half-gram all-in-one vapes using the same naming. It is one of the few brands that competes in both categories at scale.",
-      "Edibles are the larger part at 455 listings, with 183 vapes. Prices start at $16.50, and most gummy packs sit between $22 and $30 before tax, which puts Off Hours slightly below Camino and Wyld on price. The deepest selection is at Twenty8gramz in Sheepshead Bay with 38 products, followed by ENFLOR in Jackson Heights with 31, and The Daily Green, Sweetlife and Gotham Chelsea with around 21 each. Terp Bros in Astoria is also a strong stop."
+      "Off Hours is a New York edibles and vape brand carried at {shops} of the {city.shops} licensed dispensaries we track, with about {in_stock|about} products on shelves. The line is built around effect-named gummies, with names like Awaken, Euphoric and Dialed, each in a 10-count pack at 10 milligrams per piece, plus a growing set of half-gram all-in-one vapes using the same naming. It is one of the few brands that competes in both categories at scale.",
+      "Edibles are the larger part at {cat.edibles} listings, with {cat.vaporizers} vapes. Prices start at {min_price}, and the average listing runs about {avg_price} before tax. Deep selections are at Twenty8gramz in Sheepshead Bay, ENFLOR in Jackson Heights with {shop.enflor} products, and The Daily Green with {shop.the-daily-green}, Gotham Chelsea with {shop.gotham-chelsea} and Sweetlife. Terp Bros in Astoria is also a strong stop."
     ],
     "know": [
-      "Carried at 59 of 67 licensed shops; about 640 products.",
-      "455 edibles and 183 vapes, both organized by named effect.",
-      "Prices start at $16.50; most 10-packs are $22 to $30 before tax.",
-      "Deepest runs: Twenty8gramz (38), ENFLOR (31), The Daily Green, Sweetlife and Gotham Chelsea (about 21)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
+      "{cat.edibles} edibles and {cat.vaporizers} vapes, both organized by named effect.",
+      "Prices start at {min_price}; the average listing is about {avg_price} before tax.",
+      "Deep runs: Twenty8gramz, ENFLOR ({shop.enflor}), The Daily Green ({shop.the-daily-green}), Sweetlife and Gotham Chelsea ({shop.gotham-chelsea})."
     ],
     "faq": [
       {
@@ -73,25 +73,25 @@
       },
       {
         "q": "Where is Off Hours cheapest?",
-        "a": "In our data the entry price is $16.50, and Twenty8gramz, Gotham Chelsea and Terp Bros list packs starting at $22. Compare the same product across shops on Sensei, since prices vary by store."
+        "a": "In our data the entry price is {min_price}, and Gotham Chelsea lists packs starting at {shop_min.gotham-chelsea}. Compare the same product across shops on Sensei, since prices vary by store."
       }
     ]
   },
   "wyld": {
     "intro": [
-      "Wyld is the Oregon-founded gummy brand produced under license in New York, and one of the most recognized edible names in the country. It is carried at 58 of the 67 licensed dispensaries we track, with about 530 products, all of them edibles. The line is simple: fruit-flavored gummies named for real fruits like blood orange, sour apple, raspberry and marionberry, in 10-count packs at 10 milligrams per piece, with ratio versions that add CBD, CBN or CBC.",
-      "Prices start at $17.60, with most packs between $26 and $30 before tax. Sweetlife on the Upper East Side, Bud & Honey in Flatiron and The Travel Agency SoHo each list 15 Wyld products, the deepest runs in the city, with Verdi Chelsea, The Travel Agency Downtown Brooklyn and The Flowery East Village close behind at 14. Because almost every shop carries it, Wyld is the easiest brand to find on short notice and a good benchmark for comparing gummy prices across the city."
+      "Wyld is the Oregon-founded gummy brand produced under license in New York, and one of the most recognized edible names in the country. It is carried at {shops} of the {city.shops} licensed dispensaries we track, with about {in_stock|about} products, all of them edibles. The line is simple: fruit-flavored gummies named for real fruits like blood orange, sour apple, raspberry and marionberry, in 10-count packs at 10 milligrams per piece, with ratio versions that add CBD, CBN or CBC.",
+      "Prices start at {min_price}, with the average pack about {avg_price} before tax. Sweetlife on the Upper East Side ({shop.sweet-life-nyc} products), Bud & Honey in Flatiron and The Travel Agency SoHo ({shop.tango-hotel-charlie-ventures}) have some of the deepest Wyld runs in the city, alongside Verdi Chelsea, The Travel Agency Downtown Brooklyn and The Flowery East Village. Because almost every shop carries it, Wyld is the easiest brand to find on short notice and a good benchmark for comparing gummy prices across the city."
     ],
     "know": [
-      "Carried at 58 of 67 licensed shops; about 530 products, all gummies.",
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products, all gummies.",
       "Flavors named for real fruit; ratio versions with CBD, CBN (sleep) or CBC.",
-      "Prices start at $17.60; most 10-packs are $26 to $30 before tax.",
-      "Deepest runs: Sweetlife, Bud & Honey and The Travel Agency SoHo (15 each)."
+      "Prices start at {min_price}; the average 10-pack is about {avg_price} before tax.",
+      "Deep runs: Sweetlife ({shop.sweet-life-nyc}), Bud & Honey and The Travel Agency SoHo ({shop.tango-hotel-charlie-ventures})."
     ],
     "faq": [
       {
         "q": "What is the difference between Wyld and Good Tide?",
-        "a": "Good Tide is Wyld's sister brand, made with solventless rosin rather than distillate. Wyld is the larger and cheaper line; Good Tide is carried at fewer shops and starts around $25. Both are 10-count gummy packs."
+        "a": "Good Tide is Wyld's sister brand, made with solventless rosin rather than distillate. Wyld is the larger and cheaper line; Good Tide is carried at fewer shops. Both are 10-count gummy packs."
       },
       {
         "q": "Which Wyld gummies are for sleep?",
@@ -105,14 +105,14 @@
   },
   "mfny": {
     "intro": [
-      "MFNY is a New York producer best known for live resin, and the second-most stocked brand in the city after Ayrloom. It is carried at 57 of the 67 licensed dispensaries we track, with about 1,090 products on shelves across more categories than almost any other label: 376 vapes, 257 edibles, 205 concentrates, 155 pre-rolls and 88 tinctures. That concentrate count makes MFNY the deepest dab brand in New York by a wide margin.",
-      "Prices start at $4.21 for single live resin gummies, and the three-pack gummies around $5 are a common entry item. Cartridges, infused pre-rolls and concentrates run higher, with live resin tinctures in the $40 to $50 range. The deepest selections are at Cannavita in Astoria with 48 products, Weedside in Woodside with 43, Qube and The Daily Green in Midtown with 42 each, and Quality Control and Terp Bros with 34. If live resin is what you shop for, MFNY is the brand to compare across stores."
+      "MFNY is a New York producer best known for live resin, and one of the most stocked brands in the city after Ayrloom. It is carried at {shops} of the {city.shops} licensed dispensaries we track, with about {in_stock|about} products on shelves across more categories than almost any other label: {cat.vaporizers} vapes, {cat.edibles} edibles, {cat.concentrates} concentrates, {cat.pre-rolls} pre-rolls and {cat.tinctures} tinctures. That concentrate count makes MFNY the deepest dab brand in New York by a wide margin.",
+      "Prices start at {min_price} for single live resin gummies, and the three-pack gummies are a common entry item. Cartridges, infused pre-rolls, concentrates and live resin tinctures run higher. Deep selections are at Cannavita in Astoria, Weedside in Woodside with {shop.kiki-buddz} products, Qube with {shop.qube-manhattan} and The Daily Green with {shop.the-daily-green} in Midtown, and Quality Control with {shop.case-management} and Terp Bros with {shop.terp-bros-astoria}. If live resin is what you shop for, MFNY is the brand to compare across stores."
     ],
     "know": [
-      "Carried at 57 of 67 licensed shops; about 1,090 products.",
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
       "Widest category spread of any major brand: vapes, edibles, concentrates, pre-rolls and tinctures.",
-      "205 concentrates, the most of any brand in the city; prices start at $4.21.",
-      "Deepest runs: Cannavita (48), Weedside (43), Qube and The Daily Green (42)."
+      "{cat.concentrates} concentrates, the most of any brand in the city; prices start at {min_price}.",
+      "Deep runs: Cannavita, Weedside ({shop.kiki-buddz}), Qube ({shop.qube-manhattan}) and The Daily Green ({shop.the-daily-green})."
     ],
     "faq": [
       {
@@ -121,59 +121,59 @@
       },
       {
         "q": "Where can I find the most MFNY products?",
-        "a": "Cannavita in Astoria lists 48, Weedside in Woodside 43, and Qube and The Daily Green in Midtown 42 each. For concentrates specifically, Qube, Gotham Chelsea and Buzzy all carry MFNY cases."
+        "a": "Weedside in Woodside lists {shop.kiki-buddz}, The Daily Green in Midtown {shop.the-daily-green} and Qube {shop.qube-manhattan}, and Cannavita in Astoria also carries a deep run. For concentrates specifically, Qube, Gotham Chelsea and Buzzy all carry MFNY cases."
       },
       {
         "q": "Is MFNY expensive?",
-        "a": "It spans the range. Single live resin gummies start at $4.21, three-packs around $5, while cartridges and concentrates run $40 and up. The average MFNY listing in our data is about $45 before tax."
+        "a": "It spans the range. Single live resin gummies start at {min_price} and three-packs cost little more, while cartridges and concentrates run much higher. The average MFNY listing in our data is about {avg_price} before tax."
       }
     ]
   },
   "ruby-farms": {
     "intro": [
-      "Ruby Farms is a New York grower that has become the most stocked pre-roll brand in the city. It is carried at 54 of the 67 licensed dispensaries we track with about 980 products, and 752 of those are pre-rolls, more than any other brand's total in that category. The signature format is the Doobie, a half-gram joint sold in seven-packs, alongside singles, infused versions and a smaller line of 95 flower listings, 79 vapes and 29 topicals.",
-      "Prices start at $12.60, with seven-packs of Doobies around $38 before tax at most shops and singles in the mid-teens. The deepest runs are at The Travel Agency Downtown Brooklyn with 44 products, Milligrams in Greenpoint and The Travel Agency SoHo with 41 each, CONBUD on the Lower East Side with 40, and Grow Together in Coney Island with 40. Dagmar's three stores and ENFLOR in Jackson Heights also stock it heavily. If you buy pre-rolls in New York, you will see Ruby Farms almost everywhere."
+      "Ruby Farms is a New York grower that has become the most stocked pre-roll brand in the city. It is carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products, and {cat.pre-rolls} of those are pre-rolls, more than any other brand's total in that category. The signature format is the Doobie, a half-gram joint sold in seven-packs, alongside singles, infused versions and a smaller line of {cat.flower} flower listings, {cat.vaporizers} vapes and {cat.topicals} topicals.",
+      "Prices start at {min_price}, with singles at the low end and seven-packs of Doobies a step up before tax. Deep runs are at The Travel Agency Downtown Brooklyn with {shop.gmdss-llc} products, Milligrams in Greenpoint, The Travel Agency SoHo with {shop.tango-hotel-charlie-ventures}, CONBUD on the Lower East Side with {shop.conbud-les} and Grow Together in Coney Island with {shop.grow-together-brooklyn}. Dagmar's stores and ENFLOR in Jackson Heights also stock it heavily. If you buy pre-rolls in New York, you will see Ruby Farms almost everywhere."
     ],
     "know": [
-      "Carried at 54 of 67 licensed shops; about 980 products.",
-      "752 pre-rolls, the most of any brand; Doobie seven-packs are the signature format.",
-      "Prices start at $12.60; Doobie seven-packs run about $38 before tax.",
-      "Deepest runs: The Travel Agency Downtown Brooklyn (44), Milligrams and The Travel Agency SoHo (41), CONBUD and Grow Together (40)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
+      "{cat.pre-rolls} pre-rolls, the most of any brand; Doobie seven-packs are the signature format.",
+      "Prices start at {min_price}; Doobie seven-packs are the step up from singles.",
+      "Deep runs: The Travel Agency Downtown Brooklyn ({shop.gmdss-llc}), Milligrams, The Travel Agency SoHo ({shop.tango-hotel-charlie-ventures}), CONBUD ({shop.conbud-les}) and Grow Together ({shop.grow-together-brooklyn})."
     ],
     "faq": [
       {
         "q": "What is a Ruby Farms Doobie?",
-        "a": "A half-gram pre-roll sold in packs of seven, totaling 3.5 grams, usually around $38 before tax. Ruby Farms makes them in many strains, so the same pack name appears with different genetics across shops."
+        "a": "A half-gram pre-roll sold in packs of seven, totaling 3.5 grams. Ruby Farms makes them in many strains, so the same pack name appears with different genetics across shops."
       },
       {
         "q": "Does Ruby Farms sell flower?",
-        "a": "Yes, 95 flower listings across the city, but pre-rolls are the overwhelming focus at 752. Ruby Farms also makes 29 topicals, which puts it third in that category citywide."
+        "a": "Yes, {cat.flower} flower listings across the city, but pre-rolls are the overwhelming focus at {cat.pre-rolls}. Ruby Farms also makes {cat.topicals} topicals, which puts it third in that category citywide."
       },
       {
         "q": "Which shop has the most Ruby Farms?",
-        "a": "The Travel Agency Downtown Brooklyn, with 44 products, followed closely by Milligrams in Greenpoint, The Travel Agency SoHo, CONBUD and Grow Together. In the West Village, Dagmar on Jane Street carries 29."
+        "a": "The Travel Agency Downtown Brooklyn, with {shop.gmdss-llc} products, is among the deepest, along with Milligrams in Greenpoint, The Travel Agency SoHo, CONBUD and Grow Together. In the West Village, Dagmar on Jane Street also carries a good run."
       }
     ]
   },
   "gr-n": {
     "intro": [
-      "Grön is an Oregon-founded edibles company known for its pearl-shaped gummies and chocolate, produced under license in New York. It is carried at 48 of the 67 licensed dispensaries we track with about 590 products, all edibles. The line includes Pearls, Mega Pearls at a higher dose, dark and milk chocolate bars and mini bars, with ratio versions that pair THC with CBN for sleep or CBG for daytime.",
-      "Prices start at $12.80, and most packs land between $14 and $22 before tax, which makes Grön one of the cheaper major edible brands and the one with the lowest average price in our data at about $22. The deepest selection is at Quality Control in Sheepshead Bay with 34 products, followed by The Flowery Upper West Side with 25, Gotham Buds in Harlem with 24, Stash Master in Bushwick with 23, Twenty8gramz with 21 and RNR in Bushwick with 20. Brooklyn shops carry it especially well."
+      "Grön is an Oregon-founded edibles company known for its pearl-shaped gummies and chocolate, produced under license in New York. It is carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products, all edibles. The line includes Pearls, Mega Pearls at a higher dose, dark and milk chocolate bars and mini bars, with ratio versions that pair THC with CBN for sleep or CBG for daytime.",
+      "Prices start at {min_price}, which makes Grön one of the cheaper major edible brands and the one with the lowest average price in our data at about {avg_price}. The deepest selection is at Quality Control in Sheepshead Bay with {shop.case-management} products; The Flowery Upper West Side ({shop.twenty-one-thirty}), Gotham Buds in Harlem ({shop.gotham-buds}), Stash Master in Bushwick ({shop.stash-master}), Twenty8gramz and RNR in Bushwick are also well stocked. Brooklyn shops carry it especially well."
     ],
     "know": [
-      "Carried at 48 of 67 licensed shops; about 590 products, all edibles.",
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products, all edibles.",
       "Pearls, Mega Pearls and chocolate; ratio versions with CBN or CBG.",
-      "Prices start at $12.80; most packs are $14 to $22, the lowest average of the major edible brands.",
-      "Deepest runs: Quality Control (34), The Flowery UWS (25), Gotham Buds (24), Stash Master (23)."
+      "Prices start at {min_price}; the average is about {avg_price}, the lowest of the major edible brands.",
+      "Deep runs: Quality Control ({shop.case-management}), The Flowery UWS ({shop.twenty-one-thirty}), Gotham Buds ({shop.gotham-buds}), Stash Master ({shop.stash-master})."
     ],
     "faq": [
       {
         "q": "What are Grön Pearls?",
-        "a": "Small round gummies, usually 10 per pack at 10 milligrams each. Mega Pearls are the same shape at a higher dose per piece. Flavors include blackberry, blue razzleberry and others, each paired with a cannabinoid ratio."
+        "a": "Small round gummies, usually in 10-count packs at 10 milligrams each. Mega Pearls are the same shape at a higher dose per piece. Flavors include blackberry, blue razzleberry and others, each paired with a cannabinoid ratio."
       },
       {
         "q": "Does Grön make chocolate?",
-        "a": "Yes. Dark and milk chocolate bars and mini bars, including sleep-oriented versions with CBN. Mini bars start around $14 before tax in our data."
+        "a": "Yes. Dark and milk chocolate bars and mini bars, including sleep-oriented versions with CBN."
       },
       {
         "q": "How is Grön pronounced?",
@@ -183,14 +183,14 @@
   },
   "eaton-botanicals": {
     "intro": [
-      "Eaton Botanicals is a New York edibles brand from Madison County, carried at 46 of the 67 licensed dispensaries we track with about 285 products. The line is mostly gummies, 251 listings, with a smaller run of 35 pre-rolls. Its best-known product is Apple A Day, a 20-count apple gummy sold in several ratios including a 1:4 THC-to-CBD version aimed at people who want a mild dose.",
-      "Prices start at $17, with most 20-packs between $31 and $36 before tax, a reasonable per-piece price given the count. No single shop carries a huge run: ENFLOR in Jackson Heights and Highest Standards in FiDi list 11 each, Happy Buds in Bed-Stuy and CONBUD on the Lower East Side 10, and Mighty Lucky and Alta nine. Because the brand is spread thinly across many stores, almost any licensed shop will have a few Eaton Botanicals gummies, but the full flavor range takes some looking."
+      "Eaton Botanicals is a New York edibles brand from Madison County, carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products. The line is mostly gummies, {cat.edibles} listings, with a smaller run of {cat.pre-rolls} pre-rolls. Its best-known product is Apple A Day, a 20-count apple gummy sold in several ratios including a 1:4 THC-to-CBD version aimed at people who want a mild dose.",
+      "Prices start at {min_price} and average about {avg_price} before tax, a reasonable per-piece price given the 20-count packs. No single shop carries a huge run: ENFLOR in Jackson Heights lists {shop.enflor}, Happy Buds in Bed-Stuy {shop.happy-buds-brooklyn-dispensary}, Mighty Lucky {shop.mighty-lucky} and Alta {shop.alta-lower-manhattan}, and Highest Standards in FiDi and CONBUD on the Lower East Side also stock it. Because the brand is spread thinly across many stores, almost any licensed shop will have a few Eaton Botanicals gummies, but the full flavor range takes some looking."
     ],
     "know": [
-      "Carried at 46 of 67 licensed shops; about 285 products.",
-      "251 gummies and 35 pre-rolls; Apple A Day 20-packs are the signature product.",
-      "Prices start at $17; most 20-packs are $31 to $36 before tax.",
-      "Deepest runs: ENFLOR and Highest Standards (11), Happy Buds and CONBUD (10)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
+      "{cat.edibles} gummies and {cat.pre-rolls} pre-rolls; Apple A Day 20-packs are the signature product.",
+      "Prices start at {min_price}; the average listing is about {avg_price} before tax.",
+      "Deep runs: ENFLOR ({shop.enflor}), Highest Standards, Happy Buds ({shop.happy-buds-brooklyn-dispensary}) and CONBUD."
     ],
     "faq": [
       {
@@ -203,25 +203,25 @@
       },
       {
         "q": "Why does no shop carry many Eaton Botanicals products?",
-        "a": "The line itself is compact, built around a few gummy flavors in a few ratios. Eleven products at one shop, as at ENFLOR or Highest Standards, is close to the full range."
+        "a": "The line itself is compact, built around a few gummy flavors in a few ratios. The {shop.enflor} products at ENFLOR, one of the deeper runs, come close to the full range."
       }
     ]
   },
   "fernway": {
     "intro": [
-      "Fernway is a vape-only brand that started in Massachusetts and now produces in New York, carried at 46 of the 67 licensed dispensaries we track with about 570 products, every one a vaporizer. The line is organized into a Flavor Line with names like Alpine Strawberry, and strain-specific options, sold as one-gram all-in-ones, two-gram Traveler models and cartridges. It is one of the three most-stocked vape brands in the city alongside Jaunty and STIIIZY.",
-      "Fernway sits at the premium end: prices start at $25, but the common one-gram all-in-one runs about $50 and the PRO and two-gram Traveler models $83 to $95 before tax, giving it the second-highest average price of the brands we track at about $66. The deepest runs are at Qube in Midtown with 29 products, Brooklyn Bourne in Flatbush with 24, Cannavita in Astoria with 23, Torches in Midtown and ENFLOR in Jackson Heights with 22, and Twenty8gramz with 21. Twenty8gramz and Qube also list the lowest Fernway entry prices."
+      "Fernway is a vape-only brand that started in Massachusetts and now produces in New York, carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products, every one a vaporizer. The line is organized into a Flavor Line with names like Alpine Strawberry, and strain-specific options, sold as one-gram all-in-ones, two-gram Traveler models and cartridges. It is one of the three most-stocked vape brands in the city alongside Jaunty and STIIIZY.",
+      "Fernway sits at the premium end: prices start at {min_price}, but the common one-gram all-in-one costs well above that and the PRO and two-gram Traveler models more still, giving it the second-highest average price of the brands we track at about {avg_price}. Deep runs are at Qube in Midtown with {shop.qube-manhattan} products, Brooklyn Bourne in Flatbush with {shop.brooklyn-bourne}, Cannavita in Astoria with {shop.green-jungle}, Torches in Midtown, ENFLOR in Jackson Heights with {shop.enflor}, and Twenty8gramz. Twenty8gramz and Qube also list some of the lowest Fernway entry prices."
     ],
     "know": [
-      "Carried at 46 of 67 licensed shops; about 570 products, all vapes.",
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products, all vapes.",
       "All-in-ones in one-gram and two-gram Traveler formats, plus cartridges; Flavor Line and strain lines.",
-      "Prices start at $25; one-gram all-in-ones are about $50, Traveler PRO models $83 to $95.",
-      "Deepest runs: Qube (29), Brooklyn Bourne (24), Cannavita (23), Torches and ENFLOR (22)."
+      "Prices start at {min_price} and average about {avg_price}; Traveler PRO models are the most expensive.",
+      "Deep runs: Qube ({shop.qube-manhattan}), Brooklyn Bourne ({shop.brooklyn-bourne}), Cannavita ({shop.green-jungle}), Torches and ENFLOR ({shop.enflor})."
     ],
     "faq": [
       {
         "q": "What is the Fernway Traveler?",
-        "a": "Fernway's larger all-in-one, available in two-gram versions and a PRO model with a bigger battery. They are the brand's most expensive products at $83 to $95 before tax, against about $50 for the standard one-gram unit."
+        "a": "Fernway's larger all-in-one, available in two-gram versions and a PRO model with a bigger battery. They are the brand's most expensive products, well above the standard one-gram unit before tax."
       },
       {
         "q": "Is Fernway worth the price?",
@@ -229,29 +229,29 @@
       },
       {
         "q": "Where is Fernway cheapest in New York?",
-        "a": "In our data Twenty8gramz in Sheepshead Bay lists Fernway from $28, and Qube and Brooklyn Bourne from $32. Most shops start around $50. Compare the specific product on Sensei before buying."
+        "a": "In our data Fernway starts at {min_price}, and Qube in Midtown lists it from {shop_min.qube-manhattan}, with Twenty8gramz in Sheepshead Bay also among the cheaper shops. Many shops start higher. Compare the specific product on Sensei before buying."
       }
     ]
   },
   "dank-by-definition": {
     "intro": [
-      "Dank By Definition is a New York grower focused entirely on flower and pre-rolls, carried at 45 of the 67 licensed dispensaries we track with about 520 products. It is the second-most stocked flower brand in the city at 217 listings and the second-most stocked pre-roll brand at 304, which makes it one of the few New York labels competing at the top of both categories. The flower is sold by the eighth and in larger 14- and 28-gram bags.",
-      "Prices start at $7.50 for the cheapest pre-rolls, with eighths around $45 and ounces up to about $185 before tax. The deepest runs are at Cannavita in Astoria with 41 products, PRYZM in the East Village with 37, Happy Buds in Bed-Stuy with 35, Superfly on the Upper West Side with 29, Stash Master in Bushwick with 28 and Poppin in Chelsea with 25. Cannavita, Happy Buds and Stash Master also list the lowest Dank By Definition entry prices at $7.50 to $10."
+      "Dank By Definition is a New York grower focused entirely on flower and pre-rolls, carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products. It is the second-most stocked flower brand in the city at {cat.flower} listings and the second-most stocked pre-roll brand at {cat.pre-rolls}, which makes it one of the few New York labels competing at the top of both categories. The flower is sold by the eighth and in larger 14- and 28-gram bags.",
+      "Prices start at {min_price} for the cheapest pre-rolls, with eighths in the middle of the range and ounces at the top before tax. The deepest runs are at Cannavita in Astoria with {shop.green-jungle} products, PRYZM in the East Village with {shop.pryzm} and Happy Buds in Bed-Stuy with {shop.happy-buds-brooklyn-dispensary}, with Superfly on the Upper West Side at {shop.afny}, Stash Master in Bushwick at {shop.stash-master} and Poppin in Chelsea at {shop.cannaisseur}. Cannavita, Happy Buds and Stash Master also list low Dank By Definition entry prices."
     ],
     "know": [
-      "Carried at 45 of 67 licensed shops; about 520 products, all flower and pre-rolls.",
-      "Second-most stocked flower brand (217) and second-most stocked pre-roll brand (304) in the city.",
-      "Prices start at $7.50; eighths run about $45 and ounces up to $185 before tax.",
-      "Deepest runs: Cannavita (41), PRYZM (37), Happy Buds (35), Superfly (29), Stash Master (28)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products, all flower and pre-rolls.",
+      "Second-most stocked flower brand ({cat.flower}) and second-most stocked pre-roll brand ({cat.pre-rolls}) in the city.",
+      "Prices start at {min_price}; eighths and ounces run higher before tax.",
+      "Deepest runs: Cannavita ({shop.green-jungle}), PRYZM ({shop.pryzm}), Happy Buds ({shop.happy-buds-brooklyn-dispensary}); also Superfly ({shop.afny}) and Stash Master ({shop.stash-master})."
     ],
     "faq": [
       {
         "q": "Does Dank By Definition sell ounces?",
-        "a": "Yes. Alongside eighths, it lists 14-gram and 28-gram bags of some strains, with ounces around $185 before tax in our data. New York's possession limit is three ounces, so a single ounce is well within it."
+        "a": "Yes. Alongside eighths, it lists 14-gram and 28-gram bags of some strains. New York's possession limit is three ounces, so a single ounce is well within it."
       },
       {
         "q": "Which shop has the most Dank By Definition?",
-        "a": "Cannavita in Astoria with 41 products, then PRYZM in the East Village with 37 and Happy Buds in Bed-Stuy with 35. All three also start under $11 for the brand's cheapest pre-rolls."
+        "a": "Cannavita in Astoria with {shop.green-jungle} products, with PRYZM in the East Village ({shop.pryzm}) and Happy Buds in Bed-Stuy ({shop.happy-buds-brooklyn-dispensary}) close behind."
       },
       {
         "q": "Is Dank By Definition indoor or outdoor flower?",
@@ -261,14 +261,14 @@
   },
   "jetty-extracts": {
     "intro": [
-      "Jetty Extracts is a California-founded extraction company, best known for solventless and high-THC vapes, that now produces under license in New York. It is carried at 42 of the 67 licensed dispensaries we track with about 355 products: 317 vapes, 28 concentrates and a few pre-rolls and a tincture. The vapes come as one-gram cartridges, all-in-ones and high-THC disposables in classic strains like Acapulco Gold.",
-      "Jetty is the most expensive brand we track by average price, at about $75 before tax. Entry prices start at $19.92, but a one-gram cartridge typically runs $46 to $49 and the high-THC disposables around $63. The deepest runs are at Terp Bros in Astoria with 26 products, Highest Standards in FiDi with 24, The Daily Green in Midtown with 20, Twenty8gramz with 19, The Flowery Upper West Side with 18 and Quality Control with 17. The Flowery Upper West Side lists the lowest Jetty entry price at $20."
+      "Jetty Extracts is a California-founded extraction company, best known for solventless and high-THC vapes, that now produces under license in New York. It is carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products: {cat.vaporizers} vapes, {cat.concentrates} concentrates, {cat.pre-rolls} pre-rolls and a tincture. The vapes come as one-gram cartridges, all-in-ones and high-THC disposables in classic strains like Acapulco Gold.",
+      "Jetty is the most expensive brand we track by average price, at about {avg_price} before tax. Entry prices start at {min_price}, but one-gram cartridges and the high-THC disposables cost far more. Deep runs are at Terp Bros in Astoria, Highest Standards in FiDi with {shop.highest-standards-fidi} products, The Daily Green in Midtown with {shop.the-daily-green}, Twenty8gramz with {shop.twenty8gramz}, The Flowery Upper West Side with {shop.twenty-one-thirty} and Quality Control with {shop.case-management}. The Flowery Upper West Side lists Jetty from {shop_min.twenty-one-thirty}."
     ],
     "know": [
-      "Carried at 42 of 67 licensed shops; about 355 products, mostly vapes.",
-      "317 vapes and 28 concentrates; one-gram cartridges and high-THC disposables are the core.",
-      "Highest average price of any brand we track at about $75; cartridges run $46 to $49.",
-      "Deepest runs: Terp Bros (26), Highest Standards (24), The Daily Green (20), Twenty8gramz (19)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products, mostly vapes.",
+      "{cat.vaporizers} vapes and {cat.concentrates} concentrates; one-gram cartridges and high-THC disposables are the core.",
+      "Highest average price of any brand we track, at about {avg_price}.",
+      "Deep runs: Terp Bros, Highest Standards ({shop.highest-standards-fidi}), The Daily Green ({shop.the-daily-green}), Twenty8gramz ({shop.twenty8gramz})."
     ],
     "faq": [
       {
@@ -277,29 +277,29 @@
       },
       {
         "q": "Why is Jetty more expensive?",
-        "a": "Solventless and high-potency extraction costs more to produce, and Jetty positions itself as a premium brand. In our data a one-gram cartridge runs $46 to $49 before tax against $25 to $35 for many New York cartridges."
+        "a": "Solventless and high-potency extraction costs more to produce, and Jetty positions itself as a premium brand. In our data its one-gram cartridges cost noticeably more before tax than many New York cartridges."
       },
       {
         "q": "Does Jetty sell concentrates in New York?",
-        "a": "Yes, 28 listings, mostly at larger shops like Qube, Terp Bros and Highest Standards. The vape line is far bigger at 317."
+        "a": "Yes, {cat.concentrates} listings, mostly at larger shops like Qube, Terp Bros and Highest Standards. The vape line is far bigger at {cat.vaporizers}."
       }
     ]
   },
   "jaunty": {
     "intro": [
-      "Jaunty is a New York vape brand and the most stocked vaporizer label in the city, with 626 vape listings, ahead of STIIIZY and Fernway. It is carried at 41 of the 67 licensed dispensaries we track with about 790 products overall, including 118 edibles, 32 concentrates and a few pre-rolls. The signature format is the all-in-one, often in 1.5-gram sizes, with strain names like Blue Dream and Alien OG, plus gummies that have become a common low-price item.",
-      "Prices start at $4.52 for two-pack gummies, which is why Jaunty appears in the entry-price slot at so many shops, while the 1.5-gram all-in-ones run about $55 before tax. The deepest runs are at The Flowery Upper West Side and Highest Standards with 45 products each, Gotham Buds in Harlem with 43, Qube in Midtown with 40, ENFLOR in Jackson Heights with 37 and Stash Master in Bushwick with 35. The Flowery UWS, Highest Standards, ENFLOR and Stash Master all start Jaunty at $5 or less."
+      "Jaunty is a New York vape brand and the most stocked vaporizer label in the city, with {cat.vaporizers} vape listings, ahead of STIIIZY and Fernway. It is carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products overall, including {cat.edibles} edibles, {cat.concentrates} concentrates and {cat.pre-rolls} pre-rolls. The signature format is the all-in-one, often in 1.5-gram sizes, with strain names like Blue Dream and Alien OG, plus gummies that have become a common low-price item.",
+      "Prices start at {min_price} for two-pack gummies, which is why Jaunty appears in the entry-price slot at so many shops, while the 1.5-gram all-in-ones cost far more before tax. Deep runs are at The Flowery Upper West Side, Highest Standards with {shop.highest-standards-fidi} products, Gotham Buds in Harlem, Qube in Midtown, ENFLOR in Jackson Heights and Stash Master in Bushwick with {shop.stash-master}. Stash Master starts Jaunty at {shop_min.stash-master}."
     ],
     "know": [
-      "Carried at 41 of 67 licensed shops; about 790 products.",
-      "626 vapes, the most of any brand in the city; 118 edibles and 32 concentrates.",
-      "Gummy two-packs start at $4.52; 1.5-gram all-in-ones run about $55.",
-      "Deepest runs: The Flowery UWS and Highest Standards (45), Gotham Buds (43), Qube (40), ENFLOR (37)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
+      "{cat.vaporizers} vapes, the most of any brand in the city; {cat.edibles} edibles and {cat.concentrates} concentrates.",
+      "Gummy two-packs start at {min_price}; 1.5-gram all-in-ones cost far more.",
+      "Deep runs: The Flowery UWS, Highest Standards ({shop.highest-standards-fidi}), Gotham Buds, Qube, ENFLOR."
     ],
     "faq": [
       {
         "q": "What is a Jaunty all-in-one?",
-        "a": "A disposable vape with the battery and oil in one unit, no cartridge to swap. Jaunty sells them in 1.5-gram sizes at about $55, larger than the typical one-gram unit, in a wide range of strains."
+        "a": "A disposable vape with the battery and oil in one unit, no cartridge to swap. Jaunty sells them in 1.5-gram sizes, larger than the typical one-gram unit, in a wide range of strains."
       },
       {
         "q": "Is Jaunty a New York company?",
@@ -307,20 +307,20 @@
       },
       {
         "q": "Which shop has the most Jaunty?",
-        "a": "The Flowery Upper West Side and Highest Standards in FiDi tie at 45 products each. Gotham Buds, Qube, ENFLOR and Stash Master each carry 35 or more."
+        "a": "Stash Master in Bushwick lists {shop.stash-master}, and The Flowery Upper West Side, Highest Standards in FiDi ({shop.highest-standards-fidi}), Gotham Buds, Qube and ENFLOR also carry deep runs."
       }
     ]
   },
   "florist-farms": {
     "intro": [
-      "Florist Farms is a New York grower from Cortland, carried at 40 of the 67 licensed dispensaries we track with about 640 products. It is one of the broadest home-grown lines: 280 pre-rolls, 179 vapes, 126 edibles and 55 flower listings, with the pre-rolls including live resin infused singles and five-packs. It is the third-most stocked pre-roll brand in the city.",
-      "Prices start at $5.90, with infused pre-roll singles around $16 to $18, five-packs about $40 and eighths of flower up to about $76 before tax. The brand's depth is concentrated at a few shops: Grams in Williamsburg lists 63 products, the most anywhere, ENFLOR in Jackson Heights 51, The Flowery Upper West Side 40, Stoops in Chelsea 32, Urban Leaf in Midtown 26 and The Flowery West Village 24. ENFLOR, Stoops and Urban Leaf list the lowest entry prices for the brand, starting under $8."
+      "Florist Farms is a New York grower from Cortland, carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products. It is one of the broadest home-grown lines: {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower listings, with the pre-rolls including live resin infused singles and five-packs. It is one of the most stocked pre-roll brands in the city.",
+      "Prices start at {min_price}, with infused pre-roll singles, five-packs and eighths of flower each a step up before tax. The brand's depth is concentrated at a few shops: Grams in Williamsburg lists {shop.gram-cannabis-dispensary} products, the most anywhere, ENFLOR in Jackson Heights {shop.enflor} and The Flowery Upper West Side {shop.twenty-one-thirty}, and Stoops in Chelsea, Urban Leaf in Midtown and The Flowery West Village also carry it. ENFLOR, Stoops and Urban Leaf list low entry prices for the brand, with ENFLOR from {shop_min.enflor}."
     ],
     "know": [
-      "Carried at 40 of 67 licensed shops; about 640 products.",
-      "280 pre-rolls, 179 vapes, 126 edibles, 55 flower; third-most stocked pre-roll brand in the city.",
-      "Prices start at $5.90; infused singles run $16 to $18, five-packs about $40.",
-      "Deepest runs: Grams (63), ENFLOR (51), The Flowery UWS (40), Stoops (32)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
+      "{cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles, {cat.flower} flower; one of the most stocked pre-roll brands in the city.",
+      "Prices start at {min_price}; infused singles and five-packs cost more.",
+      "Deep runs: Grams ({shop.gram-cannabis-dispensary}), ENFLOR ({shop.enflor}), The Flowery UWS ({shop.twenty-one-thirty}), Stoops."
     ],
     "faq": [
       {
@@ -329,24 +329,24 @@
       },
       {
         "q": "What is a live resin infused pre-roll?",
-        "a": "A joint with live resin extract added to the flower, raising potency and aroma. Florist Farms sells them as singles around $16 to $18 and in five-packs of half-gram joints for about $40 before tax."
+        "a": "A joint with live resin extract added to the flower, raising potency and aroma. Florist Farms sells them as singles and in five-packs of half-gram joints."
       },
       {
         "q": "Which shop has the most Florist Farms?",
-        "a": "Grams on Graham Avenue in Williamsburg, with 63 products, roughly a fifth of its whole menu. ENFLOR in Jackson Heights is second with 51."
+        "a": "Grams on Graham Avenue in Williamsburg, with {shop.gram-cannabis-dispensary} products, a large share of its whole menu. ENFLOR in Jackson Heights also carries a deep run with {shop.enflor}."
       }
     ]
   },
   "cannabals": {
     "intro": [
-      "Cannabals is a brand built around liquid diamonds, a high-potency extract, used in both its edibles and its vapes. It is carried at 39 of the 67 licensed dispensaries we track with about 400 products: 241 edibles, 136 vapes and 24 pre-rolls. The vapes are mostly two-gram disposables in strain names like Acapulco Gold and flavor names like Apple Burst and Baja Blast, and the edibles are gummies at a range of doses.",
-      "Prices start at $4.99 for single gummies, while the two-gram liquid diamond disposables run $73 to $80 before tax, so the brand covers both ends of the price range. The deepest runs are at NY Canna Co in Midtown with 37 products, Superfly on the Upper West Side with 33, Twenty8gramz in Sheepshead Bay with 31, Quality Control with 26, Stoops in Chelsea with 22 and Gotham Buds in Harlem with 22. Gotham Buds lists the lowest Cannabals entry price at $4.99."
+      "Cannabals is a brand built around liquid diamonds, a high-potency extract, used in both its edibles and its vapes. It is carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products: {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.pre-rolls} pre-rolls. The vapes are mostly two-gram disposables in strain names like Acapulco Gold and flavor names like Apple Burst and Baja Blast, and the edibles are gummies at a range of doses.",
+      "Prices start at {min_price} for single gummies, while the two-gram liquid diamond disposables sit at the top before tax, so the brand covers both ends of the price range. The deepest run is at NY Canna Co in Midtown with {shop.ny-canna-co-5th-ave} products, with Superfly on the Upper West Side at {shop.afny}, Twenty8gramz in Sheepshead Bay, Quality Control at {shop.case-management}, Stoops in Chelsea at {shop.stoop} and Gotham Buds in Harlem at {shop.gotham-buds}. Gotham Buds lists the lowest Cannabals entry price at {shop_min.gotham-buds}."
     ],
     "know": [
-      "Carried at 39 of 67 licensed shops; about 400 products.",
-      "241 edibles and 136 vapes, both built on liquid diamond extract; 24 pre-rolls.",
-      "Prices start at $4.99 for gummies; two-gram disposables run $73 to $80.",
-      "Deepest runs: NY Canna Co (37), Superfly (33), Twenty8gramz (31), Quality Control (26)."
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
+      "{cat.edibles} edibles and {cat.vaporizers} vapes, both built on liquid diamond extract; {cat.pre-rolls} pre-rolls.",
+      "Prices start at {min_price} for gummies; two-gram disposables sit at the top of the range.",
+      "Deep runs: NY Canna Co ({shop.ny-canna-co-5th-ave}), Superfly ({shop.afny}), Twenty8gramz, Quality Control ({shop.case-management})."
     ],
     "faq": [
       {
@@ -355,24 +355,24 @@
       },
       {
         "q": "Why are Cannabals vapes two grams?",
-        "a": "The brand's standard disposable is a two-gram unit, double the usual one-gram size, which is why the $73 to $80 price looks high next to one-gram competitors. Per gram it is closer to the market."
+        "a": "The brand's standard disposable is a two-gram unit, double the usual one-gram size, which is why the price looks high next to one-gram competitors. Per gram it is closer to the market."
       },
       {
         "q": "Where can I find Cannabals gummies cheaply?",
-        "a": "Gotham Buds in Harlem lists the brand from $4.99 and Superfly and Quality Control from $17 for full packs. NY Canna Co in Midtown has the widest selection at 37 products."
+        "a": "Gotham Buds in Harlem lists the brand from {shop_min.gotham-buds}, Superfly from {shop_min.afny} and Quality Control from {shop_min.case-management}. NY Canna Co in Midtown has the widest selection at {shop.ny-canna-co-5th-ave} products."
       }
     ]
   },
   "good-tide": {
     "intro": [
-      "Good Tide is the solventless rosin gummy line from the makers of Wyld, produced under license in New York. It is the smallest of the brands we track, carried at 37 of the 67 licensed dispensaries with about 135 products, all 10-count gummy packs. The flavors are tropical, like guava, grapefruit and mango, and most packs are labeled by effect with ratios that pair THC with CBD and CBC, such as the 1:1:1 Balanced line.",
-      "Prices start at $25.66, and most packs run $28 to $40 before tax, above Wyld's $26 to $30, which reflects the rosin extraction. No shop carries a deep run: Superfly on the Upper West Side, The Daily Green in Midtown, The Flowery's East and West Village stores, Highest Standards in FiDi and Sunset Cannabis in Sunset Park each list six products, which is close to the full range. If you prefer rosin edibles over distillate, Good Tide is the most widely available option in the city."
+      "Good Tide is the solventless rosin gummy line from the makers of Wyld, produced under license in New York. It is the smallest of the brands we track, carried at {shops} of the {city.shops} licensed dispensaries with about {in_stock|about} products, all 10-count gummy packs. The flavors are tropical, like guava, grapefruit and mango, and most packs are labeled by effect with ratios that pair THC with CBD and CBC, such as the 1:1:1 Balanced line.",
+      "Prices start at {min_price}, and packs average about {avg_price} before tax, above Wyld's, which reflects the rosin extraction. No shop carries a deep run: Superfly on the Upper West Side lists {shop.afny} products, Highest Standards in FiDi {shop.highest-standards-fidi} and Sunset Cannabis in Sunset Park {shop.sunset-cannabis-club}, close to the full range, and The Daily Green in Midtown and The Flowery's East and West Village stores also stock it. If you prefer rosin edibles over distillate, Good Tide is the most widely available option in the city."
     ],
     "know": [
-      "Carried at 37 of 67 licensed shops; about 135 products, all gummies.",
+      "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products, all gummies.",
       "Solventless rosin gummies from the makers of Wyld; tropical flavors with THC, CBD and CBC ratios.",
-      "Prices start at $25.66; most packs are $28 to $40 before tax.",
-      "Six products is the deepest run, at Superfly, The Daily Green, both Flowery Village stores, Highest Standards and Sunset Cannabis."
+      "Prices start at {min_price}; packs average about {avg_price} before tax.",
+      "Runs are short everywhere: Superfly ({shop.afny}), The Daily Green, both Flowery Village stores, Highest Standards ({shop.highest-standards-fidi}) and Sunset Cannabis ({shop.sunset-cannabis-club})."
     ],
     "faq": [
       {

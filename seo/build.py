@@ -23,6 +23,7 @@ import os
 import re
 from pathlib import Path
 from urllib.parse import quote
+from copy_tokens import page_vars, render as render_tokens, violations as copy_violations, _strings as copy_strings
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / "dist"
@@ -94,7 +95,20 @@ def get_copy(kind, key, label):
     c = COPY[kind].get(key)
     if not c:
         raise SystemExit(f"missing copy: {kind} '{key}' ({label}) — add it to seo/data/copy/")
-    intro, know, faq = c.get("intro") or [], c.get("know") or [], c.get("faq") or []
+    # Numbers in copy are tokens filled from this page's data (copy_tokens.py);
+    # a hand-typed count, price or percentage fails the build.
+    v = page_vars(kind, key)
+    if v is None:
+        raise SystemExit(f"no data for {kind} '{key}'")
+    for where, s in copy_strings(c):
+        hits = copy_violations(s)
+        if hits:
+            raise SystemExit(f"hand-typed data number in {kind} '{key}' {where}: {hits} — use a token (python3 seo/copy_tokens.py vars {kind} {key})")
+    loc = f"{kind} '{key}'"
+    c = {"intro": [render_tokens(p, v, loc) for p in c.get("intro") or []],
+         "know": [render_tokens(k, v, loc) for k in c.get("know") or []],
+         "faq": [{"q": render_tokens(q.get("q", ""), v, loc), "a": render_tokens(q.get("a", ""), v, loc)} for q in c.get("faq") or []]}
+    intro, know, faq = c["intro"], c["know"], c["faq"]
     words = sum(len(p.split()) for p in intro)
     if words < MIN_INTRO_WORDS or len(know) < MIN_KNOW or len(faq) < MIN_FAQ:
         raise SystemExit(f"thin copy: {kind} '{key}' — {words} intro words, {len(know)} bullets, {len(faq)} FAQs")
