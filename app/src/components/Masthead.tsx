@@ -19,24 +19,24 @@ export function Bullets() {
   )
 }
 
-// The footer sign-off: six small bullets spelling SENSEI, centered, each in
-// a different line color (orange, blue, yellow, green, purple, red).
-export function SenseiBullets() {
-  const letters: { l: string; c: string; dark?: boolean }[] = [
-    { l: 'S', c: 'var(--o)' },
-    { l: 'E', c: 'var(--b)' },
-    { l: 'N', c: 'var(--y)', dark: true },
-    { l: 'S', c: 'var(--g)' },
-    { l: 'E', c: 'var(--v)' },
-    { l: 'I', c: 'var(--r)' },
+// The footer sign-off: the "Sensei" wordmark in the header's subway type, with
+// three line bullets spelling NYC underneath in the same greens as THC.
+export function FooterMark() {
+  const letters: { l: string; c: string }[] = [
+    { l: 'N', c: '#00933C' },
+    { l: 'Y', c: '#6CBE45' },
+    { l: 'C', c: '#1B5E3A' },
   ]
   return (
-    <div className="bullets bullets-sm" aria-label="Sensei" style={{ marginTop: 24 }}>
-      {letters.map((x, i) => (
-        <span key={i} className={`mb ${x.dark ? 'y' : ''}`} style={{ background: x.c }}>
-          {x.l}
-        </span>
-      ))}
+    <div className="foot-mark" aria-label="Sensei NYC">
+      <span className="wm">Sensei</span>
+      <div className="bullets" aria-hidden="true">
+        {letters.map((x) => (
+          <span key={x.l} className="mb" style={{ background: x.c }}>
+            {x.l}
+          </span>
+        ))}
+      </div>
     </div>
   )
 }

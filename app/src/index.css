@@ -237,14 +237,20 @@ select:focus {
   height: 30px;
   font-size: 15px;
 }
-.bullets-sm {
-  gap: 8px;
-  justify-content: center;
+
+/* Footer sign-off: the wordmark with N Y C line bullets under it. */
+.foot-mark {
+  @apply flex flex-col items-center;
+  gap: 14px;
+  margin-top: 40px;
 }
-.bullets-sm .mb {
-  width: 26px;
-  height: 26px;
-  font-size: 13px;
+.foot-mark .bullets {
+  gap: 8px;
+}
+.foot-mark .mb {
+  width: 34px;
+  height: 34px;
+  font-size: 17px;
 }
 
 /* The notice box (the mailing list in the footer). */
@@ -901,12 +907,12 @@ select:focus {
   .site-foot > .contact {
     margin-top: 0;
   }
-  .site-foot > .bullets,
+  .site-foot > .foot-mark,
   .site-foot > .foot {
     grid-column: 1 / -1;
   }
-  .site-foot > .bullets {
-    margin-top: 56px !important;
+  .site-foot > .foot-mark {
+    margin-top: 64px;
   }
   .site-foot > .foot {
     max-width: 720px;

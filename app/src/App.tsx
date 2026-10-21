@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
-import { Masthead, SenseiBullets } from './components/Masthead'
+import { FooterMark, Masthead } from './components/Masthead'
 import { Ways, type Way } from './components/Ways'
 import { Menu, type MenuTarget } from './components/Menu'
 import { requestLocation } from './lib/geo'
@@ -514,7 +514,7 @@ export default function App() {
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>
-        <SenseiBullets />
+        <FooterMark />
         <p className="foot">
           <b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is
           not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.
