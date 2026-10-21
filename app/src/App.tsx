@@ -506,11 +506,6 @@ export default function App() {
         <div id="drop" className="notice" style={{ marginTop: 96 }}>
           <Newsletter source="footer" compact />
         </div>
-        <p className="foot">
-          <b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to
-          each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change
-          the order of results.
-        </p>
         <div className="contact">
           <a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a>
           <a href="tel:+12125550100">(212) 555-0100</a>
@@ -520,6 +515,11 @@ export default function App() {
           </a>
         </div>
         <SenseiBullets />
+        <p className="foot">
+          <b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to
+          each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change
+          the order of results.
+        </p>
       </footer>
     </div>
   )
