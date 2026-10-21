@@ -8,6 +8,7 @@ export type StoreLite = {
   slug: string
   lat: number | null
   lng: number | null
+  address?: string | null
 }
 
 export type LatLng = { lat: number; lng: number }

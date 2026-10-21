@@ -503,6 +503,15 @@ select:focus {
   margin-top: 8px;
 }
 
+/* Google Maps directions link (product detail), same as the SEO pages. */
+.dir {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* The one-time "swipe back" hint under the header. */
 .back-hint {
   @apply flex items-center;

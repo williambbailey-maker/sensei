@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { formatMiles } from '../lib/geo'
+import { directionsUrl, formatMiles, shortAddress } from '../lib/geo'
 import { formatLabel } from '../lib/labels'
 import { track } from '../lib/analytics'
 import { eventProps, formatPrice, productFacts } from './ProductCard'
@@ -32,6 +32,8 @@ export function ProductDetail({
 }) {
   const evProps = eventProps(p)
   const { name, brand, price, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
+  const address = shortAddress(p.store?.address)
+  const maps = p.store ? directionsUrl(storeName, p.store.address, p.store.lat, p.store.lng) : null
 
   // Lock body scroll; Escape closes; arrow keys step. The panel is a history
   // entry, so the back button (or an edge swipe) closes it rather than
@@ -270,6 +272,18 @@ export function ProductDetail({
           <p className="label mt-1">{storeName}</p>
           {(place || miles != null) && (
             <p className="meta mt-0.5">{[place, miles != null ? formatMiles(miles) : null].filter(Boolean).join(' · ')}</p>
+          )}
+          {address && <p className="meta mt-0.5">{address}</p>}
+          {maps && (
+            <a
+              href={maps}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track('directions_click', { ...evProps, url: maps })}
+              className="dir mt-2 inline-block"
+            >
+              Directions in Google Maps →
+            </a>
           )}
         </div>
 

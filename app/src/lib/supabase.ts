@@ -16,7 +16,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 })
 
 const PRODUCT_COLS =
-  'id,external_id,name,clean_name,brand,clean_brand,description,brand_description,effects,category,strain_type,thc_pct,cbd_pct,variants,price_min,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng)'
+  'id,external_id,name,clean_name,brand,clean_brand,description,brand_description,effects,category,strain_type,thc_pct,cbd_pct,variants,price_min,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng,address)'
 
 // PostgREST caps each response at 1000 rows. We used to page through the whole
 // ~37k-row in-stock catalog (~26 MB) on load, and the results screen showed
