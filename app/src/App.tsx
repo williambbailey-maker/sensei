@@ -119,9 +119,6 @@ export default function App() {
     }
   }, [view, filters, stores])
 
-  useEffect(() => {
-    window.scrollTo({ top: 0 })
-  }, [view])
 
   // /#drop (the SEO menu's "weekly drop" row) lands on the footer sign-up.
   useEffect(() => {
@@ -191,6 +188,12 @@ export default function App() {
   const [locating, setLocating] = useState(false)
   const [wayError, setWayError] = useState('')
   const isHome = view === 'journey' && way === null
+
+  // Every screen change starts at the top; the home's "Start here" block is
+  // a long way down, and the next screen must not open at that offset.
+  useEffect(() => {
+    window.scrollTo({ top: 0 })
+  }, [view, way])
 
   // Browser history mirrors the screen, so the back button, and a swipe in
   // from the left edge, step back inside the app instead of leaving the site.
