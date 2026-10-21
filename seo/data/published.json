@@ -400,6 +400,11 @@
   "store": "the-emerald-dispensary-manhattan",
   "type": "dispensary"
  },
+ "/dispensaries/the-flowery-chinatown/": {
+  "hood": "chinatown-les",
+  "store": "smelly-nelly-queens",
+  "type": "dispensary"
+ },
  "/dispensaries/the-flowery-east-village/": {
   "hood": "east-west-village",
   "store": "the-flowery-east-village",

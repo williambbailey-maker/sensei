@@ -284,5 +284,31 @@
         "a": "Happy Buds in Bed-Stuy and Stash Master in Bushwick are the nearest licensed shops with full menus. Both are reachable by the J or the A and C lines."
       }
     ]
+  },
+  "smelly-nelly-queens": {
+    "intro": [
+      "The Flowery's Chinatown store is at 70 Canal Street, one of {hood_shops|word} licensed dispensaries we track across Chinatown and the Lower East Side. It now publishes a full menu: about {in_stock|about} products from {brands} brands, spread across vapes ({cat.vaporizers}), edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}), with a small case of {cat.concentrates} concentrates and a handful of tinctures and topicals.",
+      "The menu leans on New York brands. Jaunty and MFNY are among the deepest lines, with Wizard Trees, Jetty Extracts and Revert also well stocked, so it works as a one-stop shop for a vape cartridge, a pack of gummies or an eighth without a detour. The cheapest items start at {min_price}, mostly single-serve drinks and low-dose edibles. CONBUD on Delancey Street and Mighty Lucky on the Bowery carry larger menus nearby, so the Canal Street store is the convenient pick for anyone already in Chinatown."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, at 70 Canal Street.",
+      "A balanced shelf: {cat.vaporizers} vapes, {cat.edibles} edibles, {cat.pre-rolls} pre-rolls and {cat.flower} flower listings.",
+      "Entry price is {min_price}; the cheapest items are single-serve drinks and low-dose edibles.",
+      "Part of The Flowery's group of New York stores; CONBUD and Mighty Lucky are the larger nearby alternatives."
+    ],
+    "faq": [
+      {
+        "q": "Is The Flowery Chinatown open with a menu now?",
+        "a": "Yes. The Canal Street store now publishes its menu, with about {in_stock|about} products listed at our last pull. Menus change daily, so check the live listing before you go."
+      },
+      {
+        "q": "What is the cheapest thing at The Flowery Chinatown?",
+        "a": "Prices start at {min_price}, mostly for single-serve drinks and low-dose edibles. Flower, vapes and pre-rolls cost more, and New York adds cannabis taxes at the register."
+      },
+      {
+        "q": "How does it compare with other shops nearby?",
+        "a": "CONBUD on Delancey Street and Mighty Lucky on the Bowery both list more products. The Flowery Chinatown is the closest option for anyone on Canal Street, with a menu spread evenly across vapes, edibles, pre-rolls and flower."
+      }
+    ]
   }
 }

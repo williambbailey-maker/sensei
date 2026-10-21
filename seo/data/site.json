@@ -1,6 +1,12 @@
 {
  "generatedAt": "2026-10-21",
- "source": "Supabase live snapshot (project dywrisybvcorpfhbwgtg) via MCP",
+ "source": "Supabase live snapshot (project dywrisybvcorpfhbwgtg), seo/snapshot.sql",
+ "stats": {
+  "shops": 68,
+  "in_stock": 35751,
+  "neighborhoods": 25
+ },
+ "last_scrape": "2026-10-21T13:44:26.347+00:00",
  "dispensaries": [
   {
    "lat": 40.786,
@@ -4066,6 +4072,95 @@
    "neighborhood": "East & West Village"
   },
   {
+   "lat": 40.716,
+   "lng": -73.996,
+   "name": "The Flowery - Chinatown",
+   "slug": "smelly-nelly-queens",
+   "brands": 54,
+   "address": "70 Canal Street, New York, NY 10002, USA",
+   "borough": "Manhattan",
+   "featured": [
+    {
+     "url": "https://dutchie.com/dispensary/smelly-nelly-queens/product/ayrloom-cran-apple-2-1-single-10mg-beverage",
+     "name": "Ayrloom Cran Apple 2:1 Single 10mg Beverage",
+     "brand": "ayrloom",
+     "thc_pct": null,
+     "category": "edibles",
+     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/22eb0c7b3fc6c9c3ef054a3530a02f2a",
+     "price_min": 5.31,
+     "strain_type": "THC"
+    },
+    {
+     "url": "https://dutchie.com/dispensary/smelly-nelly-queens/product/ayrloom-half-half-2-1-single-10mg-beverage",
+     "name": "Ayrloom Half & Half 2:1 Single 10mg Beverage",
+     "brand": "ayrloom",
+     "thc_pct": null,
+     "category": "edibles",
+     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/198172a058009ba749019207701a04ad",
+     "price_min": 5.31,
+     "strain_type": "Hybrid"
+    },
+    {
+     "url": "https://dutchie.com/dispensary/smelly-nelly-queens/product/ayrloom-honeycrisp-2-1-single-10mg-beverage",
+     "name": "Ayrloom Honeycrisp 2:1 Single 10mg Beverage",
+     "brand": "ayrloom",
+     "thc_pct": null,
+     "category": "edibles",
+     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/7b2fc08f8029cdb729eb83eaf76b9160",
+     "price_min": 5.31,
+     "strain_type": "THC"
+    },
+    {
+     "url": "https://dutchie.com/dispensary/smelly-nelly-queens/product/ayrloom-lemonade-2-1-single-10mg-beverage",
+     "name": "Ayrloom Lemonade 2:1 Single 10mg Beverage",
+     "brand": "ayrloom",
+     "thc_pct": null,
+     "category": "edibles",
+     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/a3c74e7f186779edbdd2742afae5944b",
+     "price_min": 5.31,
+     "strain_type": "THC"
+    }
+   ],
+   "in_stock": 407,
+   "min_price": 5.31,
+   "categories": {
+    "flower": 78,
+    "edibles": 99,
+    "topicals": 3,
+    "pre-rolls": 94,
+    "tinctures": 4,
+    "vaporizers": 112,
+    "concentrates": 17
+   },
+   "top_brands": [
+    {
+     "n": 38,
+     "brand": "Jaunty"
+    },
+    {
+     "n": 28,
+     "brand": "MFNY"
+    },
+    {
+     "n": 19,
+     "brand": "Wizard Trees"
+    },
+    {
+     "n": 18,
+     "brand": "Jetty Extracts"
+    },
+    {
+     "n": 18,
+     "brand": "Revert"
+    },
+    {
+     "n": 18,
+     "brand": "Smokiez Edibles"
+    }
+   ],
+   "neighborhood": "Chinatown & LES"
+  },
+  {
    "lat": 40.743,
    "lng": -73.979,
    "name": "Smiley Exotics",
@@ -6109,7 +6204,7 @@
    "neighborhood": "East & West Village"
   },
   {
-   "stores": 3,
+   "stores": 2,
    "borough": "Manhattan",
    "featured": [
     {
@@ -6175,12 +6270,6 @@
      "slug": "gotham-buds",
      "address": "248 West 125th Street, New York, NY 10027, USA",
      "in_stock": 411
-    },
-    {
-     "name": "Hibernica Central Park",
-     "slug": "trash-island-central-park",
-     "address": "111 West 110th Street, New York, NY 10026, USA",
-     "in_stock": 0
     }
    ],
    "neighborhood": "Harlem & Washington Heights"
@@ -7045,7 +7134,7 @@
    "neighborhood": "SoHo"
   },
   {
-   "stores": 4,
+   "stores": 3,
    "borough": "Brooklyn",
    "featured": [
     {
@@ -7117,12 +7206,6 @@
      "slug": "dizzpensary",
      "address": "277 Smith Street, Brooklyn, NY 11231, USA",
      "in_stock": 301
-    },
-    {
-     "name": "Kaya Bliss - Brooklyn Heights",
-     "slug": "high-of-brooklyn",
-     "address": "64 Henry Street, Brooklyn, NY 11201, USA",
-     "in_stock": 0
     }
    ],
    "neighborhood": "Brooklyn Heights & Downtown"
@@ -11066,10 +11149,6 @@
    40.736,
    -73.986
   ],
-  "high-of-brooklyn": [
-   40.696,
-   -73.993
-  ],
   "verdi-park-slope": [
    40.6721,
    -73.9776
@@ -11133,10 +11212,6 @@
   "the-flowery-east-village": [
    40.7276,
    -73.9838
-  ],
-  "trash-island-central-park": [
-   40.7986,
-   -73.9556
   ],
   "twisted-vibrations-retail": [
    40.7092,

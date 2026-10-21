@@ -1,7 +1,7 @@
 {
  "/": {
   "date": "2026-10-21",
-  "hash": "e870d388e2d110ef"
+  "hash": "e66b3d4597599358"
  },
  "/brands/": {
   "date": "2026-10-21",
@@ -9,63 +9,63 @@
  },
  "/brands/ayrloom/": {
   "date": "2026-10-21",
-  "hash": "2162740884beee09"
+  "hash": "37b42b12cafb4702"
  },
  "/brands/camino/": {
   "date": "2026-10-21",
-  "hash": "cc65a84ca1935b3a"
+  "hash": "565e9fe277cbda62"
  },
  "/brands/cannabals/": {
   "date": "2026-10-21",
-  "hash": "c1d6d4ac0bf436d2"
+  "hash": "efd22e9755dac3f1"
  },
  "/brands/dank-by-definition/": {
   "date": "2026-10-21",
-  "hash": "15eb39a44f64ea50"
+  "hash": "407986db31bbf37e"
  },
  "/brands/eaton-botanicals/": {
   "date": "2026-10-21",
-  "hash": "17abf51376af486c"
+  "hash": "1204cc05027add63"
  },
  "/brands/fernway/": {
   "date": "2026-10-21",
-  "hash": "4b76075171915cbe"
+  "hash": "7f83de238aa6bdc7"
  },
  "/brands/florist-farms/": {
   "date": "2026-10-21",
-  "hash": "074426d5d0d46921"
+  "hash": "ff164e1f164e1dc6"
  },
  "/brands/good-tide/": {
   "date": "2026-10-21",
-  "hash": "09a76f72e613a3b1"
+  "hash": "1abc4e9bb0837cb9"
  },
  "/brands/gr-n/": {
   "date": "2026-10-21",
-  "hash": "2aea3019abbd2c1f"
+  "hash": "66428bcef6cf52f8"
  },
  "/brands/jaunty/": {
   "date": "2026-10-21",
-  "hash": "49405c3e7c57aa75"
+  "hash": "f007d3a7230f9f70"
  },
  "/brands/jetty-extracts/": {
   "date": "2026-10-21",
-  "hash": "633548f2e5b7f945"
+  "hash": "ab530c4aaf9c466d"
  },
  "/brands/mfny/": {
   "date": "2026-10-21",
-  "hash": "dadab281cad42144"
+  "hash": "5983f370049267fb"
  },
  "/brands/off-hours/": {
   "date": "2026-10-21",
-  "hash": "2bc57ffcee1bf6a6"
+  "hash": "0e2d894cce998a51"
  },
  "/brands/ruby-farms/": {
   "date": "2026-10-21",
-  "hash": "fada841f768ea084"
+  "hash": "d01ea2ca255cfc43"
  },
  "/brands/wyld/": {
   "date": "2026-10-21",
-  "hash": "0bfe39fae7da7f80"
+  "hash": "58a2b775a18af016"
  },
  "/dispensaries/afny/": {
   "date": "2026-10-21",
@@ -137,7 +137,7 @@
  },
  "/dispensaries/conbud-les/": {
   "date": "2026-10-21",
-  "hash": "d55450f28b188220"
+  "hash": "370eb63cddaeafdb"
  },
  "/dispensaries/culture-house/": {
   "date": "2026-10-21",
@@ -347,6 +347,10 @@
   "date": "2026-10-21",
   "hash": "1cc623155108b5a7"
  },
+ "/dispensaries/the-flowery-chinatown/": {
+  "date": "2026-10-21",
+  "hash": "c76062b0b9e1f523"
+ },
  "/dispensaries/the-flowery-east-village/": {
   "date": "2026-10-21",
   "hash": "793752e779592e71"
@@ -413,7 +417,7 @@
  },
  "/neighborhoods/": {
   "date": "2026-10-21",
-  "hash": "32699e981532f953"
+  "hash": "e6ce17a61ccc7a07"
  },
  "/neighborhoods/astoria/": {
   "date": "2026-10-21",
@@ -421,7 +425,7 @@
  },
  "/neighborhoods/brooklyn-heights-downtown/": {
   "date": "2026-10-21",
-  "hash": "040465192d5a7c59"
+  "hash": "01cf9d3117ad1a73"
  },
  "/neighborhoods/bushwick/": {
   "date": "2026-10-21",
@@ -433,7 +437,7 @@
  },
  "/neighborhoods/chinatown-les/": {
   "date": "2026-10-21",
-  "hash": "08a5328cb18cafee"
+  "hash": "dab3d42d549e1f91"
  },
  "/neighborhoods/coney-island/": {
   "date": "2026-10-21",
@@ -453,7 +457,7 @@
  },
  "/neighborhoods/harlem-washington-heights/": {
   "date": "2026-10-21",
-  "hash": "c7f657637e68c381"
+  "hash": "32b013535d3c989c"
  },
  "/neighborhoods/jackson-heights/": {
   "date": "2026-10-21",
@@ -493,30 +497,30 @@
  },
  "/nyc/concentrates/": {
   "date": "2026-10-21",
-  "hash": "6adf5c3aa8de244f"
+  "hash": "ea9a5860b5e9dd23"
  },
  "/nyc/edibles/": {
   "date": "2026-10-21",
-  "hash": "33418035af459c14"
+  "hash": "c894d1ce13e193c5"
  },
  "/nyc/flower/": {
   "date": "2026-10-21",
-  "hash": "1d5adb0cbbde35ce"
+  "hash": "486acd7834ae98a4"
  },
  "/nyc/pre-rolls/": {
   "date": "2026-10-21",
-  "hash": "fc6cbda38276b945"
+  "hash": "a1df37c2bf27de51"
  },
  "/nyc/tinctures/": {
   "date": "2026-10-21",
-  "hash": "43df86be451f2460"
+  "hash": "e3aee541c02e7bc3"
  },
  "/nyc/topicals/": {
   "date": "2026-10-21",
-  "hash": "dbb6830a28aa8a6a"
+  "hash": "f3ea12f8fe5476b4"
  },
  "/nyc/vaporizers/": {
   "date": "2026-10-21",
-  "hash": "8d0058d1118abc2a"
+  "hash": "140eda00a42e3068"
  }
 }

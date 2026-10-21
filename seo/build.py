@@ -145,6 +145,12 @@ PUBLIC_SLUG = URLS.get("dispensary_slugs", {})
 def disp_path(store_slug): return f"/dispensaries/{PUBLIC_SLUG.get(store_slug, store_slug)}/"
 CAT_SLUGS = {c["category"] for c in SITE["categories"]}
 
+# The site's headline numbers, from the database's site_stats() (same
+# definition the app uses): a shop is an active store with at least one item
+# in stock; neighborhoods are those with such a shop; items are in stock there.
+STATS = SITE.get("stats") or {"shops": len(SITE["dispensaries"]), "neighborhoods": len(SITE["neighborhoods"]),
+                              "in_stock": sum(c["in_stock"] for c in SITE["categories"])}
+
 # app deep links (primary Sensei action)
 def app_store(slug): return f"{APP}/?store={quote(slug)}"
 def app_brand(b): return f"{APP}/?brand={quote(b)}"
@@ -406,7 +412,7 @@ if(o)o.onclick=function(){{open()}};if(c)c.onclick=function(){{close();try{{if(h
 window.addEventListener('popstate',close);document.addEventListener('keydown',function(e){{if(e.key==='Escape')close()}});
 }})();</script>"""
 
-MENU_COUNTS = (len(SITE["dispensaries"]), len(SITE["neighborhoods"]), sum(c["in_stock"] for c in SITE["categories"]))
+MENU_COUNTS = (STATS["shops"], STATS["neighborhoods"], STATS["in_stock"])
 
 AGE_GATE = """
 <div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
@@ -776,10 +782,10 @@ def build_home(paths):
     title = "Sensei — every licensed cannabis menu in NYC"
     desc = ("Stop checking menus one shop at a time. Every licensed dispensary in New York, side by side: price, THC and distance, updated nightly. "
             "Browse by neighborhood, brand or product type.")
-    n_shops = len(SITE["dispensaries"])
-    products = sum(c["in_stock"] for c in SITE["categories"])
+    n_shops = STATS["shops"]
+    products = STATS["in_stock"]
     products_k = f"{round(products / 1000)}k" if products >= 1000 else str(products)
-    n_hoods = len(SITE["neighborhoods"])
+    n_hoods = STATS["neighborhoods"]
     # Route groups: "Downtown & Brooklyn" = lower Manhattan + Brooklyn, by the
     # TOP_HOODS order; "Uptown & Queens" = the next four elsewhere. The two
     # biggest shop counts in each group are transfer stations.
@@ -843,11 +849,17 @@ def _index(path, title, h1, lede, rows, crumb_name, exclude):
     write(path, page(title, desc, path, ld, body, "index", None))
     return path
 
+def _words(n):
+    return "zero one two three four five six seven eight nine ten eleven twelve".split()[n] if 0 <= n <= 12 else f"{n:,}"
+
 def build_index_neighborhoods():
+    _big = max(SITE["neighborhoods"], key=lambda n: (n["stores"], n["in_stock"]))
+    _small = min(SITE["neighborhoods"], key=lambda n: (n["stores"], n["in_stock"]))
     rows = [(n["neighborhood"], f"{n['borough']} · {n['stores']} shop{'s' if n['stores'] != 1 else ''}", n["in_stock"], "in stock",
              f"/neighborhoods/{slugify(n['neighborhood'])}/") for n in TOP_HOODS]
     return _index("/neighborhoods/", "NYC Dispensaries by Neighborhood | Sensei", "Neighborhoods",
-                  "Every part of the city with a licensed dispensary, from Midtown's seven shops to the two in Park Slope. "
+                  f"Every part of the city with a licensed dispensary, from {_big['neighborhood']}'s {_words(_big['stores'])} shops "
+                  f"to the {_words(_small['stores'])} in {_small['neighborhood']}. "
                   "Each page lists the shops, what they stock, and what is cheapest there right now.",
                   rows, "Neighborhoods", {"exclude_hood": "__none__"})
 
@@ -961,7 +973,7 @@ APP_INDEX = ROOT.parent / "app" / "index.html"
 HOME_START, HOME_END = "<!-- seo:home:start -->", "<!-- seo:home:end -->"
 
 def home_block():
-    n_shops = len(SITE["dispensaries"]); n_hoods = len(SITE["neighborhoods"])
+    n_shops = STATS["shops"]; n_hoods = STATS["neighborhoods"]
     hoods = "".join(
         f'<li><a href="/neighborhoods/{slugify(h["neighborhood"])}/">{esc(h["neighborhood"])}</a> '
         f'<span>{h["stores"]} shop{"s" if h["stores"] != 1 else ""}</span></li>'

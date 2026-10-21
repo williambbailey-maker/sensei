@@ -59,9 +59,11 @@ def page_vars(kind, key):
     r = _rec(kind, key)
     if r is None:
         return None
-    city_in_stock = sum(c["in_stock"] for c in SITE["categories"])
-    v = {"city.shops": len(SITE["dispensaries"]), "city.hoods": len(SITE["neighborhoods"]),
-         "city.in_stock": city_in_stock}
+    # City-wide figures from the database's site_stats() (live shops only).
+    st = SITE.get("stats") or {}
+    v = {"city.shops": st.get("shops", len(SITE["dispensaries"])),
+         "city.hoods": st.get("neighborhoods", len(SITE["neighborhoods"])),
+         "city.in_stock": st.get("in_stock", sum(c["in_stock"] for c in SITE["categories"]))}
     for c in SITE["categories"]:
         v[f"city.cat.{c['category']}"] = c["in_stock"]
         v[f"city.cat_min.{c['category']}"] = c["min_price"]
