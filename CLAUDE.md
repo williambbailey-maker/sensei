@@ -37,8 +37,9 @@ can always be restored cleanly.
   ink, with `deep #1E1E1E`, `mist`, `line`, `line-strong`), sentence case,
   body tracking −.01em, and the eight MTA line colors used only in the `.mb`
   line bullets and the `.route` station lines. Source of truth for the home is
-  `design/subway-landing.html`: 10px white `.bar`, `.top` (Sensei · 21+ · New
-  York City), `.mark` "Every menu. One stop.", `.lede`, three line bullets
+  `design/subway-landing.html` (minus its 10px bar and 21+ line: the header is
+  a 42px "Sensei" left, three-bar "Menu" right, hairline under, scrolling
+  with the page), `.mark` "Every menu. One stop.", `.lede`, three line bullets
   spelling `T H C`, one white `.cta` per screen ("Shops near me"), `.stats`, 2px `.rule`
   and 1px `.hair`, grey and red `.route` stop lists, the `.notice` box, the
   `.board`, the `.exit` bar and the demo footer. Option A kept the "Start here"

@@ -60,20 +60,20 @@ select:focus {
   }
 }
 
-/* The 10px white strip at the top of every screen. */
-.bar {
-  height: 10px;
-  background: #fff;
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
-  z-index: 30;
-}
-
+/* The header row: "Sensei" left, "Menu" right, a hairline under. */
 .top {
   @apply flex items-center justify-between;
-  padding: 22px 0 0;
+  padding: 22px 0 16px;
   font-size: 14px;
   font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+.mnu {
+  @apply inline-flex items-center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
 }
 .wm {
   font-size: 42px;
@@ -343,11 +343,11 @@ select:focus {
   border-bottom-color: #fff;
 }
 
-/* Hamburger: two white bars; open state is an X. */
+/* Hamburger: three white bars. */
 .burger {
   @apply block;
   width: 18px;
-  height: 12px;
+  height: 14px;
   position: relative;
   flex: none;
 }
@@ -361,22 +361,11 @@ select:focus {
   background: #fff;
 }
 .burger::before {
-  top: 1px;
+  top: 0;
+  box-shadow: 0 6px 0 #fff;
 }
 .burger::after {
-  top: 8px;
-}
-.burger-x::before,
-.burger-x::after {
-  top: 5px;
-  left: -2px;
-  width: 22px;
-}
-.burger-x::before {
-  transform: rotate(45deg);
-}
-.burger-x::after {
-  transform: rotate(-45deg);
+  top: 12px;
 }
 
 /* "Start here": numbered line bullets in hairline rows. */

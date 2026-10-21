@@ -14,8 +14,6 @@ export function useAgeGate(): [boolean, () => void] {
 export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-field">
-      {/* A 10px white strip like .bar, without being a second .bar in the DOM. */}
-      <div style={{ height: 10, background: '#fff' }} />
       <div className="wrap pb-16">
         <div className="top">
           <span className="wm">Sensei</span>

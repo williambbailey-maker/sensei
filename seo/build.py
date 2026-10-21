@@ -142,15 +142,15 @@ button{font-family:inherit;font-size:inherit;letter-spacing:inherit;cursor:point
 .wrap{max-width:520px;margin:0 auto;padding:0 28px 60px}
 @media (min-width:700px){.wrap{max-width:560px}}
 /* chrome */
-.bar{height:10px;background:var(--ink);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0;font-size:14px;font-weight:700}
+.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 16px;font-size:14px;font-weight:700;border-bottom:1px solid var(--line)}
 .top .tl{display:flex;align-items:center;gap:12px}
 .top .tr{font-weight:400;color:var(--mist)}
 .wm{font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
-.burger{display:block;width:18px;height:12px;position:relative;flex:none}
+.burger{display:block;width:18px;height:14px;position:relative;flex:none}
+.mnu{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-decoration:none}
 .burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
-.burger::before{top:1px}.burger::after{top:8px}
-.burger-x::before,.burger-x::after{top:5px;left:-2px;width:22px}
+.burger::before{top:0;box-shadow:0 6px 0 var(--ink)}.burger::after{top:12px}
+.burger-x::before,.burger-x::after{top:6px;left:-2px;width:22px;box-shadow:none}
 .burger-x::before{transform:rotate(45deg)}.burger-x::after{transform:rotate(-45deg)}
 /* roles */
 .mark{font-size:clamp(64px,19vw,88px);font-weight:700;letter-spacing:-.05em;line-height:.9;margin:54px 0 0}
@@ -272,15 +272,14 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .xl .xd{font-size:13px;color:var(--mist);margin-top:2px}
 /* age gate */
 #ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:auto}
-#ag .strip{height:10px;background:var(--ink)}
-#ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
+#ag #ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
 #ag .cta{margin-top:34px}
 #ag .ghost{display:block;margin-top:22px}
 .ag-ok #ag{display:none}
 /* menu: full-screen sheet, slides in from the left */
 #menu{position:fixed;inset:0;z-index:80;background:var(--field);overflow:auto;display:none}
-#menu .strip{height:10px;background:var(--ink)}
 #menu .mbody{max-width:520px;margin:0 auto;padding:0 28px 40px}
+@media (min-width:700px){#menu .mbody{max-width:560px}}
 .menu-open #menu{display:block;animation:menuIn .18s ease-out both}
 .menu-open body{overflow:hidden}
 @keyframes menuIn{from{transform:translateX(-100%)}to{transform:none}}
@@ -314,11 +313,10 @@ def menu_html(path, counts):
     stores, hoods, products = counts
     return f"""
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
-<div class="strip"></div>
 <div class="mbody">
-<div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span></div>
+<div class="top"><span class="wm">Sensei</span><button class="mnu" type="button" id="menu-close" aria-label="Close menu">Close ✕</button></div>
 <div class="grp"><div class="k">Find</div>
-{row("N", "Near me", "Closest shops first", f"{APP}/?near=1")}
+{row("N", "Shops near me", "Share location · closest shops first", f"{APP}/?near=1")}
 {row("B", "Pick a borough", "Manhattan · Brooklyn · Queens", f"{APP}/?entry=borough")}
 {row("S", "Search in your words", "Strain, brand, price or neighborhood", f"{APP}/?entry=search")}
 {row("E", "See everything", f"{products:,} products · cheapest first", f"{APP}/?entry=all")}
@@ -347,7 +345,7 @@ window.addEventListener('popstate',close);document.addEventListener('keydown',fu
 MENU_COUNTS = (len(SITE["dispensaries"]), len(SITE["neighborhoods"]), sum(c["in_stock"] for c in SITE["categories"]))
 
 AGE_GATE = """
-<div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="strip"></div><div class="box">
+<div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
 <div class="top"><span class="tl"><span class="wm">Sensei</span></span></div>
 <h1 class="mark">Are you<br>21 or<br>older?</h1>
 <p class="lede">Cannabis products are for adults 21 and over in New York State.</p>
@@ -428,9 +426,8 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>{ld}</head><body>
-<div class="bar"></div>
 <div class="wrap">
-<div class="top"><span class="tl"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a></span></div>
+<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>{body}</main>
 <div class="exit"><a href="/">↑ Exit to menus</a><span>Updated nightly</span></div>
 <footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc</footer>

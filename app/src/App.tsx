@@ -276,24 +276,24 @@ export default function App() {
         onGo={goTo}
       />
 
-      {/* The 10px white bar, then "Sensei" and the age line. */}
-      <div className="bar" />
+      {/* "Sensei" left, "Menu" right, a hairline under. Scrolls with the page. */}
       <header className="wrap">
         <div className="top">
-          <span className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => {
-                track('menu_open', {})
-                setMenuOpen(true)
-              }}
-              className="burger"
-              aria-label="Menu"
-            />
-            <button type="button" onClick={restart} className="wm">
-              Sensei
-            </button>
-          </span>
+          <button type="button" onClick={restart} className="wm">
+            Sensei
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              track('menu_open', {})
+              setMenuOpen(true)
+            }}
+            className="mnu"
+            aria-label="Menu"
+          >
+            <span className="burger" />
+            Menu
+          </button>
         </div>
       </header>
 

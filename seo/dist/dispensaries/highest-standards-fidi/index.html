@@ -20,15 +20,15 @@ button{font-family:inherit;font-size:inherit;letter-spacing:inherit;cursor:point
 .wrap{max-width:520px;margin:0 auto;padding:0 28px 60px}
 @media (min-width:700px){.wrap{max-width:560px}}
 /* chrome */
-.bar{height:10px;background:var(--ink);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0;font-size:14px;font-weight:700}
+.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 16px;font-size:14px;font-weight:700;border-bottom:1px solid var(--line)}
 .top .tl{display:flex;align-items:center;gap:12px}
 .top .tr{font-weight:400;color:var(--mist)}
 .wm{font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
-.burger{display:block;width:18px;height:12px;position:relative;flex:none}
+.burger{display:block;width:18px;height:14px;position:relative;flex:none}
+.mnu{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-decoration:none}
 .burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
-.burger::before{top:1px}.burger::after{top:8px}
-.burger-x::before,.burger-x::after{top:5px;left:-2px;width:22px}
+.burger::before{top:0;box-shadow:0 6px 0 var(--ink)}.burger::after{top:12px}
+.burger-x::before,.burger-x::after{top:6px;left:-2px;width:22px;box-shadow:none}
 .burger-x::before{transform:rotate(45deg)}.burger-x::after{transform:rotate(-45deg)}
 /* roles */
 .mark{font-size:clamp(64px,19vw,88px);font-weight:700;letter-spacing:-.05em;line-height:.9;margin:54px 0 0}
@@ -150,15 +150,14 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .xl .xd{font-size:13px;color:var(--mist);margin-top:2px}
 /* age gate */
 #ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:auto}
-#ag .strip{height:10px;background:var(--ink)}
-#ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
+#ag #ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
 #ag .cta{margin-top:34px}
 #ag .ghost{display:block;margin-top:22px}
 .ag-ok #ag{display:none}
 /* menu: full-screen sheet, slides in from the left */
 #menu{position:fixed;inset:0;z-index:80;background:var(--field);overflow:auto;display:none}
-#menu .strip{height:10px;background:var(--ink)}
 #menu .mbody{max-width:520px;margin:0 auto;padding:0 28px 40px}
+@media (min-width:700px){#menu .mbody{max-width:560px}}
 .menu-open #menu{display:block;animation:menuIn .18s ease-out both}
 .menu-open body{overflow:hidden}
 @keyframes menuIn{from{transform:translateX(-100%)}to{transform:none}}
@@ -174,9 +173,8 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 #menu .about{margin-top:12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--mist)}
 #menu .meta{display:block;margin-top:14px}
 </style><script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": "Highest Standards", "url": "https://sensei.nyc/dispensaries/highest-standards-fidi/", "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/5c26056e35e386adc4cea5b2e204b319", "address": {"@type": "PostalAddress", "streetAddress": "2 Coenties Slip", "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.703, "longitude": -74.0108}, "areaServed": "Manhattan, NY"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Sensei", "item": "https://sensei.nyc/"}, {"@type": "ListItem", "position": 2, "name": "Dispensaries", "item": "https://sensei.nyc/dispensaries/"}, {"@type": "ListItem", "position": 3, "name": "Highest Standards", "item": "https://sensei.nyc/dispensaries/highest-standards-fidi/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which FiDi dispensary has the bigger selection?", "acceptedAnswer": {"@type": "Answer", "text": "Highest Standards, with about 770 products across 72 brands, versus roughly 300 at Green Klub on South Street. Green Klub leans toward edibles; Highest Standards covers pre-rolls, vapes, edibles and flower more evenly."}}, {"@type": "Question", "name": "Does Highest Standards have good low-dose options?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It carries 1906 capsule pouches from $5, Harney Brothers 10 mg seltzers and coffee drinks, and Ayrloom beverages, which together make it one of the better FiDi stops for 5 to 10 mg products."}}, {"@type": "Question", "name": "Can I consume on site or nearby?", "acceptedAnswer": {"@type": "Answer", "text": "No. New York does not allow consumption inside licensed dispensaries, and smoking cannabis is prohibited anywhere smoking tobacco is, including most of the Seaport and the parks nearby. Buy here, consume at home."}}]}</script></head><body>
-<div class="bar"></div>
 <div class="wrap">
-<div class="top"><span class="tl"><button class="burger" type="button" id="menu-open" aria-label="Menu"></button><a class="wm" href="/">Sensei</a></span></div>
+<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>
 <p class="crumb"><a href="/">Sensei</a> › <a href="/neighborhoods/fidi/">FiDi</a> › Dispensary</p>
 <p class="kicker">FiDi · Manhattan</p>
@@ -199,11 +197,10 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 <footer class="ft"><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc</footer>
 </div>
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
-<div class="strip"></div>
 <div class="mbody">
-<div class="top"><span class="tl"><button class="burger burger-x" type="button" id="menu-close" aria-label="Close menu"></button><span class="wm">Sensei</span></span></div>
+<div class="top"><span class="wm">Sensei</span><button class="mnu" type="button" id="menu-close" aria-label="Close menu">Close ✕</button></div>
 <div class="grp"><div class="k">Find</div>
-<a class="mi" href="https://sensei.nyc/?near=1" data-ev="chip" data-cat="menu:near me"><span class="ml"><span class="mb s y" style="background:var(--y)">N</span><span><span class="mt">Near me</span><span class="md">Closest shops first</span></span></span><span class="ma">→</span></a>
+<a class="mi" href="https://sensei.nyc/?near=1" data-ev="chip" data-cat="menu:shops near me"><span class="ml"><span class="mb s y" style="background:var(--y)">N</span><span><span class="mt">Shops near me</span><span class="md">Share location · closest shops first</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/?entry=borough" data-ev="chip" data-cat="menu:pick a borough"><span class="ml"><span class="mb s" style="background:var(--o)">B</span><span><span class="mt">Pick a borough</span><span class="md">Manhattan · Brooklyn · Queens</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/?entry=search" data-ev="chip" data-cat="menu:search in your words"><span class="ml"><span class="mb s" style="background:var(--s)">S</span><span><span class="mt">Search in your words</span><span class="md">Strain, brand, price or neighborhood</span></span></span><span class="ma">→</span></a>
 <a class="mi" href="https://sensei.nyc/?entry=all" data-ev="chip" data-cat="menu:see everything"><span class="ml"><span class="mb s" style="background:var(--b)">E</span><span><span class="mt">See everything</span><span class="md">35,760 products · cheapest first</span></span></span><span class="ma">→</span></a>
@@ -228,7 +225,7 @@ function close(){h.classList.remove('menu-open')}
 if(o)o.onclick=function(){open()};if(c)c.onclick=function(){close();try{if(history.state&&history.state.menu)history.back()}catch(e){}};
 window.addEventListener('popstate',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
 })();</script>
-<div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="strip"></div><div class="box">
+<div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
 <div class="top"><span class="tl"><span class="wm">Sensei</span></span></div>
 <h1 class="mark">Are you<br>21 or<br>older?</h1>
 <p class="lede">Cannabis products are for adults 21 and over in New York State.</p>

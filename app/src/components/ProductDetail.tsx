@@ -110,7 +110,6 @@ export function ProductDetail({
       onTouchEnd={onTouchEnd}
       style={{ transform: dx ? `translateX(${dx}px)` : undefined, transition: dx ? 'none' : 'transform .18s ease' }}
     >
-      <div style={{ height: 10, background: '#fff', flex: 'none' }} />
       <div className="wrap" style={{ paddingBottom: 60 }}>
         <div className="top">
           <span>{p.category ? formatLabel(p.category) : 'Product'}</span>

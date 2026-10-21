@@ -114,10 +114,10 @@ export function Menu({
     <div className="menu menu-in" role="dialog" aria-modal="true" aria-label="Menu">
       <div className="wrap" style={{ padding: 0 }}>
         <div className="top">
-          <span className="flex items-center gap-3">
-            <button type="button" onClick={onClose} className="burger burger-x" aria-label="Close menu" />
-            <span className="wm">Sensei</span>
-          </span>
+          <span className="wm">Sensei</span>
+          <button type="button" onClick={onClose} className="mnu" aria-label="Close menu">
+            Close ✕
+          </button>
         </div>
 
         {groups.map((g) => (
