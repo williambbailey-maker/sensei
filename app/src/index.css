@@ -209,7 +209,12 @@ select:focus {
 /* Line bullets. */
 .bullets {
   @apply flex;
-  gap: 10px;
+  gap: 12px;
+}
+.bullets .mb {
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
 }
 .mb {
   width: 40px;
