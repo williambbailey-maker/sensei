@@ -577,15 +577,22 @@ async function main() {
   if (guardTripped) {
     notes.push(`GUARD: seen ${seen} vs last ${prevSeen} (>${DROP_GUARD * 100}% drop) — sweep skipped, snapshot kept`)
   } else if (sweepStoreIds.length) {
-    for (let i = 0; i < sweepStoreIds.length; i += 50) {
-      const ids = sweepStoreIds.slice(i, i + 50).join(',')
-      await sb(`products?store_id=in.(${ids})&last_seen=lt.${runStart}&in_stock=eq.true`, {
-        method: 'PATCH',
+    // One database call (sweep_out_of_stock, supabase/pipeline_functions.sql)
+    // with its own 2-minute timeout: a plain PATCH hits the API's 8s limit
+    // when a backlog of sold-out items builds up after missed nights. A
+    // failure is recorded and alerted, never a crash, so the run still logs.
+    try {
+      const n = await sb('rpc/sweep_out_of_stock', {
+        method: 'POST',
         service: true,
-        body: { in_stock: false },
+        body: { store_ids: sweepStoreIds, before: runStart },
       })
+      notes.push(`swept ${n ?? 0} sold out`)
+      swept = true
+    } catch (e) {
+      notes.push(`sweep failed: ${e.message.slice(-120)}`)
+      await sendAlert('Scrape: out-of-stock sweep failed', e.message.slice(-1500))
     }
-    swept = true
   }
 
   // --- normalize new products ----------------------------------------------
@@ -613,11 +620,10 @@ async function main() {
     notes.push(`match-rate query failed: ${e.message.slice(0, 80)}`)
   }
   try {
-    const cutoff = new Date(Date.now() - STALE_DAYS * 864e5).toISOString()
-    const recent = await sb(`products?last_seen=gte.${cutoff}&select=store_id`, { service: true })
-    const fresh = new Set((recent || []).map((r) => r.store_id))
-    const active = await sb('stores?active=eq.true&select=slug,id', { service: true })
-    staleSlugs = (active || []).filter((s) => !fresh.has(s.id)).map((s) => s.slug)
+    // Computed in the database: listing every recent product row through the
+    // API is capped at 1000 rows, which marked healthy stores as stale.
+    const rows = await sb('rpc/stale_store_slugs', { method: 'POST', service: true, body: { days: STALE_DAYS } })
+    staleSlugs = (rows || []).map((r) => (typeof r === 'string' ? r : r.stale_store_slugs))
   } catch (e) {
     notes.push(`stale-store query failed: ${e.message.slice(0, 80)}`)
   }
