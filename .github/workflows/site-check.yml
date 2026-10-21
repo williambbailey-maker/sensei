@@ -100,3 +100,13 @@ jobs:
               print(("ok  " if ok else "BAD ") + f"{r['source']} -> {code} {loc}")
           print("all redirects ok" if not bad else f"{bad} redirect(s) wrong")
           PY
+
+      - name: Public API (what the app calls with the public key)
+        run: |
+          set +e
+          KEY=$(python3 -c "import re;print(re.search(r'\"(eyJ[^\"]+)\"',open('seo/build.py').read()).group(1))")
+          U="https://dywrisybvcorpfhbwgtg.supabase.co/rest/v1"
+          H="-H apikey:$KEY -H Authorization:Bearer\ $KEY"
+          echo "== rpc/site_stats"; curl -sS -X POST "$U/rpc/site_stats" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d '{}' -w "\nHTTP %{http_code} %{time_total}s\n"
+          echo "== live_stores (count)"; curl -sS "$U/live_stores?select=slug" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -o ls.json -w "HTTP %{http_code} %{time_total}s\n"; python3 -c "import json;d=json.load(open('ls.json'));print(len(d) if isinstance(d,list) else d)"
+          echo "== stores (count, old path)"; curl -sS "$U/stores?select=slug&active=eq.true" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -o st.json -w "HTTP %{http_code}\n"; python3 -c "import json;d=json.load(open('st.json'));print(len(d) if isinstance(d,list) else d)"
