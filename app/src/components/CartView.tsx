@@ -20,8 +20,8 @@ export function CartView({
   const menuUrl = `https://dutchie.com/dispensary/${cart.store.slug}`
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="wrap" style={{ paddingTop: 28 }}>
+      <div className="flex items-center justify-between">
         <button type="button" onClick={onBack} className="ghost">
           Keep shopping
         </button>
@@ -30,21 +30,18 @@ export function CartView({
         </button>
       </div>
 
-      <h1 className="poster">{storeName}</h1>
-      <div className="rule mt-3">
-        <span>{String(count).padStart(2, '0')}</span>
-      </div>
-      <p className="meta mt-3 text-center">
+      <h1 className="poster" style={{ marginTop: 26 }}>
+        {storeName}
+      </h1>
+      <p className="meta" style={{ marginTop: 10 }}>
         {count} item{count === 1 ? '' : 's'} · estimated minimum ${total.toFixed(2).replace(/\.00$/, '')}
       </p>
 
-      <div className="mt-8">
+      <div style={{ marginTop: 20 }}>
         {cart.items.map(({ product: p, qty }) => (
           <div key={p.id} className="row">
             <span className="row-l">
-              <span className={`thumb ${p.image_url ? '' : 'thumb-empty'}`}>
-                {p.image_url ? <img src={p.image_url} alt="" /> : null}
-              </span>
+              <span className="thumb">{p.image_url ? <img src={p.image_url} alt="" /> : null}</span>
               <span className="min-w-0">
                 <span className="label block truncate">{cleanTitle(p.clean_name ?? p.name ?? 'Unknown')}</span>
                 <span className="meta block truncate">
@@ -73,12 +70,10 @@ export function CartView({
         ))}
       </div>
 
-      <div className="mt-10 text-center">
-        <a href={menuUrl} target="_blank" rel="noopener noreferrer" className="dotcta">
-          Order at {storeName}
-        </a>
-      </div>
-      <p className="copy sentence mt-5 text-center">
+      <a href={menuUrl} target="_blank" rel="noopener noreferrer" className="cta" style={{ marginTop: 28 }}>
+        <span>Order at {storeName}</span>
+      </a>
+      <p className="meta" style={{ marginTop: 14 }}>
         Dutchie doesn't accept carts filled from outside yet. Use this list on their menu; each item links
         straight to its page. Prices shown are menu minimums; final pricing and sizes are confirmed at checkout.
       </p>

@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Sensei — every licensed cannabis menu in NYC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0B0B;--fg:#FFFFFF;--dim:rgba(255,255,255,.6);--line:rgba(255,255,255,.16);--r:#EE352E;--g:#00933C;--b:#0039A6;--y:#FCCC0A;--o:#FF6319;--gr:#A7A9AC;--v:#B933AD;--lg:#6CBE45;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font-family:"Helvetica Neue",Helvetica,Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+.wrap{max-width:520px;margin:0 auto;padding:0 28px 60px}
+.bar{height:10px;background:var(--fg);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0;font-size:14px;font-weight:700}
+.top span:last-child{font-weight:400;color:var(--dim)}
+h1{font-size:clamp(64px,19vw,88px);font-weight:700;letter-spacing:-.05em;line-height:.9;margin:54px 0 0}
+.lede{font-size:21px;font-weight:400;line-height:1.3;margin:22px 0 0;max-width:22ch;letter-spacing:-.015em}
+.bullets{display:flex;gap:10px;margin:34px 0 0}
+.mb{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:21px;color:#fff;letter-spacing:-.03em;flex:none}
+.mb.y{color:#111}
+.rule{height:2px;background:var(--fg);margin:40px 0 0}
+.hair{height:1px;background:var(--line)}
+.k{font-size:13px;font-weight:700;margin:26px 0 0}
+.k small{font-weight:400;color:var(--dim);margin-left:10px;font-size:12px}
+.cta{display:flex;justify-content:space-between;align-items:center;background:var(--fg);color:#111;padding:18px 20px;font-size:19px;font-weight:700;letter-spacing:-.025em;text-decoration:none;margin:28px 0 0}
+.cta span:last-child{font-size:26px;font-weight:400;line-height:1}
+.cta.ghost{background:transparent;color:var(--fg);border:2px solid var(--fg)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:30px 0 0;gap:18px}
+.stats b{display:block;font-size:40px;font-weight:700;letter-spacing:-.05em;line-height:1}
+.stats span{display:block;font-size:13px;color:var(--dim);margin-top:6px}
+.route{position:relative;margin:26px 0 0;padding-left:34px}
+.route:before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:6px;background:var(--line-color,#EE352E);border-radius:3px}
+.stop{position:relative;display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;text-decoration:none;color:var(--fg)}
+.stop:before{content:"";position:absolute;left:-30px;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:var(--fg);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--fg)}
+.stop .n{font-size:19px;font-weight:700;letter-spacing:-.025em}
+.stop .c{font-size:13px;color:var(--dim);font-weight:400}
+.stop.xfer:before{width:18px;height:18px;left:-32px}
+.notice{border:2px solid var(--fg);padding:18px 20px;margin:28px 0 0}
+.notice h3{margin:0;font-size:16px;font-weight:700}
+.notice ol{margin:12px 0 0;padding:0;list-style:none}
+.notice li{display:flex;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.35}
+.notice li b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--fg);color:#111;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.board{margin:18px 0 0;border-top:2px solid var(--fg)}
+.board div{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;letter-spacing:-.02em}
+.board div span:last-child{font-weight:400;color:var(--dim);font-size:13px}
+.exit{display:flex;align-items:center;justify-content:space-between;margin:40px 0 0;padding:16px 0;border-top:2px solid var(--fg);border-bottom:2px solid var(--fg);font-size:15px;font-weight:700}
+.exit span:last-child{font-weight:400;color:var(--dim)}
+footer{margin:34px 0 0;font-size:12px;color:var(--dim);line-height:1.6}
+footer b{color:var(--fg)}
+@media (min-width:700px){.wrap{max-width:560px}}
+</style></head><body>
+<div class="bar"></div>
+<div class="wrap">
+<div class="top"><span>Sensei</span><span>21+ · New York City</span></div>
+<h1>Every<br>menu.<br>One stop.</h1>
+<p class="lede">All seventy licensed dispensaries in New York, compared nightly. Price and potency as labeled.</p>
+<div class="bullets"><span class="mb" style="background:var(--r)">1</span><span class="mb" style="background:var(--b)">A</span><span class="mb" style="background:var(--g)">6</span><span class="mb" style="background:var(--gr)">L</span><span class="mb y" style="background:var(--y)">N</span><span class="mb" style="background:var(--o)">F</span></div>
+<a class="cta" href="#"><span>Shops near me</span><span>→</span></a>
+<div class="stats"><div><b>70</b><span>licensed shops</span></div><div><b>37k</b><span>items in stock</span></div><div><b>18</b><span>neighborhoods</span></div></div>
+<div class="rule"></div>
+<div class="k">Downtown &amp; Brooklyn<small>most shops</small></div>
+<div class="route" style="--line-color:var(--gr)">
+<a class="stop xfer" href="#"><span class="n">Lower East Side</span><span class="c">9 shops</span></a>
+<a class="stop" href="#"><span class="n">SoHo &amp; NoHo</span><span class="c">6 shops</span></a>
+<a class="stop" href="#"><span class="n">Union Square</span><span class="c">5 shops</span></a>
+<a class="stop xfer" href="#"><span class="n">Williamsburg</span><span class="c">8 shops</span></a>
+<a class="stop" href="#"><span class="n">Bushwick</span><span class="c">6 shops</span></a>
+</div>
+<div class="hair"></div>
+<div class="k">Uptown &amp; Queens</div>
+<div class="route" style="--line-color:var(--r)">
+<a class="stop" href="#"><span class="n">Midtown</span><span class="c">7 shops</span></a>
+<a class="stop xfer" href="#"><span class="n">Harlem</span><span class="c">4 shops</span></a>
+<a class="stop" href="#"><span class="n">Astoria</span><span class="c">3 shops</span></a>
+<a class="stop" href="#"><span class="n">Jamaica</span><span class="c">4 shops</span></a>
+</div>
+<div class="notice">
+<h3>How Sensei works</h3>
+<ol>
+<li><b>1</b><span>Pick a neighborhood or share your location.</span></li>
+<li><b>2</b><span>Compare every shop's menu in one list: price, THC, size, distance.</span></li>
+<li><b>3</b><span>Order on the dispensary's own menu for pickup. We never hold your cart.</span></li>
+</ol>
+</div>
+<div class="rule"></div>
+<div class="k">Brands carried this week</div>
+<div class="board">
+<div><span>Canna Clinicals</span><span>31 shops</span></div>
+<div><span>Ayrloom</span><span>28 shops</span></div>
+<div><span>Flowerhouse</span><span>24 shops</span></div>
+<div><span>MFNY</span><span>22 shops</span></div>
+<div><span>Dank by Definition</span><span>19 shops</span></div>
+</div>
+<a class="cta ghost" href="#"><span>Browse all 70 shops</span><span>→</span></a>
+<div class="exit"><span>↑ Exit to menus</span><span>Updated nightly at 2 a.m.</span></div>
+<footer><b>Sensei</b> is a guide for adults 21 and over in New York State. We list licensed retailers only, link to each dispensary's own menu, and do not sell cannabis. Brands may advertise on Sensei; they may not change the order of results.<br><br>sensei.nyc · hello@sensei.nyc</footer>
+</div></body></html>

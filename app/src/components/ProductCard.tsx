@@ -123,7 +123,7 @@ export function ProductCard({
         <span className="min-w-0">
           <span className="label block truncate">{name}</span>
           {detailLine && <span className="meta block truncate">{detailLine}</span>}
-          <span className="meta block truncate text-[rgba(20,20,20,.4)]">{storeLine}</span>
+          <span className="meta block truncate">{storeLine}</span>
         </span>
       </span>
       <span className="label shrink-0">{price}</span>

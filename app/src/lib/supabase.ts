@@ -82,6 +82,14 @@ export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise
   return rows.concat(...rest)
 }
 
+// How many products are in stock across the city — the hero's "items in
+// stock" stat. A head-only count; no rows come back.
+export async function fetchProductCount(): Promise<number | null> {
+  const { count, error } = await supabase.from('products').select('id', { count: 'exact', head: true }).eq('in_stock', true)
+  if (error) throw error
+  return count
+}
+
 // Which stores a filter set can draw from: a neighborhood, a borough, the
 // stores inside the radius, or the nearest few when sorting by distance.
 // null = no location scoping at all.

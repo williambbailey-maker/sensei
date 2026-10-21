@@ -5,7 +5,7 @@ import { EMPTY_FILTERS, type Filters } from '../lib/types'
 import { track } from '../lib/analytics'
 
 // The core experience: a pure tap-through selection journey rendered as a
-// list of rows with a marker, sign style.
+// list of hairline rows with a disc marker.
 // Borough → Neighborhood → Product type → Strain → Quantity (flower only) →
 // Price → the product list. One tap advances each step; every step is skippable.
 export function TapJourney({
@@ -112,8 +112,8 @@ export function TapJourney({
   const shops = (n: number | undefined) => (n ? `${n} shop${n === 1 ? '' : 's'}` : undefined)
 
   return (
-    <div id="journey" className="mx-auto max-w-2xl px-6 py-12">
-      <div className="mb-8 flex items-center justify-between">
+    <div id="journey" className="wrap" style={{ paddingTop: 40 }}>
+      <div className="flex items-center justify-between">
         <button type="button" onClick={() => goBack(step)} className="ghost">
           {step === 0 ? 'Home' : 'Back'}
         </button>
@@ -133,7 +133,7 @@ export function TapJourney({
       </div>
 
       {step === 0 && (
-        <Step n={currentPos + 1} title="Where are you" hint="Tap a borough. Every step after this is skippable">
+        <Step title="Where are you" hint="Tap a borough. Every step after this is skippable.">
           {BOROUGHS.map((b) => (
             <Option
               key={b}
@@ -147,7 +147,7 @@ export function TapJourney({
       )}
 
       {step === 1 && (
-        <Step n={currentPos + 1} title={`Where in ${f.borough}`} hint="Choose a neighborhood, or all of them">
+        <Step title={`Where in ${f.borough}`} hint="Choose a neighborhood, or all of them.">
           <Option label={`All ${f.borough}`} active={f.neighborhood === null} onClick={() => pick({ neighborhood: null })} />
           {neighborhoods.map((n) => (
             <Option
@@ -162,7 +162,7 @@ export function TapJourney({
       )}
 
       {step === 2 && (
-        <Step n={currentPos + 1} title="What are you after" hint="Pick a product type, or any">
+        <Step title="What are you after" hint="Pick a product type, or any.">
           {FORMATS.map((fmt) => (
             <Option
               key={fmt.key}
@@ -176,7 +176,7 @@ export function TapJourney({
       )}
 
       {step === 3 && (
-        <Step n={currentPos + 1} title="Which strain" hint="Indica, sativa, hybrid, or any">
+        <Step title="Which strain" hint="Indica, sativa, hybrid, or any.">
           {STRAINS.map((s) => (
             <Option key={s} label={s} active={f.strain === s} onClick={() => pick({ strain: s })} />
           ))}
@@ -184,7 +184,7 @@ export function TapJourney({
       )}
 
       {step === 4 && (
-        <Step n={currentPos + 1} title="How much" hint="Pick a size, or any amount">
+        <Step title="How much" hint="Pick a size, or any amount.">
           {SIZES.map((s) => (
             <Option key={s.key} label={s.label} active={f.size === s.key} onClick={() => pick({ size: s.key })} />
           ))}
@@ -192,7 +192,7 @@ export function TapJourney({
       )}
 
       {step === 5 && (
-        <Step n={currentPos + 1} title="Your budget" hint="Per item, or no limit">
+        <Step title="Your budget" hint="Per item, or no limit.">
           {BUDGETS.map((b) => (
             <Option
               key={b.label}
@@ -204,7 +204,7 @@ export function TapJourney({
         </Step>
       )}
 
-      <div className="mt-8 flex flex-col items-center gap-4">
+      <div className="mt-7 flex flex-col items-start gap-4">
         <button type="button" onClick={skip} className="ghost">
           {step < LAST ? 'Skip this step' : 'Show my products'}
         </button>
@@ -213,36 +213,27 @@ export function TapJourney({
             {locating ? 'Locating' : 'Or share my location'}
           </button>
         )}
-        {locError && <p className="meta text-ink">{locError}</p>}
+        {locError && <p className="meta">{locError}</p>}
       </div>
     </div>
   )
 }
 
-function Step({
-  n,
-  title,
-  hint,
-  children,
-}: {
-  n: number
-  title: string
-  hint: string
-  children: React.ReactNode
-}) {
+function Step({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="poster">{title}</h2>
-      <div className="rule mt-3">
-        <span>{String(n).padStart(2, '0')}</span>
-      </div>
-      <p className="meta mb-6 mt-3 text-center">{hint}</p>
+      <h2 className="poster" style={{ marginTop: 18 }}>
+        {title}
+      </h2>
+      <p className="meta" style={{ marginTop: 10, marginBottom: 14 }}>
+        {hint}
+      </p>
       {children}
     </div>
   )
 }
 
-// One option row: marker + label, with an optional shop count on the right.
+// One option row: disc marker + label, with an optional shop count on the right.
 function Option({
   label,
   caption,
@@ -255,12 +246,12 @@ function Option({
   onClick: () => void
 }) {
   return (
-    <button type="button" onClick={onClick} className="row w-full text-left">
+    <button type="button" onClick={onClick} className="row">
       <span className="row-l">
-        <span className={`marker ${active ? 'marker-on' : ''}`} />
+        <span className={`disc ${active ? 'disc-on' : ''}`} />
         <span className="label">{label}</span>
       </span>
-      {caption && <span className="label shrink-0 text-mist">{caption}</span>}
+      {caption && <span className="meta shrink-0">{caption}</span>}
     </button>
   )
 }

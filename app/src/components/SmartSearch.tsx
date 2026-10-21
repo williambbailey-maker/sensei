@@ -36,15 +36,16 @@ export function SmartSearch({
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 pt-8">
+    <div id="search" className="wrap" style={{ paddingTop: 34 }}>
       <form
         onSubmit={(e) => {
           e.preventDefault()
           submit()
         }}
-        className="inp gap-4"
+        className="inp"
       >
         <input
+          id="search-input"
           autoFocus={autoFocus}
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -52,13 +53,13 @@ export function SmartSearch({
           aria-label="Search the menu in plain language"
           enterKeyHint="search"
         />
-      </form>
-      <p className="meta mt-3 text-center">Strain, brand, price or neighborhood</p>
-      <div className="mt-5 text-center">
-        <button type="button" onClick={submit} disabled={!q.trim()} className="dotcta">
-          Search
+        <button type="submit" className="ghost shrink-0">
+          Go
         </button>
-      </div>
+      </form>
+      <p className="meta" style={{ marginTop: 10 }}>
+        Strain, brand, price or neighborhood
+      </p>
     </div>
   )
 }

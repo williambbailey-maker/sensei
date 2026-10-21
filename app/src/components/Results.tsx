@@ -3,10 +3,9 @@ import { FilterChips } from './FilterChips'
 import { RefineBar } from './RefineBar'
 import { ProductCard, eventProps } from './ProductCard'
 import { ProductDetail } from './ProductDetail'
-import { track } from '../lib/analytics'
-import { Newsletter } from './Newsletter'
+import { track, productKey } from '../lib/analytics'
 import { rankProducts } from '../lib/rank'
-import { prettyStore } from '../lib/labels'
+import { cleanTitle, prettyStore } from '../lib/labels'
 import type { Filters, Product } from '../lib/types'
 
 export function Results({
@@ -38,12 +37,11 @@ export function Results({
     ? (filters.storeName ?? prettyStore(filters.store))
     : filters.userLoc
       ? filters.radiusMiles != null
-        ? `within ${filters.radiusMiles} mi of you`
-        : 'closest to you'
+        ? `Within ${filters.radiusMiles} mi of you`
+        : 'Closest to you'
       : (filters.neighborhood ?? filters.borough)
 
   const waiting = loading && ranked.length === 0
-  const count = waiting ? '…' : ranked.length > 999 ? '999+' : String(ranked.length)
 
   // The detail panel is owned here so it can be swiped through the list:
   // openIndex points into `shown`, and stepping logs a product_view for the
@@ -68,9 +66,24 @@ export function Results({
   )
   const openProductItem = openIndex != null ? shown[openIndex] : null
 
+  // "Also at N shops" / "Lowest nearby": the same product (brand + name) across
+  // the loaded result set, which already spans every shop in scope.
+  const same = useMemo(() => {
+    if (!openProductItem) return { shops: 0, lowest: null as number | null }
+    const key = productKey(openProductItem.clean_brand ?? openProductItem.brand, cleanTitle(openProductItem.clean_name ?? openProductItem.name ?? ''))
+    const stores = new Set<string>()
+    let lowest: number | null = null
+    for (const p of products) {
+      if (productKey(p.clean_brand ?? p.brand, cleanTitle(p.clean_name ?? p.name ?? '')) !== key) continue
+      if (p.store?.slug) stores.add(p.store.slug)
+      if (p.price_min != null && (lowest == null || p.price_min < lowest)) lowest = p.price_min
+    }
+    return { shops: stores.size, lowest }
+  }, [openProductItem, products])
+
   return (
-    <div className="mx-auto max-w-2xl px-6 py-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="wrap" style={{ paddingTop: 28 }}>
+      <div className="flex items-center justify-between">
         <button type="button" onClick={onHome} className="ghost">
           Home
         </button>
@@ -79,15 +92,14 @@ export function Results({
         </button>
       </div>
 
-      <h1 className="poster">{where ?? 'All of New York'}</h1>
-      <div className="rule mt-3">
-        <span>{count}</span>
-      </div>
-      <p className="meta mt-3 text-center">
+      <h1 className="poster" style={{ marginTop: 26 }}>
+        {where ?? 'All of New York'}
+      </h1>
+      <p className="meta" style={{ marginTop: 10 }}>
         {waiting ? 'Pulling live menus' : `${ranked.length.toLocaleString()} match${ranked.length === 1 ? '' : 'es'}`}
       </p>
 
-      <div className="mt-8">
+      <div style={{ marginTop: 24 }}>
         <RefineBar f={filters} onChange={onChange} neighborhoodsByBorough={neighborhoodsByBorough} />
         <FilterChips f={filters} onChange={onChange} />
       </div>
@@ -95,17 +107,19 @@ export function Results({
       {waiting ? (
         // Products for this filter set are still arriving — never show a
         // false "nothing matched" while we wait.
-        <p className="meta mt-14 text-center">Pulling live menus</p>
+        <p className="meta" style={{ marginTop: 48 }}>
+          Pulling live menus
+        </p>
       ) : ranked.length === 0 ? (
-        <div className="mt-14 text-center">
+        <div style={{ marginTop: 48 }}>
           <p className="poster">Nothing matched</p>
-          <p className="copy mt-3">
+          <p className="lede lede-sm" style={{ marginTop: 14 }}>
             {filters.userLoc ? 'Try a wider radius, or clear a filter above.' : 'Clear a filter above to widen the search.'}
           </p>
         </div>
       ) : (
         <>
-          <div className="mt-6">
+          <div style={{ marginTop: 20 }}>
             {shown.map((p) => (
               <ProductCard key={p.id} p={p} userLoc={filters.userLoc} onOpen={openProduct} />
             ))}
@@ -116,22 +130,20 @@ export function Results({
               index={openIndex}
               total={shown.length}
               userLoc={filters.userLoc}
+              alsoAt={same.shops}
+              lowest={same.lowest}
               onClose={closeDetail}
               onStep={stepDetail}
               onAdd={onAdd}
             />
           )}
           {ranked.length > CAP && (
-            <p className="meta mt-6 text-center">
+            <p className="meta" style={{ marginTop: 20 }}>
               Showing the first {CAP} of {ranked.length.toLocaleString()}. Refine above to narrow it down.
             </p>
           )}
         </>
       )}
-
-      <div className="mt-14">
-        <Newsletter source="results" />
-      </div>
     </div>
   )
 }
