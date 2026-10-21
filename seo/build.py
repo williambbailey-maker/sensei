@@ -121,6 +121,14 @@ def faq_ld(c):
 HOOD_SLUGS = {slugify(n["neighborhood"]): n["neighborhood"] for n in SITE["neighborhoods"]}
 BRAND_SLUGS = {slugify(b["brand"]): b["brand"] for b in SITE["brands"]}
 STORE_SLUGS = {d["slug"] for d in SITE["dispensaries"]}
+
+# Public dispensary URLs. The database slug is Dutchie's (the scraper and the
+# app's ?store= links depend on it), so a page can live at a friendlier URL:
+# seo/data/urls.json maps database slug -> public slug. Once a URL is public it
+# is permanent (see published.json + redirects below); renaming one adds a 301.
+URLS = json.loads((ROOT / "data" / "urls.json").read_text()) if (ROOT / "data" / "urls.json").exists() else {}
+PUBLIC_SLUG = URLS.get("dispensary_slugs", {})
+def disp_path(store_slug): return f"/dispensaries/{PUBLIC_SLUG.get(store_slug, store_slug)}/"
 CAT_SLUGS = {c["category"] for c in SITE["categories"]}
 
 # app deep links (primary Sensei action)
@@ -547,7 +555,7 @@ def directions_url(name, address, lat, lng):
     return "https://www.google.com/maps/dir/?api=1&destination=" + quote(dest)
 
 def build_dispensary(d):
-    path = f"/dispensaries/{d['slug']}/"
+    path = disp_path(d["slug"])
     hoodslug = slugify(d["neighborhood"]) if d.get("neighborhood") else None
     title = f"{d['name']} — Cannabis Menu, Prices & Deals | Sensei"
     desc = (f"{d['name']} in {d.get('neighborhood') or d.get('borough') or 'NYC'}: "
@@ -615,7 +623,7 @@ def build_neighborhood(n):
                    lambda c: (f"/nyc/{c}/" if c in CAT_SLUGS else app_hood(n["neighborhood"], c)))
     stores = ""
     for s in (n.get("stores_list") or []):
-        href = f"/dispensaries/{s['slug']}/" if s["slug"] in STORE_SLUGS else app_store(s["slug"])
+        href = disp_path(s["slug"]) if s["slug"] in STORE_SLUGS else app_store(s["slug"])
         stores += (f'<a class="row" href="{href}"><div class="l"><span class="mb s">{esc((s["name"] or "?")[:1].upper())}</span><div><div class="snm">{esc(s["name"])}</div>'
                    f'<div class="sd">{esc((s.get("address") or "").split(",")[0])}</div></div></div>'
                    f'<div class="sn"><b>{s["in_stock"]}</b>in stock</div></a>')
@@ -658,7 +666,7 @@ def build_brand(b):
                      for c, n in sorted((b.get("categories") or {}).items(), key=lambda kv: -kv[1]))
     stores = ""
     for s in (b.get("stores_list") or []):
-        href = f"/dispensaries/{s['slug']}/" if s["slug"] in STORE_SLUGS else app_store(s["slug"])
+        href = disp_path(s["slug"]) if s["slug"] in STORE_SLUGS else app_store(s["slug"])
         hs = slugify(s.get("neighborhood") or "")
         place = (f'<a href="/neighborhoods/{hs}/">{esc(s.get("neighborhood"))}</a>' if hs in HOOD_SLUGS else esc(s.get("neighborhood") or ""))
         stores += (f'<a class="row" href="{href}"><div class="l"><span class="mb s">{esc((s["name"] or "?")[:1].upper())}</span><div><div class="snm">{esc(s["name"])}</div>'
@@ -737,7 +745,7 @@ TOP_DISP = sorted(SITE["dispensaries"], key=lambda d: -d["in_stock"])
 def crosslinks(exclude_store=None, exclude_hood=None, exclude_brand=None, exclude_cat=None, hood=None):
     cards = []
     d = next((x for x in TOP_DISP if x["slug"] != exclude_store), TOP_DISP[0])
-    cards.append(("Dispensary", d["name"], f"{d['neighborhood']}, {d['borough']}", f"/dispensaries/{d['slug']}/"))
+    cards.append(("Dispensary", d["name"], f"{d['neighborhood']}, {d['borough']}", disp_path(d["slug"])))
     nb = next((x for x in TOP_HOODS if slugify(x["neighborhood"]) != exclude_hood), TOP_HOODS[0])
     cards.append(("Neighborhood", nb["neighborhood"], f"{nb['stores']} shops · {nb['borough']}", f"/neighborhoods/{slugify(nb['neighborhood'])}/"))
     br = next((x for x in TOP_BRANDS if slugify(x["brand"]) != exclude_brand), TOP_BRANDS[0])
@@ -845,11 +853,126 @@ def build_index_categories():
                   "neighborhoods where the selection runs deepest.",
                   rows, "Products", {"exclude_cat": "__none__"})
 
-def build_sitemap(paths):
-    today = SITE["generatedAt"]
-    urls = "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{today}</lastmod></url>" for p in paths)
+# ---------- truthful sitemap dates ----------
+# A page's <lastmod> moves only when what Google reads on it changes: its
+# title, description and <main> content. Design-only rebuilds (CSS, menu,
+# footer) keep the old date. State lives in seo/data/lastmod.json.
+LASTMOD_FILE = ROOT / "data" / "lastmod.json"
+
+def page_fingerprint(path, home_block):
+    import hashlib
+    if path == "/":
+        text = home_block  # "/" is the app; Google reads the static block in app/index.html
+    else:
+        html = (DIST / path.strip("/") / "index.html").read_text()
+        title = re.search(r"<title>(.*?)</title>", html, re.S)
+        desc = re.search(r'<meta name="description" content="([^"]*)"', html)
+        main = re.search(r"<main>(.*?)</main>", html, re.S)
+        text = "\n".join(m.group(1) if m else "" for m in (title, desc, main))
+    return hashlib.sha256(text.encode()).hexdigest()[:16]
+
+def update_lastmod(paths, home_block):
+    import datetime
+    prev = json.loads(LASTMOD_FILE.read_text()) if LASTMOD_FILE.exists() else {}
+    # First run: date every page by the snapshot it was built from.
+    today = datetime.date.today().isoformat() if prev else SITE["generatedAt"]
+    out, changed = {}, 0
+    for p in paths:
+        h = page_fingerprint(p, home_block)
+        old = prev.get(p)
+        if old and old["hash"] == h:
+            out[p] = old
+        else:
+            out[p] = {"hash": h, "date": today}
+            changed += 1
+    # Keep entries for pages no longer built, so a page that returns keeps history.
+    for p, v in prev.items():
+        out.setdefault(p, v)
+    LASTMOD_FILE.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    return out, changed
+
+def build_sitemap(paths, lastmod):
+    urls = "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{lastmod[p]['date']}</lastmod></url>" for p in paths)
     (DIST / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n")
+
+# ---------- permanent URLs: every published page, forever ----------
+# seo/data/published.json lists every URL the site has ever served. A URL in
+# it that this build no longer produces gets a 301: a renamed shop to its new
+# URL, a closed shop to its neighborhood, anything else to its hub. The
+# redirects are written into app/vercel.json (Vercel's Root Directory is app/).
+PUBLISHED_FILE = ROOT / "data" / "published.json"
+VERCEL_FILE = ROOT.parent / "app" / "vercel.json"
+
+def redirect_target(info):
+    t = info.get("type")
+    if t == "dispensary":
+        if info.get("store") in STORE_SLUGS:
+            return disp_path(info["store"])
+        h = info.get("hood")
+        return f"/neighborhoods/{h}/" if h in HOOD_SLUGS else "/neighborhoods/"
+    return {"neighborhood": "/neighborhoods/", "brand": "/brands/", "category": "/nyc/"}.get(t, "/")
+
+def update_published(meta):
+    prev = json.loads(PUBLISHED_FILE.read_text()) if PUBLISHED_FILE.exists() else {}
+    built = set(meta)
+    redirects = []
+    for p, info in sorted(prev.items()):
+        if p in built:
+            continue
+        dest = redirect_target(info)
+        if dest == p or (dest not in built and dest not in ("/", "/neighborhoods/", "/brands/", "/nyc/")):
+            raise SystemExit(f"redirect for {p} points at {dest}, which this build does not produce")
+        redirects.append((p, dest))
+    allp = dict(prev)
+    allp.update(meta)
+    PUBLISHED_FILE.write_text(json.dumps(allp, indent=1, sort_keys=True) + "\n")
+    cfg = json.loads(VERCEL_FILE.read_text())
+    rules = []
+    for src_path, dest in redirects:
+        for s in (src_path, src_path.rstrip("/")):
+            rules.append({"source": s, "destination": dest, "statusCode": 301})
+    if rules:
+        cfg["redirects"] = rules
+    else:
+        cfg.pop("redirects", None)
+    VERCEL_FILE.write_text(json.dumps(cfg, indent=2) + "\n")
+    return redirects
+
+# ---------- the app home's crawlable block ----------
+# "/" is the React app, whose HTML is otherwise an empty shell. This block is
+# written into app/index.html between markers, inside <div id="root">: Google
+# reads plain text and links, and React replaces it the moment the app loads.
+APP_INDEX = ROOT.parent / "app" / "index.html"
+HOME_START, HOME_END = "<!-- seo:home:start -->", "<!-- seo:home:end -->"
+
+def home_block():
+    n_shops = len(SITE["dispensaries"]); n_hoods = len(SITE["neighborhoods"])
+    hoods = "".join(
+        f'<li><a href="/neighborhoods/{slugify(h["neighborhood"])}/">{esc(h["neighborhood"])}</a> '
+        f'<span>{h["stores"]} shop{"s" if h["stores"] != 1 else ""}</span></li>'
+        for h in sorted(SITE["neighborhoods"], key=lambda h: h["neighborhood"]))
+    cats = "".join(f'<li><a href="/nyc/{c["category"]}/">{esc(clabel(c["category"]))}</a></li>'
+                   for c in sorted(SITE["categories"], key=lambda c: -c["in_stock"]))
+    brands = "".join(f'<li><a href="/brands/{slugify(b["brand"])}/">{esc(b["brand"])}</a></li>'
+                     for b in sorted(SITE["brands"], key=lambda b: -b["stores"]))
+    return (f'<div class="seo-home">\n'
+            f'<h1>Every menu. One stop.</h1>\n'
+            f'<p>Stop checking menus one shop at a time. Every licensed dispensary in New York, side by side: price, THC and distance. '
+            f'{n_shops} licensed shops across {n_hoods} neighborhoods in Manhattan, Brooklyn and Queens.</p>\n'
+            f'<h2>Browse</h2><ul><li><a href="/neighborhoods/">Dispensaries by neighborhood</a></li>'
+            f'<li><a href="/brands/">Cannabis brands in NYC</a></li><li><a href="/nyc/">Flower, pre-rolls, vapes and edibles</a></li></ul>\n'
+            f'<h2>Neighborhoods</h2><ul>{hoods}</ul>\n'
+            f'<h2>Products</h2><ul>{cats}</ul>\n'
+            f'<h2>Brands</h2><ul>{brands}</ul>\n'
+            f'</div>')
+
+def write_home_block(block):
+    html = APP_INDEX.read_text()
+    a, b = html.find(HOME_START), html.find(HOME_END)
+    if a < 0 or b < 0:
+        raise SystemExit("app/index.html is missing the seo:home markers")
+    APP_INDEX.write_text(html[:a + len(HOME_START)] + "\n" + block + "\n" + html[b:])
 
 if __name__ == "__main__":
     import shutil
@@ -864,7 +987,20 @@ if __name__ == "__main__":
     paths.append(build_index_brands())
     paths.append(build_index_categories())
     build_home(paths)
-    build_sitemap(paths)
+    # Every built page with what a redirect needs if it ever disappears.
+    meta = {"/": {"type": "home"}}
+    for d in SITE["dispensaries"]:
+        meta[disp_path(d["slug"])] = {"type": "dispensary", "store": d["slug"], "hood": slugify(d.get("neighborhood") or "")}
+    for n in SITE["neighborhoods"]: meta[f"/neighborhoods/{slugify(n['neighborhood'])}/"] = {"type": "neighborhood"}
+    for b in SITE["brands"]: meta[f"/brands/{slugify(b['brand'])}/"] = {"type": "brand"}
+    for c in SITE["categories"]: meta[f"/nyc/{c['category']}/"] = {"type": "category"}
+    for p in ("/neighborhoods/", "/brands/", "/nyc/"): meta[p] = {"type": "hub"}
+    assert set(meta) == set(paths), sorted(set(meta) ^ set(paths))
+    redirects = update_published(meta)
+    block = home_block()
+    write_home_block(block)
+    lastmod, changed = update_lastmod(paths, block)
+    build_sitemap(paths, lastmod)
     # Hard guard: no page may ship with placeholder text or unrendered braces.
     bad = []
     for f in DIST.rglob("index.html"):
@@ -875,5 +1011,6 @@ if __name__ == "__main__":
     if bad:
         raise SystemExit("placeholder text found in: " + ", ".join(bad))
     print(f"Built {len(paths)} pages → {DIST}")
+    print(f"  sitemap dates changed on {changed} page(s) · {len(redirects)} redirect(s) in app/vercel.json")
     print(f"  {len(SITE['dispensaries'])} dispensaries · {len(SITE['neighborhoods'])} neighborhoods · "
           f"{len(SITE['brands'])} brands · {len(SITE['categories'])} categories · home · sitemap · robots")

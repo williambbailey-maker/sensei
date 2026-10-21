@@ -24,6 +24,9 @@ jobs:
     env:
       HOST: ${{ github.event.inputs.host || 'sensei.nyc' }}
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
       - name: DNS
         run: |
           echo "== $HOST"; dig +short "$HOST" A; dig +short "$HOST" CNAME
@@ -46,6 +49,9 @@ jobs:
           echo "old disclaimer (New York State):  $(cat index-*.js 2>/dev/null | grep -c 'is a guide for adults 21 and over in New York State')"
           echo "desktop layout (home-grid css):   $(cat index-*.css 2>/dev/null | grep -c 'home-grid')"
           echo "directions link in app:           $(cat index-*.js 2>/dev/null | grep -c 'Directions in Google Maps')"
+          echo "== crawlable home"
+          echo "canonical: $(grep -oE '<link rel="canonical"[^>]*>' home.html)"
+          echo "static block: $(grep -c 'class="seo-home"' home.html)  links in it: $(sed -n '/seo:home:start/,/seo:home:end/p' home.html | grep -o '<a href' | wc -l)"
 
       - name: SEO page
         run: |
@@ -70,3 +76,27 @@ jobs:
           echo "== favicon.svg starts with"; curl $C "$B/favicon.svg" | head -c 160; echo
           echo "== manifest"; curl $C "$B/manifest.webmanifest"; echo
           echo "== service worker cache id"; curl $C "$B/sw.js" | grep -oE 'setCacheNameDetails\(\{[^}]*\}\)|cleanupOutdatedCaches' | sort -u
+
+      - name: Sitemap dates and redirects
+        run: |
+          set +e
+          B="https://$HOST"
+          C='-sS -H Cache-Control:no-cache -H Pragma:no-cache'
+          echo "== sitemap: URLs per lastmod date"
+          curl $C "$B/sitemap.xml" | grep -oE '<lastmod>[^<]+' | sort | uniq -c
+          echo "== redirects in app/vercel.json (expect 301 to the listed destination)"
+          python3 - <<'PY'
+          import json, subprocess, os
+          cfg = json.load(open("app/vercel.json"))
+          rules = cfg.get("redirects", [])
+          print(f"{len(rules)} rule(s)")
+          bad = 0
+          for r in rules:
+              out = subprocess.run(["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code} %{redirect_url}",
+                                    f"https://{os.environ['HOST']}{r['source']}"], capture_output=True, text=True).stdout
+              code, _, loc = out.partition(" ")
+              ok = code == "301" and loc.rstrip("/").endswith(r["destination"].rstrip("/"))
+              bad += not ok
+              print(("ok  " if ok else "BAD ") + f"{r['source']} -> {code} {loc}")
+          print("all redirects ok" if not bad else f"{bad} redirect(s) wrong")
+          PY
