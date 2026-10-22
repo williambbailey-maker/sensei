@@ -54,6 +54,8 @@ jobs:
           echo "== crawlable home"
           echo "canonical: $(grep -oE '<link rel="canonical"[^>]*>' home.html)"
           echo "static block: $(grep -c 'class="seo-home"' home.html)  links in it: $(sed -n '/seo:home:start/,/seo:home:end/p' home.html | grep -o '<a href' | wc -l)"
+          echo "home counts: $(grep -oE '[0-9]+ licensed shops across [0-9]+ neighborhoods' home.html)"
+          curl $C -o wb.html "$B/neighborhoods/williamsburg/"; echo "williamsburg names Hii: $(grep -c 'Hii Williamsburg' wb.html)  shop pages in sitemap: $(curl $C "$B/sitemap.xml" | grep -o '/dispensaries/[^<]*' | wc -l)"
 
       - name: SEO page
         run: |
