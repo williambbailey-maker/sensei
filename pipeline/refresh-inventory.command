@@ -31,21 +31,45 @@ if ! node --env-file-if-exists=/dev/null -e 0 >/dev/null 2>&1; then
   pause; exit 1
 fi
 
-# The Supabase key lives in .env next to this file (never committed).
-if [ ! -f .env ]; then
-  cp .env.example .env
-  echo "First run: paste your Supabase service_role key into the .env file that just opened,"
-  echo "replacing 'your-service-role-key'. Save it (Cmd+S) and close it."
-  open -e .env
-  echo
-  read -r -p "Press Return here when you've saved it... "
+# The Supabase key lives in .env next to this file and is never committed (the
+# repo is public). It is also saved once to ~/.config/sensei/pipeline.env, so a
+# freshly downloaded copy picks it up with no setup. On first run the key comes
+# from, in order: that saved file, the .env of an older copy of the code on this
+# Mac, or a one-time paste in this window.
+SAVED="$HOME/.config/sensei/pipeline.env"
+has_key() { [ -f "$1" ] && grep -Eq '^SUPABASE_SERVICE_ROLE_KEY=.{20,}' "$1" && ! grep -q '^SUPABASE_SERVICE_ROLE_KEY=your-service-role-key' "$1"; }
+
+if ! has_key .env; then
+  if has_key "$SAVED"; then
+    cp "$SAVED" .env
+    echo "Using your saved Supabase key."
+  else
+    OLD=""
+    while IFS= read -r f; do
+      d="$(dirname "$f")"
+      [ "$d" = "$PWD" ] && continue
+      if has_key "$d/.env"; then OLD="$d/.env"; break; fi
+    done < <({ mdfind -name scrape.mjs 2>/dev/null; find "$HOME/Downloads" "$HOME/Desktop" "$HOME/Documents" "$HOME" -maxdepth 4 -name scrape.mjs -path '*pipeline*' 2>/dev/null; } | awk '!seen[$0]++')
+    if [ -n "$OLD" ]; then
+      cp "$OLD" .env
+      echo "Found your Supabase key in your old copy: $OLD"
+    else
+      echo "Couldn't find your Supabase key on this Mac."
+      echo "Copy the service_role (secret) key from Supabase → Project Settings → API (opening it now),"
+      echo "then paste it here and press Return. It won't show on screen as you paste."
+      open "https://supabase.com/dashboard/project/dywrisybvcorpfhbwgtg/settings/api"
+      read -r -s KEY; echo
+      printf 'SUPABASE_SERVICE_ROLE_KEY=%s\n' "$(printf '%s' "$KEY" | tr -d '[:space:]')" > .env
+    fi
+  fi
 fi
-if ! grep -Eq '^SUPABASE_SERVICE_ROLE_KEY=.{20,}' .env || grep -q '^SUPABASE_SERVICE_ROLE_KEY=your-service-role-key' .env; then
-  echo "The key in .env is missing. Opening it — paste the key after SUPABASE_SERVICE_ROLE_KEY=, save,"
-  echo "then run this again."
-  open -e .env
+if ! has_key .env; then
+  echo "That doesn't look like a key. Run this again and paste the service_role key."
+  rm -f .env
   pause; exit 1
 fi
+# Remember it for the next download (readable only by you).
+mkdir -p "$(dirname "$SAVED")" && chmod 700 "$(dirname "$SAVED")" && cp .env "$SAVED" && chmod 600 "$SAVED" .env
 
 # First run only: install the scraper and its browser.
 if [ ! -d node_modules/playwright ]; then

@@ -12,9 +12,12 @@ database (Supabase), which is reachable from anywhere.
 bash ~/Downloads/sensei-main/pipeline/refresh-inventory.command
 ```
 
-`refresh-inventory.command` does everything below for you: checks Node, creates
-`.env` and asks for your key the first time, runs `npm install` once, keeps the
-Mac awake, scrapes every active store, and saves the output to `logs/`. Adjust
+`refresh-inventory.command` does everything below for you: checks Node, finds
+your Supabase key (a key saved in `~/.config/sensei/pipeline.env`, else the
+`.env` of an older copy of this folder, else a one-time paste in Terminal) and
+saves it there for the next download, runs `npm install` once, keeps the Mac
+awake, scrapes every active store, and saves the output to `logs/`. The key is
+never put in the repo, which is public. Adjust
 the path if the folder lives somewhere else (you can also double-click the file
 in Finder).
 
