@@ -1,0 +1,4 @@
+{
+  "_about": "Per-store platform details for non-Dutchie menus, keyed by stores.slug (e.g. a Dispense venue id, a Blaze shop id, the menu URL). The scraper hands each store's entry to its platform module as store.config. Dutchie stores need nothing here: their slug is the Dutchie cName.",
+  "stores": {}
+}

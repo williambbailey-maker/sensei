@@ -1,14 +1,14 @@
-// Local Dutchie scraper — RUN THIS ON YOUR OWN COMPUTER, not in the cloud.
+// Local menu scraper — RUN THIS ON YOUR OWN COMPUTER, not in the cloud.
 //
 // Why local: Dutchie is behind Cloudflare, which blocks datacenter IPs (cloud
 // servers) but trusts residential IPs like your home internet. A real browser
 // from your Mac gets through.
 //
-// How it reads data: it loads each store's category pages in a real browser
-// (to pass Cloudflare) and captures the STRUCTURED PRODUCT FEED the page fetches
-// (Dutchie's GraphQL) — exact prices, every pack size, strain, potency — instead
-// of scraping the rendered HTML (which varies per store template). Writes to
-// Supabase.
+// How it's organized: this file is the runner — it reads the store list from
+// Supabase, hands each store to the module for its menu platform (the
+// `provider` column; modules live in providers/), upserts what comes back, then
+// runs the out-of-stock sweep, normalization, health checks and alerts. Each
+// module returns rows in the same `products` shape.
 //
 // Setup (once), from this folder:
 //   npm install
@@ -20,7 +20,13 @@
 // script). Nothing else to configure.
 //
 // Options: HEADLESS=1 hide browser · STORE_LIMIT=3 first N stores (testing) ·
-//          STORE=<slug> one store · SLOW=1 cautious pacing · DEBUG_API=1 dump feed shape.
+//          STORE=<slug> one store · SLOW=1 cautious pacing · DEBUG_API=1 dump feed shape ·
+//          DRY_RUN=1 print normalized products, write nothing (PROVIDER=<name>
+//          to try a STORE slug that isn't in the stores table yet).
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { PROVIDERS } from './providers/index.mjs'
+import { fieldCoverage, PRODUCT_FIELDS } from './lib/product.mjs'
+export { mapApiProduct } from './providers/dutchie.mjs'
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dywrisybvcorpfhbwgtg.supabase.co'
 const ANON =
@@ -29,14 +35,14 @@ const SERVICE = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim()
 const HEADLESS = /^(1|true|yes)$/i.test(process.env.HEADLESS || '')
 const STORE_LIMIT = parseInt(process.env.STORE_LIMIT || '0', 10)
 const STORE = (process.env.STORE || '').trim()
-const CATEGORIES = ['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals']
-const SLOW = /^(1|true|yes)$/i.test(process.env.SLOW || '')
-const T = SLOW
-  ? { load: 4000, scrollWait: 1500, scrolls: 4, betweenPages: 2000 }
-  : { load: 1200, scrollWait: 350, scrolls: 2, betweenPages: 250 }
-// A "full" page returns ~100 products; fewer means it's the last page, so we
-// can stop without fetching an empty next page.
-const FULL_PAGE = 90
+const DRY_RUN = /^(1|true|yes)$/i.test(process.env.DRY_RUN || '')
+const PROVIDER = (process.env.PROVIDER || '').trim()
+const DRY_RUN_SHOW = parseInt(process.env.DRY_RUN_SHOW || '3', 10)
+// A test run (one store / first N) is marked in pipeline_runs.notes so the
+// drop guard never uses it as the baseline for a full run.
+const TEST_RUN = STORE ? `STORE=${STORE}` : STORE_LIMIT ? `STORE_LIMIT=${STORE_LIMIT}` : ''
+// Pause between stores (random, so requests don't land on a fixed beat).
+const STORE_GAP_MS = [3000, 6000]
 
 // --- Block 2: pipeline health ------------------------------------------------
 // Email alerts via Resend (optional — logs to console when unset). Config lives
@@ -98,222 +104,7 @@ async function sendAlert(subject, body) {
   }
 }
 
-const num = (x) => {
-  if (x === null || x === undefined) return null
-  const m = String(x).replace(/,/g, '').match(/-?[\d.]+/)
-  return m ? parseFloat(m[0]) : null
-}
-
-// --- Parse a Dutchie GraphQL product object into a Supabase row -------------
-function normCategory(type, fallback) {
-  const t = String(type || '').toLowerCase()
-  if (t.includes('pre-roll') || t.includes('preroll') || t.includes('pre roll')) return 'pre-rolls'
-  if (t.includes('vap')) return 'vaporizers'
-  if (t.includes('edible')) return 'edibles'
-  if (t.includes('flower')) return 'flower'
-  if (t.includes('concentrate')) return 'concentrates'
-  if (t.includes('tincture')) return 'tinctures'
-  if (t.includes('topical')) return 'topicals'
-  return fallback || (type ? t : null)
-}
-
-// Only a percentage potency maps to thc_pct/cbd_pct; mg (edibles) is skipped.
-function potencyPct(content) {
-  if (!content) return null
-  const unit = String(content.unit || '').toUpperCase()
-  if (unit && !unit.startsWith('PERCENT')) return null
-  if (!Array.isArray(content.range)) return null
-  const vals = content.range.filter((v) => typeof v === 'number')
-  return vals.length ? Math.max(...vals) : null
-}
-
-// Dutchie product descriptions often carry light HTML entities/tags. Strip to
-// clean, single-spaced text and cap the length so rows stay lean.
-function cleanDescription(raw) {
-  if (!raw || typeof raw !== 'string') return null
-  const text = raw
-    .replace(/<br\s*\/?>/gi, ' ')
-    .replace(/<\/(p|div|li|h\d)>/gi, ' ')
-    .replace(/<[^>]*>/g, '')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&#39;|&rsquo;|&apos;/gi, "'")
-    .replace(/&quot;|&ldquo;|&rdquo;/gi, '"')
-    .replace(/\s+/g, ' ')
-    .trim()
-  if (!text) return null
-  return text.length > 1500 ? text.slice(0, 1497).trimEnd() + '…' : text
-}
-
-// Dutchie's `effects` come as an array of strings or small objects; normalize
-// to a deduped list of effect names.
-function extractEffects(raw) {
-  if (!Array.isArray(raw)) return null
-  const out = []
-  for (const e of raw) {
-    let v = null
-    if (typeof e === 'string') v = e
-    else if (e && typeof e === 'object') v = e.name || e.effect || e.displayName || e.label || null
-    if (v && typeof v === 'string') {
-      const s = v.trim()
-      if (s && !out.includes(s)) out.push(s)
-    }
-  }
-  return out.length ? out.slice(0, 8) : null
-}
-
-export function mapApiProduct(prod, storeId, slug, fallbackCat) {
-  const options = Array.isArray(prod.Options) ? prod.Options : []
-  const rec = Array.isArray(prod.recPrices) && prod.recPrices.length
-    ? prod.recPrices
-    : Array.isArray(prod.Prices)
-      ? prod.Prices
-      : []
-  const special = Array.isArray(prod.recSpecialPrices) ? prod.recSpecialPrices : []
-  const variants = []
-  const n = Math.max(options.length, rec.length)
-  for (let i = 0; i < n; i++) {
-    const base = num(rec[i])
-    const sp = num(special[i])
-    const price = sp && sp > 0 ? sp : base
-    if (price != null || options[i] != null) variants.push({ weight: options[i] ?? null, price: price ?? null })
-  }
-  const prices = variants.map((v) => v.price).filter((p) => typeof p === 'number' && p > 0)
-  const priceMin = prices.length ? Math.min(...prices) : null
-
-  const cName = prod.cName || prod.id || prod._id
-  const brandName = prod.brandName || prod.brand?.name || null
-  const image =
-    prod.Image ||
-    (Array.isArray(prod.images) && prod.images[0] ? prod.images[0].url || prod.images[0] : null) ||
-    null
-  const strain = prod.strainType && prod.strainType !== 'N/A' ? prod.strainType : null
-
-  return {
-    store_id: storeId,
-    external_id: String(cName),
-    name: prod.Name || null,
-    brand: brandName,
-    // Product-level description isn't in Dutchie's menu feed; the brand blurb is.
-    description: cleanDescription(prod.Description ?? prod.description),
-    brand_description: cleanDescription(prod.brand?.description),
-    effects: extractEffects(prod.effects),
-    category: normCategory(prod.type, fallbackCat),
-    strain_type: strain,
-    thc_pct: potencyPct(prod.THCContent) ?? num(prod.THC),
-    cbd_pct: potencyPct(prod.CBDContent) ?? num(prod.CBD),
-    variants,
-    price_min: priceMin,
-    url: cName ? `https://dutchie.com/dispensary/${slug}/product/${cName}` : null,
-    image_url: image,
-    in_stock: true,
-    last_seen: new Date().toISOString(),
-  }
-}
-
-// Pull {lat,lng} out of the many shapes Dutchie uses for coordinates.
-function pickCoords(o) {
-  if (!o || typeof o !== 'object') return null
-  // GeoJSON: { coordinates: [lng, lat] }
-  if (Array.isArray(o.coordinates) && o.coordinates.length === 2) {
-    const [lng, lat] = o.coordinates
-    if (typeof lat === 'number' && typeof lng === 'number' && lat !== 0) return { lat, lng }
-  }
-  const lat = o.lt ?? o.lat ?? o.latitude
-  const lng = o.ln ?? o.lng ?? o.longitude
-  if (
-    typeof lat === 'number' &&
-    typeof lng === 'number' &&
-    lat !== 0 &&
-    Math.abs(lat) <= 90 &&
-    Math.abs(lng) <= 180
-  ) {
-    return { lat, lng }
-  }
-  return null
-}
-
-// Some payloads only carry coordinates inside a Google Maps link.
-function coordsFromMapsUrl(url) {
-  if (typeof url !== 'string') return null
-  const m = url.match(/[@=](-?\d{2}\.\d+),(-?\d{2,3}\.\d+)/)
-  if (!m) return null
-  const lat = Number(m[1])
-  const lng = Number(m[2])
-  if (lat !== 0 && Math.abs(lat) <= 90 && Math.abs(lng) <= 180) return { lat, lng }
-  return null
-}
-
-// Recursively look for the dispensary object in a GraphQL response — it
-// carries the store's real name, street address, and coordinates. Shapes vary,
-// so match defensively: a name plus an address or location.
-function findDispensaryMeta(node, out, depth = 0) {
-  if (!node || typeof node !== 'object' || depth > 14 || out.done) return
-  if (Array.isArray(node)) {
-    for (const v of node) findDispensaryMeta(v, out, depth + 1)
-    return
-  }
-  const looksDispensary =
-    node.__typename === 'Dispensary' ||
-    (typeof node.name === 'string' &&
-      node.name.length < 80 &&
-      (node.address1 || node.address || node.location || node.googleMapsUrl))
-  if (looksDispensary) {
-    const coords =
-      pickCoords(node.location) ?? pickCoords(node) ?? coordsFromMapsUrl(node.googleMapsUrl)
-    if (typeof node.name === 'string' && node.name && !out.name) out.name = node.name.trim()
-    if (coords && out.lat == null) {
-      out.lat = coords.lat
-      out.lng = coords.lng
-    }
-    const street = typeof node.address1 === 'string' ? node.address1 : typeof node.address === 'string' ? node.address : null
-    if (street && !out.address) {
-      out.address = [street, node.city, node.state, node.zip].filter(Boolean).join(', ')
-    }
-    if (typeof node.city === 'string' && !out.city) out.city = node.city.trim()
-    if (out.name && out.lat != null && out.address) out.done = true
-  }
-  for (const k of Object.keys(node)) findDispensaryMeta(node[k], out, depth + 1)
-}
-
-// Dutchie keeps the full address + coordinates on the store's /info page
-// (embedded page data + its own GraphQL calls) rather than in the menu feed.
-// One quick visit per store that still lacks an address fills the gap.
-async function fetchStoreInfo(page, slug, meta) {
-  const handler = async (r) => {
-    if (!/graphql/i.test(r.url())) return
-    try {
-      findDispensaryMeta(await r.json(), meta)
-    } catch {
-      /* not json */
-    }
-  }
-  page.on('response', handler)
-  try {
-    await page.goto(`https://dutchie.com/dispensary/${slug}/info`, {
-      waitUntil: 'domcontentloaded',
-    })
-    await sleep(2500)
-    const nd = await page
-      .evaluate(() => document.getElementById('__NEXT_DATA__')?.textContent || null)
-      .catch(() => null)
-    if (nd) {
-      try {
-        findDispensaryMeta(JSON.parse(nd), meta)
-      } catch {
-        /* unparseable */
-      }
-    }
-    if (process.env.DEBUG_STORE && !meta.address) {
-      console.log(`    DEBUG ${slug}: info page yielded name=${meta.name ?? '-'} coords=${meta.lat ?? '-'} (no address)`)
-    }
-  } catch (err) {
-    console.log(`    info page error: ${err.message.slice(0, 80)}`)
-  }
-  page.off('response', handler)
-}
-
-// City names from Dutchie -> borough, only used when we don't know it yet.
+// City names from a menu feed -> borough, only used when we don't know it yet.
 const CITY_BOROUGH = {
   'new york': 'Manhattan',
   manhattan: 'Manhattan',
@@ -328,108 +119,121 @@ const CITY_BOROUGH = {
   'staten island': 'Staten Island',
 }
 
-// Recursively find arrays of product-like objects in a GraphQL JSON response.
-function findProductArrays(node, out, depth = 0) {
-  if (!node || depth > 14) return
-  if (Array.isArray(node)) {
-    if (
-      node.length > 0 &&
-      node.every((x) => x && typeof x === 'object' && ('Prices' in x || 'Options' in x || x.__typename === 'Product'))
-    ) {
-      out.push(node)
-    }
-    for (const v of node) findProductArrays(v, out, depth + 1)
-  } else if (typeof node === 'object') {
-    for (const k of Object.keys(node)) findProductArrays(node[k], out, depth + 1)
+// Store name/address/coords seen in a menu feed -> a `stores` patch. Curated
+// fields (neighborhood) are never touched; borough only fills in when unknown.
+function storePatch(store, meta) {
+  const patch = {}
+  if (meta.name) patch.name = meta.name
+  if (meta.address) patch.address = meta.address
+  if (meta.lat != null) {
+    patch.lat = meta.lat
+    patch.lng = meta.lng
+  }
+  if (!store.borough && meta.city && CITY_BOROUGH[meta.city.toLowerCase()]) {
+    patch.borough = CITY_BOROUGH[meta.city.toLowerCase()]
+  }
+  return patch
+}
+
+// Per-store platform details (stores.config.json, keyed by slug).
+function loadStoreConfig() {
+  try {
+    return JSON.parse(readFileSync(new URL('./stores.config.json', import.meta.url), 'utf8')).stores || {}
+  } catch (e) {
+    console.warn(`(stores.config.json not read: ${e.message.slice(0, 80)})`)
+    return {}
   }
 }
 
-async function scrapeStore(page, storeId, slug, meta) {
-  const base = `https://dutchie.com/dispensary/${slug}/products`
-  const seen = new Map()
-  for (const category of CATEGORIES) {
-    let pageNum = 1
-    while (true) {
-      const captured = []
-      const handler = async (r) => {
-        if (!/graphql/i.test(r.url())) return
-        try {
-          const j = await r.json()
-          const arrs = []
-          findProductArrays(j, arrs)
-          for (const a of arrs) captured.push(...a)
-          if (!meta.done) findDispensaryMeta(j, meta)
-        } catch {
-          /* not json */
-        }
-      }
-      page.on('response', handler)
-      const url = pageNum === 1 ? `${base}/${category}` : `${base}/${category}?page=${pageNum}`
-      try {
-        await page.goto(url, { waitUntil: 'domcontentloaded' })
-        await sleep(T.load)
-        for (let i = 0; i < T.scrolls; i++) {
-          await page.evaluate('window.scrollTo(0, document.body.scrollHeight)').catch(() => {})
-          await sleep(T.scrollWait)
-        }
-        await sleep(500)
-      } catch (err) {
-        page.off('response', handler)
-        console.log(`    error ${url}: ${err.message}`)
-        break
-      }
-      page.off('response', handler)
-
-      const pageIds = new Set()
-      let added = 0
-      for (const prod of captured) {
-        const row = mapApiProduct(prod, storeId, slug, category)
-        if (!row.external_id || row.external_id === 'undefined') continue
-        pageIds.add(row.external_id)
-        if (!seen.has(row.external_id)) {
-          seen.set(row.external_id, row)
-          added++
-        }
-      }
-      console.log(`    ${category} p${pageNum}: +${added}`)
-      // Stop if this page wasn't full (last page) or added nothing new.
-      if (pageIds.size < FULL_PAGE || added === 0) break
-      pageNum++
-      await sleep(T.betweenPages)
+// The stores to scrape. DRY_RUN with STORE also finds inactive stores, and with
+// PROVIDER set it can try a slug that isn't in the table yet.
+async function loadStores() {
+  const cols = 'select=id,slug,provider,borough,address,lat'
+  let stores
+  if (DRY_RUN && STORE) {
+    stores = await sb(`stores?slug=eq.${encodeURIComponent(STORE)}&${cols}`)
+    if (!stores.length) {
+      if (!PROVIDER) throw new Error(`No store "${STORE}" in the stores table. Add PROVIDER=<name> to dry-run it anyway.`)
+      stores = [{ id: null, slug: STORE, provider: PROVIDER, borough: null, address: null, lat: null }]
+    } else if (PROVIDER) {
+      stores = stores.map((s) => ({ ...s, provider: PROVIDER }))
     }
+  } else {
+    stores = await sb(`stores?active=eq.true&${cols}`)
+    if (STORE) stores = stores.filter((s) => s.slug === STORE)
+    if (STORE_LIMIT) stores = stores.slice(0, STORE_LIMIT)
   }
-  return [...seen.values()]
+  const config = loadStoreConfig()
+  return stores.map((s) => ({ ...s, config: config[s.slug] || {} }))
 }
 
-async function debugApi(page, store) {
-  const responses = []
-  page.on('response', async (r) => {
-    if (!/graphql/i.test(r.url())) return
+// In-stock external_ids Supabase currently has for a store (read-only, paged
+// past the API's 1000-row cap). Lets a dry run show how it compares to live.
+async function liveIds(storeId) {
+  const ids = new Set()
+  for (let from = 0; ; from += 1000) {
+    const rows = await sb(`products?store_id=eq.${storeId}&in_stock=eq.true&select=external_id&order=external_id`, {
+      headers: { Range: `${from}-${from + 999}` },
+    })
+    for (const r of rows) ids.add(r.external_id)
+    if (rows.length < 1000) return ids
+  }
+}
+
+// DRY_RUN output for one store: field coverage, a few sample rows, the diff
+// against what's live, and the full list saved to logs/ for a closer look.
+async function dryRunReport(store, provider, products, meta) {
+  const cov = fieldCoverage(products)
+  console.log(`\n  ${products.length} products (nothing written)`)
+  if (products.length) console.log('  field coverage (% of products with a value):')
+  for (const f of products.length ? PRODUCT_FIELDS : []) {
+    const note = provider.fields.includes(f) ? '' : '   ← not provided by this platform (left null)'
+    console.log(`    ${f.padEnd(18)} ${String(cov[f]).padStart(3)}%${note}`)
+  }
+  const patch = storePatch(store, meta)
+  if (Object.keys(patch).length) console.log(`  would update store: ${JSON.stringify(patch)}`)
+  if (store.id) {
     try {
-      responses.push(await r.json())
-    } catch {
-      /* not json */
+      const live = await liveIds(store.id)
+      const scraped = new Set(products.map((p) => p.external_id))
+      const both = [...scraped].filter((id) => live.has(id)).length
+      console.log(
+        `  vs live: ${both} of ${scraped.size} scraped are already in stock in Supabase · ` +
+          `${scraped.size - both} new · ${live.size - both} live items not seen (would be swept)`,
+      )
+    } catch (e) {
+      console.log(`  vs live: could not read current products (${e.message.slice(0, 80)})`)
     }
-  })
-  const url = `https://dutchie.com/dispensary/${store.slug}/products/flower`
-  console.log(`Loading ${url} …`)
-  await page.goto(url, { waitUntil: 'domcontentloaded' }).catch(() => {})
-  await sleep(8000)
-  console.log(`Captured ${responses.length} graphql responses.`)
-  const arrays = []
-  for (const j of responses) findProductArrays(j, arrays)
-  if (!arrays.length) return console.log('No product arrays found.')
-  arrays.sort((a, b) => b.length - a.length)
-  const p = arrays[0][0]
-  console.log(`\nLargest product array: ${arrays[0].length} items`)
-  console.log('PRODUCT KEYS:', Object.keys(p).join(', '))
-  console.log('\nSAMPLE PRODUCT (first ~2KB):')
-  console.log(JSON.stringify(p, null, 1).slice(0, 2000))
-  console.log('\nMAPPED ->', JSON.stringify(mapApiProduct(p, 'debug', store.slug, 'flower')))
+  }
+  for (const p of products.slice(0, DRY_RUN_SHOW)) console.log(JSON.stringify(p, null, 2))
+  mkdirSync(new URL('./logs/', import.meta.url), { recursive: true })
+  const file = new URL(`./logs/dry-run-${store.slug}-${Date.now()}.json`, import.meta.url)
+  writeFileSync(file, JSON.stringify({ store: store.slug, provider: provider.name, coverage: cov, meta, products }, null, 2))
+  console.log(`  full list: ${file.pathname}`)
 }
+
+// The last run worth comparing against: not a test run, and it covered at
+// least half as many stores as this one. A 1-store test row would otherwise
+// make every following full run look like a jump and switch the guard off.
+async function guardBaseline(attempted) {
+  try {
+    const rows = await sb('pipeline_runs?select=products_seen,stores_ok,stores_failed,notes&order=ran_at.desc&limit=20', {
+      service: true,
+    })
+    const prev = (rows || []).find(
+      (r) => !/test run/.test(r.notes || '') && (r.stores_ok || 0) + (r.stores_failed || 0) >= attempted * 0.5,
+    )
+    return prev ? prev.products_seen : null
+  } catch {
+    return null // first run — no prior to compare against
+  }
+}
+
+let runId = null // pipeline_runs row of this run, once written
+let runNotes = '' // its notes so far, so a crash can add to them
 
 async function main() {
-  if (!SERVICE) {
+  if (!SERVICE && !DRY_RUN) {
     console.error(
       '\nERROR: SUPABASE_SERVICE_ROLE_KEY is not set.\n' +
         'Get it from Supabase dashboard -> Project Settings -> API -> service_role,\n' +
@@ -439,139 +243,176 @@ async function main() {
   }
   // Fail fast if the service key is rejected — otherwise we'd scrape everything
   // and then 401 on every write.
-  try {
-    await sb('pipeline_runs?select=id&limit=1', { service: true })
-  } catch (e) {
-    console.error(
-      `\nERROR: your SUPABASE_SERVICE_ROLE_KEY was rejected by Supabase.\n${e.message.slice(0, 140)}\n\n` +
-        'Open .env and make sure the value is the *service_role* key (not anon),\n' +
-        'copied whole from Supabase -> Project Settings -> API -> service_role.\n',
-    )
-    process.exit(1)
+  if (!DRY_RUN) {
+    try {
+      await sb('pipeline_runs?select=id&limit=1', { service: true })
+    } catch (e) {
+      console.error(
+        `\nERROR: your SUPABASE_SERVICE_ROLE_KEY was rejected by Supabase.\n${e.message.slice(0, 140)}\n\n` +
+          'Open .env and make sure the value is the *service_role* key (not anon),\n' +
+          'copied whole from Supabase -> Project Settings -> API -> service_role.\n',
+      )
+      process.exit(1)
+    }
   }
 
   const runStart = new Date().toISOString()
-  let stores = await sb('stores?active=eq.true&select=id,slug,borough,address,lat')
-  if (STORE) stores = stores.filter((s) => s.slug === STORE)
-  if (STORE_LIMIT) stores = stores.slice(0, STORE_LIMIT)
-  console.log(`Active stores: ${stores.length}${HEADLESS ? ' (headless)' : ''}`)
+  const all = await loadStores()
+  // Stores whose platform has no module yet (or isn't switched on) are skipped,
+  // not failed. A dry run tries disabled modules so they can be tested first.
+  const stores = []
+  const skipped = {}
+  for (const s of all) {
+    const p = PROVIDERS[s.provider]
+    if (p && (p.enabled || DRY_RUN)) stores.push(s)
+    else skipped[s.provider] = (skipped[s.provider] || 0) + 1
+  }
+  const skippedNote = Object.entries(skipped)
+    .map(([p, n]) => `${n} ${p}`)
+    .join(', ')
+  console.log(
+    `Active stores: ${stores.length}${skippedNote ? ` (skipped, no enabled module: ${skippedNote})` : ''}` +
+      `${HEADLESS ? ' (headless)' : ''}${DRY_RUN ? ' · DRY RUN — nothing is written' : ''}`,
+  )
+  if (DRY_RUN && !STORE && !STORE_LIMIT) console.log('(tip: DRY_RUN is meant for one store — add STORE=<slug>)')
 
-  const { chromium } = await import('playwright')
-  const browser = await chromium.launch({ headless: HEADLESS })
-  const page = await browser.newPage()
-  page.setDefaultTimeout(60000)
+  let browser = null
+  const ctx = {}
+  if (stores.some((s) => PROVIDERS[s.provider].needsBrowser)) {
+    const { chromium } = await import('playwright')
+    browser = await chromium.launch({ headless: HEADLESS })
+    ctx.page = await browser.newPage()
+    ctx.page.setDefaultTimeout(60000)
+  }
 
   if (process.env.DEBUG_API) {
-    await debugApi(page, stores[0])
-    await browser.close()
+    const s = stores.find((x) => PROVIDERS[x.provider].debug)
+    if (s) await PROVIDERS[s.provider].debug(ctx, s)
+    else console.log('No store with a debug-capable module.')
+    await browser?.close()
     return
   }
 
-  // INFO_ONLY=1 — refresh store addresses/coordinates from /info pages
-  // without scraping any menus. A few seconds per store.
+  // INFO_ONLY=1 — refresh store addresses/coordinates without scraping any
+  // menus. A few seconds per store.
   if (/^(1|true|yes)$/i.test(process.env.INFO_ONLY || '')) {
     console.log('Address-only refresh (no menus)…')
     let updated = 0
     for (let i = 0; i < stores.length; i++) {
-      const { id, slug, borough, address, lat } = stores[i]
-      if (address && lat != null) continue
-      const meta = {}
-      console.log(`[${i + 1}/${stores.length}] ${slug}`)
-      await fetchStoreInfo(page, slug, meta)
-      const patch = {}
-      if (meta.name) patch.name = meta.name
-      if (meta.address) patch.address = meta.address
-      if (meta.lat != null) {
-        patch.lat = meta.lat
-        patch.lng = meta.lng
-      }
-      if (!borough && meta.city && CITY_BOROUGH[meta.city.toLowerCase()]) {
-        patch.borough = CITY_BOROUGH[meta.city.toLowerCase()]
-      }
+      const store = stores[i]
+      const provider = PROVIDERS[store.provider]
+      if ((store.address && store.lat != null) || !provider.info) continue
+      console.log(`[${i + 1}/${stores.length}] ${store.slug}`)
+      const patch = storePatch(store, await provider.info(ctx, store))
       if (Object.keys(patch).length) {
-        await sb(`stores?id=eq.${id}`, { method: 'PATCH', service: true, body: patch }).catch(
-          () => {},
-        )
+        if (!DRY_RUN) {
+          await sb(`stores?id=eq.${store.id}`, { method: 'PATCH', service: true, body: patch }).catch(() => {})
+        }
         updated++
         console.log(`  ${patch.address ?? patch.name ?? 'updated'}`)
       } else {
         console.log('  nothing captured')
       }
     }
-    await browser.close()
-    console.log(`\nAddress refresh done: ${updated} stores updated.`)
+    await browser?.close()
+    console.log(`\nAddress refresh done: ${updated} stores ${DRY_RUN ? 'would be ' : ''}updated.`)
     return
   }
 
   let ok = 0
+  let empty = 0
   let failed = 0
   let seen = 0
+  const byProvider = {} // provider -> { ok, empty, failed }
   // Stores that returned products this run — only these get the out-of-stock
   // sweep, so a store that failed or returned nothing keeps its inventory.
   const sweepStoreIds = []
   for (let i = 0; i < stores.length; i++) {
-    const { id, slug, borough, address, lat } = stores[i]
-    console.log(`\n[${i + 1}/${stores.length}] ${slug}`)
+    const store = stores[i]
+    const provider = PROVIDERS[store.provider]
+    const tally = (byProvider[provider.name] ||= { ok: 0, empty: 0, failed: 0 })
+    console.log(`\n[${i + 1}/${stores.length}] ${store.slug}${provider.name === 'dutchie' ? '' : ` (${provider.name})`}`)
     try {
-      const meta = {}
-      // Visit the store's info page once if we still lack its address/coords.
-      if (!address || lat == null) await fetchStoreInfo(page, slug, meta)
-      const list = await scrapeStore(page, id, slug, meta)
+      const { products: list, meta } = await provider.scrape(ctx, store)
+      if (DRY_RUN) {
+        await dryRunReport(store, provider, list, meta)
+      } else {
+        if (list.length) {
+          await sb('products?on_conflict=store_id,external_id', {
+            method: 'POST',
+            service: true,
+            headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+            body: list,
+          })
+          // The out-of-stock sweep is deferred to a single gated step after the
+          // loop (see the 30% drop guard), so a systemic failure can't nuke the
+          // live menu store-by-store before we notice.
+          sweepStoreIds.push(store.id)
+        }
+        // Backfill the store's real name/address/coordinates from the feed.
+        const patch = storePatch(store, meta)
+        if (Object.keys(patch).length) {
+          await sb(`stores?id=eq.${store.id}`, { method: 'PATCH', service: true, body: patch }).catch(() => {})
+          console.log(`  store info: ${[patch.name, patch.borough, patch.lat != null ? 'coords' : null].filter(Boolean).join(' · ') || 'updated'}`)
+        }
+        console.log(`  -> ${list.length} products upserted`)
+      }
+      // A store that returns nothing is a failure too (blocked, moved, or
+      // closed) — it just doesn't throw. Its inventory is left as is.
       if (list.length) {
-        await sb('products?on_conflict=store_id,external_id', {
-          method: 'POST',
-          service: true,
-          headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
-          body: list,
-        })
-        // The out-of-stock sweep is deferred to a single gated step after the
-        // loop (see the 30% drop guard), so a systemic failure can't nuke the
-        // live menu store-by-store before we notice.
-        sweepStoreIds.push(id)
+        ok++
+        tally.ok++
+      } else {
+        empty++
+        tally.empty++
+        console.log(`  EMPTY ${store.slug}: no products returned`)
       }
-      // Backfill the store's real name/address/coordinates from the feed.
-      // Curated fields (neighborhood) are never touched; borough only fills
-      // in when it's still unknown.
-      const patch = {}
-      if (meta.name) patch.name = meta.name
-      if (meta.address) patch.address = meta.address
-      if (meta.lat != null) {
-        patch.lat = meta.lat
-        patch.lng = meta.lng
-      }
-      if (!borough && meta.city && CITY_BOROUGH[meta.city.toLowerCase()]) {
-        patch.borough = CITY_BOROUGH[meta.city.toLowerCase()]
-      }
-      if (Object.keys(patch).length) {
-        await sb(`stores?id=eq.${id}`, { method: 'PATCH', service: true, body: patch }).catch(
-          () => {},
-        )
-        console.log(`  store info: ${[patch.name, patch.borough, patch.lat != null ? 'coords' : null].filter(Boolean).join(' · ') || 'updated'}`)
-      }
-      ok++
       seen += list.length
-      console.log(`  -> ${list.length} products upserted`)
     } catch (err) {
       failed++
-      console.log(`  FAILED ${slug}: ${err.message}`)
+      tally.failed++
+      console.log(`  FAILED ${store.slug}: ${err.message}`)
     }
+    if (i < stores.length - 1) await sleep(STORE_GAP_MS[0] + Math.random() * (STORE_GAP_MS[1] - STORE_GAP_MS[0]))
   }
 
-  await browser.close()
+  await browser?.close()
+
+  const tallies = Object.entries(byProvider)
+    .map(([p, t]) => `${p} ${t.ok} ok/${t.empty} empty/${t.failed} failed`)
+    .join(' · ')
+  if (DRY_RUN) {
+    console.log(`\nDry run done: ${tallies || 'no stores'} · ${seen} products · nothing written.`)
+    return
+  }
+
+  // --- record the run before the heavy steps ------------------------------
+  // Written now (and finished at the end) so a run that dies during the sweep
+  // or normalize still leaves its counts in pipeline_runs.
+  const attempted = ok + empty + failed
+  const prevSeen = await guardBaseline(attempted)
+  const label = `local node scrape${TEST_RUN ? ` · test run (${TEST_RUN})` : ''}`
+  const head = [tallies, skippedNote ? `skipped ${skippedNote}` : null].filter(Boolean)
+  const runRow = { stores_ok: ok, stores_failed: empty + failed, products_seen: seen }
+  try {
+    const rows = await sb('pipeline_runs', {
+      method: 'POST',
+      service: true,
+      headers: { Prefer: 'return=representation' },
+      body: { ...runRow, notes: `${label} · ${[...head, 'finishing (sweep/normalize not done)'].join(' · ')}` },
+    })
+    runNotes = `${label} · ${head.join(' · ')}`
+    runId = rows?.[0]?.id ?? null
+  } catch (e) {
+    console.warn(`(could not write the run row yet: ${e.message.slice(0, 120)})`)
+  }
 
   // --- 30% drop guard: protect the live snapshot ---------------------------
   // The out-of-stock sweep flips unseen items to sold out. If this run saw far
   // fewer products than the last good run, something broke (a block, a feed
   // change) — skip the sweep and keep the last snapshot rather than emptying
   // the menu.
-  let prevSeen = null
-  try {
-    const prev = await sb('pipeline_runs?select=products_seen&order=ran_at.desc&limit=1', { service: true })
-    if (prev && prev.length) prevSeen = prev[0].products_seen
-  } catch {
-    /* first run — no prior to compare against */
-  }
-  const notes = []
+  const notes = [...head]
   let swept = false
   const guardTripped = prevSeen != null && prevSeen > 0 && seen < prevSeen * (1 - DROP_GUARD)
   if (guardTripped) {
@@ -579,7 +420,7 @@ async function main() {
   } else if (sweepStoreIds.length) {
     // One database call (sweep_out_of_stock, supabase/pipeline_functions.sql)
     // with its own 2-minute timeout: a plain PATCH hits the API's 8s limit
-    // when a backlog of sold-out items builds up after missed nights. A
+    // when a backlog of sold-out items builds up after a long gap between runs. A
     // failure is recorded and alerted, never a crash, so the run still logs.
     try {
       const n = await sb('rpc/sweep_out_of_stock', {
@@ -631,34 +472,30 @@ async function main() {
   if (staleSlugs.length) notes.push(`stale(${staleSlugs.length}): ${staleSlugs.slice(0, 10).join(', ')}${staleSlugs.length > 10 ? '…' : ''}`)
   notes.push(swept ? 'sweep applied' : guardTripped ? 'sweep skipped' : 'no sweep')
 
-  await sb('pipeline_runs', {
-    method: 'POST',
-    service: true,
-    body: {
-      stores_ok: ok,
-      stores_failed: failed,
-      products_seen: seen,
-      products_tagged: matched, // in-stock rows with clean_brand (the match count)
-      notes: `local node scrape · ${notes.join(' · ')}`,
-    },
-  })
-  console.log(`\nDone: ${ok} ok, ${failed} failed, ${seen} products · ${notes.join(' · ')}`)
+  const final = {
+    ...runRow,
+    products_tagged: matched, // in-stock rows with clean_brand (the match count)
+    notes: `${label} · ${notes.join(' · ')}`,
+  }
+  if (runId) await sb(`pipeline_runs?id=eq.${runId}`, { method: 'PATCH', service: true, body: final })
+  else await sb('pipeline_runs', { method: 'POST', service: true, body: final })
+  console.log(`\nDone: ${ok} ok, ${empty} empty, ${failed} failed, ${seen} products · ${notes.join(' · ')}`)
 
   // --- alerts --------------------------------------------------------------
   if (guardTripped) {
     await sendAlert(
       'Scrape guard tripped — snapshot kept',
-      `products_seen=${seen} vs last ${prevSeen} (>${DROP_GUARD * 100}% drop). The out-of-stock sweep was skipped to protect the live menu. Check for a Cloudflare block or a Dutchie feed change, then re-run.`,
+      `products_seen=${seen} vs last ${prevSeen} (>${DROP_GUARD * 100}% drop). The out-of-stock sweep was skipped to protect the live menu. Check for a Cloudflare block or a feed change, then re-run.`,
     )
   } else if (ok === 0 || seen === 0) {
     await sendAlert(
       'Scrape returned zero changes',
-      `${ok} stores ok, ${failed} failed, ${seen} products seen. Nothing was captured — likely a block or feed change.`,
+      `${ok} stores ok, ${empty} empty, ${failed} failed, ${seen} products seen. Nothing was captured — likely a block or feed change.`,
     )
-  } else if (failed > ok) {
+  } else if (empty + failed > ok) {
     await sendAlert(
       'Scrape: majority of stores failed',
-      `${failed} failed vs ${ok} ok, ${seen} products seen. Inventory may be partial.`,
+      `${empty + failed} failed or empty vs ${ok} ok (${tallies}), ${seen} products seen. Inventory may be partial.`,
     )
   }
   if (matchRate != null && matchRate < MATCH_TARGET) {
@@ -672,6 +509,14 @@ async function main() {
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch(async (e) => {
     console.error(e)
+    // Mark this run's row so a crash after the scrape is visible in the table.
+    if (runId) {
+      await sb(`pipeline_runs?id=eq.${runId}`, {
+        method: 'PATCH',
+        service: true,
+        body: { notes: `${runNotes} · CRASHED after scrape: ${String(e?.message || e).slice(0, 200)}` },
+      }).catch(() => {})
+    }
     await sendAlert('Scrape crashed', String((e && e.stack) || e).slice(0, 1500))
     process.exit(1)
   })

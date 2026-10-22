@@ -1,7 +1,7 @@
 -- Deterministic product normalization (Block 2.5).
 -- Populates clean_brand, clean_name, potency_tier, price_band, experience_level.
 -- Incremental by default (only rows missing each field); full_refresh => all.
--- Called by the nightly scraper (pipeline/scrape.mjs) after each run, and by
+-- Called by the scraper (pipeline/scrape.mjs) after each run, and by
 -- `npm run normalize`. Applied to the Supabase project as a migration; kept here
 -- version-controlled.
 --
