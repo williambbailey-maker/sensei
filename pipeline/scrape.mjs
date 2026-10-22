@@ -135,6 +135,34 @@ function storePatch(store, meta) {
   return patch
 }
 
+// Shops whose menu platform publishes no address get one in stores.config.json
+// ("address"); NYC GeoSearch, the city's own geocoder, turns it into
+// coordinates. Only fills what the store record is missing. A match counts only
+// if it has the same house number (GeoSearch sometimes drops it when a ZIP is
+// included), so the street-only form is tried second.
+async function configLocation(store) {
+  const addr = store.config.address
+  if (!addr || (store.address && store.lat != null)) return {}
+  const out = store.address ? {} : { address: addr }
+  if (store.lat == null) {
+    const num = (addr.match(/^\s*([\d-]+)/) || [])[1]
+    for (const q of [addr, addr.split(',')[0]]) {
+      try {
+        const r = await fetch(`https://geosearch.planninglabs.nyc/v2/search?size=1&text=${encodeURIComponent(q)}`)
+        const f = (await r.json()).features?.[0]
+        if (!f || (num && !String(f.properties?.label || '').startsWith(num + ' '))) continue
+        const [lng, lat] = f.geometry.coordinates
+        Object.assign(out, { lat, lng })
+        if (!store.borough && f.properties?.borough) out.borough = f.properties.borough
+        break
+      } catch {
+        /* geocoder unreachable: the address alone still helps */
+      }
+    }
+  }
+  return out
+}
+
 // Per-store platform details (stores.config.json, keyed by slug).
 function loadStoreConfig() {
   try {
@@ -364,7 +392,7 @@ async function main() {
           sweepStoreIds.push(store.id)
         }
         // Backfill the store's real name/address/coordinates from the feed.
-        const patch = storePatch(store, meta)
+        const patch = { ...(await configLocation(store)), ...storePatch(store, meta) }
         if (Object.keys(patch).length) {
           await sb(`stores?id=eq.${store.id}`, { method: 'PATCH', service: true, body: patch }).catch(() => {})
           console.log(`  store info: ${[patch.name, patch.borough, patch.lat != null ? 'coords' : null].filter(Boolean).join(' · ') || 'updated'}`)
@@ -488,6 +516,17 @@ async function main() {
     staleSlugs = (rows || []).map((r) => (typeof r === 'string' ? r : r.stale_store_slugs))
   } catch (e) {
     notes.push(`stale-store query failed: ${e.message.slice(0, 80)}`)
+  }
+  // Neighborhood is set by hand (it drives the neighborhood pages), so a new
+  // store needs one before it shows up in neighborhood browsing.
+  try {
+    const noHood = await sb('stores?active=eq.true&neighborhood=is.null&select=slug', { service: true })
+    if (noHood.length) {
+      notes.push(`needs neighborhood(${noHood.length}): ${noHood.map((r) => r.slug).slice(0, 10).join(', ')}`)
+      console.warn(`\n${noHood.length} active store(s) have no neighborhood yet: ${noHood.map((r) => r.slug).join(', ')}`)
+    }
+  } catch {
+    /* informational only */
   }
   if (matchRate != null) notes.push(`match ${matchRate}% (${matched}/${inStock})`)
   if (staleSlugs.length) notes.push(`stale(${staleSlugs.length}): ${staleSlugs.slice(0, 10).join(', ')}${staleSlugs.length > 10 ? '…' : ''}`)

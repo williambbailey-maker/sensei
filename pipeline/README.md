@@ -186,3 +186,16 @@ Anything a platform doesn't provide is left empty, never guessed.
 - `refresh-inventory.command` — one-step manual refresh (key, install, run, log).
 - `package.json` — Node deps (Playwright).
 - `.env.example` — copy to `.env` and add your key (+ optional alert vars).
+
+## Store addresses and neighborhoods
+
+Most menu platforms send each store's address and coordinates, and the
+scraper saves them. Some (several Blaze, Dispense and Joint shops) don't. For
+those, put the street address in `stores.config.json` as `"address"`: the
+next run geocodes it with NYC GeoSearch and fills in the coordinates and
+borough. To look addresses up without a Mac, run the **Store lookup** GitHub
+Action (`extract` reads shops' own websites, `geocode` returns coordinates).
+
+`neighborhood` is set by hand in the `stores` table, because it decides which
+neighborhood page a shop appears on. Each run's notes list any active store
+that still needs one (`needs neighborhood(...)`).

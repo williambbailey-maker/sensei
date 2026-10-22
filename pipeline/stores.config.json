@@ -1,29 +1,35 @@
 {
-  "_about": "Per-store platform details, keyed by stores.slug (e.g. a Dispense venue id, a Blaze shop id, the menu URL). The scraper hands each store's entry to its platform module as store.config. Dutchie stores need nothing here (their slug is the Dutchie cName) unless the menu is only shown inside the store's own website: then {\"menu\": \"embedded-menu\"} reads it from dutchie.com/embedded-menu/<slug>.",
+  "_about": "Per-store platform details, keyed by stores.slug (e.g. a Dispense venue id, a Blaze shop id, the menu URL). The scraper hands each store's entry to its platform module as store.config. Dutchie stores need nothing here (their slug is the Dutchie cName) unless the menu is only shown inside the store's own website: then {\"menu\": \"embedded-menu\"} reads it from dutchie.com/embedded-menu/<slug>. A store whose platform publishes no street address can carry one here (\"address\"); the scraper geocodes it with NYC GeoSearch when the store has no coordinates yet.",
   "stores": {
     "cannadreams": {
       "provider": "dispense",
-      "menu_url": "https://cannadreams.nyc/menu"
+      "menu_url": "https://cannadreams.nyc/menu",
+      "address": "862 9th Avenue, New York, NY 10019"
     },
     "tetra-east-harlem": {
       "provider": "dispense",
-      "menu_url": "https://menus.dispenseapp.com/245e4aee1af46eb4/menu"
+      "menu_url": "https://menus.dispenseapp.com/245e4aee1af46eb4/menu",
+      "address": "2152 3rd Avenue, New York, NY 10035"
     },
     "flower-power": {
       "provider": "dispense",
-      "menu_url": "https://flowerpowerdispensers.com/menu"
+      "menu_url": "https://flowerpowerdispensers.com/menu",
+      "address": "22 West 66th Street, New York, NY 10023"
     },
     "pure-blossoms": {
       "provider": "dispense",
-      "menu_url": "https://pureblossomsnyc.com/shop"
+      "menu_url": "https://pureblossomsnyc.com/shop",
+      "address": "716 Amsterdam Avenue, New York, NY 10025"
     },
     "the-herbal-care": {
       "provider": "dispense",
-      "menu_url": "https://thctheherbalcare.com/shop"
+      "menu_url": "https://thctheherbalcare.com/shop",
+      "address": "1410 Lexington Avenue, New York, NY 10128"
     },
     "uplift-royal": {
       "provider": "dispense",
-      "menu_url": "https://upliftroyal.com/shop"
+      "menu_url": "https://upliftroyal.com/shop",
+      "address": "1557 Lexington Avenue, New York, NY 10029"
     },
     "carnegie-hill": {
       "provider": "carrot",
@@ -43,16 +49,19 @@
     },
     "kushklub": {
       "provider": "jane",
-      "menu_url": "https://menu.kushklub.com/nyc"
+      "menu_url": "https://menu.kushklub.com/nyc",
+      "address": "186 Orchard Street, New York, NY 10002"
     },
     "alto": {
       "provider": "blaze",
-      "menu_url": "https://altocanna.nyc/menu"
+      "menu_url": "https://altocanna.nyc/menu",
+      "address": "110 Chambers Street, New York, NY 10007"
     },
     "sofaclub-broadway": {
       "provider": "dispense",
       "menu_url": "https://menus.dispenseapp.com/1cf9ea9a5cfa24d2/menu",
-      "link": "menu"
+      "link": "menu",
+      "address": "2195 Broadway, New York, NY 10024"
     },
     "bliss-lex": {
       "provider": "gapcommerce",
@@ -60,31 +69,38 @@
     },
     "dazed-union-square": {
       "provider": "joint",
-      "menu_url": "https://dazed.fun/stores/dazed-cannabis-dispensary-union-square-nyc-ny/"
+      "menu_url": "https://dazed.fun/stores/dazed-cannabis-dispensary-union-square-nyc-ny/",
+      "address": "33 Union Square West, New York, NY 10003"
     },
     "cannabis-on-lex": {
       "provider": "blaze",
-      "menu_url": "https://shop.cannabisonlex.com"
+      "menu_url": "https://shop.cannabisonlex.com",
+      "address": "459 Lexington Avenue, New York, NY 10017"
     },
     "chelsea-cannabis": {
       "provider": "blaze",
-      "menu_url": "https://shop.chelseacannabis.co/menu"
+      "menu_url": "https://shop.chelseacannabis.co/menu",
+      "address": "104 7th Avenue, New York, NY 10011"
     },
     "happy-munkey": {
       "provider": "blaze",
-      "menu_url": "https://happymunkey.com/shop/dyckman"
+      "menu_url": "https://happymunkey.com/shop/dyckman",
+      "address": "151 Dyckman Street, New York, NY 10034"
     },
     "housing-works-broadway": {
       "provider": "blaze",
-      "menu_url": "https://hwcannabis.co/menu/broadway"
+      "menu_url": "https://hwcannabis.co/menu/broadway",
+      "address": "750 Broadway, New York, NY 10003"
     },
     "nycbud": {
       "provider": "blaze",
-      "menu_url": "https://nycbud.com/shop"
+      "menu_url": "https://nycbud.com/shop",
+      "address": "44-45 Vernon Boulevard, Long Island City, NY 11101"
     },
     "vereleaf": {
       "provider": "blaze",
-      "menu_url": "https://shop.vereleaf.com/shop"
+      "menu_url": "https://shop.vereleaf.com/shop",
+      "address": "383 8th Avenue, New York, NY 10001"
     },
     "le-flora": {
       "provider": "gapcommerce",
