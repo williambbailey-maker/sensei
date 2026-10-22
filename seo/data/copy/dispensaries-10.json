@@ -1,0 +1,288 @@
+{
+  "1106-rebecca-street-llc": {
+    "intro": [
+      "Herbology is at 304 Ellery Street in Bushwick, Brooklyn. It is the smallest of the {hood_shops|word} licensed dispensaries we track in Bushwick, with about {in_stock|about} products from {brands} brands at last count. Stash Master on Broadway, RNR Dispensary on Harrison Place and The Emerald Dispensary on Suydam Street all list more, but Herbology still carries a full menu across the main formats, and its tighter brand list means each of its main brands is stocked in some depth.",
+      "Flower is the biggest section here at {cat.flower} listings, followed by {cat.pre-rolls} pre-rolls and {cat.vaporizers} vapes, which makes the shop a better fit for smokers than for edible shoppers. Edibles are a smaller {cat.edibles}, and the concentrate shelf is close to empty at {cat.concentrates}. Cannabals is the largest brand at {brand.Cannabals} products, with 1937 just behind at {brand.1937}, then Jaunty, Cannacure Farms, Nyce and Boukét. The entry price is {min_price}, set by Layup 10 mg drinks in flavors like Futbol Punch, Lemonade, Limeade and Raspberry Tea."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the smallest of the Bushwick shops we track.",
+      "Flower leads at {cat.flower} listings, with pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) behind it.",
+      "Cannabals and 1937 are the biggest brands, followed by Jaunty, Cannacure Farms, Nyce and Boukét.",
+      "Cheapest items are Layup 10 mg drinks at {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is Herbology?",
+        "a": "Herbology is at 304 Ellery Street in Bushwick, Brooklyn. The other Bushwick shops we track are Stash Master at 1119 Broadway, RNR Dispensary at 287 Harrison Place and The Emerald Dispensary at 85 Suydam Street."
+      },
+      {
+        "q": "What does Herbology carry most?",
+        "a": "Flower, with {cat.flower} listings, then pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}). Edibles number {cat.edibles} and concentrates only {cat.concentrates}. The brands with the most products on the menu are Cannabals and 1937."
+      },
+      {
+        "q": "What is the cheapest item at Herbology?",
+        "a": "At last check the menu started at {min_price} for single Layup 10 mg cannabis drinks. Prices on Sensei are menu prices before New York's cannabis tax is added at the register."
+      }
+    ]
+  },
+  "tedg": {
+    "intro": [
+      "The Emerald Dispensary is at 85 Suydam Street in Bushwick, Brooklyn. This is the Bushwick store, a separate shop from The Emerald Dispensary in Manhattan and from Emerald Dispensary in Carroll Gardens. With about {in_stock|about} products it ranks third among the {hood_shops|word} licensed dispensaries we track in Bushwick, behind Stash Master and RNR Dispensary, but its {brands} brands are the second-widest brand list in the neighborhood. That works out to only a few items per brand, so the menu favors trying many labels over going deep on any one of them.",
+      "Pre-rolls dominate the shelf at {cat.pre-rolls} listings, well ahead of {cat.edibles} edibles and {cat.flower} flower options. Vapes are a smaller section at {cat.vaporizers}, the fewest of the Bushwick shops we track, and there are {cat.concentrates} concentrates plus a few tinctures. BODEGA BOYZ ({brand.BODEGA BOYZ}) and Jeeter ({brand.Jeeter}) are the biggest brands, followed by Ayrloom, Julia, Grön and MFNY. The entry price is {min_price}, shared by 1906 Sleep tablet two-packs and single Ayrloom 2:1 drinks in flavors like Cranberry Apple and Pineapple Mango."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, a wide brand list for a menu this size.",
+      "Pre-rolls lead by a wide margin at {cat.pre-rolls}; vapes are a smaller {cat.vaporizers}.",
+      "BODEGA BOYZ and Jeeter are the biggest brands, with Ayrloom, Julia, Grön and MFNY close behind.",
+      "Not the same shop as The Emerald Dispensary in Manhattan or Emerald Dispensary in Carroll Gardens."
+    ],
+    "faq": [
+      {
+        "q": "Is this the same Emerald Dispensary as the one in Manhattan or Carroll Gardens?",
+        "a": "No. This page covers the Bushwick store at 85 Suydam Street. The Emerald Dispensary in Manhattan and Emerald Dispensary in Carroll Gardens, at 548 Court Street, are separate shops with their own menus on Sensei."
+      },
+      {
+        "q": "What does The Emerald Dispensary in Bushwick carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.edibles} edibles and {cat.flower} flower options. BODEGA BOYZ and Jeeter have the most products of any brand on the menu."
+      },
+      {
+        "q": "What other dispensaries are near The Emerald Dispensary in Bushwick?",
+        "a": "Stash Master at 1119 Broadway, RNR Dispensary at 287 Harrison Place and Herbology at 304 Ellery Street are the other Bushwick shops we track. Stash Master has by far the largest menu of the group."
+      }
+    ]
+  },
+  "altitude-ny": {
+    "intro": [
+      "Culture House Greenpoint is at 807 Manhattan Avenue, on Greenpoint's main shopping street in north Brooklyn. It is one of {hood_shops|word} licensed dispensaries we track in Greenpoint, with about {in_stock|about} products from {brands} brands at last count. Milligrams, a short walk away on Greenpoint Avenue, and Green Apple Distributors farther south on Manhattan Avenue both list somewhat more, but the three are close enough in size that the real difference between them is what each one stocks rather than how much.",
+      "Culture House leans hard toward edibles: {cat.edibles} listings, the most of any Greenpoint shop we track, followed by {cat.vaporizers} vapes and {cat.pre-rolls} pre-rolls. Flower is the thinnest section in the neighborhood at {cat.flower} options, so flower shoppers may do better at Green Apple. Jaunty is the biggest brand with {brand.Jaunty} products, then Fernway with {brand.Fernway}, followed by Ayrloom, PAX, Florist Farms and Camino. The entry price is {min_price}, shared by 1906 Chill and Go tablet two-packs, Jaunty Sour Watermelon 2:1 CBD:THC gummies and a LayUp Black Cherry Lemonade drink."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands on Manhattan Avenue in Greenpoint.",
+      "Edibles lead at {cat.edibles}, the most in Greenpoint; flower is a small {cat.flower}.",
+      "Jaunty and Fernway are the biggest brands, with Ayrloom, PAX and Florist Farms behind them.",
+      "Cheapest items are low-dose tablets, gummies and drinks at {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is Culture House Greenpoint?",
+        "a": "At 807 Manhattan Avenue in Greenpoint, Brooklyn, a short walk from Milligrams at 58 Greenpoint Avenue. Green Apple Distributors, the third Greenpoint shop we track, is farther south at 572 Manhattan Avenue."
+      },
+      {
+        "q": "What does Culture House Greenpoint carry most?",
+        "a": "Edibles, with {cat.edibles} listings, then vapes ({cat.vaporizers}) and pre-rolls ({cat.pre-rolls}). Jaunty and Fernway have the most products of any brand on the menu."
+      },
+      {
+        "q": "What is the cheapest item at Culture House Greenpoint?",
+        "a": "At last check the menu started at {min_price}, a price shared by 1906 tablet two-packs, Jaunty gummy two-packs and a LayUp drink. Prices on Sensei are menu prices before New York's cannabis tax."
+      }
+    ]
+  },
+  "green-apple-distributors": {
+    "intro": [
+      "Green Apple Distributors is at 572 Manhattan Avenue in Greenpoint, Brooklyn, on the neighborhood's main shopping street. It is the second-largest of the {hood_shops|word} licensed dispensaries we track in Greenpoint, with about {in_stock|about} products from {brands} brands at last count, behind Milligrams on Greenpoint Avenue and ahead of Culture House farther north on Manhattan Avenue. Hii Williamsburg on Bedford Avenue is also close by if you want to compare menus in one trip.",
+      "The menu is unusually even. Flower leads at {cat.flower} listings, the most of any Greenpoint shop we track, with {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.edibles} edibles close behind, and a {cat.concentrates}-item concentrate case that is also the deepest in the neighborhood. Fernway is the biggest brand at {brand.Fernway} products, one of the largest Fernway selections we track in the city, followed by Ayrloom at {brand.ayrloom}, then Ruby Farms, Timeless, Vacation and Wyld. The entry price is {min_price} for single Ayrloom 12oz 10 mg drinks such as Black Cherry, Cran Apple and Honeycrisp Cider."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the second-largest menu in Greenpoint.",
+      "Balanced shelf: flower ({cat.flower}), pre-rolls ({cat.pre-rolls}), vapes ({cat.vaporizers}) and edibles ({cat.edibles}).",
+      "One of the deepest Fernway selections in the city, plus plenty of Ayrloom and Ruby Farms.",
+      "Cheapest items are Ayrloom 10 mg drinks at {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "How big is Green Apple Distributors' menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, with flower, pre-rolls, vapes and edibles all well stocked and {cat.concentrates} concentrates on top of that."
+      },
+      {
+        "q": "What other dispensaries are near Green Apple Distributors?",
+        "a": "Milligrams at 58 Greenpoint Avenue and Culture House at 807 Manhattan Avenue are the other Greenpoint shops we track. Hii Williamsburg at 152 Bedford Avenue is also nearby, just across the neighborhood line."
+      },
+      {
+        "q": "What is the cheapest item at Green Apple Distributors?",
+        "a": "At last check the menu started at {min_price} for single Ayrloom 12oz cannabis drinks. Prices on Sensei are menu prices before New York's cannabis tax is added."
+      }
+    ]
+  },
+  "hii-williamsburg": {
+    "intro": [
+      "Hii Williamsburg is at 152 Bedford Avenue in north Williamsburg, Brooklyn. It is the largest of the {hood_shops|word} licensed dispensaries we track in Williamsburg, with about {in_stock|about} products from {brands} brands at last count, comfortably ahead of Gotham on Kent Avenue and Grams Cannabis on Graham Avenue. It also has the most flower and the deepest concentrate case in the neighborhood, so it is the one Williamsburg shop where most shopping lists can be covered in a single stop.",
+      "Flower leads at {cat.flower} listings, followed by {cat.pre-rolls} pre-rolls, {cat.edibles} edibles and {cat.vaporizers} vapes, and the {cat.concentrates}-item concentrate selection is one of the larger ones in the city. MFNY is the standout brand with {brand.MFNY} products, more MFNY than any other shop we track, and Jaunty follows at {brand.Jaunty}. Wizard Tree, Runtz, Ayrloom and 7 SEAZ round out the top of the list. The entry price is among the lowest in our data: {min_price} for a 1906 Boost drops two-pack, with Ayrloom 1:1 drinks and MFNY live resin gummies close behind."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the largest menu in Williamsburg.",
+      "Flower leads at {cat.flower}; the concentrate case ({cat.concentrates}) is one of the deeper ones in the city.",
+      "The largest MFNY selection we track anywhere, plus Jaunty, Wizard Tree and Runtz in depth.",
+      "Entry price of {min_price} for 1906 drops, among the lowest in our NYC data."
+    ],
+    "faq": [
+      {
+        "q": "How big is Hii Williamsburg's menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, the biggest of the Williamsburg shops we track. Flower ({cat.flower}), pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}) are all deep."
+      },
+      {
+        "q": "What brand does Hii Williamsburg carry most?",
+        "a": "MFNY, with {brand.MFNY} products, which is more MFNY than any other dispensary in our data. Jaunty, Wizard Tree, Runtz, Ayrloom and 7 SEAZ are the next-largest brands."
+      },
+      {
+        "q": "What other dispensaries are near Hii Williamsburg?",
+        "a": "Within Williamsburg we also track Gotham on Kent Avenue, Grams Cannabis on Graham Avenue, The Flowery, Sunflower on Metropolitan Avenue, Dagmar on North 11th Street and Twisted Vibrations on Broadway. Green Apple Distributors in Greenpoint, on Manhattan Avenue, is also close."
+      }
+    ]
+  },
+  "jungle-kingdom-flower-company": {
+    "intro": [
+      "Jungle Kingdom Flower Company is at 515 Nostrand Avenue in Bed-Stuy, Brooklyn. It is one of {hood_shops|word} licensed dispensaries we track in Bed-Stuy, and the smaller of the pair: about {in_stock|about} products from {brands} brands at last count, against a noticeably larger menu at Happy Buds on Malcolm X Boulevard. That puts it on the compact side for a New York shop, though still large enough to cover the main formats, and the closest shop in our data is Take N Toke on Atlantic Avenue, just over the line in Prospect Heights.",
+      "Despite the name, edibles are the largest section here at {cat.edibles} listings, with {cat.flower} flower options close behind, then {cat.pre-rolls} pre-rolls and {cat.vaporizers} vapes. Concentrates are nearly absent at {cat.concentrates}. Jaunty is the biggest brand with {brand.Jaunty} products, followed by Revert Cannabis at {brand.Revert Cannabis}, then Akron Bloom, Cannabals, Left Coast and ADK Hemp Co. The entry price is {min_price}, set by Jaunty gummy two-packs such as Dreamberry 1:1:1 THC:CBD:CBN and Orange Swirl hash-infused gummies, with single Ayrloom 2:1 drinks a little higher."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, a compact menu for New York.",
+      "Edibles ({cat.edibles}) and flower ({cat.flower}) are the two biggest sections; concentrates are scarce.",
+      "Jaunty and Revert Cannabis are the main brands, with Akron Bloom, Cannabals and Left Coast behind.",
+      "Cheapest items are Jaunty gummy two-packs at {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is Jungle Kingdom Flower Company?",
+        "a": "At 515 Nostrand Avenue in Bed-Stuy, Brooklyn. Happy Buds at 225 Malcolm X Boulevard is the other Bed-Stuy shop we track, and Take N Toke at 994 Atlantic Avenue is the closest dispensary in our data."
+      },
+      {
+        "q": "What does Jungle Kingdom carry most?",
+        "a": "Edibles, with {cat.edibles} listings, then flower ({cat.flower}), pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}). Jaunty has the most products of any brand on the menu."
+      },
+      {
+        "q": "What is the cheapest item at Jungle Kingdom?",
+        "a": "At last check the menu started at {min_price} for Jaunty gummy two-packs. Prices on Sensei are menu prices before New York's cannabis tax is added at the register."
+      }
+    ]
+  },
+  "puro-vita-retail": {
+    "intro": [
+      "Puro Vita is at 288 Flushing Avenue in Clinton Hill, Brooklyn. It is the larger of the {hood_shops|word} licensed dispensaries we track in Clinton Hill, with about {in_stock|about} products from {brands} brands at last count, a much bigger menu than By Any Other Name on Fulton Street. The brand list is short for a menu this big, which means each brand it does carry is stocked in real depth, so it suits shoppers who already know which producer they like and want to compare strains and sizes within that line.",
+      "Pre-rolls ({cat.pre-rolls}), vapes ({cat.vaporizers}) and flower ({cat.flower}) make up most of the shelf, with a smaller {cat.edibles} edibles and only a handful of concentrates. Ruby Farms is the biggest brand at {brand.Ruby Farms} products and STIIIZY follows at {brand.STIIIZY}; both Ruby Farms and Jetty Extracts are stocked more deeply here than at most shops we track in the city. Ayrloom, Boukét and REVERT fill out the top of the list. The entry price of {min_price} is one of the lowest in our data, set by a 1906 Boost drops pouch, with Ayrloom 1:1 drinks next."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the largest menu in Clinton Hill.",
+      "Pre-rolls, vapes and flower dominate; edibles are a smaller {cat.edibles}.",
+      "Ruby Farms and STIIIZY lead, and the Jetty Extracts selection is one of the deeper ones in the city.",
+      "Entry price of {min_price} for 1906 drops, among the lowest in our NYC data."
+    ],
+    "faq": [
+      {
+        "q": "What does Puro Vita carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, then vapes ({cat.vaporizers}) and flower ({cat.flower}). Ruby Farms and STIIIZY have the most products of any brand, followed by Jetty Extracts and Ayrloom."
+      },
+      {
+        "q": "What is the cheapest item at Puro Vita?",
+        "a": "At last check the menu started at {min_price} for a 1906 Boost drops pouch, one of the lowest entry prices of any shop we track. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Puro Vita?",
+        "a": "By Any Other Name at 946 Fulton Street is the other Clinton Hill shop we track, with a much smaller menu. Twisted Vibrations on Broadway in Williamsburg is the closest shop in our data."
+      }
+    ]
+  },
+  "bk-greenery": {
+    "intro": [
+      "BK Greenery is at 367 Flatbush Avenue in Prospect Heights, Brooklyn. It is one of {hood_shops|word} licensed dispensaries we track in Prospect Heights, and the smaller of the pair, with about {in_stock|about} products from {brands} brands at last count against a somewhat larger menu at Take N Toke on Atlantic Avenue. Two Park Slope shops are also close by on the map: Be. farther north on Flatbush Avenue and Verdi on 7th Avenue, so there are several menus to compare within a short trip.",
+      "Edibles are the biggest section at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls and equal-sized flower and vape sections, plus small tincture, topical and concentrate shelves. MFNY is the largest brand at {brand.MFNY} products, with Ithaca Organics close behind at {brand.Ithaca Organics Cannabis Co.}. Ayrloom, Harney Brothers, Jaunty and Boukét round out the top of the list. The entry price is {min_price} for single Ayrloom 2:1 THC:CBD 10 mg drinks, including Cran Apple, Honeycrisp, Lemonade and a Half and Half iced tea lemonade."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands on Flatbush Avenue in Prospect Heights.",
+      "Edibles lead at {cat.edibles}, with pre-rolls ({cat.pre-rolls}) next.",
+      "MFNY and Ithaca Organics are the biggest brands, with Ayrloom and Harney Brothers drinks behind them.",
+      "Cheapest items are Ayrloom 10 mg drinks at {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "What does BK Greenery carry most?",
+        "a": "Edibles, with {cat.edibles} listings, then pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}). MFNY and Ithaca Organics have the most products of any brand on the menu."
+      },
+      {
+        "q": "What is the cheapest item at BK Greenery?",
+        "a": "At last check the menu started at {min_price} for single Ayrloom 2:1 drinks. Prices on Sensei are menu prices before New York's cannabis tax is added at the register."
+      },
+      {
+        "q": "What other dispensaries are near BK Greenery?",
+        "a": "Take N Toke at 994 Atlantic Avenue is the other Prospect Heights shop we track. Be. at 206 Flatbush Avenue and Verdi at 360 7th Avenue, both in Park Slope, are also nearby."
+      }
+    ]
+  },
+  "take-n-toke-dispensary": {
+    "intro": [
+      "Take N Toke is at 994 Atlantic Avenue in Prospect Heights, Brooklyn, on the avenue that forms the neighborhood's northern edge. It is the larger of the {hood_shops|word} licensed dispensaries we track in Prospect Heights, with about {in_stock|about} products from {brands} brands at last count, ahead of BK Greenery on Flatbush Avenue. Other shops are close on the map too: By Any Other Name on Fulton Street in Clinton Hill and Jungle Kingdom Flower Company on Nostrand Avenue in Bed-Stuy, both with smaller menus.",
+      "Pre-rolls lead at {cat.pre-rolls} listings, followed by {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower options, with a few concentrates, tinctures and topicals. Ayrloom is the biggest brand at {brand.ayrloom} products, and Dank By Definition follows at {brand.Dank By Definition.}, with Hashtag Honey, Heavy Hitters, Jaunty and Grön close behind, a mix that covers drinks, pre-rolls and vapes well. The entry price is {min_price}, the lowest in Prospect Heights, for single Ayrloom 1:1 5mg THC and 5mg CBD drinks in Black Cherry and Honeycrisp, with the stronger 2:1 versions a little higher."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the larger of the Prospect Heights shops.",
+      "Pre-rolls lead at {cat.pre-rolls}, with vapes ({cat.vaporizers}) and edibles ({cat.edibles}) close behind.",
+      "Ayrloom and Dank By Definition are the biggest brands, with Hashtag Honey and Heavy Hitters next.",
+      "Cheapest items are Ayrloom 1:1 drinks at {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is Take N Toke?",
+        "a": "At 994 Atlantic Avenue in Prospect Heights, Brooklyn. BK Greenery at 367 Flatbush Avenue is the other Prospect Heights shop we track, and By Any Other Name and Jungle Kingdom Flower Company are close by in Clinton Hill and Bed-Stuy."
+      },
+      {
+        "q": "What does Take N Toke carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, then vapes ({cat.vaporizers}), edibles ({cat.edibles}) and flower ({cat.flower}). Ayrloom and Dank By Definition have the most products of any brand."
+      },
+      {
+        "q": "What is the cheapest item at Take N Toke?",
+        "a": "At last check the menu started at {min_price} for single Ayrloom 1:1 drinks. Prices on Sensei are menu prices before New York's cannabis tax is added at the register."
+      }
+    ]
+  },
+  "dispo-brooklyn": {
+    "intro": [
+      "DISPO Brooklyn is at 588 4th Avenue in Park Slope, Brooklyn, on the wide avenue that runs along the neighborhood's western side. It is one of {hood_shops|word} licensed dispensaries we track in Park Slope, with about {in_stock|about} products at last count, fewer than Be. on Flatbush Avenue and more than Verdi on 7th Avenue. Its {brands} brands are the widest brand list in Park Slope, so the menu offers a lot of variety for its size, and Emerald Dispensary on Court Street in Carroll Gardens is not far away.",
+      "Edibles ({cat.edibles}) and vapes ({cat.vaporizers}) are the two biggest sections, followed by {cat.pre-rolls} pre-rolls and {cat.flower} flower options. Concentrates are nearly absent at {cat.concentrates}, so look elsewhere for dabs. Rove is the biggest brand at {brand.Rove} products, then Ayrloom at {brand.ayrloom}, and the next names on the list, PAX, PUFF Pre-Rolls, Jenny's Baked at Home and BLOOM, confirm the lean toward vapes and edibles. The entry price is {min_price} for single Ayrloom 2:1 10 mg THC and 5 mg CBD drinks in Black Cherry, Cranberry Apple, Honeycrisp and Lemonade."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the widest brand list in Park Slope.",
+      "Edibles ({cat.edibles}) and vapes ({cat.vaporizers}) lead; concentrates are close to none.",
+      "Rove and Ayrloom are the biggest brands, with PAX, PUFF Pre-Rolls and Jenny's Baked at Home next.",
+      "Cheapest items are Ayrloom 2:1 drinks at {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is DISPO Brooklyn?",
+        "a": "At 588 4th Avenue in Park Slope, Brooklyn. The other Park Slope shops we track are Be. at 206 Flatbush Avenue and Verdi at 360 7th Avenue."
+      },
+      {
+        "q": "What does DISPO Brooklyn carry most?",
+        "a": "Edibles and vapes, at {cat.edibles} and {cat.vaporizers} listings, then pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}). Rove and Ayrloom have the most products of any brand on the menu."
+      },
+      {
+        "q": "What is the cheapest item at DISPO Brooklyn?",
+        "a": "At last check the menu started at {min_price} for single Ayrloom 2:1 drinks. Prices on Sensei are menu prices before New York's cannabis tax is added at the register."
+      }
+    ]
+  },
+  "emerald-dispensary-carroll-gardens": {
+    "intro": [
+      "Emerald Dispensary Carroll Gardens is at 548 Court Street in Carroll Gardens, Brooklyn, and it is the only licensed dispensary we track in the neighborhood. It is a separate shop from The Emerald Dispensary on Suydam Street in Bushwick and The Emerald Dispensary in Manhattan, each with its own menu. At last count it listed about {in_stock|about} products from {brands} brands, on the smaller side for Brooklyn, and the nearest shops in our data are The Garden Club on Smith Street and Buzzy NY farther north on Court Street.",
+      "Pre-rolls are the biggest section at {cat.pre-rolls} listings, followed by {cat.edibles} edibles and {cat.vaporizers} vapes. Flower is a small part of the menu at {cat.flower} options, so this is a better stop for pre-rolls, vapes and drinks than for loose flower. Florist Farms is the largest brand at {brand.Florist Farms} products, with Fernway, Ruby Farms and STIIIZY close behind, then Wyld and Jaunty. The entry price is {min_price}, shared by single Ayrloom drinks such as Cranberry Apple and a 1:1 THC:CBC Rosé, and Harney Brothers cannabis coffee cans like Espresso Tonic and Maple Coffee Nitro."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the only licensed shop we track in Carroll Gardens.",
+      "Pre-rolls lead at {cat.pre-rolls}; flower is a small {cat.flower}.",
+      "Florist Farms is the biggest brand, with Fernway, Ruby Farms and STIIIZY close behind.",
+      "Separate from The Emerald Dispensary in Bushwick and in Manhattan."
+    ],
+    "faq": [
+      {
+        "q": "Is Emerald Dispensary Carroll Gardens the same as The Emerald Dispensary in Bushwick?",
+        "a": "No. This page covers the shop at 548 Court Street in Carroll Gardens. The Emerald Dispensary at 85 Suydam Street in Bushwick and The Emerald Dispensary in Manhattan are separate shops with their own menus on Sensei."
+      },
+      {
+        "q": "What does Emerald Dispensary Carroll Gardens carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, then edibles ({cat.edibles}) and vapes ({cat.vaporizers}). Florist Farms has the most products of any brand, followed by Fernway, Ruby Farms and STIIIZY."
+      },
+      {
+        "q": "What other dispensaries are near Emerald Dispensary Carroll Gardens?",
+        "a": "It is the only shop we track in Carroll Gardens. The closest in our data are The Garden Club at 277 Smith Street and Buzzy NY at 137 Court Street, with DISPO Brooklyn on 4th Avenue in Park Slope a bit farther away."
+      }
+    ]
+  }
+}

@@ -63,6 +63,11 @@
   "store": "alta-lower-manhattan",
   "type": "dispensary"
  },
+ "/dispensaries/alto-canna/": {
+  "hood": "tribeca",
+  "store": "alto",
+  "type": "dispensary"
+ },
  "/dispensaries/astoria-bud-boutique/": {
   "hood": "astoria",
   "store": "dominica62",
@@ -76,6 +81,16 @@
  "/dispensaries/be-brooklyn-ny/": {
   "hood": "park-slope",
   "store": "be-brooklyn-ny",
+  "type": "dispensary"
+ },
+ "/dispensaries/bellanova/": {
+  "hood": "east-west-village",
+  "store": "bellanova-retail",
+  "type": "dispensary"
+ },
+ "/dispensaries/bk-greenery/": {
+  "hood": "prospect-heights",
+  "store": "bk-greenery",
   "type": "dispensary"
  },
  "/dispensaries/blazinup/": {
@@ -118,6 +133,16 @@
   "store": "xander-legacy",
   "type": "dispensary"
  },
+ "/dispensaries/cannabis-on-lex/": {
+  "hood": "midtown",
+  "store": "cannabis-on-lex",
+  "type": "dispensary"
+ },
+ "/dispensaries/cannadreams/": {
+  "hood": "midtown",
+  "store": "cannadreams",
+  "type": "dispensary"
+ },
  "/dispensaries/cannaisseur/": {
   "hood": "chelsea-flatiron",
   "store": "cannaisseur",
@@ -138,9 +163,24 @@
   "store": "cbj-retail",
   "type": "dispensary"
  },
+ "/dispensaries/chelsea-cannabis-co/": {
+  "hood": "chelsea-flatiron",
+  "store": "chelsea-cannabis",
+  "type": "dispensary"
+ },
  "/dispensaries/conbud-les/": {
   "hood": "chinatown-les",
   "store": "conbud-les",
+  "type": "dispensary"
+ },
+ "/dispensaries/coney-island-cannabis/": {
+  "hood": "coney-island",
+  "store": "mzdz-corp",
+  "type": "dispensary"
+ },
+ "/dispensaries/culture-house-greenpoint/": {
+  "hood": "greenpoint",
+  "store": "altitude-ny",
   "type": "dispensary"
  },
  "/dispensaries/culture-house/": {
@@ -158,6 +198,21 @@
   "store": "dagmar-cannabis-williamsburg",
   "type": "dispensary"
  },
+ "/dispensaries/dankley/": {
+  "hood": "fidi",
+  "store": "dankley-manhattan",
+  "type": "dispensary"
+ },
+ "/dispensaries/dazed-union-square/": {
+  "hood": "gramercy-union-square",
+  "store": "dazed-union-square",
+  "type": "dispensary"
+ },
+ "/dispensaries/dispo-brooklyn/": {
+  "hood": "park-slope",
+  "store": "dispo-brooklyn",
+  "type": "dispensary"
+ },
  "/dispensaries/dizzpensary/": {
   "hood": "brooklyn-heights-downtown",
   "store": "dizzpensary",
@@ -173,9 +228,29 @@
   "store": "elevate-soho",
   "type": "dispensary"
  },
+ "/dispensaries/emerald-dispensary-carroll-gardens/": {
+  "hood": "carroll-gardens",
+  "store": "emerald-dispensary-carroll-gardens",
+  "type": "dispensary"
+ },
  "/dispensaries/enflor/": {
   "hood": "jackson-heights",
   "store": "enflor",
+  "type": "dispensary"
+ },
+ "/dispensaries/erbquest/": {
+  "hood": "chelsea-flatiron",
+  "store": "taozen-27th",
+  "type": "dispensary"
+ },
+ "/dispensaries/fireleaf/": {
+  "hood": "bergen-beach",
+  "store": "fireleaf",
+  "type": "dispensary"
+ },
+ "/dispensaries/flower-power/": {
+  "hood": "upper-west-side",
+  "store": "flower-power",
   "type": "dispensary"
  },
  "/dispensaries/flowery/": {
@@ -183,9 +258,19 @@
   "store": "flowery",
   "type": "dispensary"
  },
+ "/dispensaries/flynnstoned-chelsea/": {
+  "hood": "chelsea-flatiron",
+  "store": "bright-elephant-dispensary",
+  "type": "dispensary"
+ },
  "/dispensaries/gmdss-llc/": {
   "hood": "brooklyn-heights-downtown",
   "store": "gmdss-llc",
+  "type": "dispensary"
+ },
+ "/dispensaries/good-company/": {
+  "hood": "upper-west-side",
+  "store": "good-company",
   "type": "dispensary"
  },
  "/dispensaries/gotham-buds/": {
@@ -213,6 +298,16 @@
   "store": "gram-cannabis-dispensary",
   "type": "dispensary"
  },
+ "/dispensaries/grass-station/": {
+  "hood": "bensonhurst",
+  "store": "cannabis-kingdom",
+  "type": "dispensary"
+ },
+ "/dispensaries/green-apple-distributors/": {
+  "hood": "greenpoint",
+  "store": "green-apple-distributors",
+  "type": "dispensary"
+ },
  "/dispensaries/green-genius-nyc/": {
   "hood": "gramercy-union-square",
   "store": "green-genius-nyc",
@@ -226,6 +321,16 @@
  "/dispensaries/green-klub/": {
   "hood": "fidi",
   "store": "green-klub",
+  "type": "dispensary"
+ },
+ "/dispensaries/green-rise/": {
+  "hood": "midtown",
+  "store": "green-rise-retail",
+  "type": "dispensary"
+ },
+ "/dispensaries/green-room-ny/": {
+  "hood": "sheepshead-bay",
+  "store": "green-room-dispensary",
   "type": "dispensary"
  },
  "/dispensaries/green-street-brooklyn/": {
@@ -243,9 +348,29 @@
   "store": "happy-buds-brooklyn-dispensary",
   "type": "dispensary"
  },
+ "/dispensaries/happy-munkey-dyckman/": {
+  "hood": "harlem-washington-heights",
+  "store": "happy-munkey",
+  "type": "dispensary"
+ },
  "/dispensaries/healthy-choice/": {
   "hood": "harlem-washington-heights",
   "store": "healthy-choice",
+  "type": "dispensary"
+ },
+ "/dispensaries/hells-kitchen-cannabis/": {
+  "hood": "midtown",
+  "store": "hells-kitchen-cannabis",
+  "type": "dispensary"
+ },
+ "/dispensaries/herbology/": {
+  "hood": "bushwick",
+  "store": "1106-rebecca-street-llc",
+  "type": "dispensary"
+ },
+ "/dispensaries/herbwell-madison/": {
+  "hood": "midtown",
+  "store": "herbwell-madison-ave",
   "type": "dispensary"
  },
  "/dispensaries/high-tidez/": {
@@ -258,14 +383,74 @@
   "store": "highest-standards-fidi",
   "type": "dispensary"
  },
+ "/dispensaries/hii-bay-ridge/": {
+  "hood": "bay-ridge",
+  "store": "hii-3rd-ave",
+  "type": "dispensary"
+ },
+ "/dispensaries/hii-williamsburg/": {
+  "hood": "williamsburg",
+  "store": "hii-williamsburg",
+  "type": "dispensary"
+ },
+ "/dispensaries/housing-works-broadway/": {
+  "hood": "east-west-village",
+  "store": "housing-works-broadway",
+  "type": "dispensary"
+ },
+ "/dispensaries/hudson-haze/": {
+  "hood": "east-new-york",
+  "store": "hudson-haze-dispensary",
+  "type": "dispensary"
+ },
  "/dispensaries/hybrid-nyc/": {
   "hood": "williamsburg",
   "store": "hybrid-nyc",
   "type": "dispensary"
  },
+ "/dispensaries/indoor-treez-8th-avenue/": {
+  "hood": "midtown",
+  "store": "indoor-treez-8th-avenue",
+  "type": "dispensary"
+ },
+ "/dispensaries/indoor-treez-fashion-avenue/": {
+  "hood": "midtown",
+  "store": "indoor-treez-fashion-avenue",
+  "type": "dispensary"
+ },
+ "/dispensaries/jungle-kingdom-flower-company/": {
+  "hood": "bed-stuy",
+  "store": "jungle-kingdom-flower-company",
+  "type": "dispensary"
+ },
+ "/dispensaries/kaya-bliss-bay-ridge/": {
+  "hood": "bay-ridge",
+  "store": "kayabliss-bayridge",
+  "type": "dispensary"
+ },
  "/dispensaries/kiki-buddz/": {
   "hood": "woodside",
   "store": "kiki-buddz",
+  "type": "dispensary"
+ },
+ "/dispensaries/kushklub/": {
+  "hood": "chinatown-les",
+  "store": "kushklub",
+  "type": "dispensary"
+ },
+ "/dispensaries/lighthouse-cannabis/": {
+  "hood": "soho",
+  "store": "lighthouse-cannabis-dispensary",
+  "type": "dispensary"
+ },
+ "/dispensaries/mello-tymes/": {
+  "hood": "harlem-washington-heights",
+  "store": "mello-tymes-dispensary",
+  "type": "dispensary"
+ },
+ "/dispensaries/midnight-moon/": {
+  "hood": "harlem-washington-heights",
+  "store": "midnight-moon",
   "type": "dispensary"
  },
  "/dispensaries/mighty-lucky/": {
@@ -283,6 +468,21 @@
   "store": "ny-canna-co-5th-ave",
   "type": "dispensary"
  },
+ "/dispensaries/ny-cannabis-co/": {
+  "hood": "midtown",
+  "store": "ny-canna-co",
+  "type": "dispensary"
+ },
+ "/dispensaries/nyc-bud/": {
+  "hood": "long-island-city",
+  "store": "nycbud",
+  "type": "dispensary"
+ },
+ "/dispensaries/oc-dispensary/": {
+  "hood": "crown-heights",
+  "store": "oc-dispensary",
+  "type": "dispensary"
+ },
  "/dispensaries/organic-relief-leaf/": {
   "hood": "midtown",
   "store": "organic-relief-leaf",
@@ -298,9 +498,24 @@
   "store": "pryzm",
   "type": "dispensary"
  },
+ "/dispensaries/pure-blossoms/": {
+  "hood": "upper-west-side",
+  "store": "pure-blossoms",
+  "type": "dispensary"
+ },
+ "/dispensaries/puro-vita/": {
+  "hood": "clinton-hill",
+  "store": "puro-vita-retail",
+  "type": "dispensary"
+ },
  "/dispensaries/purple-buds-inc-recreational/": {
   "hood": "jackson-heights",
   "store": "purple-buds-inc-recreational",
+  "type": "dispensary"
+ },
+ "/dispensaries/q-dispensary/": {
+  "hood": "flatbush",
+  "store": "oet-inc",
   "type": "dispensary"
  },
  "/dispensaries/quality-control-ny/": {
@@ -311,6 +526,11 @@
  "/dispensaries/qube-manhattan/": {
   "hood": "midtown",
   "store": "qube-manhattan",
+  "type": "dispensary"
+ },
+ "/dispensaries/rezidue/": {
+  "hood": "midtown",
+  "store": "rezidue",
   "type": "dispensary"
  },
  "/dispensaries/rnr-dispensary/": {
@@ -331,6 +551,16 @@
  "/dispensaries/smiley-exotics/": {
   "hood": "gramercy-union-square",
   "store": "smiley-exotics",
+  "type": "dispensary"
+ },
+ "/dispensaries/sofaclub-broadway/": {
+  "hood": "upper-west-side",
+  "store": "sofaclub-broadway",
+  "type": "dispensary"
+ },
+ "/dispensaries/sparkboro/": {
+  "hood": "harlem-washington-heights",
+  "store": "sparkboro",
   "type": "dispensary"
  },
  "/dispensaries/stash-master/": {
@@ -368,6 +598,11 @@
   "store": "sweet-life-nyc",
   "type": "dispensary"
  },
+ "/dispensaries/take-n-toke/": {
+  "hood": "prospect-heights",
+  "store": "take-n-toke-dispensary",
+  "type": "dispensary"
+ },
  "/dispensaries/tango-hotel-charlie-ventures/": {
   "hood": "soho",
   "store": "tango-hotel-charlie-ventures",
@@ -383,9 +618,19 @@
   "store": "terp-bros-astoria",
   "type": "dispensary"
  },
+ "/dispensaries/tetra-east-harlem/": {
+  "hood": "harlem-washington-heights",
+  "store": "tetra-east-harlem",
+  "type": "dispensary"
+ },
  "/dispensaries/the-alchemy-chelsea/": {
   "hood": "chelsea-flatiron",
   "store": "blazinup",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-alchemy-flatiron/": {
+  "hood": "chelsea-flatiron",
+  "store": "the-alchemy-flatiron",
   "type": "dispensary"
  },
  "/dispensaries/the-daily-green/": {
@@ -396,6 +641,11 @@
  "/dispensaries/the-doe-store/": {
   "hood": "gramercy-union-square",
   "store": "the-doe-store",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-emerald-dispensary-bushwick/": {
+  "hood": "bushwick",
+  "store": "tedg",
   "type": "dispensary"
  },
  "/dispensaries/the-emerald-dispensary-manhattan/": {
@@ -428,9 +678,29 @@
   "store": "dizzpensary",
   "type": "dispensary"
  },
+ "/dispensaries/the-herbal-care/": {
+  "hood": "upper-east-side",
+  "store": "the-herbal-care",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-plug-brooklyn/": {
+  "hood": "crown-heights",
+  "store": "the-plug-brooklyn-ny",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-thc-shop-86th-street/": {
+  "hood": "bensonhurst",
+  "store": "the-thc-shop-ny-86th-st",
+  "type": "dispensary"
+ },
  "/dispensaries/the-travel-agency-downtown-brooklyn/": {
   "hood": "brooklyn-heights-downtown",
   "store": "gmdss-llc",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-travel-agency-fifth-avenue/": {
+  "hood": "midtown",
+  "store": "terrapin-greens-llc",
   "type": "dispensary"
  },
  "/dispensaries/the-travel-agency-soho/": {
@@ -448,6 +718,11 @@
   "store": "torches-nyc",
   "type": "dispensary"
  },
+ "/dispensaries/tru-cannabis/": {
+  "hood": "upper-west-side",
+  "store": "mad-ny-1",
+  "type": "dispensary"
+ },
  "/dispensaries/twenty-one-thirty/": {
   "hood": "upper-west-side",
   "store": "twenty-one-thirty",
@@ -458,9 +733,19 @@
   "store": "twenty8gramz",
   "type": "dispensary"
  },
+ "/dispensaries/twinn-leaf/": {
+  "hood": "midtown",
+  "store": "twinn-leaf",
+  "type": "dispensary"
+ },
  "/dispensaries/twisted-vibrations-retail/": {
   "hood": "williamsburg",
   "store": "twisted-vibrations-retail",
+  "type": "dispensary"
+ },
+ "/dispensaries/uplift-royal/": {
+  "hood": "harlem-washington-heights",
+  "store": "uplift-royal",
   "type": "dispensary"
  },
  "/dispensaries/verdi-park-slope/": {
@@ -471,6 +756,11 @@
  "/dispensaries/verdi/": {
   "hood": "chelsea-flatiron",
   "store": "verdi",
+  "type": "dispensary"
+ },
+ "/dispensaries/vereleaf/": {
+  "hood": "chelsea-flatiron",
+  "store": "vereleaf",
   "type": "dispensary"
  },
  "/dispensaries/weedkraft/": {

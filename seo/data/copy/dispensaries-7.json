@@ -1,0 +1,288 @@
+{
+  "cannabis-on-lex": {
+    "intro": [
+      "Cannabis on Lex is at 459 Lexington Avenue in East Midtown, Manhattan. At our last menu check it listed about {in_stock|about} products from {brands} brands, which puts it in the smaller half of the {hood_shops|word} licensed dispensaries we track in Midtown, a neighborhood where Qube on Broadway carries by far the biggest menu. It is one of a handful of Midtown shops east of Fifth Avenue: Torches on East 42nd Street and Urban Leaf on Second Avenue are the nearest alternatives, and Herbwell on Madison Avenue is the largest menu on this side of Midtown.",
+      "Vapes lead the menu at {cat.vaporizers} listings, followed by pre-rolls ({cat.pre-rolls}), edibles ({cat.edibles}) and a smaller flower shelf ({cat.flower}). There were no concentrates on the online menu at last check, and tinctures and topicals are only a few listings each. Ayrloom ({brand.ayrloom}) and Ruby Farms ({brand.Ruby Farms}) are the biggest brands, with Jaunty, Jetty, Select and Camino close behind. Prices start at {min_price}, the highest entry point among the Midtown shops we track: the cheapest items are a three-pack of 1906 Boost+ 30mg pills and a Golden Garden No Cap 1g pre-roll."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, in the smaller half of Midtown's licensed shops.",
+      "Vapes ({cat.vaporizers}) and pre-rolls ({cat.pre-rolls}) make up most of the shelf; no concentrates were listed at last check.",
+      "Ayrloom and Ruby Farms are the top brands, at {brand.ayrloom} and {brand.Ruby Farms} products.",
+      "Entry price is {min_price} before tax, higher than at any other Midtown shop we track."
+    ],
+    "faq": [
+      {
+        "q": "What does Cannabis on Lex carry most?",
+        "a": "Vapes, with {cat.vaporizers} listings at last check, followed by {cat.pre-rolls} pre-rolls and {cat.edibles} edibles. Ayrloom and Ruby Farms are the biggest brands on the menu, with Jaunty, Jetty, Select and Camino next."
+      },
+      {
+        "q": "What is the cheapest item at Cannabis on Lex?",
+        "a": "At last check the menu started at {min_price}, for a three-pack of 1906 Boost+ 30mg pills or a Golden Garden No Cap 1g pre-roll. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Cannabis on Lex?",
+        "a": "Torches at 12 East 42nd Street, Urban Leaf at 977 2nd Avenue and The Travel Agency at 587 5th Avenue are the closest Midtown shops we track. Herbwell Madison at 519 Madison Avenue is a little farther and carries a larger menu."
+      }
+    ]
+  },
+  "cannadreams": {
+    "intro": [
+      "Cannadreams is at 862 9th Avenue in Hell's Kitchen, on the west side of Midtown Manhattan. With about {in_stock|about} products from {brands} brands at our last menu check, it is the second-largest of the {hood_shops|word} licensed dispensaries we track in Midtown, behind only Qube on Broadway, and one of the bigger menus anywhere in the city. NY Cannabis Co., farther down Ninth Avenue at 743 9th Avenue, is close behind it in size, so the two are an easy pair for comparing prices and stock on the west side.",
+      "Vapes are the core of the shelf at around {cat.vaporizers|about} listings, with edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) all well stocked, a {cat.concentrates}-item concentrate case and {cat.tinctures} tinctures, the most of any Midtown shop. STIIIZY ({brand.STIIIZY}) and Rove ({brand.Rove}) are the biggest brands, and Cannadreams carries more of each than any other shop we track. MFNY, Ayrloom, Wizard Trees and Cannabals round out the top of the menu. Prices start at {min_price}, for MFNY 30mg live resin gummy three-packs such as Pina Colada x Strawpaya."
+    ],
+    "know": [
+      "Second-largest menu in Midtown after Qube: about {in_stock|about} products from {brands} brands.",
+      "More STIIIZY ({brand.STIIIZY}) and Rove ({brand.Rove}) than any other shop in our NYC data.",
+      "Vapes lead at around {cat.vaporizers|about} listings; the {cat.tinctures} tinctures are the most of any Midtown shop.",
+      "Entry price {min_price} before tax, for MFNY live resin gummy three-packs."
+    ],
+    "faq": [
+      {
+        "q": "Where is Cannadreams?",
+        "a": "At 862 9th Avenue in Hell's Kitchen, on the west side of Midtown Manhattan. NY Cannabis Co. at 743 9th Avenue and Nicklz at 797 8th Avenue are the nearest Midtown shops we track, and Rezidue on 11th Avenue is also close."
+      },
+      {
+        "q": "What brands does Cannadreams carry most?",
+        "a": "STIIIZY and Rove by a wide margin, at {brand.STIIIZY} and {brand.Rove} products at last check, more of either brand than any other dispensary in our data. MFNY, Ayrloom, Wizard Trees and Cannabals come next."
+      },
+      {
+        "q": "What is the cheapest item at Cannadreams?",
+        "a": "At last check the menu started at {min_price}, for MFNY 30mg live resin gummy three-packs. Field of Dreams pre-rolls and High Falls sleep gummies were among the next cheapest. Prices on Sensei are menu prices before New York's cannabis tax."
+      }
+    ]
+  },
+  "green-rise-retail": {
+    "intro": [
+      "Green Rise is at 599 10th Avenue in Hell's Kitchen, on the west side of Midtown Manhattan. At our last menu check it listed about {in_stock|about} products from {brands} brands, which puts it in the middle of the {hood_shops|word} licensed dispensaries we track in Midtown by product count. The brand count tells a different story: only Qube on Broadway carries more brands in the neighborhood, so Green Rise stocks a wide range of labels with fewer items from each. Hell's Kitchen Cannabis on West 40th Street is the nearest shop we track, and NY Cannabis Co. and Cannadreams on Ninth Avenue are a little farther north.",
+      "Pre-rolls are the biggest section, at around {cat.pre-rolls|about} listings, followed by edibles ({cat.edibles}) and flower ({cat.flower}). Vapes ({cat.vaporizers}) are a smaller section than the size of the menu might suggest, and concentrates, tinctures and topicals are limited. STIIIZY ({brand.STIIIZY}) and Ruby Farms ({brand.Ruby Farms}) are the biggest brands, with Florist Farms, Ayrloom, Jaunty and Grön close behind, so no single label dominates the shelf. Prices start at {min_price}, for 1906 tablet pouches such as the Bliss, Chill and Go two-packs and the Genius four-pack."
+    ],
+    "know": [
+      "About {in_stock|about} products, mid-sized for Midtown, but {brands} brands, second only to Qube in the neighborhood.",
+      "Pre-rolls lead at around {cat.pre-rolls|about} listings, with edibles ({cat.edibles}) and flower ({cat.flower}) next.",
+      "No single brand dominates: STIIIZY, Ruby Farms, Florist Farms, Ayrloom, Jaunty and Grön carry similar weight.",
+      "Entry price {min_price} before tax, for 1906 tablet two-packs."
+    ],
+    "faq": [
+      {
+        "q": "How many brands does Green Rise carry?",
+        "a": "{brands} at last check, more than any Midtown shop except Qube, spread across about {in_stock|about} products. STIIIZY and Ruby Farms are the largest, at {brand.STIIIZY} and {brand.Ruby Farms} products."
+      },
+      {
+        "q": "What is the cheapest item at Green Rise?",
+        "a": "At last check the menu started at {min_price}, for 1906 Bliss, Chill and Go tablet two-packs and the 1906 Genius four-pack. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Green Rise?",
+        "a": "Hell's Kitchen Cannabis at 356 West 40th Street is the closest Midtown shop we track, with Indoor Treez at 584 8th Avenue, NY Cannabis Co. at 743 9th Avenue and Rezidue at 723 11th Avenue also nearby."
+      }
+    ]
+  },
+  "hells-kitchen-cannabis": {
+    "intro": [
+      "Hell's Kitchen Cannabis is at 356 West 40th Street, between Eighth and Ninth Avenues at the southern end of Hell's Kitchen, in the Midtown area of Manhattan. It is one of the smaller menus nearby: at our last check it listed about {in_stock|about} products from {brands} brands, near the bottom of the {hood_shops|word} licensed dispensaries we track in Midtown, where Qube on Broadway is the largest. Indoor Treez on 8th Avenue is the nearest shop we track, and Green Rise on 10th Avenue and Twinn Leaf on 7th Avenue are a short walk away for a wider selection.",
+      "The menu is not built around a single category. Pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and edibles ({cat.edibles}) are close in size, with vapes ({cat.vaporizers}) and a small concentrate shelf ({cat.concentrates}) behind them, and flower makes up a larger share of the menu than at most Midtown shops. Dompen ({brand.dompen™}) and Harney Brothers ({brand.Harney Brothers}) are the biggest brands, followed by Major, Left Coast, District 7 and LEVEL. Prices start at {min_price}, for a NY Infusions Cherry Limeade 10mg lollipop and LEVEL Protab Slumber 40mg two-packs."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, one of the smaller menus in Midtown.",
+      "Pre-rolls, flower and edibles are close in size ({cat.pre-rolls}, {cat.flower} and {cat.edibles}).",
+      "Dompen and Harney Brothers are the top brands, at {brand.dompen™} and {brand.Harney Brothers} products.",
+      "Entry price {min_price} before tax, for single lollipops and tablet two-packs."
+    ],
+    "faq": [
+      {
+        "q": "Where is Hell's Kitchen Cannabis?",
+        "a": "At 356 West 40th Street, between Eighth and Ninth Avenues in Midtown Manhattan. Indoor Treez at 584 8th Avenue is the nearest licensed shop we track."
+      },
+      {
+        "q": "What does Hell's Kitchen Cannabis carry most?",
+        "a": "Pre-rolls, at {cat.pre-rolls} listings at last check, with flower ({cat.flower}) and edibles ({cat.edibles}) close behind. Dompen and Harney Brothers are the biggest brands."
+      },
+      {
+        "q": "What other dispensaries are near Hell's Kitchen Cannabis?",
+        "a": "Indoor Treez at 584 8th Avenue, Green Rise at 599 10th Avenue and Twinn Leaf at 566 7th Avenue are the closest Midtown shops we track. Qube at 1412 Broadway, a little farther east, has the largest menu in the city."
+      }
+    ]
+  },
+  "herbwell-madison-ave": {
+    "intro": [
+      "Herbwell Madison is at 519 Madison Avenue in East Midtown, Manhattan. At our last menu check it listed about {in_stock|about} products from {brands} brands, which places it in the upper half of the {hood_shops|word} licensed dispensaries we track in Midtown and makes it the largest Midtown menu we track east of Fifth Avenue. Qube on Broadway is still far bigger, but Herbwell is the deepest option on this side of the neighborhood. The Travel Agency on Fifth Avenue is the nearest licensed shop we track, with Urban Leaf on Second Avenue and Cannabis on Lex a little farther east.",
+      "Vapes are the biggest section by far, at around {cat.vaporizers|about} listings, followed by edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}). The topicals shelf ({cat.topicals}) is the deepest in Midtown and one of the largest in the city. Jeeter ({brand.Jeeter}) is the biggest brand, and only Qube carries more Jeeter among the shops we track; MFNY, Rove, Jetpacks, Bloom and Ayrloom follow. Prices start at {min_price}, for single-serve edibles and drinks such as Foy Good Moood gummies, Ayrloom sour raspberry lemonade gummies and Ayrloom black cherry sparkling water."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the largest Midtown menu we track east of Fifth Avenue.",
+      "Vape-heavy: around {cat.vaporizers|about} vape listings against {cat.flower} flower.",
+      "Jeeter leads with {brand.Jeeter} products, second only to Qube in our NYC data.",
+      "{cat.topicals} topicals, the most of any Midtown shop; entry price {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "What does Herbwell Madison carry most?",
+        "a": "Vapes, with around {cat.vaporizers|about} listings at last check, then edibles ({cat.edibles}). Jeeter is the biggest single brand, at {brand.Jeeter} products, followed by MFNY, Rove and Jetpacks."
+      },
+      {
+        "q": "Does Herbwell Madison sell topicals?",
+        "a": "Yes. It listed {cat.topicals} topicals at last check, more than any other Midtown shop we track, so it is a good stop if topicals are what you are after."
+      },
+      {
+        "q": "What other dispensaries are near Herbwell Madison?",
+        "a": "The Travel Agency at 587 5th Avenue is the closest Midtown shop we track, with Urban Leaf at 977 2nd Avenue and Cannabis on Lex at 459 Lexington Avenue a little farther away."
+      }
+    ]
+  },
+  "indoor-treez-8th-avenue": {
+    "intro": [
+      "Indoor Treez 8th Avenue is at 584 8th Avenue in Midtown Manhattan, a short walk from the Indoor Treez on Fashion Avenue, which has its own separate menu. At our last check this shop listed about {in_stock|about} products from {brands} brands, which puts it among the smaller of the {hood_shops|word} licensed dispensaries we track in Midtown, where Qube on Broadway is far ahead. The brand count is high for a menu this size, so you get a wide spread of labels with only a few items from each. Hell's Kitchen Cannabis on West 40th Street is the nearest shop we track, and Twinn Leaf and Qube are a few blocks east.",
+      "Edibles are the largest section ({cat.edibles}), followed by pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}), with a {cat.concentrates}-item concentrate shelf and a few topicals and tinctures. MFNY ({brand.MFNY}) is the biggest brand, ahead of Honey King ({brand.Honey King}), Static Room, Dompen, Layup and Rove. Cannabis drinks show up often among the cheapest items: prices start at {min_price}, for a 10mg High Peaks root beer, with Jaunty hash-infused gummy two-packs and Layup drinks such as Black Cherry Lemonade next."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands; a smaller Midtown menu with a wide brand spread.",
+      "Edibles lead ({cat.edibles}), with pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) close behind.",
+      "MFNY and Honey King are the top brands, at {brand.MFNY} and {brand.Honey King} products.",
+      "Entry price {min_price} before tax, mostly for cannabis drinks."
+    ],
+    "faq": [
+      {
+        "q": "Is Indoor Treez 8th Avenue the same as Indoor Treez Fashion Avenue?",
+        "a": "They are listed as separate shops with separate menus: this one at 584 8th Avenue, the other at 474 Fashion Avenue, a short walk to the south-east. The Fashion Avenue shop carries a larger menu weighted heavily toward flower, while the 8th Avenue menu leans toward edibles and pre-rolls."
+      },
+      {
+        "q": "What is the cheapest item at Indoor Treez 8th Avenue?",
+        "a": "At last check the menu started at {min_price}, for a 10mg High Peaks root beer. Jaunty hash-infused gummy two-packs and Layup drinks were next. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Indoor Treez 8th Avenue?",
+        "a": "Hell's Kitchen Cannabis at 356 West 40th Street is the closest, followed by Twinn Leaf at 566 7th Avenue, Indoor Treez Fashion Avenue at 474 Fashion Avenue and Qube at 1412 Broadway, which has the largest menu in the city."
+      }
+    ]
+  },
+  "indoor-treez-fashion-avenue": {
+    "intro": [
+      "Indoor Treez Fashion Avenue is at 474 Fashion Avenue, the Garment District stretch of Seventh Avenue in Midtown Manhattan. At our last menu check it listed about {in_stock|about} products from {brands} brands, in the middle of the {hood_shops|word} licensed dispensaries we track in Midtown by size. What sets it apart is the mix: {cat.flower} of those products are flower, more than any Midtown shop except Qube and a larger share of the menu than at any other licensed dispensary in our NYC data. If flower is what you came for, this is the most flower-focused shelf in the city.",
+      "Everything else plays a supporting role: pre-rolls ({cat.pre-rolls}), vapes ({cat.vaporizers}), concentrates ({cat.concentrates}) and a short list of edibles ({cat.edibles}), plus {cat.tinctures|word} tinctures. The flower comes from many growers rather than one dominant label: Royal Genetics ({brand.Royal Genetics}) is the largest brand, followed by Julia, Preferred Gardens, Grocery, PiCC and urbanXtracts. Prices start at {min_price}, for Cycling Frog 1:1 drinks at 10 mg in flavors such as Black Currant and Wild Cherry, so the cheapest items are beverages even though flower is the focus. The separate Indoor Treez on 8th Avenue is a short walk away."
+    ],
+    "know": [
+      "Flower-first: {cat.flower} of about {in_stock|about} products, the highest flower share of any shop we track.",
+      "Second only to Qube for flower listings in Midtown.",
+      "Edibles and vapes are thin ({cat.edibles} and {cat.vaporizers}), so look elsewhere for a wide choice of gummies or carts.",
+      "Entry price {min_price} before tax, for Cycling Frog 1:1 drinks."
+    ],
+    "faq": [
+      {
+        "q": "Is Indoor Treez Fashion Avenue good for flower?",
+        "a": "It is the most flower-focused menu in our data: {cat.flower} of about {in_stock|about} products are flower, from growers including Royal Genetics, Julia, Preferred Gardens and Grocery. Only Qube lists more flower in Midtown."
+      },
+      {
+        "q": "Is it the same as Indoor Treez 8th Avenue?",
+        "a": "They are listed as separate shops with separate menus. The 8th Avenue shop, at 584 8th Avenue, is smaller and leans toward edibles and pre-rolls rather than flower."
+      },
+      {
+        "q": "What other dispensaries are near Indoor Treez Fashion Avenue?",
+        "a": "Culture House at 958 6th Avenue is the closest Midtown shop we track, with Qube at 1412 Broadway, Twinn Leaf at 566 7th Avenue and Indoor Treez at 584 8th Avenue all a short walk away."
+      }
+    ]
+  },
+  "ny-canna-co": {
+    "intro": [
+      "NY Cannabis Co. is at 743 9th Avenue in Hell's Kitchen, on the west side of Midtown Manhattan. It is a different shop from NY Canna Co on Fifth Avenue, which Sensei lists separately at 381 5th Avenue with its own menu. At our last check NY Cannabis Co. listed about {in_stock|about} products from {brands} brands, making it the third-largest of the {hood_shops|word} licensed dispensaries we track in Midtown, after Qube on Broadway and Cannadreams, which sits a few blocks up Ninth Avenue. Nicklz on 8th Avenue is the closest shop we track.",
+      "The menu is broad and evenly stocked: pre-rolls ({cat.pre-rolls}), vapes ({cat.vaporizers}) and edibles ({cat.edibles}) are all deep, and only Qube lists more pre-rolls or edibles in Midtown. Flower ({cat.flower}) and concentrates ({cat.concentrates}) are well covered too. Cannabals ({brand.Cannabals}) is the biggest brand, and no shop we track carries more of it; Jeeter ({brand.Jeeter}), Jaunty, Rove, Ayrloom and Brass Knuckles follow. Prices start at {min_price}, for 1906 tablets such as the Bliss, Boost and Chill two-packs and the Genius four-pack."
+    ],
+    "know": [
+      "Third-largest menu in Midtown: about {in_stock|about} products from {brands} brands.",
+      "More Cannabals ({brand.Cannabals}) than any other shop in our NYC data.",
+      "Pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}) are second only to Qube in Midtown.",
+      "Not the same shop as NY Canna Co at 381 5th Avenue; entry price here is {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "Is NY Cannabis Co. the same as NY Canna Co on Fifth Avenue?",
+        "a": "No. Sensei lists them as separate shops with separate menus: NY Cannabis Co. at 743 9th Avenue in Hell's Kitchen, and NY Canna Co at 381 5th Avenue, farther south and east in Midtown. Stock and prices differ, so check the page for the location you plan to visit."
+      },
+      {
+        "q": "What does NY Cannabis Co. carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings at last check, followed closely by vapes ({cat.vaporizers}) and edibles ({cat.edibles}). Cannabals is the biggest brand, at {brand.Cannabals} products."
+      },
+      {
+        "q": "What other dispensaries are near NY Cannabis Co.?",
+        "a": "Nicklz at 797 8th Avenue is the closest Midtown shop we track, and Cannadreams at 862 9th Avenue, slightly larger, is a few blocks north. Rezidue at 723 11th Avenue is also nearby."
+      }
+    ]
+  },
+  "rezidue": {
+    "intro": [
+      "Rezidue is at 723 11th Avenue on the far west side of Hell's Kitchen, in the Midtown area of Manhattan. It has the smallest online menu of the {hood_shops|word} licensed dispensaries we track in Midtown: at our last check it listed about {in_stock|about} products from {brands} brands, a fraction of what nearby shops carry. A menu this size may mean the shop publishes only part of its stock online, so it is worth checking with the store before going for a specific item. NY Cannabis Co. and Cannadreams on Ninth Avenue and Green Rise on 10th Avenue are the closest larger menus.",
+      "What is listed leans heavily toward edibles: {cat.edibles} of the products are edibles, a larger share than at any other shop we track, with pre-rolls ({cat.pre-rolls}) the only other sizable section. Flower ({cat.flower}) and vapes ({cat.vaporizers}) are barely represented, alongside a handful of topicals, concentrates and tinctures. Drops ({brand.Drops}) is the biggest brand, followed by STIIIZY ({brand.STIIIZY}), Camino, PICC, DragonFly and Smokiez. The {min_price} entry price is for a bottle of water rather than a cannabis product; the cheapest cannabis items are Ayrloom 2:1 sodas such as Orange Creamsicle, Root Beer and Vanilla Cola."
+    ],
+    "know": [
+      "Smallest online menu in Midtown at last check: about {in_stock|about} products from {brands} brands.",
+      "Edibles make up most of the menu ({cat.edibles}); flower and vapes are minimal.",
+      "Drops and STIIIZY are the top brands, at {brand.Drops} and {brand.STIIIZY} products.",
+      "The {min_price} listing is bottled water; Ayrloom sodas are the cheapest cannabis items."
+    ],
+    "faq": [
+      {
+        "q": "Why is Rezidue's menu so small?",
+        "a": "With {in_stock} products listed at last check, Rezidue has the smallest online menu among the Midtown shops we track. The online menu may not reflect everything at the counter, so confirm with the store before making a trip for a specific product."
+      },
+      {
+        "q": "What does Rezidue carry most?",
+        "a": "Edibles, at {cat.edibles} listings, followed by pre-rolls ({cat.pre-rolls}). Drops is the biggest brand, with STIIIZY, Camino and PICC next."
+      },
+      {
+        "q": "What other dispensaries are near Rezidue?",
+        "a": "NY Cannabis Co. at 743 9th Avenue, Cannadreams at 862 9th Avenue and Green Rise at 599 10th Avenue are the closest Midtown shops we track, and all carry much larger menus."
+      }
+    ]
+  },
+  "terrapin-greens-llc": {
+    "intro": [
+      "The Travel Agency Fifth Avenue is at 587 5th Avenue in Midtown Manhattan. At our last menu check it listed about {in_stock|about} products from {brands} brands, which puts it near the middle of the {hood_shops|word} licensed dispensaries we track in Midtown, where Qube on Broadway is the largest. It carries fewer brands than Midtown shops of a similar size, so the brands it does stock tend to run deep. It is also a different shop from NY Canna Co, which is farther down Fifth Avenue at 381 5th Avenue. Herbwell on Madison Avenue is the nearest licensed shop we track, with The Daily Green on 7th Avenue and Torches on East 42nd Street also close.",
+      "Edibles ({cat.edibles}) and vapes ({cat.vaporizers}) are the biggest sections, followed by flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}), with a {cat.concentrates}-item concentrate shelf and {cat.tinctures} tinctures, more than most Midtown shops carry. RYTHM ({brand.RYTHM}) is the biggest brand by a wide margin, one of the deepest RYTHM selections in the city, and Ruby Farms ({brand.Ruby Farms}) is second; Heavy Hitters, Select, Fernway and Harney Brothers follow. Prices start at {min_price}, for single-serve edibles and drinks such as a Harney Brothers Focus coffee shot, a Layup iced tea lemonade and Minny Grown's Boat Cruise Cosmo."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, mid-sized for Midtown.",
+      "RYTHM leads with {brand.RYTHM} products, among the deepest RYTHM selections we track.",
+      "Edibles and vapes lead ({cat.edibles} and {cat.vaporizers}); tinctures ({cat.tinctures}) are deeper than at most Midtown shops.",
+      "Entry price {min_price} before tax, for single-serve drinks and edibles."
+    ],
+    "faq": [
+      {
+        "q": "Where is The Travel Agency Fifth Avenue?",
+        "a": "At 587 5th Avenue in Midtown Manhattan. It is a different shop from NY Canna Co, which is farther south at 381 5th Avenue. Herbwell Madison at 519 Madison Avenue is the closest licensed shop we track."
+      },
+      {
+        "q": "What brands does The Travel Agency carry most?",
+        "a": "RYTHM, with {brand.RYTHM} products at last check, then Ruby Farms ({brand.Ruby Farms}). Heavy Hitters, Select, Fernway and Harney Brothers round out its biggest brands."
+      },
+      {
+        "q": "What is the cheapest item at The Travel Agency?",
+        "a": "At last check the menu started at {min_price}, for single-serve items including a Harney Brothers Focus coffee shot, a Layup iced tea lemonade and Minny Grown's Boat Cruise Cosmo and Lakeside Lemon Drop. Prices on Sensei are menu prices before New York's cannabis tax."
+      }
+    ]
+  },
+  "twinn-leaf": {
+    "intro": [
+      "Twinn Leaf is at 566 7th Avenue in the Garment District, part of Midtown Manhattan. At our last menu check it listed about {in_stock|about} products from {brands} brands, in the smaller half of the {hood_shops|word} licensed dispensaries we track in Midtown. Qube on Broadway, the largest menu in the city, is a short walk away, and both Indoor Treez locations and Culture House on 6th Avenue are also close, so this corner of Midtown has plenty of options if Twinn Leaf does not have what you want.",
+      "The menu is evenly split across the main categories: vapes ({cat.vaporizers}), edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) are close in size, with flower ({cat.flower}) and a small concentrate shelf ({cat.concentrates}) behind them. No topicals were listed at last check. Select ({brand.Select}) is the biggest brand, followed by Fernway ({brand.Fernway}), Ruby Farms, RYTHM, Grassroots and urbanXtracts. Prices start at {min_price}, for MFNY live resin gummy three-packs such as Peach x Oishii and Sour Fruit Punch x Lemon Sour Dawg; Layup drinks are the next cheapest items on the menu."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, a smaller Midtown menu.",
+      "Vapes, edibles and pre-rolls are evenly matched ({cat.vaporizers}, {cat.edibles} and {cat.pre-rolls}).",
+      "Select and Fernway are the top brands, at {brand.Select} and {brand.Fernway} products.",
+      "Entry price {min_price} before tax, for MFNY gummy three-packs."
+    ],
+    "faq": [
+      {
+        "q": "How big is Twinn Leaf's menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, on the smaller side for Midtown. Qube, a short walk away on Broadway, carries the largest menu in the city if you need more choice."
+      },
+      {
+        "q": "What is the cheapest item at Twinn Leaf?",
+        "a": "At last check the menu started at {min_price}, for MFNY live resin gummy three-packs. Layup drinks were the next cheapest. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Twinn Leaf?",
+        "a": "Qube at 1412 Broadway is the closest, followed by Indoor Treez at 584 8th Avenue, Indoor Treez at 474 Fashion Avenue and Culture House at 958 6th Avenue."
+      }
+    ]
+  }
+}

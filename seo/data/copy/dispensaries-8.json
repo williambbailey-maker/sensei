@@ -1,0 +1,314 @@
+{
+  "bright-elephant-dispensary": {
+    "intro": [
+      "Flynnstoned Chelsea is at 206 8th Avenue in Chelsea, Manhattan. At last count its menu listed about {in_stock|about} products from {brands} brands, which makes it one of the smaller menus among the {hood_shops|word} licensed shops we track in Chelsea and Flatiron. Only Erbquest on West 27th Street lists fewer, while Chelsea Cannabis Co. on Seventh Avenue and The Alchemy Chelsea, farther up Eighth Avenue at number 302, both carry noticeably more. It is still a full menu with every major category on the shelf, so it works as an everyday neighborhood stop even if it is not the place for the widest choice.",
+      "Edibles and pre-rolls lead, with about {cat.edibles|about} edibles and {cat.pre-rolls|about} pre-rolls, followed by roughly {cat.flower|about} flower options and {cat.vaporizers|about} vapes. Concentrates ({cat.concentrates}), tinctures ({cat.tinctures}) and topicals ({cat.topicals}) are only a small part of the menu. Kushy Punch is the biggest brand with {brand.Kushy Punch} items and Camino is next with {brand.Camino}, so gummies are a strength; Umamii, Claybourne Co., Drops and Anthem round out the top six. The entry price is {min_price}, and the cheapest items are Ayrloom 2:1 THC and CBD edibles in flavors such as Cranberry Apple, Honeycrisp and Lemonade. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, one of the smaller menus in Chelsea and Flatiron.",
+      "Edibles ({cat.edibles|about}) and pre-rolls ({cat.pre-rolls|about}) lead the menu.",
+      "Kushy Punch and Camino gummies are the biggest brands here.",
+      "Entry price is {min_price} before tax, for Ayrloom 2:1 edibles."
+    ],
+    "faq": [
+      {
+        "q": "Where is Flynnstoned Chelsea?",
+        "a": "At 206 8th Avenue, New York, NY 10011, in Chelsea, Manhattan. It is one of the {hood_shops|word} licensed dispensaries Sensei tracks in Chelsea and Flatiron."
+      },
+      {
+        "q": "What does Flynnstoned Chelsea carry most?",
+        "a": "Edibles and pre-rolls. At last check the menu had about {cat.edibles|about} edibles and {cat.pre-rolls|about} pre-rolls, and the biggest brands were Kushy Punch ({brand.Kushy Punch} items) and Camino ({brand.Camino})."
+      },
+      {
+        "q": "What other dispensaries are near Flynnstoned Chelsea?",
+        "a": "The Alchemy Chelsea is on the same avenue at 302 8th Avenue, and Chelsea Cannabis Co. at 104 7th Avenue has the largest menu in the area. Gotham Chelsea, Verdi and VereLeaf are also in Chelsea."
+      }
+    ]
+  },
+  "chelsea-cannabis": {
+    "intro": [
+      "Chelsea Cannabis Co. is at 104 7th Avenue in Chelsea, Manhattan, and it has the largest menu of the {hood_shops|word} licensed dispensaries we track in Chelsea and Flatiron: about {in_stock|about} products from {brands} brands at last count. Stoops on Fifth Avenue comes closest, while the rest of the area's shops, including The Alchemy, Gotham, Poppin and Verdi, list noticeably fewer. Its brand count is among the highest of any shop in Manhattan, which makes it a good stop when you are looking for a specific label rather than browsing.",
+      "The menu is balanced across categories. Pre-rolls (about {cat.pre-rolls|about}), flower ({cat.flower|about}) and vapes ({cat.vaporizers|about}) lead, with roughly {cat.edibles|about} edibles and a {cat.concentrates}-item concentrate section. The wellness side is unusually deep: its {cat.topicals} topicals are the most of any shop we track, and there are {cat.tinctures} tinctures as well. Heavy Hitters ({brand.Heavy Hitters} items) and ROVE ({brand.ROVE}) are the biggest brands, followed by DANK, The Healing Rose, Fernway and PAX. The entry price is {min_price}, and the cheapest items are The Healing Rose CBD lip balms in flavors such as Coconut, Lemon Lime and Peppermint Rosemary."
+    ],
+    "know": [
+      "Largest menu in Chelsea and Flatiron: about {in_stock|about} products from {brands} brands.",
+      "Its {cat.topicals} topicals are the most of any shop we track, plus {cat.tinctures} tinctures.",
+      "Pre-rolls, flower and vapes lead; Heavy Hitters and ROVE are the biggest brands.",
+      "Entry price is {min_price} before tax, for Healing Rose CBD lip balms."
+    ],
+    "faq": [
+      {
+        "q": "How big is Chelsea Cannabis Co.'s menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, the largest of the {hood_shops|word} licensed shops Sensei tracks in Chelsea and Flatiron."
+      },
+      {
+        "q": "Does Chelsea Cannabis Co. sell topicals and tinctures?",
+        "a": "Yes. It listed {cat.topicals} topicals, more than any other shop we track, and {cat.tinctures} tinctures. The cheapest items on the whole menu are The Healing Rose CBD lip balms at {min_price}, before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Chelsea Cannabis Co.?",
+        "a": "Stoops at 182 5th Avenue has the next-largest menu in the area. The Alchemy has stores at 302 8th Avenue and 12 West 18th Street, and Flynnstoned Chelsea, Verdi and Gotham Chelsea are also nearby."
+      }
+    ]
+  },
+  "taozen-27th": {
+    "intro": [
+      "Erbquest is a dispensary at 52 West 27th Street in Manhattan. Sensei tracks {hood_shops|word} licensed shops in the Chelsea and Flatiron area, and Erbquest has by far the smallest online menu among them: at our last check it listed just {in_stock|word} products from {brands|word} brands, while the next-smallest shop in the area lists several hundred. It is also one of the smallest menus we track anywhere in New York City. A menu this small usually means a store publishes only part of its stock online or has only recently started listing, so check with the store before making a trip for something specific.",
+      "What is listed leans toward flower and pre-rolls: {cat.flower} flower options and {cat.pre-rolls} pre-rolls, plus {cat.vaporizers} vapes and {cat.edibles} edibles. The brand 1937 is the biggest on the menu with {brand.1937} items, and Jenny's is next with {brand.jenny's}, followed by Boukét, Kings & Queens, HiCOLOR and Lion Order. The entry price is {min_price}, and the cheapest listings are Jenny's pre-rolls in strains such as Super Lemon Haze, Biscotti and Acapulco Gold. If you need a wider choice, Chelsea Cannabis Co. on Seventh Avenue and Stoops on Fifth Avenue carry the largest menus in the area. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "Just {in_stock|word} products from {brands|word} brands at our last check, the smallest menu in Chelsea and Flatiron.",
+      "Flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}) make up most of the listings.",
+      "Entry price is {min_price} before tax, for Jenny's pre-rolls.",
+      "Check with the store before a trip; the online menu may not show the full counter."
+    ],
+    "faq": [
+      {
+        "q": "Why does Erbquest have so few products listed?",
+        "a": "A menu of {in_stock|word} products is far below what a typical licensed New York shop lists. The likeliest explanations are an online menu that shows only part of the stock or a recent start to listing. Confirm with the store directly before going for a specific item."
+      },
+      {
+        "q": "What is the cheapest item at Erbquest?",
+        "a": "At last check the menu started at {min_price}, for Jenny's pre-rolls such as Super Lemon Haze and Biscotti. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Erbquest?",
+        "a": "Sensei tracks {hood_shops|word} licensed shops in Chelsea and Flatiron. Chelsea Cannabis Co. at 104 7th Avenue and Stoops at 182 5th Avenue have the largest menus, and VereLeaf on Eighth Avenue and Bud & Honey on Fifth Avenue are other options."
+      }
+    ]
+  },
+  "the-alchemy-flatiron": {
+    "intro": [
+      "The Alchemy Flatiron is at 12 West 18th Street, just off Fifth Avenue in the Flatiron District of Manhattan, and it is the sister store of The Alchemy Chelsea at 302 8th Avenue. At last count it listed about {in_stock|about} products from {brands} brands, which puts it in the middle of the {hood_shops|word} licensed shops we track in Chelsea and Flatiron. Chelsea Cannabis Co., Stoops and its own Chelsea sibling list more, while Verdi, Bud & Honey, VereLeaf and Flynnstoned Chelsea list fewer, so it is a solid mid-sized menu for the area.",
+      "Edibles are the largest category at about {cat.edibles|about} listings, with vapes ({cat.vaporizers|about}) and pre-rolls ({cat.pre-rolls|about}) close behind and roughly {cat.flower|about} flower options. There is a {cat.concentrates}-item concentrate section, plus a few tinctures and topicals. Ayrloom is the biggest brand with {brand.ayrloom} items and MFNY is next with {brand.MFNY}, followed by Fernway, Claybourne Co., Heady Tree and Camino. The entry price is {min_price}, and the cheapest items are Ayrloom 2:1 THC and CBD drinks with 10 mg of THC, in flavors such as Black Cherry, Cran Apple and Honeycrisp. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "Sister store of The Alchemy Chelsea on Eighth Avenue.",
+      "About {in_stock|about} products from {brands} brands, mid-sized for Chelsea and Flatiron.",
+      "Edibles lead at about {cat.edibles|about}, with vapes and pre-rolls close behind; Ayrloom and MFNY are the biggest brands.",
+      "Entry price is {min_price} before tax, for Ayrloom 2:1 drinks."
+    ],
+    "faq": [
+      {
+        "q": "Where is The Alchemy Flatiron?",
+        "a": "At 12 West 18th Street, New York, NY 10011, just off Fifth Avenue in the Flatiron District. Its sister store, The Alchemy Chelsea, is at 302 8th Avenue."
+      },
+      {
+        "q": "What does The Alchemy Flatiron carry most?",
+        "a": "Edibles, at about {cat.edibles|about} listings, followed by vapes and pre-rolls. The biggest brands are Ayrloom ({brand.ayrloom} items) and MFNY ({brand.MFNY})."
+      },
+      {
+        "q": "What other dispensaries are near The Alchemy Flatiron?",
+        "a": "Stoops at 182 5th Avenue and Bud & Honey at 241 5th Avenue are on Fifth Avenue, and Chelsea Cannabis Co. at 104 7th Avenue has the largest menu of the {hood_shops|word} shops we track in Chelsea and Flatiron."
+      }
+    ]
+  },
+  "vereleaf": {
+    "intro": [
+      "VereLeaf is at 383 8th Avenue in Chelsea, Manhattan. At our last check it listed about {in_stock|about} products from {brands} brands, which places it in the lower half of the {hood_shops|word} licensed shops we track in Chelsea and Flatiron, where Chelsea Cannabis Co. and Stoops have the largest menus. It is still a full menu with every major category on the shelf, and unlike many of its neighbors it has a clear specialty, which makes it worth a look if you know what kind of product you want before you walk in.",
+      "That specialty is pre-rolls. About {cat.pre-rolls|about} of the listings are pre-rolls, well ahead of vapes ({cat.vaporizers|about}), edibles ({cat.edibles|about}) and flower ({cat.flower|about}), with {cat.concentrates} concentrates and a few tinctures and topicals. Florist Farms is the biggest brand with {brand.Florist Farms} items and Nanticoke is next with {brand.Nanticoke}, followed by Off Hours, MFNY, Ayrloom and Dank By Definition. The entry price is {min_price}, shared by Pioneer Plant-Tech half-gram pre-rolls such as Papaya Diesel and Pioneer Blueberry and by Florist Farms 10 mg edible two-packs. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "Pre-rolls lead the menu at about {cat.pre-rolls|about} listings.",
+      "About {in_stock|about} products from {brands} brands in all.",
+      "Florist Farms and Nanticoke are the biggest brands, with Off Hours and MFNY close behind.",
+      "Entry price is {min_price} before tax, for half-gram pre-rolls and edible two-packs."
+    ],
+    "faq": [
+      {
+        "q": "What does VereLeaf carry most?",
+        "a": "Pre-rolls. At last check there were about {cat.pre-rolls|about}, more than any other category on the menu, and the biggest brands were Florist Farms ({brand.Florist Farms} items) and Nanticoke ({brand.Nanticoke})."
+      },
+      {
+        "q": "What is the cheapest item at VereLeaf?",
+        "a": "The menu started at {min_price}, for Pioneer Plant-Tech half-gram pre-rolls and Florist Farms 10 mg edible two-packs. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near VereLeaf?",
+        "a": "The Alchemy Chelsea at 302 8th Avenue and Flynnstoned Chelsea at 206 8th Avenue are on the same avenue. Chelsea Cannabis Co. at 104 7th Avenue has the largest menu of the {hood_shops|word} shops we track in Chelsea and Flatiron."
+      }
+    ]
+  },
+  "dankley-manhattan": {
+    "intro": [
+      "Dankley is at 85 Nassau Street in the Financial District, and it carries the largest menu of the {hood_shops|word} licensed dispensaries we track in FiDi: about {in_stock|about} products from {brands} brands at last count. Highest Standards on Coenties Slip is the closest rival in the area, and Green Klub on South Street lists far fewer. Across the city, Dankley is one of the largest menus in Manhattan and the biggest in Lower Manhattan, and its brand count is among the highest we track anywhere, so it is the obvious downtown stop when you want to compare a lot of options in one place.",
+      "Vapes and pre-rolls dominate, with about {cat.vaporizers|about} vapes and {cat.pre-rolls|about} pre-rolls, followed by roughly {cat.edibles|about} edibles and {cat.flower|about} flower options. The vape selection is one of the deepest in Manhattan. Concentrates ({cat.concentrates}) and tinctures ({cat.tinctures}) are smaller sections. Florist Farms is the biggest brand with {brand.Florist Farms} items and Ruby Farms is next with {brand.Ruby Farms}, followed by Jaunty, Ayrloom, STIIIZY and Fernway. The entry price is {min_price}, for a 1906 Boost tablet two-pack, with Jaunty hash-infused gummies and LEVEL Protab tablets just behind. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "Largest menu in FiDi and in Lower Manhattan: about {in_stock|about} products from {brands} brands.",
+      "Vapes ({cat.vaporizers|about}) and pre-rolls ({cat.pre-rolls|about}) make up most of the shelf.",
+      "Florist Farms and Ruby Farms are the biggest brands, with Jaunty, Ayrloom and STIIIZY close behind.",
+      "Entry price is {min_price} before tax, for 1906 tablets."
+    ],
+    "faq": [
+      {
+        "q": "How big is Dankley's menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, the largest of the {hood_shops|word} licensed shops Sensei tracks in FiDi and one of the largest in Manhattan."
+      },
+      {
+        "q": "What is the cheapest item at Dankley?",
+        "a": "The menu started at {min_price}, for a 1906 Boost tablet two-pack, with Jaunty hash-infused gummies and LEVEL Protab tablets close behind. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Dankley?",
+        "a": "Highest Standards at 2 Coenties Slip and Green Klub at 108 South Street are the other FiDi shops we track. Alto Canna on Chambers Street in Tribeca is a short trip north."
+      }
+    ]
+  },
+  "alto": {
+    "intro": [
+      "Alto Canna is at 110 Chambers Street in Tribeca, Lower Manhattan, and it is the only licensed dispensary we track in Tribeca. At last count it listed about {in_stock|about} products from {brands} brands, a substantial menu by city standards that places it in the upper third of the {city.shops} shops in our New York data. With no other tracked shop in the neighborhood, the nearest alternatives are in the Financial District to the south and SoHo to the north, so Alto is the main option for shoppers who live or work in Tribeca and want a full menu without leaving the area.",
+      "Pre-rolls lead at about {cat.pre-rolls|about} listings, ahead of vapes ({cat.vaporizers|about}), flower ({cat.flower|about}) and edibles ({cat.edibles|about}), with a handful of tinctures and topicals. No concentrates were listed at our last check. Jetty Extracts is the biggest brand with {brand.Jetty Extracts} items, one of the larger Jetty selections in the city, and MFNY is next with {brand.MFNY}, followed by RYTHM, Select, STIIIZY and Camino. The entry price is {min_price}, for a Pioneer Plant Tech OG Kush pre-roll, with Miss Grass and Revert pre-rolls close behind. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "The only licensed dispensary we track in Tribeca.",
+      "About {in_stock|about} products from {brands} brands, led by pre-rolls ({cat.pre-rolls|about}).",
+      "Jetty Extracts and MFNY are the biggest brands; no concentrates were listed at last check.",
+      "Entry price is {min_price} before tax, for a Pioneer Plant Tech pre-roll."
+    ],
+    "faq": [
+      {
+        "q": "Where is Alto Canna?",
+        "a": "At 110 Chambers Street, New York, NY 10007, in Tribeca. It is the only licensed dispensary Sensei tracks in the neighborhood."
+      },
+      {
+        "q": "What does Alto Canna carry most?",
+        "a": "Pre-rolls, at about {cat.pre-rolls|about} listings, followed by vapes and flower. The biggest brands are Jetty Extracts ({brand.Jetty Extracts} items) and MFNY ({brand.MFNY})."
+      },
+      {
+        "q": "What other dispensaries are near Alto Canna?",
+        "a": "Dankley at 85 Nassau Street and Highest Standards at 2 Coenties Slip are in the Financial District to the south. To the north, Lighthouse Cannabis at 381 Broadway is the closest of the shops we track in SoHo."
+      }
+    ]
+  },
+  "lighthouse-cannabis-dispensary": {
+    "intro": [
+      "Lighthouse Cannabis is at 381 Broadway in lower Manhattan, one of the {hood_shops|word} licensed dispensaries we track in SoHo. At last count it listed about {in_stock|about} products from {brands} brands, the second-largest menu in that group after The Travel Agency at 598 Broadway, and ahead of Alta on Kenmare Street, The Flowery's SoHo store at 481 Broadway and Dagmar on West Broadway. It is a mid-sized menu by city standards, but it covers every category and has a couple of brands it carries in unusual depth, which makes it a useful stop on the lower stretch of Broadway.",
+      "Pre-rolls are the biggest category at about {cat.pre-rolls|about}, followed by edibles ({cat.edibles|about}), vapes ({cat.vaporizers|about}) and flower ({cat.flower|about}), with a few concentrates, topicals and tinctures. Cannabals is the biggest brand with {brand.Cannabals} items, one of the deepest Cannabals selections in the city, and Rove is next with {brand.Rove}, followed by Julia, MFNY, EUREKA and Revert. The entry price is {min_price}, and the cheapest items are LayUp edibles in flavors such as Fruit Punch, Lemonade and Limeade. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the second-largest menu we track in SoHo.",
+      "Pre-rolls ({cat.pre-rolls|about}) and edibles ({cat.edibles|about}) lead the menu.",
+      "Cannabals and Rove are the biggest brands, with one of the deepest Cannabals selections in the city.",
+      "Entry price is {min_price} before tax, for LayUp edibles."
+    ],
+    "faq": [
+      {
+        "q": "Where is Lighthouse Cannabis?",
+        "a": "At 381 Broadway, New York, NY 10013, in lower Manhattan. Sensei lists it with the {hood_shops|word} licensed shops we track in SoHo."
+      },
+      {
+        "q": "What does Lighthouse Cannabis carry most?",
+        "a": "Pre-rolls, at about {cat.pre-rolls|about} listings, followed by edibles. The biggest brands are Cannabals ({brand.Cannabals} items) and Rove ({brand.Rove})."
+      },
+      {
+        "q": "What other dispensaries are near Lighthouse Cannabis?",
+        "a": "The Travel Agency at 598 Broadway and The Flowery at 481 Broadway are farther up Broadway, Alta is on Kenmare Street and Dagmar is at 412 West Broadway. Alto Canna on Chambers Street in Tribeca is also close."
+      }
+    ]
+  },
+  "kushklub": {
+    "intro": [
+      "KushKlub is at 186 Orchard Street on the Lower East Side of Manhattan. It is one of the {hood_shops|word} licensed dispensaries we track in Chinatown and the Lower East Side, and at our last check its online menu was the smallest of them, with just {in_stock|word} products from {brands|word} brands. CONBUD on Delancey Street, Mighty Lucky on the Bowery and The Flowery's Chinatown store on Canal Street each list several hundred. A menu this small usually means a shop publishes only part of its stock online or is still building out its listings, so it is worth checking the store's own menu or calling before a trip for something specific.",
+      "What is listed leans toward pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}), with {cat.flower} flower options, {cat.vaporizers} vapes and concentrates ({cat.concentrates}). Off Hours is the biggest brand with {brand.Off Hours} items, followed by Grön, untitled, Heavy Hitters, New York Honey and Revert Cannabis, so even the short list covers a range of familiar New York brands. The entry price is {min_price}, for a New York Honey Cranberry Lemonade (10 mg), and a LEVEL Protab two-pack and Pot & Head one-gram pre-rolls are among the next-cheapest listings. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "Just {in_stock|word} products from {brands|word} brands at our last check, a small online menu.",
+      "Pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}) make up most of the listings.",
+      "Entry price is {min_price} before tax, for a New York Honey 10 mg edible.",
+      "Check with the store before a trip; the online menu may not show the full counter."
+    ],
+    "faq": [
+      {
+        "q": "Why does KushKlub have so few products listed?",
+        "a": "A menu of {in_stock|word} products is well below what a typical licensed New York shop lists. The likeliest explanations are an online menu that shows only part of the stock or listings that are still being built out. Confirm with the store directly before going for a specific item."
+      },
+      {
+        "q": "What does KushKlub carry most?",
+        "a": "Pre-rolls and edibles. Off Hours was the biggest brand at last check with {brand.Off Hours} items, followed by Grön and untitled."
+      },
+      {
+        "q": "What other dispensaries are near KushKlub?",
+        "a": "CONBUD at 85 Delancey Street, Mighty Lucky at 259 Bowery and The Flowery at 70 Canal Street are the other shops we track in Chinatown and the Lower East Side, and each has a much larger menu."
+      }
+    ]
+  },
+  "bellanova-retail": {
+    "intro": [
+      "Bellanova is at 331 East 9th Street in the East Village, Manhattan, between First and Second Avenues. It is one of the {hood_shops|word} licensed dispensaries we track across the East and West Village, and with about {in_stock|about} products from {brands} brands at last count it is one of the smaller menus in the area. Housing Works on Broadway, Gotham on East 3rd Street and The Flowery's East Village store on East 10th Street all list several times as many items. That makes Bellanova a compact, focused shop rather than a place to browse every brand, and the menu shows a few clear preferences.",
+      "Edibles lead at about {cat.edibles|about} listings, with vapes ({cat.vaporizers|about}) and flower ({cat.flower|about}) close behind and a few concentrates. Notably, no pre-rolls were on the online menu at our last check, so ask the store if that is what you want. Camino is the biggest brand with {brand.Camino} items and MFNY is next with {brand.MFNY}, followed by Ayrloom, Ruby Farms, Edie Parker and Boutiq. The entry price is {min_price}, and the cheapest items are Ayrloom 2:1 THC and CBD edibles in flavors such as Black Cherry, Orange Creamsicle and Half + Half, plus a 1:1 Rosé made with CBC. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, one of the smaller menus in the East and West Village.",
+      "Edibles ({cat.edibles|about}) lead, with vapes and flower close behind.",
+      "No pre-rolls were listed online at our last check.",
+      "Entry price is {min_price} before tax, for Ayrloom 2:1 edibles."
+    ],
+    "faq": [
+      {
+        "q": "What does Bellanova carry most?",
+        "a": "Edibles, at about {cat.edibles|about} listings, followed by vapes and flower. The biggest brands are Camino ({brand.Camino} items) and MFNY ({brand.MFNY})."
+      },
+      {
+        "q": "Does Bellanova sell pre-rolls?",
+        "a": "None were on its online menu at our last check, which covered edibles, vapes, flower and a few concentrates. The online menu may not show everything at the counter, so ask the store directly."
+      },
+      {
+        "q": "What other dispensaries are near Bellanova?",
+        "a": "The Flowery at 101 East 10th Street, Gotham at 3 East 3rd Street and PRYZM at 15 Avenue B are in the East Village, and Housing Works at 750 Broadway has the largest menu of the {hood_shops|word} shops we track in the East and West Village."
+      }
+    ]
+  },
+  "housing-works-broadway": {
+    "intro": [
+      "Housing Works Cannabis Co. has its Broadway store at 750 Broadway, near Astor Place in Manhattan. It carries the largest menu of the {hood_shops|word} licensed dispensaries we track in the East and West Village: about {in_stock|about} products from {brands} brands at last count, well ahead of Gotham on East 3rd Street and The Flowery's East Village and West Village stores. Across New York City it is one of the larger menus we track, and it is among the biggest in Manhattan, which makes it a strong first stop for anyone downtown who wants plenty of choice in one place.",
+      "Pre-rolls are the biggest category at about {cat.pre-rolls|about}, followed by flower ({cat.flower|about}), edibles ({cat.edibles|about}) and vapes ({cat.vaporizers|about}), with {cat.concentrates} concentrates, {cat.tinctures} tinctures and {cat.topicals} topicals. The flower selection is one of the deepest in Manhattan. MFNY is the biggest brand with {brand.MFNY} items and Florist Farms is next with {brand.Florist Farms}, followed by DANK, Heady Tree, Nanticoke and Ayrloom. The entry price is {min_price}, for 1906 Bliss and Go pill two-packs, and Nanticoke half-gram pre-rolls such as All Gas and Block Monster are among the next-cheapest items. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "Largest menu in the East and West Village: about {in_stock|about} products from {brands} brands.",
+      "Pre-rolls ({cat.pre-rolls|about}) and flower ({cat.flower|about}) lead; the flower selection is one of the deepest in Manhattan.",
+      "MFNY and Florist Farms are the biggest brands.",
+      "Entry price is {min_price} before tax, for 1906 pill two-packs."
+    ],
+    "faq": [
+      {
+        "q": "How big is the Housing Works Cannabis Co. menu on Broadway?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, the largest of the {hood_shops|word} licensed shops Sensei tracks in the East and West Village."
+      },
+      {
+        "q": "What is the cheapest item at Housing Works Cannabis Co.?",
+        "a": "The menu started at {min_price}, for 1906 Bliss and Go pill two-packs, with Nanticoke half-gram pre-rolls among the next-cheapest items. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Housing Works Cannabis Co.?",
+        "a": "Gotham at 3 East 3rd Street and The Flowery at 101 East 10th Street are in the East Village, and The Flowery's West Village store is at 112 Christopher Street. Green Genius on Third Avenue and The Travel Agency on Broadway are a short walk north toward Union Square."
+      }
+    ]
+  },
+  "dazed-union-square": {
+    "intro": [
+      "Dazed Union Square is at 33 Union Square West, facing Union Square in Manhattan. It is one of the {hood_shops|word} licensed dispensaries we track in Gramercy and Union Square, and with about {in_stock|about} products from {brands} brands at last count it has the smallest menu of the group. Green Genius on Third Avenue and The Travel Agency on Broadway list several times as many items, and Smiley Exotics on East 30th Street is somewhat larger. What Dazed offers instead is a location right on the square and a short, broad menu that still touches every category.",
+      "Pre-rolls lead at about {cat.pre-rolls|about} listings, followed by flower ({cat.flower|about}), edibles ({cat.edibles|about}) and vapes ({cat.vaporizers|about}), with a few concentrates, tinctures and topicals, so each category is covered even if each is short. Ayrloom is the biggest brand with {brand.Ayrloom} items and House of Sacci is next with {brand.House of Sacci}, followed by Chaos, Kushy Punch, Raven's View Genetics and Billy Clubs. The entry price is {min_price}, and the cheapest items are single 12 oz Ayrloom 2:1 drinks in flavors such as Black Cherry, Cran Apple and Honeycrisp Apple Cider. Prices on Sensei are menu prices before New York's cannabis tax."
+    ],
+    "know": [
+      "Right on Union Square, at 33 Union Square West.",
+      "About {in_stock|about} products from {brands} brands, the smallest menu we track in Gramercy and Union Square.",
+      "Pre-rolls lead; Ayrloom and House of Sacci are the biggest brands.",
+      "Entry price is {min_price} before tax, for single Ayrloom drinks."
+    ],
+    "faq": [
+      {
+        "q": "Where is Dazed Union Square?",
+        "a": "At 33 Union Square West, New York, NY 10003, on the west side of Union Square in Manhattan."
+      },
+      {
+        "q": "What does Dazed Union Square carry most?",
+        "a": "Pre-rolls, at about {cat.pre-rolls|about} listings, followed by flower and edibles. The biggest brands are Ayrloom ({brand.Ayrloom} items) and House of Sacci ({brand.House of Sacci})."
+      },
+      {
+        "q": "What other dispensaries are near Dazed Union Square?",
+        "a": "The Travel Agency at 835 Broadway and Green Genius at 214 3rd Avenue are nearby and have much larger menus. Smiley Exotics at 201 East 30th Street is the other Gramercy and Union Square shop we track."
+      }
+    ]
+  }
+}

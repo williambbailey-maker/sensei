@@ -1,0 +1,340 @@
+{
+  "flower-power": {
+    "intro": [
+      "Flower Power is at 22 West 66th Street, between Central Park West and Columbus Avenue at the southern end of the Upper West Side in Manhattan. It lists about {in_stock|about} products from {brands} brands, one of the smaller menus among the {hood_shops|word} licensed dispensaries we track in the neighborhood. Only Pure Blossoms on Amsterdam Avenue lists fewer, while The Flowery, TRU Cannabis and Superfly each carry several times as many products. It is also the southernmost Upper West Side shop in our data, a short walk from Lincoln Center.",
+      "The menu is spread evenly rather than built around one category: edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}) are close in size, and the {cat.concentrates}-item concentrate shelf is generous for a shop this size. Its {cat.topicals} topicals are the most of any Upper West Side shop we track. SuperNaturals ({brand.SuperNaturals}) and Back Home Cannabis Co. ({brand.Back Home Cannabis CO.}) are the biggest brands, followed by Heavy Hitters, Kiva, 518 Hollow and MFNY. The entry price is {min_price}, for Level Protab two-packs in Energy and Slumber versions, with Hive & High gummy three-packs close behind."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, one of the smaller menus on the Upper West Side.",
+      "Edibles, pre-rolls, flower and vapes are close in size; concentrates ({cat.concentrates}) run deep for a small shop.",
+      "SuperNaturals and Back Home Cannabis Co. are the biggest brands, with Heavy Hitters and Kiva close behind.",
+      "Entry price is {min_price} for Level Protab two-packs, before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is Flower Power?",
+        "a": "At 22 West 66th Street, between Central Park West and Columbus Avenue, on the Upper West Side of Manhattan. It is the southernmost of the {hood_shops|word} licensed shops we track in the neighborhood."
+      },
+      {
+        "q": "What is the cheapest item at Flower Power?",
+        "a": "At last check the menu started at {min_price}, for Level Protab two-packs in Energy and Slumber versions. Hive & High gummy three-packs were the next cheapest. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Flower Power?",
+        "a": "SOFACLUB at 2195 Broadway and Good Company at 2273 Broadway are the closest Upper West Side shops we track, and both carry larger menus. Superfly Dispensary is on West 86th Street, and The Flowery at 2465 Broadway has the largest menu in the neighborhood."
+      }
+    ]
+  },
+  "good-company": {
+    "intro": [
+      "Good Company is at 2273 Broadway on the Upper West Side of Manhattan, on the same stretch of Broadway as SOFACLUB a few blocks to the south. It lists about {in_stock|about} products from {brands} brands, the fourth-largest menu among the {hood_shops|word} licensed dispensaries we track in the neighborhood, behind The Flowery, TRU Cannabis and Superfly. Its brand count is close to theirs, so the gap is mostly in how many products each brand gets rather than in how many labels are on the shelf.",
+      "Edibles are the clear focus, with {cat.edibles} listings, the most of any Upper West Side shop we track. Pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) follow, and flower is a smaller section at {cat.flower}. STIIIZY ({brand.STIIIZY}) and Ayrloom ({brand.ayrloom}) are the biggest brands, followed by Nanticoke, Heavy Hitters, Harney Brothers and Select. Good Company also has the lowest entry price in the neighborhood: {min_price} for an Ayrloom Honeycrisp edible with 5 mg THC and 5 mg CBD, with 1906 tablet two-packs in Bliss, Chill and Go versions close behind."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the fourth-largest menu on the Upper West Side.",
+      "Edibles lead with {cat.edibles} listings, the most of any Upper West Side shop we track.",
+      "STIIIZY and Ayrloom are the biggest brands; Nanticoke, Heavy Hitters and Harney Brothers follow.",
+      "Lowest entry price in the neighborhood: {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "What does Good Company carry most?",
+        "a": "Edibles. There are {cat.edibles} on the menu, more than at any other Upper West Side shop we track, followed by {cat.pre-rolls} pre-rolls and {cat.vaporizers} vapes. Flower is a smaller section with {cat.flower} listings."
+      },
+      {
+        "q": "What is the cheapest item at Good Company?",
+        "a": "At last check the menu started at {min_price}, for an Ayrloom Honeycrisp 1:1 edible with 5 mg THC and 5 mg CBD. 1906 tablet two-packs in Bliss, Chill and Go versions came next. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Good Company?",
+        "a": "SOFACLUB at 2195 Broadway is a few blocks south on Broadway, and Superfly Dispensary is on West 86th Street. The Flowery at 2465 Broadway has the largest menu we track on the Upper West Side."
+      }
+    ]
+  },
+  "mad-ny-1": {
+    "intro": [
+      "TRU Cannabis is at 256 Manhattan Avenue, at the northern edge of the Upper West Side in Manhattan, close to where the neighborhood meets Harlem. With about {in_stock|about} products from {brands} brands, it is the second-largest of the {hood_shops|word} licensed dispensaries we track on the Upper West Side, behind only The Flowery on Broadway, and one of the largest menus we track anywhere in the city. It is a good stop when you want a wide choice within one category rather than a single product.",
+      "Pre-rolls are the biggest section, at {cat.pre-rolls} listings, followed by edibles ({cat.edibles}), flower ({cat.flower}) and vapes ({cat.vaporizers}); concentrates, tinctures and topicals are small. Florist Farms ({brand.Florist Farms}) is the top brand, and TRU has one of the deepest Florist Farms selections we track in the city. Ayrloom ({brand.ayrloom}), Nanticoke, PICC, STIIIZY and Claybourne Co. follow, and it also carries one of the larger Camino lineups in our data. The entry price is {min_price}, for LEVEL Protab two-packs in Energy and Slumber versions, with Ayrloom Black Cherry and Cranberry Apple close behind."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, second only to The Flowery on the Upper West Side.",
+      "Pre-rolls lead ({cat.pre-rolls}), with edibles and flower close behind.",
+      "Florist Farms is the biggest brand, at {brand.Florist Farms} products, one of the deepest selections of it in the city.",
+      "Entry price is {min_price} for LEVEL Protab two-packs, before tax."
+    ],
+    "faq": [
+      {
+        "q": "How big is TRU Cannabis's menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check. That is the second-largest menu among the {hood_shops|word} Upper West Side dispensaries we track, behind The Flowery, and one of the larger menus in Manhattan."
+      },
+      {
+        "q": "What does TRU Cannabis carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.edibles} edibles and {cat.flower} flower options. Florist Farms is the biggest brand, and Ayrloom, Nanticoke, PICC and STIIIZY are all well stocked."
+      },
+      {
+        "q": "What other dispensaries are near TRU Cannabis?",
+        "a": "Pure Blossoms at 716 Amsterdam Avenue is the nearest Upper West Side shop we track, and The Flowery at 2465 Broadway has the largest menu in the neighborhood. Gotham Buds on West 125th Street is the closest of the Harlem shops in our data."
+      }
+    ]
+  },
+  "pure-blossoms": {
+    "intro": [
+      "Pure Blossoms is at 716 Amsterdam Avenue on the Upper West Side of Manhattan. It lists about {in_stock|about} products from {brands} brands, the smallest menu among the {hood_shops|word} licensed dispensaries we track in the neighborhood and the narrowest brand list too. The Flowery, a short walk away on Broadway, and TRU Cannabis on Manhattan Avenue each carry several times as many products, so Pure Blossoms works best as a focused stop rather than a place to browse widely.",
+      "What it lacks in breadth it makes up in depth on one brand: MFNY ({brand.MFNY}) accounts for a large share of the shelf, one of the deepest MFNY selections we track anywhere in the city. Florist Farms ({brand.Florist Farms}), Ruby Farms, PICC, Electraleaf and Bouket follow. Pre-rolls are the biggest category with {cat.pre-rolls} listings, then edibles ({cat.edibles}), vapes ({cat.vaporizers}) and flower ({cat.flower}). The entry price is {min_price}, the highest starting price on the Upper West Side, and the cheapest items are single 1 g PICC pre-rolls from its Juan Roll and Ichi Roll lines."
+    ],
+    "know": [
+      "Smallest menu on the Upper West Side: about {in_stock|about} products from {brands} brands.",
+      "MFNY is the biggest brand by far, one of the deepest MFNY selections in the city.",
+      "Pre-rolls lead with {cat.pre-rolls} listings; concentrates and topicals are minor.",
+      "Entry price is {min_price} for single PICC pre-rolls, before tax."
+    ],
+    "faq": [
+      {
+        "q": "What does Pure Blossoms carry most?",
+        "a": "MFNY products and pre-rolls. MFNY is the biggest brand on the shelf by a wide margin, and pre-rolls are the largest category with {cat.pre-rolls} listings, ahead of {cat.edibles} edibles and {cat.vaporizers} vapes."
+      },
+      {
+        "q": "What is the cheapest item at Pure Blossoms?",
+        "a": "At last check the menu started at {min_price}, for single 1 g PICC pre-rolls such as Kush Cake, Sour Scout and Sour Face. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Pure Blossoms?",
+        "a": "The Flowery at 2465 Broadway has the largest menu we track on the Upper West Side, and TRU Cannabis at 256 Manhattan Avenue is the second largest. Superfly Dispensary on West 86th Street is a little farther south."
+      }
+    ]
+  },
+  "sofaclub-broadway": {
+    "intro": [
+      "SOFACLUB's Broadway store is at 2195 Broadway on the Upper West Side of Manhattan, a few blocks south of Good Company on the same stretch of Broadway. It lists about {in_stock|about} products from {brands} brands, a mid-sized menu that ranks fifth among the {hood_shops|word} licensed dispensaries we track in the neighborhood. That puts it ahead of Flower Power and Pure Blossoms but well short of The Flowery, TRU Cannabis, Superfly and Good Company, each of which carries roughly twice as many brands or more.",
+      "Vapes are the largest section, with {cat.vaporizers} listings, followed by edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}); concentrates are a small shelf. Florist Farms ({brand.Florist Farms}) is the biggest brand, ahead of Nanticoke ({brand.Nanticoke}), with MFNY, Ruby Farms, Ayrloom and Off Hours rounding out the top of the menu. The entry price is {min_price}, and the cheapest items are 1906 two-pack pouches in Go, Bliss, Chill and Sleep versions, each at 10 mg, which makes the low end of the menu a good place to try a single dose."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, mid-sized for the Upper West Side.",
+      "Vapes lead with {cat.vaporizers} listings, ahead of edibles and pre-rolls.",
+      "Florist Farms and Nanticoke are the biggest brands; MFNY and Ruby Farms follow.",
+      "Entry price is {min_price} for 1906 two-pack pouches, before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is SOFACLUB on the Upper West Side?",
+        "a": "At 2195 Broadway, on the Upper West Side of Manhattan. Good Company is a few blocks north at 2273 Broadway, so the two are easy to compare in one trip."
+      },
+      {
+        "q": "What does SOFACLUB carry most?",
+        "a": "Vapes, with {cat.vaporizers} listings, followed by {cat.edibles} edibles and {cat.pre-rolls} pre-rolls. Florist Farms and Nanticoke are the biggest brands on the menu."
+      },
+      {
+        "q": "What is the cheapest item at SOFACLUB?",
+        "a": "At last check the menu started at {min_price}, for 1906 two-pack pouches in Go, Bliss, Chill and Sleep versions. Prices on Sensei are menu prices before New York's cannabis tax."
+      }
+    ]
+  },
+  "the-herbal-care": {
+    "intro": [
+      "The Herbal Care is at 1410 Lexington Avenue on the Upper East Side of Manhattan. It lists about {in_stock|about} products from {brands} brands, the smallest of the {hood_shops|word} licensed dispensaries we track in the neighborhood and one of the smaller menus we track anywhere in Manhattan. Sweetlife on First Avenue and The Emerald Dispensary farther down Lexington both carry several times as many products. The online menu is compact at last check, so if you are after a specific product it is worth confirming with the store before making a trip.",
+      "Pre-rolls are the biggest category, with {cat.pre-rolls} listings, followed by vapes ({cat.vaporizers}), edibles ({cat.edibles}) and flower ({cat.flower}); concentrates, tinctures and topicals are only a handful each. The Botanist ({brand.THE BOTANIST}) and Smokiez ({brand.Smokiez}) are the biggest brands, with Julia, Grams, Hurley Grown and PAX after them. The entry price is {min_price}, the highest starting price on the Upper East Side, for Hepworth Mendo Purps pre-roll two-packs and single 1 g Leal pre-rolls, with a 10 mg 2X Baked Rainbow Cookie close behind."
+    ],
+    "know": [
+      "Smallest of the Upper East Side shops we track: about {in_stock|about} products from {brands} brands.",
+      "Pre-rolls lead with {cat.pre-rolls} listings, then vapes and edibles.",
+      "The Botanist and Smokiez are the biggest brands on the menu.",
+      "Entry price is {min_price} for pre-rolls from Hepworth and Leal, before tax."
+    ],
+    "faq": [
+      {
+        "q": "How big is The Herbal Care's menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, the smallest of the {hood_shops|word} Upper East Side shops we track. The online menu may not show everything on the counter, so check with the store for a specific item."
+      },
+      {
+        "q": "What is the cheapest item at The Herbal Care?",
+        "a": "At last check the menu started at {min_price}, for Hepworth Mendo Purps pre-roll two-packs and single 1 g Leal pre-rolls in Gorilla Glue #4 and Sour Kush. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near The Herbal Care?",
+        "a": "The Emerald Dispensary at 1190 Lexington Avenue and Sweetlife at 1662 First Avenue are the other Upper East Side shops we track, and both have much larger menus. Uplift Royal is farther north on Lexington Avenue, at 99th Street."
+      }
+    ]
+  },
+  "happy-munkey": {
+    "intro": [
+      "Happy Munkey Dyckman is at 151 Dyckman Street in Inwood, and it is the northernmost shop we track in Manhattan. Sensei groups Inwood with Harlem and Washington Heights, and among the {hood_shops|word} licensed dispensaries we track in that area, Happy Munkey is the second-largest, with about {in_stock|about} products from {brands} brands. Only Sparkboro on West 177th Street lists more, and the two are close in size, though Sparkboro carries a noticeably wider brand list while Happy Munkey goes deeper on fewer brands.",
+      "Pre-rolls are the core of the menu, with {cat.pre-rolls} listings, followed by edibles ({cat.edibles}), flower ({cat.flower}) and vapes ({cat.vaporizers}). Its pre-roll and edible counts are the largest in Harlem and Washington Heights. Ayrloom ({brand.ayrloom}) is the biggest brand, one of the deepest Ayrloom selections we track in the city, and Revert ({brand.Revert}) is close behind, ahead of STIIIZY, PICC, Florist Farms and Drops. The entry price is {min_price}, for single 10 mg Ayrloom drinks in Black Cherry, Cranberry Apple, Half and Half and Honeycrisp."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, second only to Sparkboro in Harlem and Washington Heights.",
+      "Pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}) are the largest in the area.",
+      "Ayrloom is the top brand, one of the deepest Ayrloom selections in the city.",
+      "Entry price is {min_price} for single Ayrloom drinks, before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is Happy Munkey Dyckman?",
+        "a": "At 151 Dyckman Street in Inwood, at the northern end of Manhattan. Sensei lists it with Harlem and Washington Heights, where it is the second-largest of the {hood_shops|word} licensed shops we track."
+      },
+      {
+        "q": "What does Happy Munkey Dyckman carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.edibles} edibles. Ayrloom is the biggest brand, with Revert, STIIIZY and PICC also well stocked."
+      },
+      {
+        "q": "What other dispensaries are near Happy Munkey Dyckman?",
+        "a": "Mello Tymes at 1597 Saint Nicholas Avenue and Sparkboro at 704 West 177th Street are the closest shops we track. Sparkboro has the largest menu in Harlem and Washington Heights; Mello Tymes is much smaller."
+      }
+    ]
+  },
+  "mello-tymes-dispensary": {
+    "intro": [
+      "Mello Tymes is at 1597 Saint Nicholas Avenue in Washington Heights, in upper Manhattan. It lists about {in_stock|about} products from {brands} brands, the smallest menu among the {hood_shops|word} licensed dispensaries we track in Harlem and Washington Heights. Its nearest neighbors in our data, Happy Munkey Dyckman in Inwood and Sparkboro on West 177th Street, each carry several times as many products, so Mello Tymes is better suited to a quick, familiar purchase than to browsing a wide selection.",
+      "The menu leans on pre-rolls ({cat.pre-rolls}), edibles ({cat.edibles}) and flower ({cat.flower}). Vapes are a short list at {cat.vaporizers}, the fewest in the area, and there were no topicals at last check. The Budcracker ({brand.The Budcracker}) and Ayrloom ({brand.ayrloom}) are the biggest brands, followed by Grams, Dragonfly, Honest Pharm and Harney Brothers. The entry price is {min_price}, for Ayrloom drinks in Black Cherry, Cranberry Apple, Half & Half and Honeycrisp, each a 2:1 blend of THC and CBD."
+    ],
+    "know": [
+      "Smallest menu in Harlem and Washington Heights: about {in_stock|about} products from {brands} brands.",
+      "Pre-rolls, edibles and flower make up most of the shelf; vapes are limited.",
+      "The Budcracker and Ayrloom are the biggest brands.",
+      "Entry price is {min_price} for Ayrloom 2:1 drinks, before tax."
+    ],
+    "faq": [
+      {
+        "q": "What does Mello Tymes carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.edibles} edibles and {cat.flower} flower options. The Budcracker and Ayrloom are the biggest brands on the menu."
+      },
+      {
+        "q": "What is the cheapest item at Mello Tymes?",
+        "a": "At last check the menu started at {min_price}, for Ayrloom 2:1 THC and CBD drinks in Black Cherry, Cranberry Apple, Half & Half and Honeycrisp. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Mello Tymes?",
+        "a": "Happy Munkey Dyckman at 151 Dyckman Street and Sparkboro at 704 West 177th Street are the closest shops we track, and both have much larger menus. Broadway Strains at 3858 Broadway is also in Washington Heights."
+      }
+    ]
+  },
+  "midnight-moon": {
+    "intro": [
+      "Midnight Moon is at 1536 Amsterdam Avenue in West Harlem, Manhattan. With about {in_stock|about} products from {brands} brands, it is the third-largest of the {hood_shops|word} licensed dispensaries we track in Harlem and Washington Heights, behind Sparkboro and Happy Munkey Dyckman, and the largest in Harlem itself, since Sparkboro and Happy Munkey sit farther north in Washington Heights and Inwood. Gotham Buds on West 125th Street is the nearest other shop in the group, with a smaller menu.",
+      "The menu is broad across categories: vapes ({cat.vaporizers}), flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}) are all large, edibles add {cat.edibles}, and the {cat.concentrates}-item concentrate shelf is unusually deep. Its vape and concentrate counts are the highest in Harlem and Washington Heights. Florist Farms ({brand.Florist Farms}) and MFNY ({brand.MFNY}) are the biggest brands, with Ayrloom, Heavy Hitters, Nanticoke and Harney Brothers close behind. The entry price is {min_price}, shared by several single 10 mg drinks, including Tune seltzers, LayUp and Ayrloom."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the largest menu in Harlem proper.",
+      "Most vapes ({cat.vaporizers}) and concentrates ({cat.concentrates}) of any shop in Harlem and Washington Heights.",
+      "Florist Farms and MFNY are the biggest brands.",
+      "Entry price is {min_price} for single 10 mg drinks, before tax."
+    ],
+    "faq": [
+      {
+        "q": "How big is Midnight Moon's menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, third among the {hood_shops|word} Harlem and Washington Heights shops we track, behind Sparkboro and Happy Munkey Dyckman."
+      },
+      {
+        "q": "What does Midnight Moon carry most?",
+        "a": "Vapes, with {cat.vaporizers} listings, closely followed by {cat.flower} flower options and {cat.pre-rolls} pre-rolls. Its concentrate shelf is the deepest in the area, and Florist Farms and MFNY are the biggest brands."
+      },
+      {
+        "q": "What is the cheapest item at Midnight Moon?",
+        "a": "At last check the menu started at {min_price}, for single 10 mg drinks such as Tune Black Cherry seltzer, LayUp Black Cherry Lemonade and Ayrloom Cran Apple. Prices on Sensei are menu prices before New York's cannabis tax."
+      }
+    ]
+  },
+  "sparkboro": {
+    "intro": [
+      "Sparkboro is at 704 West 177th Street in Washington Heights, Manhattan. With about {in_stock|about} products from {brands} brands, it is the largest of the {hood_shops|word} licensed dispensaries we track in Harlem and Washington Heights, narrowly ahead of Happy Munkey Dyckman. Its brand list is the real standout: it is the widest in the area by a clear margin and one of the widest we track anywhere in New York City, which makes Sparkboro a good place to look for a less common label.",
+      "Pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and edibles ({cat.edibles}) are the main sections, with vapes at {cat.vaporizers} and a {cat.concentrates}-item concentrate shelf. Its flower count is the largest in Harlem and Washington Heights. Jaunty ({brand.Jaunty}) is the biggest brand, and Sparkboro has one of the deepest Jaunty selections we track in the city. STIIIZY ({brand.STIIIZY}), Doobie Labs, Ayrloom, Dragonfly and Find follow. The entry price is {min_price}, for 1906 drops: two-packs of Bliss, Chill and Go, and a four-pack of Love."
+    ],
+    "know": [
+      "Largest menu in Harlem and Washington Heights: about {in_stock|about} products from {brands} brands.",
+      "One of the widest brand lists we track in the city.",
+      "Jaunty is the top brand, one of the deepest Jaunty selections in New York City.",
+      "Entry price is {min_price} for 1906 drops, before tax."
+    ],
+    "faq": [
+      {
+        "q": "How big is Sparkboro's menu?",
+        "a": "About {in_stock|about} products from {brands} brands at last check, the largest of the {hood_shops|word} Harlem and Washington Heights shops we track and one of the widest brand lists in the city."
+      },
+      {
+        "q": "What does Sparkboro carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.flower} flower options and {cat.edibles} edibles. Jaunty is the biggest brand, with STIIIZY, Doobie Labs and Ayrloom also well stocked."
+      },
+      {
+        "q": "What other dispensaries are near Sparkboro?",
+        "a": "Mello Tymes at 1597 Saint Nicholas Avenue and Broadway Strains at 3858 Broadway are nearby in Washington Heights, and Happy Munkey Dyckman is farther north in Inwood. Happy Munkey is the closest to Sparkboro in size."
+      }
+    ]
+  },
+  "tetra-east-harlem": {
+    "intro": [
+      "Tetra East Harlem is at 2152 Third Avenue in East Harlem, Manhattan. It lists about {in_stock|about} products from {brands} brands, sixth by size among the {hood_shops|word} licensed dispensaries we track in Harlem and Washington Heights. It is larger than Uplift Royal, the other East Harlem shop in that group, while the biggest menus in the area belong to Sparkboro, Happy Munkey Dyckman and Midnight Moon farther uptown. For East Harlem, that makes Tetra the broadest option in our data.",
+      "The menu is spread evenly across the main categories: edibles ({cat.edibles}), flower ({cat.flower}), pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) are close in size, with a {cat.concentrates}-item concentrate shelf. MFNY ({brand.MFNY}) and Dank ({brand.Dank}) are the biggest brands, followed by Ayrloom, Fernway, Florist Farms and Rove. Tetra also has the lowest entry price in Harlem and Washington Heights: {min_price} for a 1906 Boost two-pack, with other packs from 1906 such as Bliss, Chill and Genius next in line."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, the larger of the East Harlem shops we track.",
+      "Edibles, flower, pre-rolls and vapes are close in size.",
+      "MFNY and Dank are the biggest brands; Ayrloom, Fernway and Rove follow.",
+      "Lowest entry price in Harlem and Washington Heights: {min_price} before tax."
+    ],
+    "faq": [
+      {
+        "q": "What does Tetra East Harlem carry most?",
+        "a": "The menu is balanced: {cat.edibles} edibles, {cat.flower} flower options, {cat.pre-rolls} pre-rolls and {cat.vaporizers} vapes. MFNY and Dank are the biggest brands."
+      },
+      {
+        "q": "What is the cheapest item at Tetra East Harlem?",
+        "a": "At last check the menu started at {min_price}, for a 1906 Boost two-pack, the lowest starting price in Harlem and Washington Heights. Other packs from 1906 came next. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near Tetra East Harlem?",
+        "a": "Uplift Royal at 1557 Lexington Avenue is the other East Harlem shop we track, and Gotham Buds is on West 125th Street. Midnight Moon at 1536 Amsterdam Avenue has a larger menu in West Harlem."
+      }
+    ]
+  },
+  "uplift-royal": {
+    "intro": [
+      "Uplift Royal is at 1557 Lexington Avenue, at 99th Street in East Harlem. Sensei groups it with Harlem and Washington Heights, where it is one of the smaller shops: with about {in_stock|about} products from {brands} brands, it ranks seventh of the {hood_shops|word} licensed dispensaries we track in the area, ahead of only Mello Tymes. Tetra East Harlem on Third Avenue is the closest shop in that group and carries a larger menu, and The Herbal Care is farther south on Lexington Avenue on the Upper East Side.",
+      "Pre-rolls are the biggest section, with {cat.pre-rolls} listings, well ahead of vapes ({cat.vaporizers}), edibles ({cat.edibles}) and flower ({cat.flower}). Off Hours ({brand.Off Hours}) is the top brand, and Uplift Royal carries one of the larger Off Hours selections we track. Stiiizy ({brand.Stiiizy}) is second, followed by MFNY, Jaunty, Ayrloom and Ruby Farms. The entry price is {min_price}, the highest starting price in Harlem and Washington Heights, for half-gram Revert pre-rolls in strains such as Crumble Cake, Lemon Drop, Pineapple Haze and Sour Glue."
+    ],
+    "know": [
+      "About {in_stock|about} products from {brands} brands, one of the smaller menus in Harlem and Washington Heights.",
+      "Pre-rolls lead with {cat.pre-rolls} listings.",
+      "Off Hours and Stiiizy are the biggest brands; MFNY and Jaunty follow.",
+      "Entry price is {min_price} for half-gram Revert pre-rolls, before tax."
+    ],
+    "faq": [
+      {
+        "q": "Where is Uplift Royal?",
+        "a": "At 1557 Lexington Avenue, at 99th Street in East Harlem. Sensei lists it with Harlem and Washington Heights, among {hood_shops|word} licensed shops we track there."
+      },
+      {
+        "q": "What does Uplift Royal carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.vaporizers} vapes and {cat.edibles} edibles. Off Hours is the biggest brand, ahead of Stiiizy and MFNY."
+      },
+      {
+        "q": "What other dispensaries are near Uplift Royal?",
+        "a": "Tetra East Harlem at 2152 Third Avenue is the closest shop in its group and has a larger menu. The Herbal Care at 1410 Lexington Avenue is farther south on the same avenue, on the Upper East Side."
+      }
+    ]
+  },
+  "nycbud": {
+    "intro": [
+      "NYC Bud is at 44-45 Vernon Boulevard in Long Island City, Queens, and it is the only licensed dispensary we track in Long Island City. It lists about {in_stock|about} products from {brands} brands, a modest menu by city standards and on the smaller side among the Queens shops we track. The larger Queens menus in our data are farther east and north, in Astoria, Jackson Heights and Woodside, so NYC Bud is mainly the convenient option for people already in the neighborhood.",
+      "Pre-rolls are the largest category, at {cat.pre-rolls} listings, followed by flower ({cat.flower}), vapes ({cat.vaporizers}) and edibles ({cat.edibles}); concentrates and tinctures are a handful each, and there were no topicals at last check. Major ({brand.Major}) and Jetty ({brand.Jetty}) are the biggest brands, followed by MFNY, To The Moon, PAX and Florist Farms. The entry price is {min_price}, for MFNY live resin gummy three-packs at 10 mg, with half-gram and 1 g pre-rolls from Nanticoke and Dragonfly next in line."
+    ],
+    "know": [
+      "The only licensed shop we track in Long Island City.",
+      "About {in_stock|about} products from {brands} brands; pre-rolls lead with {cat.pre-rolls} listings.",
+      "Major and Jetty are the biggest brands, followed by MFNY and To The Moon.",
+      "Entry price is {min_price} for MFNY live resin gummies, before tax."
+    ],
+    "faq": [
+      {
+        "q": "What does NYC Bud carry most?",
+        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.flower} flower options and {cat.vaporizers} vapes. Major and Jetty are the biggest brands on the menu."
+      },
+      {
+        "q": "What is the cheapest item at NYC Bud?",
+        "a": "At last check the menu started at {min_price}, for MFNY live resin gummy three-packs at 10 mg. Pre-rolls from Nanticoke and Dragonfly came next. Prices on Sensei are menu prices before New York's cannabis tax."
+      },
+      {
+        "q": "What other dispensaries are near NYC Bud?",
+        "a": "NYC Bud is the only shop we track in Long Island City. The nearest Queens shops in our data are in Astoria, including Cannavita on Steinway Street and Astoria Bud Boutique on Astoria Boulevard, and Terp Bros on Ditmars Boulevard has the largest Queens menu we track."
+      }
+    ]
+  }
+}

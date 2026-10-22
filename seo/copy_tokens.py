@@ -43,9 +43,18 @@ PRICE_VARS = {"min_price", "avg_price", "shop_min", "low_shop_min"}
 
 
 def shop_name(n):
-    """A menu's store name as it reads in a sentence: platform suffixes dropped."""
-    n = re.sub(r"\s*-\s*New York,?\s*NY$", "", n or "").strip()
-    return re.sub(r"\s+\|\s+", " ", n)
+    """A menu's store name as people say it: the platform's account suffixes
+    dropped ("Green Rise - Retail" -> "Green Rise", "Purple Buds, Inc -
+    Recreational" -> "Purple Buds") and "Name | Place" read as "Name (Place)"."""
+    n = (n or "").strip()
+    prev = None
+    while prev != n:
+        prev = n
+        n = re.sub(r"\s*-\s*New York,?\s*NY$", "", n)
+        n = re.sub(r"\s*-\s*(?:Retail|Dispensary|Recreational)$", "", n, flags=re.I)
+        n = re.sub(r",?\s+(?:LLC|Inc\.?)$", "", n)
+    m = re.match(r"^(.*?)\s+\|\s+(.+)$", n)
+    return f"{m.group(1)} ({m.group(2)})" if m else n
 
 
 def _series(items):

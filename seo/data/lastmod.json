@@ -1,75 +1,75 @@
 {
  "/": {
   "date": "2026-10-22",
-  "hash": "b28f8b82ef6e275b"
+  "hash": "3f30bdba85ba1676"
  },
  "/about/": {
   "date": "2026-10-22",
-  "hash": "5378dabe236871df"
+  "hash": "5a63f64f1f3e9d96"
  },
  "/brands/": {
   "date": "2026-10-22",
-  "hash": "7738c0c93cad306f"
+  "hash": "cf9d3977e51711cc"
  },
  "/brands/ayrloom/": {
   "date": "2026-10-22",
-  "hash": "43de42cf7b9d6a3e"
+  "hash": "a4643d417e8545b1"
  },
  "/brands/camino/": {
   "date": "2026-10-22",
-  "hash": "542faa71fe26a995"
+  "hash": "64b49ebc17112d7b"
  },
  "/brands/cannabals/": {
   "date": "2026-10-22",
-  "hash": "72f427752c15093a"
+  "hash": "d4d13afc57dcec18"
  },
  "/brands/dank-by-definition/": {
   "date": "2026-10-22",
-  "hash": "33f70a018045fd2c"
+  "hash": "f56a4e029e68cec4"
  },
  "/brands/eaton-botanicals/": {
   "date": "2026-10-22",
-  "hash": "61c8bfc62d53e081"
+  "hash": "5f22ba53308099e4"
  },
  "/brands/fernway/": {
   "date": "2026-10-22",
-  "hash": "18c999b547f8a420"
+  "hash": "f4ceaa963c41a1a4"
  },
  "/brands/florist-farms/": {
   "date": "2026-10-22",
-  "hash": "7ace4c28d3f524ae"
+  "hash": "97f7503742688064"
  },
  "/brands/good-tide/": {
   "date": "2026-10-22",
-  "hash": "a7646d20f8e64ae6"
+  "hash": "bc14570fd085abec"
  },
  "/brands/gr-n/": {
   "date": "2026-10-22",
-  "hash": "c39bac33acf80178"
+  "hash": "1f0582f7718d2ca1"
  },
  "/brands/jaunty/": {
   "date": "2026-10-22",
-  "hash": "c1bd810047c5d63d"
+  "hash": "cacfcb053b46defb"
  },
  "/brands/jetty-extracts/": {
   "date": "2026-10-22",
-  "hash": "f2d43d846488f3e8"
+  "hash": "7fa6c9439584209d"
  },
  "/brands/mfny/": {
   "date": "2026-10-22",
-  "hash": "1c6abc9c8b6020aa"
+  "hash": "129bddc161facece"
  },
  "/brands/off-hours/": {
   "date": "2026-10-22",
-  "hash": "7db9bb910eab1dff"
+  "hash": "230aaedd31a693f2"
  },
  "/brands/ruby-farms/": {
   "date": "2026-10-22",
-  "hash": "2a2ca6efb63ef706"
+  "hash": "840cf9290a0f13a9"
  },
  "/brands/wyld/": {
   "date": "2026-10-22",
-  "hash": "ab4b313fc398e930"
+  "hash": "cd98bc6be61395a2"
  },
  "/dispensaries/afny/": {
   "date": "2026-10-21",
@@ -77,11 +77,15 @@
  },
  "/dispensaries/alta-lower-manhattan/": {
   "date": "2026-10-22",
-  "hash": "53c8a57e28662f41"
+  "hash": "eaa6b5ecce7270c4"
+ },
+ "/dispensaries/alto-canna/": {
+  "date": "2026-10-22",
+  "hash": "7338f3541f9d38cb"
  },
  "/dispensaries/astoria-bud-boutique/": {
   "date": "2026-10-22",
-  "hash": "4bd1869a042ac88b"
+  "hash": "c4824f095219a807"
  },
  "/dispensaries/baiked/": {
   "date": "2026-10-21",
@@ -89,7 +93,15 @@
  },
  "/dispensaries/be-brooklyn-ny/": {
   "date": "2026-10-22",
-  "hash": "c422d209d1b9b45d"
+  "hash": "8a5367475cf1f426"
+ },
+ "/dispensaries/bellanova/": {
+  "date": "2026-10-22",
+  "hash": "c73c53de2600e574"
+ },
+ "/dispensaries/bk-greenery/": {
+  "date": "2026-10-22",
+  "hash": "e7531cffc9cc483e"
  },
  "/dispensaries/blazinup/": {
   "date": "2026-10-21",
@@ -97,31 +109,39 @@
  },
  "/dispensaries/broadway-strains/": {
   "date": "2026-10-22",
-  "hash": "b74f6029ac6b394c"
+  "hash": "23c46e185bf8b228"
  },
  "/dispensaries/brooklyn-bourne/": {
   "date": "2026-10-22",
-  "hash": "a9195a57ff436bdd"
+  "hash": "7eeb1dc3ff07f083"
  },
  "/dispensaries/brooklyn-greenpoint-ny/": {
   "date": "2026-10-22",
-  "hash": "20f6c015c4a3a44f"
+  "hash": "7659db24f7de075d"
  },
  "/dispensaries/bud-and-honey/": {
   "date": "2026-10-22",
-  "hash": "cb36fdceda9ed8c6"
+  "hash": "d58e0eadd85740e8"
  },
  "/dispensaries/bud-city-cannabis-llc/": {
   "date": "2026-10-22",
-  "hash": "7c50c0c0cc80fd51"
+  "hash": "160a73b1e61e4ac4"
  },
  "/dispensaries/buzzy-ny/": {
   "date": "2026-10-22",
-  "hash": "b28e26e94c5a75e4"
+  "hash": "c403eac792ca3891"
  },
  "/dispensaries/by-any-other-name/": {
   "date": "2026-10-22",
-  "hash": "72332dd0bf5973dc"
+  "hash": "9f62c5841b7a5056"
+ },
+ "/dispensaries/cannabis-on-lex/": {
+  "date": "2026-10-22",
+  "hash": "32f864848057dce2"
+ },
+ "/dispensaries/cannadreams/": {
+  "date": "2026-10-22",
+  "hash": "edb62b33e27e3de7"
  },
  "/dispensaries/cannaisseur/": {
   "date": "2026-10-21",
@@ -129,7 +149,7 @@
  },
  "/dispensaries/cannavita/": {
   "date": "2026-10-22",
-  "hash": "a9735a5c8719b7ff"
+  "hash": "5940a2afb6be4c53"
  },
  "/dispensaries/case-management/": {
   "date": "2026-10-21",
@@ -139,21 +159,45 @@
   "date": "2026-10-21",
   "hash": "f3abdcf29325c7c3"
  },
+ "/dispensaries/chelsea-cannabis-co/": {
+  "date": "2026-10-22",
+  "hash": "5df177a900f25cd1"
+ },
  "/dispensaries/conbud-les/": {
   "date": "2026-10-22",
-  "hash": "f5f9ffaa4a70b1dc"
+  "hash": "7f1f2b7d8e8c367b"
+ },
+ "/dispensaries/coney-island-cannabis/": {
+  "date": "2026-10-22",
+  "hash": "829e9d68b61fb17b"
+ },
+ "/dispensaries/culture-house-greenpoint/": {
+  "date": "2026-10-22",
+  "hash": "81b361892b263df6"
  },
  "/dispensaries/culture-house/": {
   "date": "2026-10-22",
-  "hash": "b382dbfe7a35f4c7"
+  "hash": "80561a179519f77a"
  },
  "/dispensaries/dagmar-cannabis-west-village/": {
   "date": "2026-10-22",
-  "hash": "cd303bb5cb26d02c"
+  "hash": "c9b41b03b6430dd7"
  },
  "/dispensaries/dagmar-cannabis-williamsburg/": {
   "date": "2026-10-22",
-  "hash": "fc124fdf5bac8632"
+  "hash": "744832cebd8855da"
+ },
+ "/dispensaries/dankley/": {
+  "date": "2026-10-22",
+  "hash": "65443e52a160aa67"
+ },
+ "/dispensaries/dazed-union-square/": {
+  "date": "2026-10-22",
+  "hash": "e3fa6c77f506db51"
+ },
+ "/dispensaries/dispo-brooklyn/": {
+  "date": "2026-10-22",
+  "hash": "27b72e8a8d70dd12"
  },
  "/dispensaries/dizzpensary/": {
   "date": "2026-10-21",
@@ -165,43 +209,75 @@
  },
  "/dispensaries/elevate-soho/": {
   "date": "2026-10-22",
-  "hash": "1de79f3070d231f7"
+  "hash": "528b160f9f370c00"
+ },
+ "/dispensaries/emerald-dispensary-carroll-gardens/": {
+  "date": "2026-10-22",
+  "hash": "d332cf834ae632aa"
  },
  "/dispensaries/enflor/": {
   "date": "2026-10-22",
-  "hash": "9f99c3d6249e7ba3"
+  "hash": "080533cf7a041573"
+ },
+ "/dispensaries/erbquest/": {
+  "date": "2026-10-22",
+  "hash": "acc17eb7e157c2f3"
+ },
+ "/dispensaries/fireleaf/": {
+  "date": "2026-10-22",
+  "hash": "342f907012899d60"
+ },
+ "/dispensaries/flower-power/": {
+  "date": "2026-10-22",
+  "hash": "ff804edf00efda6e"
  },
  "/dispensaries/flowery/": {
   "date": "2026-10-22",
-  "hash": "ce14b1b692554bd9"
+  "hash": "f62634f8ca70ce2c"
+ },
+ "/dispensaries/flynnstoned-chelsea/": {
+  "date": "2026-10-22",
+  "hash": "ad4fb15e659ef48d"
  },
  "/dispensaries/gmdss-llc/": {
   "date": "2026-10-21",
   "hash": "5aaa0cb4dcc66dab"
  },
+ "/dispensaries/good-company/": {
+  "date": "2026-10-22",
+  "hash": "f71e8f0bbe1011dc"
+ },
  "/dispensaries/gotham-buds/": {
   "date": "2026-10-22",
-  "hash": "ba839421a1511b52"
+  "hash": "0d772697dfbd7c83"
  },
  "/dispensaries/gotham-chelsea/": {
   "date": "2026-10-22",
-  "hash": "8bca773f3997fc10"
+  "hash": "b669bc5a04f08e36"
  },
  "/dispensaries/gotham-domino/": {
   "date": "2026-10-22",
-  "hash": "e559f6a93aa3e252"
+  "hash": "38e769457bb66d33"
  },
  "/dispensaries/gotham-nyc-3rd-st/": {
   "date": "2026-10-22",
-  "hash": "5526486bb7ba3eb2"
+  "hash": "278f60e6f3cdfa37"
  },
  "/dispensaries/gram-cannabis-dispensary/": {
   "date": "2026-10-22",
-  "hash": "e3eb656df9e4b31a"
+  "hash": "e4eedd123dc52ccc"
+ },
+ "/dispensaries/grass-station/": {
+  "date": "2026-10-22",
+  "hash": "a448f700db8fcecd"
+ },
+ "/dispensaries/green-apple-distributors/": {
+  "date": "2026-10-22",
+  "hash": "132da2bc01cf9930"
  },
  "/dispensaries/green-genius-nyc/": {
   "date": "2026-10-22",
-  "hash": "5835a0fec5bdfd5d"
+  "hash": "59e27e5273f1df46"
  },
  "/dispensaries/green-jungle/": {
   "date": "2026-10-21",
@@ -209,95 +285,203 @@
  },
  "/dispensaries/green-klub/": {
   "date": "2026-10-22",
-  "hash": "da67702adef6d12a"
+  "hash": "944952bfb3749b8f"
+ },
+ "/dispensaries/green-rise/": {
+  "date": "2026-10-22",
+  "hash": "40cda4d31ba8c74e"
+ },
+ "/dispensaries/green-room-ny/": {
+  "date": "2026-10-22",
+  "hash": "3f3f1012d96544b0"
  },
  "/dispensaries/green-street-brooklyn/": {
   "date": "2026-10-22",
-  "hash": "58fbe4d568ef13da"
+  "hash": "11e915bfe89a9dd3"
  },
  "/dispensaries/grow-together-brooklyn/": {
   "date": "2026-10-22",
-  "hash": "471a642b5e9dc5f1"
+  "hash": "589275bb286e7fe0"
  },
  "/dispensaries/happy-buds-brooklyn-dispensary/": {
   "date": "2026-10-22",
-  "hash": "9ef6da193ef2fe7a"
+  "hash": "5e05a989bda45cce"
+ },
+ "/dispensaries/happy-munkey-dyckman/": {
+  "date": "2026-10-22",
+  "hash": "fb712ddbb8d7c9fe"
  },
  "/dispensaries/healthy-choice/": {
   "date": "2026-10-21",
   "hash": "f06acc07c4f670ef"
  },
+ "/dispensaries/hells-kitchen-cannabis/": {
+  "date": "2026-10-22",
+  "hash": "e6868a74f7765971"
+ },
+ "/dispensaries/herbology/": {
+  "date": "2026-10-22",
+  "hash": "79ee64fd366f8898"
+ },
+ "/dispensaries/herbwell-madison/": {
+  "date": "2026-10-22",
+  "hash": "0a518f6dcb3757fd"
+ },
  "/dispensaries/high-tidez/": {
   "date": "2026-10-22",
-  "hash": "fdb2b1b1fdd80983"
+  "hash": "2019ddc95de518a4"
  },
  "/dispensaries/highest-standards-fidi/": {
   "date": "2026-10-22",
-  "hash": "7918b1b1c5cf7d99"
+  "hash": "21ebb3cc26f8eb80"
+ },
+ "/dispensaries/hii-bay-ridge/": {
+  "date": "2026-10-22",
+  "hash": "78720a3a7020e792"
+ },
+ "/dispensaries/hii-williamsburg/": {
+  "date": "2026-10-22",
+  "hash": "aedbada47be51d0f"
+ },
+ "/dispensaries/housing-works-broadway/": {
+  "date": "2026-10-22",
+  "hash": "1100650810aca7d9"
+ },
+ "/dispensaries/hudson-haze/": {
+  "date": "2026-10-22",
+  "hash": "82c89f3b8c0057a3"
  },
  "/dispensaries/hybrid-nyc/": {
   "date": "2026-10-21",
   "hash": "b6770f93c8ca9729"
  },
+ "/dispensaries/indoor-treez-8th-avenue/": {
+  "date": "2026-10-22",
+  "hash": "b5d1236efe52155d"
+ },
+ "/dispensaries/indoor-treez-fashion-avenue/": {
+  "date": "2026-10-22",
+  "hash": "5cf8269fe3e0cc18"
+ },
+ "/dispensaries/jungle-kingdom-flower-company/": {
+  "date": "2026-10-22",
+  "hash": "aa73c0b3e088fe07"
+ },
+ "/dispensaries/kaya-bliss-bay-ridge/": {
+  "date": "2026-10-22",
+  "hash": "0cf748d588f251df"
+ },
  "/dispensaries/kiki-buddz/": {
   "date": "2026-10-21",
   "hash": "7de32c286f189077"
  },
+ "/dispensaries/kushklub/": {
+  "date": "2026-10-22",
+  "hash": "ede0186d47c8e95c"
+ },
+ "/dispensaries/lighthouse-cannabis/": {
+  "date": "2026-10-22",
+  "hash": "af1af2164ba162b8"
+ },
+ "/dispensaries/mello-tymes/": {
+  "date": "2026-10-22",
+  "hash": "3e860ce7e1350ec3"
+ },
+ "/dispensaries/midnight-moon/": {
+  "date": "2026-10-22",
+  "hash": "f5e75de1a8ef50e1"
+ },
  "/dispensaries/mighty-lucky/": {
   "date": "2026-10-22",
-  "hash": "69d3a7bb5e2a3ca4"
+  "hash": "9272414dfa6bfdef"
  },
  "/dispensaries/nicklz/": {
   "date": "2026-10-22",
-  "hash": "1d88f75a2766633f"
+  "hash": "f83148f0879a0114"
  },
  "/dispensaries/ny-canna-co-5th-ave/": {
   "date": "2026-10-22",
-  "hash": "38ad47fbdc72ca36"
+  "hash": "be1e414e5a81895a"
+ },
+ "/dispensaries/ny-cannabis-co/": {
+  "date": "2026-10-22",
+  "hash": "d2f70e6cd0609416"
+ },
+ "/dispensaries/nyc-bud/": {
+  "date": "2026-10-22",
+  "hash": "f995fd00b390e45d"
+ },
+ "/dispensaries/oc-dispensary/": {
+  "date": "2026-10-22",
+  "hash": "d86a01ce64e6b703"
  },
  "/dispensaries/organic-relief-leaf/": {
   "date": "2026-10-22",
-  "hash": "b74773247a899c8e"
+  "hash": "2bc4cc6c0150b411"
  },
  "/dispensaries/poppin/": {
   "date": "2026-10-22",
-  "hash": "d9680d73df93e2c7"
+  "hash": "2dbfc0e8ed868cd0"
  },
  "/dispensaries/pryzm/": {
   "date": "2026-10-22",
-  "hash": "69810a8655e1759e"
+  "hash": "d5442973ea16d3e2"
+ },
+ "/dispensaries/pure-blossoms/": {
+  "date": "2026-10-22",
+  "hash": "af49a6d5adab37d3"
+ },
+ "/dispensaries/puro-vita/": {
+  "date": "2026-10-22",
+  "hash": "a4bbaa295814aa1a"
  },
  "/dispensaries/purple-buds-inc-recreational/": {
   "date": "2026-10-22",
-  "hash": "3fa19ff209c3a76c"
+  "hash": "579e3c68be827331"
+ },
+ "/dispensaries/q-dispensary/": {
+  "date": "2026-10-22",
+  "hash": "4c9325ee87b723d3"
  },
  "/dispensaries/quality-control-ny/": {
   "date": "2026-10-22",
-  "hash": "68206d6628427322"
+  "hash": "0b6a7b94c85733ad"
  },
  "/dispensaries/qube-manhattan/": {
   "date": "2026-10-22",
-  "hash": "b70103fe1dcae639"
+  "hash": "08cfde47edcfc61d"
+ },
+ "/dispensaries/rezidue/": {
+  "date": "2026-10-22",
+  "hash": "932eb803936c526e"
  },
  "/dispensaries/rnr-dispensary/": {
   "date": "2026-10-22",
-  "hash": "399c9e5cf2854abd"
+  "hash": "351e655cd18b1f39"
  },
  "/dispensaries/robin-hood-cannabis-west-broadway/": {
   "date": "2026-10-22",
-  "hash": "3d5b3cab7345b1e0"
+  "hash": "13b1214b05b52f9f"
  },
  "/dispensaries/sky-high-club/": {
   "date": "2026-10-22",
-  "hash": "62364d7f765ada9f"
+  "hash": "a20ab9c7df73b0cc"
  },
  "/dispensaries/smiley-exotics/": {
   "date": "2026-10-22",
-  "hash": "8feba35570c0d4a9"
+  "hash": "2c1a9179b7cc46fb"
+ },
+ "/dispensaries/sofaclub-broadway/": {
+  "date": "2026-10-22",
+  "hash": "afff0619bbbdc544"
+ },
+ "/dispensaries/sparkboro/": {
+  "date": "2026-10-22",
+  "hash": "d5e96f2e780c1c88"
  },
  "/dispensaries/stash-master/": {
   "date": "2026-10-22",
-  "hash": "9299a392cbd375eb"
+  "hash": "7eeecfef3cd994f0"
  },
  "/dispensaries/stoop/": {
   "date": "2026-10-21",
@@ -305,23 +489,27 @@
  },
  "/dispensaries/stoops-flatiron/": {
   "date": "2026-10-22",
-  "hash": "eccf339e2ac6919f"
+  "hash": "7e3c324f2290db95"
  },
  "/dispensaries/sunflower-dispensary-retail/": {
   "date": "2026-10-22",
-  "hash": "db0e4e1a0cb4ce8c"
+  "hash": "1a771d261a75c047"
  },
  "/dispensaries/sunset-cannabis-club/": {
   "date": "2026-10-22",
-  "hash": "1b1644643bc001f8"
+  "hash": "e5ff36023a34ee45"
  },
  "/dispensaries/superfly/": {
   "date": "2026-10-22",
-  "hash": "913121c65fad527c"
+  "hash": "18d7d22402184273"
  },
  "/dispensaries/sweet-life-nyc/": {
   "date": "2026-10-22",
-  "hash": "96a2aa142265ce02"
+  "hash": "1378428c9814e0a3"
+ },
+ "/dispensaries/take-n-toke/": {
+  "date": "2026-10-22",
+  "hash": "e51ad966feed0d91"
  },
  "/dispensaries/tango-hotel-charlie-ventures/": {
   "date": "2026-10-21",
@@ -329,63 +517,95 @@
  },
  "/dispensaries/temeka-bleecker/": {
   "date": "2026-10-22",
-  "hash": "3713c12d819dd830"
+  "hash": "4df1cc4f84b32d78"
  },
  "/dispensaries/terp-bros-astoria/": {
   "date": "2026-10-22",
-  "hash": "6ac20e536425cd45"
+  "hash": "fdb9e43cba3e743e"
+ },
+ "/dispensaries/tetra-east-harlem/": {
+  "date": "2026-10-22",
+  "hash": "87bcc88bf166f583"
  },
  "/dispensaries/the-alchemy-chelsea/": {
   "date": "2026-10-22",
-  "hash": "a22e923f9fc316d8"
+  "hash": "128ebf444bc78806"
+ },
+ "/dispensaries/the-alchemy-flatiron/": {
+  "date": "2026-10-22",
+  "hash": "7d80967790f8f315"
  },
  "/dispensaries/the-daily-green/": {
   "date": "2026-10-22",
-  "hash": "4745dbe3a5577055"
+  "hash": "2bf48cc934aea733"
  },
  "/dispensaries/the-doe-store/": {
   "date": "2026-10-21",
   "hash": "9fdb8121c8e59104"
  },
+ "/dispensaries/the-emerald-dispensary-bushwick/": {
+  "date": "2026-10-22",
+  "hash": "6fecfa881b4acac1"
+ },
  "/dispensaries/the-emerald-dispensary-manhattan/": {
   "date": "2026-10-22",
-  "hash": "19e037506a206e17"
+  "hash": "609349fc81bee2d0"
  },
  "/dispensaries/the-flowery-chinatown/": {
   "date": "2026-10-22",
-  "hash": "947e37334550667c"
+  "hash": "5fbcdd746051bb75"
  },
  "/dispensaries/the-flowery-east-village/": {
   "date": "2026-10-22",
-  "hash": "e681921fd263d098"
+  "hash": "43269bc9db0b5024"
  },
  "/dispensaries/the-flowery-upper-west-side/": {
   "date": "2026-10-22",
-  "hash": "6f188513d6a10eb7"
+  "hash": "8d3ed4bf8007f1c7"
  },
  "/dispensaries/the-flowery-west-village/": {
   "date": "2026-10-22",
-  "hash": "2f377f34383c81b5"
+  "hash": "b8d813c064017070"
  },
  "/dispensaries/the-garden-club/": {
   "date": "2026-10-22",
-  "hash": "5b54381dfe8123c8"
+  "hash": "51d8bf7767e009d7"
+ },
+ "/dispensaries/the-herbal-care/": {
+  "date": "2026-10-22",
+  "hash": "9e146955b7575463"
+ },
+ "/dispensaries/the-plug-brooklyn/": {
+  "date": "2026-10-22",
+  "hash": "7d688bc2050604fc"
+ },
+ "/dispensaries/the-thc-shop-86th-street/": {
+  "date": "2026-10-22",
+  "hash": "2c48e2cb03b78a08"
  },
  "/dispensaries/the-travel-agency-downtown-brooklyn/": {
   "date": "2026-10-22",
-  "hash": "3bc89c18b2945bbe"
+  "hash": "adf3b6fcd0c6bd6b"
+ },
+ "/dispensaries/the-travel-agency-fifth-avenue/": {
+  "date": "2026-10-22",
+  "hash": "7de9111663710b62"
  },
  "/dispensaries/the-travel-agency-soho/": {
   "date": "2026-10-22",
-  "hash": "570c83d9903bb049"
+  "hash": "321727ce52b6f01a"
  },
  "/dispensaries/the-travel-agency-union-square/": {
   "date": "2026-10-22",
-  "hash": "301465dc7e80a545"
+  "hash": "1d43ed77bf245b2f"
  },
  "/dispensaries/torches-nyc/": {
   "date": "2026-10-22",
-  "hash": "0b1804dcb92708ae"
+  "hash": "5e632b0496951f50"
+ },
+ "/dispensaries/tru-cannabis/": {
+  "date": "2026-10-22",
+  "hash": "256892aa23aaa2bf"
  },
  "/dispensaries/twenty-one-thirty/": {
   "date": "2026-10-21",
@@ -393,19 +613,31 @@
  },
  "/dispensaries/twenty8gramz/": {
   "date": "2026-10-22",
-  "hash": "c3a68a412155a55d"
+  "hash": "2d68cd171f44ae59"
+ },
+ "/dispensaries/twinn-leaf/": {
+  "date": "2026-10-22",
+  "hash": "b337d23f2923409d"
  },
  "/dispensaries/twisted-vibrations-retail/": {
   "date": "2026-10-22",
-  "hash": "9e62178678dc7294"
+  "hash": "4aa6e4cef7f81ad8"
+ },
+ "/dispensaries/uplift-royal/": {
+  "date": "2026-10-22",
+  "hash": "509b9a56387beaf3"
  },
  "/dispensaries/verdi-park-slope/": {
   "date": "2026-10-22",
-  "hash": "e57552281e7c5b3f"
+  "hash": "abe95d894fe18740"
  },
  "/dispensaries/verdi/": {
   "date": "2026-10-22",
-  "hash": "c964d738ecf91e15"
+  "hash": "f8e9d11830d0d3d1"
+ },
+ "/dispensaries/vereleaf/": {
+  "date": "2026-10-22",
+  "hash": "3866856dd8ab8941"
  },
  "/dispensaries/weedkraft/": {
   "date": "2026-10-21",
@@ -413,7 +645,7 @@
  },
  "/dispensaries/weedside/": {
   "date": "2026-10-22",
-  "hash": "8ce6db756d42ad12"
+  "hash": "a187bf966d59a176"
  },
  "/dispensaries/xander-legacy/": {
   "date": "2026-10-21",
@@ -421,111 +653,111 @@
  },
  "/neighborhoods/": {
   "date": "2026-10-22",
-  "hash": "4019e2ea8ca4911c"
+  "hash": "f3f21cf3c24eedad"
  },
  "/neighborhoods/astoria/": {
   "date": "2026-10-22",
-  "hash": "678d8bf81c9cf298"
+  "hash": "3d86696cd8585161"
  },
  "/neighborhoods/brooklyn-heights-downtown/": {
   "date": "2026-10-22",
-  "hash": "a4edc74469976aa3"
+  "hash": "9ea98ffbadeac1cb"
  },
  "/neighborhoods/bushwick/": {
   "date": "2026-10-22",
-  "hash": "ded99676b0d5b82a"
+  "hash": "bac433799ace5e71"
  },
  "/neighborhoods/chelsea-flatiron/": {
   "date": "2026-10-22",
-  "hash": "9462a989c546da8a"
+  "hash": "047621b574231252"
  },
  "/neighborhoods/chinatown-les/": {
   "date": "2026-10-22",
-  "hash": "f36cd3d8e42c5a48"
+  "hash": "dee2634ce84ef6ef"
  },
  "/neighborhoods/coney-island/": {
   "date": "2026-10-22",
-  "hash": "899a94cc186c8d86"
+  "hash": "8458889b4b3c662a"
  },
  "/neighborhoods/east-west-village/": {
   "date": "2026-10-22",
-  "hash": "ce0672fad1f5a586"
+  "hash": "0f6e1222f08b1396"
  },
  "/neighborhoods/fidi/": {
   "date": "2026-10-22",
-  "hash": "8555ff4311df6206"
+  "hash": "ebd3e8a88ab5b198"
  },
  "/neighborhoods/gramercy-union-square/": {
   "date": "2026-10-22",
-  "hash": "b8edeb182ded25ff"
+  "hash": "644af11f4fd63463"
  },
  "/neighborhoods/harlem-washington-heights/": {
   "date": "2026-10-22",
-  "hash": "fd6d828fd1e0c81a"
+  "hash": "667affb674c8c98e"
  },
  "/neighborhoods/jackson-heights/": {
   "date": "2026-10-22",
-  "hash": "24458fd0ce6f090b"
+  "hash": "93afb7afaf98fe04"
  },
  "/neighborhoods/midtown/": {
   "date": "2026-10-22",
-  "hash": "25f3c0c4f15fc238"
+  "hash": "2c6de72fbb887d0a"
  },
  "/neighborhoods/park-slope/": {
   "date": "2026-10-22",
-  "hash": "fe66eb14595cb8a4"
+  "hash": "3be67ad85847a8b8"
  },
  "/neighborhoods/sheepshead-bay/": {
   "date": "2026-10-22",
-  "hash": "43e8592ccaf4fa69"
+  "hash": "bc83409f789f09ce"
  },
  "/neighborhoods/soho/": {
   "date": "2026-10-22",
-  "hash": "486f62e51c26a807"
+  "hash": "912b62156e000cbc"
  },
  "/neighborhoods/upper-east-side/": {
   "date": "2026-10-22",
-  "hash": "b4c962f3234b96f2"
+  "hash": "c9a4d69165198f75"
  },
  "/neighborhoods/upper-west-side/": {
   "date": "2026-10-22",
-  "hash": "52920f9b5d452128"
+  "hash": "f9ff5017989114db"
  },
  "/neighborhoods/williamsburg/": {
   "date": "2026-10-22",
-  "hash": "4e2eccf8d5692269"
+  "hash": "f56b926059880aa1"
  },
  "/nyc/": {
   "date": "2026-10-22",
-  "hash": "ce39863e09650ea1"
+  "hash": "2fdafca59f48b6ea"
  },
  "/nyc/concentrates/": {
   "date": "2026-10-22",
-  "hash": "f946e4a53fd0d7f9"
+  "hash": "c50156e54a6fb61f"
  },
  "/nyc/edibles/": {
   "date": "2026-10-22",
-  "hash": "20afdf296162ae93"
+  "hash": "7be7e5ef516b0cf2"
  },
  "/nyc/flower/": {
   "date": "2026-10-22",
-  "hash": "20d61af4c3ab3fc7"
+  "hash": "fcbb79ac75e9f118"
  },
  "/nyc/pre-rolls/": {
   "date": "2026-10-22",
-  "hash": "aefab4857c57a067"
+  "hash": "626275ee2d0be8bc"
  },
  "/nyc/tinctures/": {
   "date": "2026-10-22",
-  "hash": "e199f31738faab6e"
+  "hash": "b93749198206968d"
  },
  "/nyc/topicals/": {
   "date": "2026-10-22",
-  "hash": "09e9faa9ddb02353"
+  "hash": "a09cbe5d6a6d6cc7"
  },
  "/nyc/vaporizers/": {
   "date": "2026-10-22",
-  "hash": "30dea22995f75f81"
+  "hash": "4c1fb82d2c9e9d44"
  },
  "/privacy/": {
   "date": "2026-10-22",

@@ -136,6 +136,18 @@ def faq_ld(c):
 # known page slugs for internal linking
 HOOD_SLUGS = {slugify(n["neighborhood"]): n["neighborhood"] for n in SITE["neighborhoods"]}
 BRAND_SLUGS = {slugify(b["brand"]): b["brand"] for b in SITE["brands"]}
+# Store names as people say them, everywhere a page shows one (titles,
+# headings, lists): the platform's account suffixes are dropped.
+from copy_tokens import shop_name as _shop_name
+for _d in SITE["dispensaries"]:
+    _d["name"] = _shop_name(_d["name"])
+for _h in SITE["neighborhoods"]:
+    for _s in _h.get("stores_list") or []:
+        _s["name"] = _shop_name(_s["name"])
+for _b in SITE["brands"]:
+    for _s in _b.get("stores_list") or []:
+        _s["name"] = _shop_name(_s["name"])
+
 # Every live shop counts in the numbers, but a shop gets its own page only once
 # it has editorial copy in seo/data/copy/. Until then, links to it open the app.
 PAGE_DISPS = [d for d in SITE["dispensaries"] if d["slug"] in COPY["dispensary"]]
