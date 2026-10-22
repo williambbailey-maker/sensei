@@ -136,7 +136,11 @@ def faq_ld(c):
 # known page slugs for internal linking
 HOOD_SLUGS = {slugify(n["neighborhood"]): n["neighborhood"] for n in SITE["neighborhoods"]}
 BRAND_SLUGS = {slugify(b["brand"]): b["brand"] for b in SITE["brands"]}
-STORE_SLUGS = {d["slug"] for d in SITE["dispensaries"]}
+# Every live shop counts in the numbers, but a shop gets its own page only once
+# it has editorial copy in seo/data/copy/. Until then, links to it open the app.
+PAGE_DISPS = [d for d in SITE["dispensaries"] if d["slug"] in COPY["dispensary"]]
+STORE_SLUGS = {d["slug"] for d in PAGE_DISPS}
+STORE_NO_PAGE = {d["slug"] for d in SITE["dispensaries"]} - STORE_SLUGS
 
 # Public dispensary URLs. The database slug is Dutchie's (the scraper and the
 # app's ?store= links depend on it), so a page can live at a friendlier URL:
@@ -854,7 +858,7 @@ def build_category(c):
 # representative cross-links to the other page types (connected graph for crawl)
 TOP_HOODS = sorted(SITE["neighborhoods"], key=lambda n: -n["in_stock"])
 TOP_BRANDS = SITE["brands"]
-TOP_DISP = sorted(SITE["dispensaries"], key=lambda d: -d["in_stock"])
+TOP_DISP = sorted(PAGE_DISPS, key=lambda d: -d["in_stock"])
 def crosslinks(exclude_store=None, exclude_hood=None, exclude_brand=None, exclude_cat=None, hood=None):
     cards = []
     d = next((x for x in TOP_DISP if x["slug"] != exclude_store), TOP_DISP[0])
@@ -959,9 +963,12 @@ def build_index_neighborhoods():
 def build_index_brands():
     rows = [(b["brand"], f"{b['stores']} stores stock it", b["in_stock"], "in stock", f"/brands/{slugify(b['brand'])}/")
             for b in sorted(SITE["brands"], key=lambda b: -b["stores"])]
+    _most = max(SITE["brands"], key=lambda b: b["stores"])
+    _least = min(SITE["brands"], key=lambda b: b["stores"])
     return _index("/brands/", "Cannabis Brands in NYC | Sensei", "Brands",
-                  "The most widely stocked brands on New York's licensed menus, from Ayrloom at nearly every shop to Good Tide "
-                  "at a few dozen. Each page shows every store carrying the brand and where it is cheapest.",
+                  f"The most widely stocked brands on New York's licensed menus, from {_most['brand'].capitalize() if _most['brand'].islower() else _most['brand']} "
+                  f"at {_most['stores']} of {STATS['shops']} shops to {_least['brand'].rstrip('.')} at {_least['stores']}. "
+                  "Each page shows every store carrying the brand and where it is cheapest.",
                   rows, "Brands", {"exclude_brand": "__none__"})
 
 def build_index_categories():
@@ -1154,7 +1161,7 @@ if __name__ == "__main__":
     if DIST.exists(): shutil.rmtree(DIST)
     DIST.mkdir(parents=True)
     paths = ["/"]
-    for d in SITE["dispensaries"]: paths.append(build_dispensary(d))
+    for d in PAGE_DISPS: paths.append(build_dispensary(d))
     for n in SITE["neighborhoods"]: paths.append(build_neighborhood(n))
     for b in SITE["brands"]: paths.append(build_brand(b))
     for c in SITE["categories"]: paths.append(build_category(c))
@@ -1166,7 +1173,7 @@ if __name__ == "__main__":
     paths.append(build_about())
     # Every built page with what a redirect needs if it ever disappears.
     meta = {"/": {"type": "home"}}
-    for d in SITE["dispensaries"]:
+    for d in PAGE_DISPS:
         meta[disp_path(d["slug"])] = {"type": "dispensary", "store": d["slug"], "hood": slugify(d.get("neighborhood") or "")}
     for n in SITE["neighborhoods"]: meta[f"/neighborhoods/{slugify(n['neighborhood'])}/"] = {"type": "neighborhood"}
     for b in SITE["brands"]: meta[f"/brands/{slugify(b['brand'])}/"] = {"type": "brand"}
@@ -1194,5 +1201,7 @@ if __name__ == "__main__":
         raise SystemExit("placeholder text found in: " + ", ".join(bad))
     print(f"Built {len(paths)} pages → {DIST}")
     print(f"  sitemap dates changed on {changed} page(s) · {len(redirects)} redirect(s) in app/vercel.json")
-    print(f"  {len(SITE['dispensaries'])} dispensaries · {len(SITE['neighborhoods'])} neighborhoods · "
+    print(f"  {len(PAGE_DISPS)} of {len(SITE['dispensaries'])} live shops have pages "
+          f"(no copy yet: {', '.join(sorted(STORE_NO_PAGE)) or 'none'})")
+    print(f"  {len(PAGE_DISPS)} dispensaries · {len(SITE['neighborhoods'])} neighborhoods · "
           f"{len(SITE['brands'])} brands · {len(SITE['categories'])} categories · home · sitemap · robots")

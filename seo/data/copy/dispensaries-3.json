@@ -28,7 +28,7 @@
   "gotham-nyc-3rd-st": {
     "intro": [
       "Gotham's Bowery store is at 3 East 3rd Street, where the East Village meets the Bowery, with about {in_stock|about} products from {brands} brands. It is the largest of the {hood_shops|word} licensed dispensaries we track across the East and West Village, and edibles are its biggest section at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, with a {cat.concentrates}-item concentrate shelf and {cat.tinctures} tinctures.",
-      "MFNY ({brand.MFNY}) and ElectraLeaf ({brand.ElectraLeaf}) are the anchor brands, giving it a strong live resin and gummy selection, with Ayrloom, Florist Farms, RYTHM and Off Hours alongside them. Gotham also runs stores in Chelsea and at Domino Park in Williamsburg with a similar edible-forward mix. The entry price is {min_price}, and TUNE infused seltzers in Blackberry Cardamom, Raspberry Lime and Sicilian Lemon Rose are among the cheapest items."
+      "MFNY ({brand.MFNY}) is the anchor brand, giving it a strong live resin selection, with Ayrloom, Florist Farms, Rolling Green Cannabis, Ruby Farms and Off Hours alongside it. Gotham also runs stores in Chelsea and at Domino Park in Williamsburg with a similar edible-forward mix. The entry price is {min_price}, and TUNE infused seltzers in Blackberry Cardamom, Raspberry Lime and Sicilian Lemon Rose are among the cheapest items."
     ],
     "know": [
       "Largest menu in the East and West Village: about {in_stock|about} products and {brands} brands.",
@@ -46,8 +46,8 @@
         "a": "Flower is a smaller section here at about {cat.flower|about} listings. For flower in the Village, PRYZM on Avenue B carries more and has a larger pre-roll selection. Gotham is the stronger stop for edibles and live resin."
       },
       {
-        "q": "What is ElectraLeaf?",
-        "a": "ElectraLeaf is a New York cannabis brand with a focus on edibles and vapes. Gotham Bowery carries {brand.ElectraLeaf} of its products, one of the deeper ElectraLeaf selections in the city."
+        "q": "Which brands does Gotham Bowery carry the most of?",
+        "a": "MFNY leads with {brand.MFNY} products, followed by Ayrloom ({brand.ayrloom}) and Florist Farms ({brand.Florist Farms}). Search a brand on Sensei to see everything this shop has from it."
       }
     ]
   },
@@ -157,11 +157,11 @@
   },
   "hybrid-nyc": {
     "intro": [
-      "Gotham's Domino store is at 296 Kent Avenue in Williamsburg, beside Domino Park and the waterfront, with about {in_stock|about} products from {brands} brands. It is the largest of the {hood_shops|word} licensed dispensaries we track in Williamsburg, and like Gotham's Manhattan stores it is edible-led: {cat.edibles} edible listings, then {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, with {cat.concentrates} concentrates and a few tinctures and topicals.",
+      "Gotham's Domino store is at 296 Kent Avenue in Williamsburg, beside Domino Park and the waterfront, with about {in_stock|about} products from {brands} brands. It is the second-largest of the {hood_shops|word} licensed dispensaries we track in Williamsburg, after Hii on Bedford Avenue, and like Gotham's Manhattan stores it is edible-led: {cat.edibles} edible listings, then {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, with {cat.concentrates} concentrates and a few tinctures and topicals.",
       "MFNY ({brand.MFNY}) is the deepest brand, with ElectraLeaf, Florist Farms, Ayrloom, RYTHM and Off Hours behind it, the same mix as Gotham's Bowery and Chelsea shops. The entry price is {min_price} for Ayrloom Black Cherry sparkling water, with Weed Water and LayUp drinks a little more. The Flowery and Grams on Grand and Graham Avenues are the nearest alternatives, each with a smaller menu."
     ],
     "know": [
-      "Largest menu in Williamsburg: about {in_stock|about} products and {brands} brands.",
+      "Second-largest menu in Williamsburg, after Hii: about {in_stock|about} products and {brands} brands.",
       "Edible-led ({cat.edibles}), with MFNY and ElectraLeaf the main lines.",
       "Flower ({cat.flower}) and vapes ({cat.vaporizers}) are evenly matched.",
       "On the waterfront next to Domino Park, near the Marcy Avenue J, M, Z and the Bedford Avenue L."
@@ -183,7 +183,7 @@
   },
   "rnr-dispensary": {
     "intro": [
-      "RNR Dispensary is at 287 Harrison Place in Bushwick, near the Morgan Avenue L stop, with about {in_stock|about} products from {brands} brands. It is the smaller of Bushwick's {hood_shops|word} licensed shops, but it has a distinct profile: pre-rolls lead at {cat.pre-rolls} listings, and its {cat.concentrates}-item concentrate case is one of the largest in Brooklyn in our data despite the shop being far smaller than Stash Master.",
+      "RNR Dispensary is at 287 Harrison Place in Bushwick, near the Morgan Avenue L stop, with about {in_stock|about} products from {brands} brands. It is the second-largest of Bushwick's {hood_shops|word} licensed shops, far behind Stash Master, but it has a distinct profile: pre-rolls lead at {cat.pre-rolls} listings, and its {cat.concentrates}-item concentrate case is one of the largest in Brooklyn in our data despite the shop being far smaller than Stash Master.",
       "Claybourne Co. ({brand.Claybourne Co.}) is one of the deepest brands here, alongside Heavy Hitters, Ayrloom, MFNY, Grön and Jetpacks, a mix that leans toward pre-rolls, vapes and concentrates. Flower is a lighter section. The entry price is {min_price}. If you want a bigger overall menu, Stash Master on Broadway carries far more products a short walk south."
     ],
     "know": [
@@ -262,7 +262,7 @@
   "the-flowery-east-village": {
     "intro": [
       "The Flowery's East Village store is at 101 East 10th Street, near Third Avenue, with about {in_stock|about} products from {brands} brands. Its menu is evenly balanced: vapes ({cat.vaporizers}), edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) all run deep, with no category left thin, which makes it a reliable one-stop shop in a neighborhood where several competitors specialize.",
-      "Ayrloom ({brand.ayrloom}) and To The Moon ({brand.To The Moon}) give it strong drinks and New York-grown flower, alongside MFNY, Flav, STIIIZY and Off Hours. The entry price is {min_price} for LEVEL Slumber tablets, with Cycling Frog seltzers and Ayrloom drinks a little more. The Flowery also has stores in the West Village, SoHo, the Upper West Side and Williamsburg; this is the second-largest after the Upper West Side location."
+      "MFNY ({brand.MFNY}) and To The Moon ({brand.To The Moon}) lead the shelf, alongside Fernway, Flav, Ruby Farms and Florist Farms. The entry price is {min_price} for LEVEL Slumber tablets, with Cycling Frog seltzers and Ayrloom drinks a little more. The Flowery also has stores in the West Village, SoHo, the Upper West Side and Williamsburg; this is the second-largest after the Upper West Side location."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands, spread across edibles, pre-rolls, vapes and flower.",

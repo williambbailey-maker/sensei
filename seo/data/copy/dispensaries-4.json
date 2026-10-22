@@ -53,7 +53,7 @@
   },
   "healthy-choice": {
     "intro": [
-      "Broadway Strains is at 3858 Broadway in Washington Heights, near 161st Street and a short walk from the 1 train. With about {in_stock|about} products from {brands} brands, it is the largest licensed menu we track in Harlem and Washington Heights, ahead of Gotham Buds. Unlike most Manhattan shops, flower is the biggest category here at {cat.flower} listings, followed by {cat.pre-rolls} pre-rolls, {cat.edibles} edibles and {cat.vaporizers} vapes, plus a {cat.concentrates}-item concentrate case.",
+      "Broadway Strains is at 3858 Broadway in Washington Heights, near 161st Street and a short walk from the 1 train. With about {in_stock|about} products from {brands} brands, it is one of the larger licensed menus we track in Harlem and Washington Heights, ahead of Gotham Buds. Unlike most Manhattan shops, flower is the biggest category here at {cat.flower} listings, followed by {cat.pre-rolls} pre-rolls, {cat.edibles} edibles and {cat.vaporizers} vapes, plus a {cat.concentrates}-item concentrate case.",
       "Ayrloom ({brand.ayrloom}), Hashtag Honey, MFNY, Ruby Farms and Jaunty are the deepest brands, with Jetpacks covering the vape side. The entry price is {min_price} for MFNY's three-pack live resin gummies, and High Peaks sparkling lemonade and Jaunty's Dreamberry sleep gummies are only a few cents more. For anyone in upper Manhattan who wants to shop flower by the gram rather than by pre-roll, this is the strongest selection north of Central Park."
     ],
     "know": [
@@ -105,19 +105,19 @@
   },
   "alta-lower-manhattan": {
     "intro": [
-      "Alta Dispensary is at 52 Kenmare Street, on the SoHo and Nolita border near Mulberry Street. It carries about {in_stock|about} products from {brands} brands and is the second-largest of the {hood_shops|word} licensed shops we track in SoHo. The menu is led by pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}), with {cat.vaporizers} vapes and {cat.flower} flower options. Its topical shelf, at {cat.topicals} products, is the largest we track at any New York dispensary, and it also has {cat.concentrates} concentrates and {cat.tinctures} tinctures.",
+      "Alta Dispensary is at 52 Kenmare Street, on the SoHo and Nolita border near Mulberry Street. It carries about {in_stock|about} products from {brands} brands and is the third-largest of the {hood_shops|word} licensed shops we track in SoHo. The menu is led by pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}), with {cat.vaporizers} vapes and {cat.flower} flower options. Its topical shelf, at {cat.topicals} products, is one of the largest we track at any New York dispensary, and it also has {cat.concentrates} concentrates and {cat.tinctures} tinctures.",
       "MFNY is the deepest brand at {brand.MFNY} products, and Ayrloom, 1906, Ruby Farms, Grön and HOLIDAY round out the top of the list. The {min_price} entry price is among the lowest in the city: 1906's two-pack and four-pack drop pouches in Sleep, Boost, Love and Go. If you need a cream or balm, this is the shop to check first. For flower, The Travel Agency on Broadway and The Flowery's SoHo store both list more."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}) lead the menu.",
-      "Largest topical selection we track in New York at {cat.topicals} products.",
+      "One of the largest topical selections we track in New York at {cat.topicals} products.",
       "{min_price} entry price for 1906 drop pouches, among the lowest in the city.",
       "The Travel Agency SoHo and The Flowery SoHo are the nearest licensed alternatives."
     ],
     "faq": [
       {
         "q": "Why is Alta known for topicals?",
-        "a": "It lists {cat.topicals} topical products, more than any other licensed dispensary in our data. Most shops carry only a handful. If you want a THC or CBD balm, lotion or patch, Alta has the widest range to compare in one place."
+        "a": "It lists {cat.topicals} topical products, one of the biggest topical shelves in our data. Most shops carry only a handful. If you want a THC or CBD balm, lotion or patch, Alta is one of the few places to compare several in one stop."
       },
       {
         "q": "What is the cheapest product at Alta?",
@@ -132,7 +132,7 @@
   "the-emerald-dispensary-manhattan": {
     "intro": [
       "The Emerald Dispensary is at 1190 Lexington Avenue on the Upper East Side, near 81st Street and a few blocks from the 86th Street station. It stocks about {in_stock|about} products, but from {brands} brands, one of the highest brand counts of any licensed dispensary we track in Manhattan outside Midtown. Edibles lead at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, with {cat.concentrates} concentrates.",
-      "Because the brand list is so long, no single label dominates. Ayrloom has {brand.ayrloom} products, Cannabals {brand.Cannabals} and Grön {brand.Grön}, with Florist Farms, MFNY and Juniper Jill also on the shelf. The entry price is {min_price} for a single Lussi caramel square or LEVEL's two-pack Slumber protabs, with 1906 drops a little more. The Emerald is one of {hood_shops|word} licensed shops on the Upper East Side; Sweetlife on 2nd Avenue is much larger, so The Emerald is the pick when you want to browse unfamiliar brands rather than the deepest stock."
+      "Because the brand list is so long, no single label dominates. Ayrloom has {brand.ayrloom} products, Nanticoke {brand.Nanticoke} and Grön {brand.Grön}, with Florist Farms, Jaunty and STIIIZY also on the shelf. The entry price is {min_price} for a single Lussi caramel square or LEVEL's two-pack Slumber protabs, with 1906 drops a little more. The Emerald is one of {hood_shops|word} licensed shops on the Upper East Side; Sweetlife on 2nd Avenue is much larger, so The Emerald is the pick when you want to browse unfamiliar brands rather than the deepest stock."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands, one of the widest brand lists in uptown Manhattan.",
@@ -235,14 +235,14 @@
   },
   "happy-buds-brooklyn-dispensary": {
     "intro": [
-      "Happy Buds Brooklyn is at 225 Malcolm X Boulevard in Bed-Stuy, near Hancock Street and a short walk from the Utica Avenue A and C station. It is the only licensed dispensary we track in Bed-Stuy, with about {in_stock|about} products from {brands} brands. Pre-rolls are the clear focus at {cat.pre-rolls} listings, followed by {cat.edibles} edibles, {cat.flower} flower options and {cat.vaporizers} vapes. Concentrates and tinctures are minimal.",
+      "Happy Buds Brooklyn is at 225 Malcolm X Boulevard in Bed-Stuy, near Hancock Street and a short walk from the Utica Avenue A and C station. It is the larger of the {hood_shops|word} licensed dispensaries we track in Bed-Stuy, with about {in_stock|about} products from {brands} brands. Pre-rolls are the clear focus at {cat.pre-rolls} listings, followed by {cat.edibles} edibles, {cat.flower} flower options and {cat.vaporizers} vapes. Concentrates and tinctures are minimal.",
       "The brand list is unusual for the city. Dank By Definition leads at {brand.Dank By Definition.} products and Revert Cannabis has {brand.REVERT CANNABIS}, both New York growers that specialize in pre-rolls and flower, while MFNY, Ayrloom, Ruby Farms and mini mart fill in the rest. The entry price is {min_price} for Weed Water's sparkling sativa cans in razz mint limeade, pink lemonade, yuzu peach and P.O.G. Wowie. For a bigger vape selection, Stash Master in Bushwick lists far more; for pre-rolls and flower in central Brooklyn, Happy Buds is the stronger stop."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; pre-rolls ({cat.pre-rolls}) are the core.",
       "Dank By Definition ({brand.Dank By Definition.}) leads the brand list, with Revert Cannabis ({brand.REVERT CANNABIS}) also deep.",
       "Entry price is {min_price} for Weed Water sparkling cans.",
-      "Only licensed dispensary we track in Bed-Stuy; Stash Master in Bushwick is the nearest larger menu."
+      "Larger of Bed-Stuy's {hood_shops|word} licensed shops; Stash Master in Bushwick is a bigger menu nearby."
     ],
     "faq": [
       {

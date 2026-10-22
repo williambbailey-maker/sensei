@@ -39,7 +39,19 @@ def slugify(s):
     return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", (s or "").lower())).strip("-") or "x"
 
 
-PRICE_VARS = {"min_price", "avg_price", "shop_min"}
+PRICE_VARS = {"min_price", "avg_price", "shop_min", "low_shop_min"}
+
+
+def shop_name(n):
+    """A menu's store name as it reads in a sentence: platform suffixes dropped."""
+    n = re.sub(r"\s*-\s*New York,?\s*NY$", "", n or "").strip()
+    return re.sub(r"\s+\|\s+", " ", n)
+
+
+def _series(items):
+    """'A (12), B (9) and C (7)' from (label, n) pairs."""
+    parts = [f"{a} ({n:,})" for a, n in items]
+    return parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " and " + parts[-1]
 
 
 def _rec(kind, key):
@@ -94,12 +106,33 @@ def page_vars(kind, key):
             v[f"shop.{s['slug']}"] = s["n"]
             if s.get("min_price") is not None:
                 v[f"shop_min.{s['slug']}"] = s["min_price"]
+        # Who carries the most, and the cheapest of those: written from data so
+        # the copy never names a shop that has since slipped down the list.
+        sl = r.get("stores_list") or []
+        if sl:
+            v["top_shops"] = _series([(shop_name(x["name"]), x["n"]) for x in sl[:3]])
+            v["top_shop"], v["top_shop_n"] = shop_name(sl[0]["name"]), sl[0]["n"]
+            priced = [x for x in sl if x.get("min_price") is not None]
+            if priced:
+                low = min(priced, key=lambda x: (x["min_price"], -x["n"]))
+                v["low_shop"], v["low_shop_min"] = shop_name(low["name"]), low["min_price"]
     elif kind == "category":
         v.update(in_stock=r["in_stock"], shops=r["stores"], brands=r["brands"], min_price=r["min_price"])
         for b in r.get("top_brands") or []:
             v[f"brand.{b['brand']}"] = b["n"]
         for h in r.get("neighborhoods") or []:
             v[f"hood.{h['neighborhood']}"] = h["n"]
+        tb = r.get("top_brands") or []
+        if tb:
+            v["top_brands"] = _series([(b["brand"].rstrip("."), b["n"]) for b in tb[:5]])
+        cs = sorted((d for d in SITE["dispensaries"] if (d.get("categories") or {}).get(key)),
+                    key=lambda d: (-d["categories"][key], d["slug"]))
+        if cs:
+            v["top_shops"] = _series([(shop_name(d["name"]), d["categories"][key]) for d in cs[:3]])
+            v["top_shop"], v["top_shop_n"] = shop_name(cs[0]["name"]), cs[0]["categories"][key]
+        hs = r.get("neighborhoods") or []
+        if hs:
+            v["top_hoods"] = _series([(h["neighborhood"], h["n"]) for h in hs[:3]])
     return v
 
 
@@ -139,6 +172,10 @@ def render(text, v, where=""):
             raise SystemExit(f"unknown copy token {{{name}}} in {where}")
         if flt not in (None, "about", "word"):
             raise SystemExit(f"unknown filter |{flt} in {where}")
+        if isinstance(v[name], str):
+            if flt:
+                raise SystemExit(f"filter |{flt} on text token {{{name}}} in {where}")
+            return v[name]
         return _fmt(name, v[name], flt)
     out = TOKEN_RE.sub(sub, text)
     # Numbers change, so "a" vs "an" can't be written by hand: "an 81-item",

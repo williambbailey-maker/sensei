@@ -1,7 +1,7 @@
 {
   "be-brooklyn-ny": {
     "intro": [
-      "Be. is at 206 Flatbush Avenue on the Park Slope and Prospect Heights border, a block from the Bergen Street 2 and 3 station and a short walk from Barclays Center. It is the larger of the {hood_shops|word} licensed dispensaries we track in Park Slope, with about {in_stock|about} products from {brands} brands. Vapes lead at {cat.vaporizers} listings, followed by {cat.flower} flower options and {cat.pre-rolls} pre-rolls. Edibles are a smaller {cat.edibles}, and the concentrate case holds {cat.concentrates} items.",
+      "Be. is at 206 Flatbush Avenue on the Park Slope and Prospect Heights border, a block from the Bergen Street 2 and 3 station and a short walk from Barclays Center. It is the largest of the {hood_shops|word} licensed dispensaries we track in Park Slope, with about {in_stock|about} products from {brands} brands. Vapes lead at {cat.vaporizers} listings, followed by {cat.flower} flower options and {cat.pre-rolls} pre-rolls. Edibles are a smaller {cat.edibles}, and the concentrate case holds {cat.concentrates} items.",
       "The brand list is different from most New York shops. Find. is the deepest at {brand.Find.} products, with ISH at {brand.ISH}, then Cheetah, Grassroots, Select and RYTHM, a mix that leans toward multi-state producers and flower. There are no cheap single-serve drinks here: the entry price is {min_price} for Find. pre-rolls in Bluejack, Crusty Crustacean, B.A.M. and Mint Snackz. For gummies and drinks, Verdi's Park Slope store on 7th Avenue is the better pick; for flower and vapes near Barclays, Be. has the deeper shelf."
     ],
     "know": [
@@ -80,11 +80,11 @@
   "gram-cannabis-dispensary": {
     "intro": [
       "Grams Cannabis is at 360 Graham Avenue in Williamsburg, near Conselyea Street and a block from the Graham Avenue L station. It carries about {in_stock|about} products from {brands} brands, one of the larger of the {hood_shops|word} licensed dispensaries we track in the neighborhood. The menu is evenly split: {cat.pre-rolls} pre-rolls, {cat.flower} flower options, {cat.edibles} edibles and {cat.vaporizers} vapes, plus a concentrate case of {cat.concentrates} items that is one of the largest in Williamsburg.",
-      "The defining feature is Florist Farms, stocked at {brand.Florist Farms} products, the deepest run of that New York brand at any licensed dispensary we track. Jetty Extracts, BLOOM, Jeeter and the shop's own Grams house label fill out the top of the brand list. The entry price is {min_price} for Layup raspberry and mango tea cans, Tune's Sicilian lemon and rose seltzer and Muz Muz two-pack gummies. If Florist Farms pre-rolls or vapes are what you buy, there is no better single shelf in the city."
+      "The defining feature is Florist Farms, stocked at {brand.Florist Farms} products, one of the deepest runs of that New York brand at any licensed dispensary we track. Jetty Extracts, BLOOM, Jeeter and the shop's own Grams house label fill out the top of the brand list. The entry price is {min_price} for Layup raspberry and mango tea cans, Tune's Sicilian lemon and rose seltzer and Muz Muz two-pack gummies. If Florist Farms pre-rolls or vapes are what you buy, there is no better single shelf in the city."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands, balanced across edibles, pre-rolls, vapes and flower.",
-      "{brand.Florist Farms} Florist Farms products, the deepest selection of that brand anywhere we track.",
+      "{brand.Florist Farms} Florist Farms products, one of the deepest selections of that brand anywhere we track.",
       "{cat.concentrates} concentrates, one of the largest cases in Williamsburg, with Jetty Extracts among the brands.",
       "Entry price is {min_price} for Layup, Tune and Muz Muz."
     ],
@@ -132,13 +132,13 @@
   "organic-relief-leaf": {
     "intro": [
       "Urban Leaf is at 977 2nd Avenue in Midtown East, near 52nd Street and a few blocks from the 51st Street 6 and Lexington Avenue E and M stations. It lists about {in_stock|about} products from {brands} brands, one of the smaller licensed menus among the {hood_shops|word} Midtown dispensaries we track. Edibles lead at {cat.edibles} listings, then {cat.pre-rolls} pre-rolls and {cat.vaporizers} vapes. Flower is a thinner {cat.flower}, and there are {cat.concentrates} concentrates.",
-      "Ayrloom is the top brand at {brand.ayrloom} products, with STIIIZY, Florist Farms, Jaunty, Jeeter and Heavy Hitters following. The entry price is {min_price} for Jaunty's Dreamberry sleep gummies and sour watermelon two-packs and nama's Sleep Plus and Relax Plus gummies. Urban Leaf is the only licensed shop we track in Midtown east of Madison, which makes it the practical choice for the Turtle Bay and Sutton Place side. For flower, Qube on Broadway lists far more options."
+      "Ayrloom is the top brand at {brand.ayrloom} products, with STIIIZY, Florist Farms, Jaunty, Jeeter and Heavy Hitters following. The entry price is {min_price} for Jaunty's Dreamberry sleep gummies and sour watermelon two-packs and nama's Sleep Plus and Relax Plus gummies. Urban Leaf is one of the few licensed shops we track on Midtown's far east side, which makes it the practical choice for the Turtle Bay and Sutton Place side. For flower, Qube on Broadway lists far more options."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) lead, flower is only {cat.flower}.",
       "Ayrloom is the deepest brand at {brand.ayrloom} products, with STIIIZY and Florist Farms also stocked.",
       "Entry price is {min_price} for Jaunty and nama gummy two-packs.",
-      "Only licensed dispensary we track in Midtown East; Qube and Torches are the nearest larger menus."
+      "One of the few licensed shops in Midtown East; Herbwell on Madison Avenue and Torches on 42nd Street are larger menus nearby."
     ],
     "faq": [
       {
@@ -157,7 +157,7 @@
   },
   "green-klub": {
     "intro": [
-      "Green Klub is at 108 South Street in the Financial District, on the East River side near the Seaport and a short walk from the Fulton Street transit hub. It is the smaller of the {hood_shops|word} licensed dispensaries we track in FiDi, with about {in_stock|about} products from {brands} brands. Edibles dominate at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, then a modest {cat.vaporizers} vapes and {cat.flower} flower options, with {cat.concentrates} concentrates.",
+      "Green Klub is at 108 South Street in the Financial District, on the East River side near the Seaport and a short walk from the Fulton Street transit hub. It is the smallest of the {hood_shops|word} licensed dispensaries we track in FiDi, with about {in_stock|about} products from {brands} brands. Edibles dominate at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, then a modest {cat.vaporizers} vapes and {cat.flower} flower options, with {cat.concentrates} concentrates.",
       "The brand list is unusual. Dumbo Electric, a Brooklyn label, is the deepest at {brand.Dumbo Electric} products, with Grön, Lion Order, Off Hours, Hashtag Honey and LEVEL following. The entry price is {min_price}, and LEVEL's Energy and Slumber five-milligram protab two-packs and Cycling Frog seltzers in black currant and ruby grapefruit are among the cheaper items. Highest Standards on the west side of FiDi lists far more products, so Green Klub is the pick for the Seaport side and for edibles and pre-rolls rather than vapes or flower."
     ],
     "know": [
@@ -235,7 +235,7 @@
   },
   "verdi-park-slope": {
     "intro": [
-      "Verdi's Park Slope store is at 360 7th Avenue, near 10th Street and a block from the 7th Avenue F and G station. It is the smaller of the {hood_shops|word} licensed dispensaries we track in Park Slope, with about {in_stock|about} products from {brands} brands. Edibles lead at {cat.edibles} listings, then {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates, {cat.topicals|word} topicals and {cat.tinctures|word} tinctures.",
+      "Verdi's Park Slope store is at 360 7th Avenue, near 10th Street and a block from the 7th Avenue F and G station. It is the smallest of the {hood_shops|word} licensed dispensaries we track in Park Slope, with about {in_stock|about} products from {brands} brands. Edibles lead at {cat.edibles} listings, then {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates, {cat.topicals|word} topicals and {cat.tinctures|word} tinctures.",
       "MFNY, Cannabals, Claybourne Co., urbanXtracts, 1906 and Nanticoke are among the main brands. The entry price of {min_price} for 1906's two-pack Boost tablets is one of the lowest at any licensed dispensary we track in Brooklyn, and Harney Brothers' rosemary yuzu shot, Layup black cherry lemonade and Ayrloom rosé are also among the cheaper items. Be. on Flatbush Avenue has the bigger flower and vape selection in the neighborhood; Verdi Park Slope is the pick on the South Slope side and for edibles, concentrates and low-dose options."
     ],
     "know": [
@@ -273,7 +273,7 @@
     "faq": [
       {
         "q": "Is The Garden Club in Carroll Gardens?",
-        "a": "Yes. Smith Street at Degraw is in Carroll Gardens, on the Cobble Hill border. Sensei groups it with Brooklyn Heights and Downtown because those are the nearest other licensed shops, but it is the only one in Carroll Gardens itself."
+        "a": "Yes. Smith Street at Degraw is in Carroll Gardens, on the Cobble Hill border. Sensei groups it with Brooklyn Heights and Downtown because those are the nearest other licensed shops, and Emerald Dispensary on Court Street is the other licensed shop we track in Carroll Gardens itself."
       },
       {
         "q": "What is Wizard Trees?",

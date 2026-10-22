@@ -27,7 +27,7 @@
   },
   "baiked": {
     "intro": [
-      "Nicklz is at 797 8th Avenue in Midtown, near 48th Street on the west side of the Theater District, a few blocks from Times Square and the 50th Street C and E station. It is the smallest of the {hood_shops|word} licensed dispensaries we track in Midtown, with about {in_stock|about} products from {brands} brands. Edibles dominate at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, plus a concentrate case of {cat.concentrates} items.",
+      "Nicklz is at 797 8th Avenue in Midtown, near 48th Street on the west side of the Theater District, a few blocks from Times Square and the 50th Street C and E station. It is one of the smallest of the {hood_shops|word} licensed dispensaries we track in Midtown, with about {in_stock|about} products from {brands} brands. Edibles dominate at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, plus a concentrate case of {cat.concentrates} items.",
       "1906 is the deepest brand at {brand.1906} products, with MFNY, NYCE, Rove, Camino and Off Hours behind it. The entry price is {min_price} for 1906's drop pouches in Genius, Boost, Go and Bliss, each a one- or two-dose sampler. For theatergoers and anyone staying in the hotel blocks west of Broadway, Nicklz is the closest licensed shop; for a full selection, Qube on Broadway at 39th Street lists far more products about a ten-minute walk south."
     ],
     "know": [
@@ -209,14 +209,14 @@
   },
   "xander-legacy": {
     "intro": [
-      "By Any Other Name is at 946 Fulton Street in Clinton Hill, near Grand Avenue and a short walk from the Clinton-Washington Avenues C and G stations. It is the only licensed dispensary we track in Clinton Hill, with about {in_stock|about} products from {brands} brands. The menu runs {cat.edibles} edibles, {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, and there are {cat.concentrates|word} concentrates.",
+      "By Any Other Name is at 946 Fulton Street in Clinton Hill, near Grand Avenue and a short walk from the Clinton-Washington Avenues C and G stations. It is one of the {hood_shops|word} licensed dispensaries we track in Clinton Hill, with about {in_stock|about} products from {brands} brands. The menu runs {cat.edibles} edibles, {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, and there are {cat.concentrates|word} concentrates.",
       "Hepworth and Aeterna, both New York growers, are stocked alongside Grams, Ayrloom, Stranman and dompen. That gives the shop a New York flower identity that is rare at this size. The entry price is {min_price} for Ayrloom drinks in Honeycrisp 1:1, root beer, lemonade and cranberry apple. For edibles or a larger menu, Happy Buds in Bed-Stuy and The Travel Agency in Downtown Brooklyn are each about 15 minutes away by bus or bike."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; edibles ({cat.edibles}) lead, with flower at {cat.flower}.",
       "Hepworth and Aeterna, both New York growers, are key lines.",
       "Entry price is {min_price} for Ayrloom drinks; edibles run to {cat.edibles} listings.",
-      "Only licensed dispensary we track in Clinton Hill, near the Clinton-Washington C and G."
+      "One of Clinton Hill's {hood_shops|word} licensed shops, near the Clinton-Washington C and G."
     ],
     "faq": [
       {
@@ -261,14 +261,14 @@
   },
   "bud-city-cannabis-llc": {
     "intro": [
-      "Bud City Cannabis is at 3343 Fulton Street in East New York, near Crescent Street and a short walk from the Crescent Street J and Z station on the Brooklyn and Queens border. It is the only licensed dispensary we track in East New York, and at the time of our last menu pull it listed just {in_stock|word} products from {brands|word} brands, by far the smallest licensed menu in our data. Flower accounts for {cat.flower|word} of those, with the rest split among topicals, vapes and concentrates.",
-      "Dumbo Electric supplies {brand.Dumbo Electric|word} of the {in_stock|word} products, MFNY {brand.MFNY|word} and Ayrloom {brand.ayrloom|word}. The entry price is {min_price}, and listings have included a Tropicana Cherry flower, a 1906 Bliss tin, an MFNY Chemdog live resin cartridge and an Ayrloom Revive topical. A menu this small usually means the shop is newly opened or publishes only part of its stock online, so it is worth checking the store's own menu or calling before a trip. The nearest larger licensed shops are Happy Buds in Bed-Stuy and Stash Master in Bushwick."
+      "Bud City Cannabis is at 3343 Fulton Street in East New York, near Crescent Street and a short walk from the Crescent Street J and Z station on the Brooklyn and Queens border. It is one of the {hood_shops|word} licensed dispensaries we track in East New York, and at the time of our last menu pull it listed just {in_stock|word} products from {brands|word} brands, by far the smallest licensed menu in our data. Flower accounts for {cat.flower|word} of those, with the rest split among topicals, vapes and concentrates.",
+      "Dumbo Electric supplies {brand.Dumbo Electric|word} of the {in_stock|word} products, MFNY {brand.MFNY|word} and Ayrloom {brand.ayrloom|word}. The entry price is {min_price}, and listings have included a Tropicana Cherry flower, a 1906 Bliss tin, an MFNY Chemdog live resin cartridge and an Ayrloom Revive topical. A menu this small usually means the shop is newly opened or publishes only part of its stock online, so it is worth checking the store's own menu or calling before a trip. Hudson Haze, a few blocks west on Fulton Street, carries a much larger menu."
     ],
     "know": [
       "Just {in_stock|word} products from {brands|word} brands at our last pull, the smallest licensed menu we track.",
       "Flower accounts for {cat.flower|word} listings, with topicals, vapes and concentrates making up the rest.",
       "Entry price is {min_price} before tax.",
-      "Only licensed dispensary we track in East New York; Happy Buds and Stash Master are the nearest larger menus."
+      "Hudson Haze, also on Fulton Street in East New York, carries a much larger menu."
     ],
     "faq": [
       {
@@ -281,7 +281,7 @@
       },
       {
         "q": "What is nearby if Bud City doesn't have what I want?",
-        "a": "Happy Buds in Bed-Stuy and Stash Master in Bushwick are the nearest licensed shops with full menus. Both are reachable by the J or the A and C lines."
+        "a": "Hudson Haze at 3043 Fulton Street, a few blocks west, has a full menu. Happy Buds in Bed-Stuy and Stash Master in Bushwick are larger shops farther away, reachable by the J or the A and C lines."
       }
     ]
   },

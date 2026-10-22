@@ -2,18 +2,18 @@
   "green-jungle": {
     "intro": [
       "Cannavita is on Steinway Street in Astoria, the neighborhood's main shopping strip, and with about {in_stock|about} products from {brands} brands it is the second-largest licensed dispensary we track in Queens' busiest cannabis neighborhood. Pre-rolls ({cat.pre-rolls}), flower ({cat.flower}), vapes ({cat.vaporizers}) and edibles ({cat.edibles}) are all well stocked, with a {cat.concentrates}-item concentrate shelf that is respectable for a shop this size.",
-      "MFNY is one of the key brands here, which makes Cannavita one of the better places in Queens to find that label's live resin vapes, tinctures and gummies. Dank By Definition ({brand.Dank By Definition.}) and Zips OG ({brand.Zips OG}) give the flower and pre-roll sections real weight, and Nanticoke, Ayrloom and Fernway round things out. The entry price is among the lowest in the borough: 1906 Boost drops at {min_price}, with LEVEL Energy tablets and High Peaks drinks close behind. Terp Bros on Ditmars Boulevard is the other big Astoria shop, slightly larger and more vape-leaning."
+      "Rove ({brand.Rove}) leads the shelf, and Dank By Definition ({brand.Dank By Definition.}) gives the flower and pre-roll sections real weight, with Ayrloom, Grön, Fernway and Grassroots rounding things out. The entry price is among the lowest in the borough: 1906 Boost drops at {min_price}, with LEVEL Energy tablets and High Peaks drinks close behind. Terp Bros on Ditmars Boulevard is the other big Astoria shop, slightly larger and more vape-leaning."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands; Astoria's second-largest menu after Terp Bros.",
       "Pre-rolls and flower are deep ({cat.pre-rolls} and {cat.flower}), with Dank By Definition and Zips OG the main growers.",
-      "One of the deeper MFNY selections in Queens.",
+      "Rove and Dank By Definition are the biggest brands here, at {brand.Rove} and {brand.Dank By Definition.} products.",
       "Among the lowest entry prices in Astoria: micro-dose edibles from {min_price}, with drinks close behind."
     ],
     "faq": [
       {
         "q": "What is Cannavita best for?",
-        "a": "Flower and pre-rolls from New York growers, and MFNY products. With {cat.pre-rolls} pre-rolls, {cat.flower} flower options and a range of MFNY listings, it leans toward smokers and live resin fans more than the vape-heavy shops nearby."
+        "a": "A one-stop shop: {cat.vaporizers} vapes, {cat.flower} flower options, {cat.edibles} edibles and {cat.pre-rolls} pre-rolls, so most shopping lists can be covered in one visit."
       },
       {
         "q": "How far is it from Terp Bros?",
@@ -109,7 +109,7 @@
       "RYTHM, a multi-state flower and vape brand, has {brand.RYTHM} listings here, more than at almost any other shop in our data, and Select, Heavy Hitters, Ruby Farms, Grassroots and Find. complete a brand list that skews toward established names. The Travel Agency also runs stores at Union Square and in Downtown Brooklyn with a similar mix. The cheapest items are TUNE infused seltzers and Ayrloom drinks at {min_price}."
     ],
     "know": [
-      "Largest SoHo menu: about {in_stock|about} products and {brands} brands; Alta and The Flowery SoHo are the next largest.",
+      "Largest SoHo menu: about {in_stock|about} products and {brands} brands; Lighthouse and Alta are the next largest.",
       "Edible-heavy ({cat.edibles}), with one of the deepest RYTHM selections in our data ({brand.RYTHM} listings).",
       "Better than most shops for topicals ({cat.topicals}) and tinctures ({cat.tinctures}).",
       "Part of The Travel Agency group, which also has Union Square and Downtown Brooklyn locations."
@@ -157,7 +157,7 @@
   },
   "conbud-les": {
     "intro": [
-      "CONBUD is at 85 Delancey Street on the Lower East Side, with about {in_stock|about} products from {brands} brands, the larger of the {hood_shops|word} licensed dispensaries we track in the Chinatown and LES area. Pre-rolls are its biggest section by a wide margin at around {cat.pre-rolls|about} listings, ahead of edibles ({cat.edibles}), vapes ({cat.vaporizers}) and flower ({cat.flower}). It also lists {cat.topicals|word} topicals, more than most downtown shops.",
+      "CONBUD is at 85 Delancey Street on the Lower East Side, with about {in_stock|about} products from {brands} brands, the largest of the {hood_shops|word} licensed dispensaries we track in the Chinatown and LES area. Pre-rolls are its biggest section by a wide margin at around {cat.pre-rolls|about} listings, ahead of edibles ({cat.edibles}), vapes ({cat.vaporizers}) and flower ({cat.flower}). It also lists {cat.topicals|word} topicals, more than most downtown shops.",
       "Ruby Farms, a New York pre-roll and flower grower, is one of the deepest lines with {brand.Ruby Farms} listings, and Claybourne Co., Ayrloom, Mfused, Zips and Wizard Trees cover pre-rolls, drinks, edibles and flower. The lowest-priced listing is a lighter; the entry price for cannabis is LEVEL tablet two-packs. Mighty Lucky on the Bowery is the other licensed shop nearby, with a more edible-heavy menu."
     ],
     "know": [
@@ -183,19 +183,19 @@
   },
   "brooklyn-greenpoint-ny": {
     "intro": [
-      "Milligrams is on Greenpoint Avenue in Greenpoint, the only licensed dispensary we track in the neighborhood, with about {in_stock|about} products from {brands} brands. Pre-rolls lead at around {cat.pre-rolls|about} listings, with vapes ({cat.vaporizers}), edibles ({cat.edibles}) and flower ({cat.flower}) close behind, plus {cat.concentrates|word} concentrates and a handful of tinctures and topicals.",
+      "Milligrams is on Greenpoint Avenue in Greenpoint, one of the {hood_shops|word} licensed dispensaries we track in the neighborhood, with about {in_stock|about} products from {brands} brands. Pre-rolls lead at around {cat.pre-rolls|about} listings, with vapes ({cat.vaporizers}), edibles ({cat.edibles}) and flower ({cat.flower}) close behind, plus {cat.concentrates|word} concentrates and a handful of tinctures and topicals.",
       "Ruby Farms is one of the deepest brands at {brand.Ruby Farms} listings, giving the shop a strong New York pre-roll section, and Heavy Hitters, MFNY, Ayrloom, Fernway and Camino cover vapes, live resin, drinks and gummies. The cheapest item is an Ayrloom 1:1 Honeycrisp drink, with other Ayrloom beverages close behind. The licensed shops in Williamsburg are the nearest alternatives, a short ride south on the G or a walk down Manhattan Avenue."
     ],
     "know": [
-      "Greenpoint's only licensed dispensary in our data, with about {in_stock|about} products and {brands} brands.",
+      "One of Greenpoint's {hood_shops|word} licensed dispensaries in our data, with about {in_stock|about} products and {brands} brands.",
       "Evenly spread across pre-rolls, vapes, edibles and flower ({cat.pre-rolls}, {cat.vaporizers}, {cat.edibles} and {cat.flower}).",
       "Ruby Farms ({brand.Ruby Farms} listings) is the main pre-roll line; Fernway and Camino add vapes and gummies.",
       "Entry price of {min_price}, with 5 mg infused drinks among the cheapest items; Williamsburg's shops are within a short trip."
     ],
     "faq": [
       {
-        "q": "Is Milligrams the only dispensary in Greenpoint?",
-        "a": "It is the only licensed one we track in the neighborhood. The next-closest options are the Williamsburg shops, including Gotham Domino and The Flowery Brooklyn, which are a short G train ride or a walk south."
+        "q": "What other dispensaries are in Greenpoint?",
+        "a": "We also track Green Apple Distributors and Culture House Greenpoint, both on Manhattan Avenue. The Williamsburg shops, including Gotham Domino and The Flowery Brooklyn, are a short G train ride or a walk south."
       },
       {
         "q": "What is Milligrams good for?",

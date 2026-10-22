@@ -13,7 +13,7 @@
     "faq": [
       {
         "q": "Why does Qube have so much more than other Midtown dispensaries?",
-        "a": "Qube stocks around {in_stock|about} products from {brands} brands, while the next-largest Midtown shop in our data, NY Canna Co on 5th Avenue, lists far fewer. Qube simply carries more SKUs per brand, which is why it is the best Midtown stop for comparing one brand's full lineup."
+        "a": "Qube stocks around {in_stock|about} products from {brands} brands, while the next-largest Midtown shop in our data lists far fewer. Qube simply carries more SKUs per brand, which is why it is the best Midtown stop for comparing one brand's full lineup."
       },
       {
         "q": "What is the cheapest thing at Qube?",
@@ -69,7 +69,7 @@
       },
       {
         "q": "What is the closest licensed alternative to Brooklyn Bourne?",
-        "a": "Brooklyn Bourne is the only licensed dispensary we list in Flatbush itself. The nearest large shops are in Park Slope to the north and the Sheepshead Bay cluster to the south, so for most of central Brooklyn this is the local option."
+        "a": "Q Dispensary on Flatbush Avenue is the other licensed shop we list in Flatbush, with a much smaller menu. The nearest large shops are in Park Slope to the north and the Sheepshead Bay cluster to the south, so for most of central Brooklyn this is the local option."
       },
       {
         "q": "Can I bring a friend who is under 21?",
@@ -79,7 +79,7 @@
   },
   "stash-master": {
     "intro": [
-      "Stash Master is on Broadway in Bushwick, under the elevated J, M and Z line, and it is the larger of the {hood_shops|word} licensed dispensaries we track in the neighborhood by a wide margin: about {in_stock|about} products from {brands} brands, well ahead of RNR Dispensary near Morgan Avenue. The menu is unusually even, with pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) out front, followed by {cat.vaporizers} vapes and {cat.edibles} edibles, so it does not force you toward one format.",
+      "Stash Master is on Broadway in Bushwick, under the elevated J, M and Z line, and it is the largest of the {hood_shops|word} licensed dispensaries we track in the neighborhood by a wide margin: about {in_stock|about} products from {brands} brands, well ahead of RNR Dispensary near Morgan Avenue. The menu is unusually even, with pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) out front, followed by {cat.vaporizers} vapes and {cat.edibles} edibles, so it does not force you toward one format.",
       "The brand list reads like a cross-section of the New York market: Heavy Hitters and Hashtag Honey for vapes and pre-rolls, Ayrloom for drinks and gummies, Jaunty for all-in-one vapes, MFNY for live resin, and Dank By Definition for flower, each stocked in depth. It also keeps a {cat.concentrates}-item concentrate case. The entry price is among the lowest in Brooklyn: the menu starts at {min_price}, and the cheapest items are Ayrloom 1:1 drinks and Jaunty two-pack gummies."
     ],
     "know": [
@@ -287,19 +287,19 @@
   },
   "highest-standards-fidi": {
     "intro": [
-      "Highest Standards is at 2 Coenties Slip in the Financial District, a short walk from the Seaport and Stone Street, and it is the larger of the {hood_shops|word} licensed dispensaries we track in FiDi with about {in_stock|about} products from {brands} brands. Pre-rolls, edibles and vapes share the top of the menu at around {cat.pre-rolls|about}, {cat.edibles|about} and {cat.vaporizers|about} listings, with about {cat.flower|about} flower options plus a small concentrate shelf.",
+      "Highest Standards is at 2 Coenties Slip in the Financial District, a short walk from the Seaport and Stone Street, and it is the second-largest of the {hood_shops|word} licensed dispensaries we track in FiDi, after Dankley, with about {in_stock|about} products from {brands} brands. Pre-rolls, edibles and vapes share the top of the menu at around {cat.pre-rolls|about}, {cat.edibles|about} and {cat.vaporizers|about} listings, with about {cat.flower|about} flower options plus a small concentrate shelf.",
       "Jaunty is one of the deepest brands here with {brand.Jaunty} listings, mostly all-in-one vapes and gummies, and Ayrloom, Claybourne Co., STIIIZY and Select fill out the vape and edible sections. Harney Brothers, a New York maker of infused seltzers and coffee drinks, has {brand.Harney Brother's} listings, one of its strongest showings anywhere. The entry price is {min_price} for 1906 capsule pouches in Sleep, Boost and Bliss formulas. Green Klub on South Street is the other FiDi option, smaller and edible-leaning."
     ],
     "know": [
-      "Largest FiDi menu: about {in_stock|about} products and {brands} brands; Green Klub on South Street has far fewer.",
+      "Second-largest FiDi menu after Dankley: about {in_stock|about} products and {brands} brands; Green Klub on South Street has far fewer.",
       "Pre-rolls ({cat.pre-rolls}), edibles ({cat.edibles}) and vapes ({cat.vaporizers}) make up most of the menu.",
       "Harney Brothers drinks ({brand.Harney Brother's} listings) and 1906 capsule pouches from {min_price} make it a strong stop for low-dose products.",
       "Steps from the Seaport, Stone Street and the Wall Street and South Ferry stations."
     ],
     "faq": [
       {
-        "q": "Which FiDi dispensary has the bigger selection?",
-        "a": "Highest Standards, with about {in_stock|about} products across {brands} brands, versus a much smaller menu at Green Klub on South Street. Green Klub leans toward edibles; Highest Standards covers pre-rolls, vapes, edibles and flower more evenly."
+        "q": "How does Highest Standards compare with other FiDi dispensaries?",
+        "a": "Highest Standards has about {in_stock|about} products across {brands} brands, behind Dankley but far ahead of Green Klub on South Street. Green Klub leans toward edibles; Highest Standards covers pre-rolls, vapes, edibles and flower more evenly."
       },
       {
         "q": "Does Highest Standards have good low-dose options?",
