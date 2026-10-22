@@ -523,7 +523,9 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=No
     # pages; everything else is the city. Not an analytics property.
     ctx = dict(ctx or {})
     place = ctx.pop("borough", None) or "New York City"
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+    # Secondary pages (terms, privacy, about) skip the 21+ check: they are
+    # marked cleared up front and carry no gate.
+    return f"""<!doctype html><html lang="en"{' class="ag-ok"' if secondary else ''}><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -541,7 +543,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=No
 {_secondary_open(secondary) if secondary else ''}<div class="wrap">
 {'' if secondary else _TOP}
 <main>{body}</main>
-{_secondary_close(secondary) if secondary else _END + menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
+{_secondary_close(secondary) if secondary else _END + menu_html(path, MENU_COUNTS)}{'' if secondary else AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """
 
 _TOP = '<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>'
