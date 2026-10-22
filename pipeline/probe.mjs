@@ -11,6 +11,7 @@
 //
 // To print sample items from a saved capture (for Claude to read the shape):
 //   node probe.mjs --show logs/probe-<file>.json <text in the request url>
+//   node probe.mjs --show logs/probe-<file>.html [<text in the data path>]
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 
 const urls = process.argv.slice(2)
@@ -44,9 +45,24 @@ if (urls[0] === '--show') {
       console.log('no __NEXT_DATA__ in that page')
       process.exit(0)
     }
-    const big = largestArray(JSON.parse(nd[1]))
-    console.log(`__NEXT_DATA__: biggest list ${big.len} items at ${big.path}`)
-    for (const item of (big.items || []).slice(0, 2)) console.log(JSON.stringify(item, null, 1).slice(0, 3000))
+    const data = JSON.parse(nd[1])
+    console.log(`buildId: ${data.buildId} · page: ${data.page} · query: ${JSON.stringify(data.query)}`)
+    console.log(`pageProps keys: ${Object.keys(data.props?.pageProps || {}).join(', ')}`)
+    // Every list of objects with 3+ items, biggest first, so the product list
+    // can be told apart from filters and menus.
+    const lists = []
+    ;(function walk(node, path, depth) {
+      if (!node || typeof node !== 'object' || depth > 12) return
+      if (Array.isArray(node)) {
+        const objs = node.filter((x) => x && typeof x === 'object' && !Array.isArray(x))
+        if (objs.length >= 3) lists.push({ path, len: objs.length, keys: Object.keys(objs[0]).slice(0, 12), first: objs[0] })
+        node.slice(0, 3).forEach((v, i) => walk(v, `${path}[${i}]`, depth + 1))
+      } else for (const k of Object.keys(node)) walk(node[k], `${path}.${k}`, depth + 1)
+    })(data, '$', 0)
+    lists.sort((a, b) => b.len - a.len)
+    for (const l of lists.slice(0, 15)) console.log(`  ${String(l.len).padStart(4)} items  ${l.path}  [${l.keys.join(', ')}]`)
+    const pick = match ? lists.find((l) => l.path.includes(match)) : lists[0]
+    if (pick) console.log(`\nfirst item of ${pick.path}:\n${JSON.stringify(pick.first, null, 1).slice(0, 3500)}`)
     process.exit(0)
   }
   const { calls } = JSON.parse(readFileSync(file, 'utf8'))

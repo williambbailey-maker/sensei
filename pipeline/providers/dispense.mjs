@@ -8,7 +8,7 @@
 // browser and watching the first API request it makes (cached per site for
 // the run). To skip the browser, give them directly:
 //   { "menu_url": "...", "venue": "55e6bc0c93d44d8a", "api_key": "..." }
-import { cleanDescription, extractEffects, normCategory, num } from '../lib/product.mjs'
+import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
 
 const API = process.env.DISPENSE_API || 'https://api.dispenseapp.com'
 const PAGE = 50 // products per request
@@ -80,8 +80,23 @@ function findCategories(node, depth = 0) {
 
 const titleCase = (s) => (s ? String(s).toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase()) : null)
 
-// Only a 0–100 number counts as a percentage.
-function pct(v) {
+// Potency lives in `labs` ({ thc: 22.4, thcContentUnit: '%', cbd, … }), and
+// in the POS sync blob as "labs.thc" / "labs.thcContentUnit". Only a
+// percentage maps to thc_pct/cbd_pct; mg (edibles) is skipped, as for Dutchie.
+function labPct(prod, which) {
+  const labs = prod.labs && typeof prod.labs === 'object' ? prod.labs : null
+  let v = labs?.[which]
+  let unit = labs?.[`${which}ContentUnit`]
+  if (v == null) {
+    try {
+      const sync = typeof prod.posLastSyncData === 'string' ? JSON.parse(prod.posLastSyncData) : prod.posLastSyncData
+      v = sync?.[`labs.${which}`]
+      unit = sync?.[`labs.${which}ContentUnit`]
+    } catch {
+      /* not json */
+    }
+  }
+  if (unit && String(unit).trim() !== '%' && !/^percent/i.test(String(unit))) return null
   const n = num(v)
   return n != null && n > 0 && n <= 100 ? n : null
 }
@@ -116,10 +131,8 @@ export function mapProduct(prod, storeId) {
   if (variants.length === 1 && disc != null && disc > 0 && variants[0].price != null && disc < variants[0].price) variants[0].price = disc
   const prices = variants.map((v) => v.price).filter((p) => typeof p === 'number' && p > 0)
 
-  // Potency field names are unconfirmed for Dispense — see the raw sample a
-  // dry run prints. These are the usual candidates; anything else stays null.
-  const thc = pct(prod.thc ?? prod.thcPercent ?? prod.thcPercentage ?? prod.thcContent ?? prod.labResults?.thc ?? prod.potency?.thc)
-  const cbd = pct(prod.cbd ?? prod.cbdPercent ?? prod.cbdPercentage ?? prod.cbdContent ?? prod.labResults?.cbd ?? prod.potency?.cbd)
+  const thc = labPct(prod, 'thc')
+  const cbd = labPct(prod, 'cbd')
 
   return {
     store_id: storeId,
@@ -142,15 +155,16 @@ export function mapProduct(prod, storeId) {
   }
 }
 
-// Store name/address/coords from the venue record, matched defensively.
+// Store coords/city (and a street address when it has a number) from the
+// venue record. The venue name is an SEO string ("… | Cannabis Dispensary
+// Manhattan [NYC] (Rec)"), so it is not used — store names are set by hand.
 function venueMeta(v) {
   const meta = {}
   const o = v?.data ?? v
   if (!o || typeof o !== 'object') return meta
-  if (typeof o.name === 'string') meta.name = o.name.trim()
   const a = o.address && typeof o.address === 'object' ? o.address : o
   const street = a.address1 || a.street || a.line1 || (typeof o.address === 'string' ? o.address : null)
-  if (street) meta.address = [street, a.city, a.state, a.zip || a.postalCode].filter(Boolean).join(', ')
+  if (street && /^\d/.test(String(street).trim())) meta.address = [street, a.city, a.state, a.zip || a.postalCode].filter(Boolean).join(', ')
   if (typeof a.city === 'string') meta.city = a.city.trim()
   const lat = o.latitude ?? o.lat ?? o.location?.latitude ?? o.location?.lat ?? o.location?.coordinates?.[1]
   const lng = o.longitude ?? o.lng ?? o.location?.longitude ?? o.location?.lng ?? o.location?.coordinates?.[0]
@@ -162,8 +176,7 @@ export default {
   name: 'dispense',
   enabled: false, // switch on after a dry run on one store looks right
   needsBrowser: (store) => !(store.config?.venue && store.config?.api_key),
-  // thc_pct / cbd_pct left out until the field names are confirmed.
-  fields: ['name', 'brand', 'description', 'brand_description', 'effects', 'category', 'strain_type', 'variants', 'price_min', 'url', 'image_url'],
+  fields: PRODUCT_FIELDS,
 
   async scrape(ctx, store) {
     const creds = await discover(ctx, store)
