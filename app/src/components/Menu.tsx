@@ -167,7 +167,8 @@ export function Menu({
             </p>
             <p className="copy mt-2" style={{ color: 'rgba(255,255,255,.6)' }}>
               Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each
-              shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.
+              shop's live menu and refresh nightly. We don't sell anything (<u>including your personal information</u>); you
+              order on the dispensary's own site.
             </p>
             <p className="meta mt-4">21+ only · adults in New York State</p>
           </div>

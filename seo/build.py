@@ -438,7 +438,7 @@ def menu_html(path, counts):
 {row("", "Cart", "Open in the app", f"{APP}/?entry=cart")}
 </div>
 <div class="grp"><div class="k">About</div>
-<p class="about">Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.</p>
+<p class="about">Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything (<u>including your personal information</u>); you order on the dispensary's own site.</p>
 <span class="meta">21+ · adults in New York State</span>
 </div></div></div>
 <script>(function(){{var h=document.documentElement,o=document.getElementById('menu-open'),c=document.getElementById('menu-close');
@@ -1003,7 +1003,7 @@ def build_about():
     body = f"""
 <div class="doc-head"><h1>About Sensei</h1></div>
 <div class="doc">
-<p>Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.</p>
+<p>Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything (<u>including your personal information</u>); you order on the dispensary's own site.</p>
 <p>Right now that's {STATS["shops"]} licensed shops across {STATS["neighborhoods"]} neighborhoods.</p>
 <p>21+ only · adults in New York State.</p>
 <p>Questions or corrections? Email <a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a>.</p>
