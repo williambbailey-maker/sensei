@@ -274,6 +274,45 @@ select:focus {
   gap: 12px;
 }
 
+/* Journey borough rows: the row picks the whole borough; the arrow on the
+   right opens its neighborhoods underneath, indented. */
+.boro-head {
+  @apply flex w-full items-stretch;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+.boro-pick {
+  @apply flex min-w-0 flex-1 items-center text-left;
+  gap: 12px;
+  padding: 16px 0;
+}
+.boro-tog {
+  @apply flex flex-none items-center justify-center;
+  width: 52px;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+.boro-tog svg {
+  transition: transform 0.15s;
+}
+.boro-tog svg.up {
+  transform: rotate(180deg);
+}
+.boro-hoods {
+  padding-left: 24px;
+}
+.boro-hoods .label {
+  font-size: 15px;
+  font-weight: 400;
+}
+.boro-hoods .row {
+  padding: 14px 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .boro-tog svg {
+    transition: none;
+  }
+}
+
 /* Journey option marker. */
 .disc {
   width: 12px;

@@ -6,8 +6,9 @@ import { track } from '../lib/analytics'
 
 // The core experience: a pure tap-through selection journey rendered as a
 // list of hairline rows with a disc marker.
-// Borough → Neighborhood → Product type → Strain → Quantity (flower only) →
-// Price → the product list. One tap advances each step; every step is skippable.
+// Borough (a whole borough, or one of its neighborhoods under its arrow) →
+// Product type → Strain → Quantity (flower only) → Price → the product list.
+// One tap advances each step; every step is skippable.
 export function TapJourney({
   initial,
   neighborhoodsByBorough,
@@ -27,18 +28,20 @@ export function TapJourney({
   const [f, setF] = useState<Filters>({ ...EMPTY_FILTERS, ...initial })
   const [locating, setLocating] = useState(false)
   const [locError, setLocError] = useState('')
+  // The borough whose neighborhoods are showing (one at a time). Coming back
+  // to edit a neighborhood pick opens its borough.
+  const [open, setOpen] = useState<string | null>(initial.neighborhood ? initial.borough : null)
 
-  const STEPS = ['Borough', 'Neighborhood', 'Product type', 'Strain', 'Quantity', 'Price']
+  const STEPS = ['Borough', 'Product type', 'Strain', 'Quantity', 'Price']
   const LAST = STEPS.length - 1
 
   const hoodsFor = (borough: string | null) =>
     borough ? (neighborhoodsByBorough[borough] ?? []) : []
 
-  // Which steps apply to the current draft: the neighborhood step needs
-  // neighborhoods to exist, and the quantity (pack size) step is flower-only.
+  // Which steps apply to the current draft: the quantity (pack size) step is
+  // flower-only.
   const stepVisible = (i: number, draft: Filters) => {
-    if (i === 1) return hoodsFor(draft.borough).length > 0
-    if (i === 4) return draft.format === 'flower'
+    if (i === 3) return draft.format === 'flower'
     return true
   }
 
@@ -76,8 +79,7 @@ export function TapJourney({
   // distance (closest first). We deliberately don't hard-limit to a tight radius
   // up front — that produced empty screens for anyone not standing right next to
   // a shop. "Any distance" guarantees results; the Distance control on the
-  // results screen lets them tighten to a mile radius. (Neighborhood step
-  // self-skips with no borough set.)
+  // results screen lets them tighten to a mile radius.
   const locate = () => {
     setLocError('')
     setLocating(true)
@@ -103,7 +105,6 @@ export function TapJourney({
     )
   }
 
-  const neighborhoods = hoodsFor(f.borough)
   // Progress reflects only the steps that apply to the current path.
   const visibleSteps = STEPS.map((_, i) => i).filter((i) => stepVisible(i, f))
   const currentPos = visibleSteps.indexOf(step)
@@ -133,35 +134,59 @@ export function TapJourney({
       </div>
 
       {step === 0 && (
-        <Step title="Where are you" hint="Tap a borough. Every step after this is skippable.">
-          {BOROUGHS.map((b) => (
-            <Option
-              key={b}
-              label={b}
-              caption={shops(boroughCounts[b])}
-              active={f.borough === b}
-              onClick={() => pick({ borough: b, neighborhood: null })}
-            />
-          ))}
+        <Step title="Where are you" hint="Tap a borough for all of it, or open its arrow to pick a neighborhood.">
+          {BOROUGHS.map((b) => {
+            const hoods = hoodsFor(b)
+            const isOpen = open === b && hoods.length > 0
+            const id = `hoods-${b.replace(/\W/g, '')}`
+            return (
+              <div key={b} className="boro">
+                <div className="boro-head">
+                  <button type="button" onClick={() => pick({ borough: b, neighborhood: null })} className="boro-pick">
+                    <span className={`disc ${f.borough === b && !f.neighborhood ? 'disc-on' : ''}`} />
+                    <span className="min-w-0">
+                      <span className="label block">{b}</span>
+                      <span className="meta block">
+                        All of {b}
+                        {boroughCounts[b] ? ` · ${shops(boroughCounts[b])}` : ''}
+                      </span>
+                    </span>
+                  </button>
+                  {hoods.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setOpen(isOpen ? null : b)}
+                      className="boro-tog"
+                      aria-expanded={isOpen}
+                      aria-controls={id}
+                      aria-label={`${isOpen ? 'Hide' : 'Show'} neighborhoods in ${b}`}
+                    >
+                      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" className={isOpen ? 'up' : ''}>
+                        <path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" strokeWidth="2" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+                {isOpen && (
+                  <div id={id} className="boro-hoods">
+                    {hoods.map((n) => (
+                      <Option
+                        key={n}
+                        label={n}
+                        caption={shops(neighborhoodCounts[n])}
+                        active={f.neighborhood === n}
+                        onClick={() => pick({ borough: b, neighborhood: n })}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </Step>
       )}
 
       {step === 1 && (
-        <Step title={`Where in ${f.borough}`} hint="Choose a neighborhood, or all of them.">
-          <Option label={`All ${f.borough}`} active={f.neighborhood === null} onClick={() => pick({ neighborhood: null })} />
-          {neighborhoods.map((n) => (
-            <Option
-              key={n}
-              label={n}
-              caption={shops(neighborhoodCounts[n])}
-              active={f.neighborhood === n}
-              onClick={() => pick({ neighborhood: n })}
-            />
-          ))}
-        </Step>
-      )}
-
-      {step === 2 && (
         <Step title="What are you after" hint="Pick a product type, or any.">
           {FORMATS.map((fmt) => (
             <Option
@@ -175,7 +200,7 @@ export function TapJourney({
         </Step>
       )}
 
-      {step === 3 && (
+      {step === 2 && (
         <Step title="Which strain" hint="Indica, sativa, hybrid, or any.">
           {STRAINS.map((s) => (
             <Option key={s} label={s} active={f.strain === s} onClick={() => pick({ strain: s })} />
@@ -183,7 +208,7 @@ export function TapJourney({
         </Step>
       )}
 
-      {step === 4 && (
+      {step === 3 && (
         <Step title="How much" hint="Pick a size, or any amount.">
           {SIZES.map((s) => (
             <Option key={s.key} label={s.label} active={f.size === s.key} onClick={() => pick({ size: s.key })} />
@@ -191,7 +216,7 @@ export function TapJourney({
         </Step>
       )}
 
-      {step === 5 && (
+      {step === 4 && (
         <Step title="Your budget" hint="Per item, or no limit.">
           {BUDGETS.map((b) => (
             <Option
