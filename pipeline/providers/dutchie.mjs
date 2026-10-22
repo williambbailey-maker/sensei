@@ -3,10 +3,10 @@
 // (Dutchie's GraphQL) — exact prices, every pack size, strain, potency —
 // instead of scraping the rendered HTML (which varies per store template).
 //
-// store.slug is the Dutchie cName (dutchie.com/dispensary/<slug>). Some stores
-// hide their menu from dutchie.com and only show it inside their own website;
-// those load from Dutchie's embedded menu (dutchie.com/embedded-menu/<slug>)
-// instead, picked automatically when the regular page loads no product feed.
+// store.slug is the Dutchie cName (dutchie.com/dispensary/<slug>). A store that
+// only shows its menu inside its own website can be read from Dutchie's
+// embedded menu instead: set {"menu": "embedded-menu"} for it in
+// stores.config.json. Nothing is tried automatically.
 import { cleanDescription, extractEffects, normCategory, num, potencyPct, PRODUCT_FIELDS } from '../lib/product.mjs'
 
 const CATEGORIES = ['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals']
@@ -17,10 +17,14 @@ const T = SLOW
 // A "full" page returns ~100 products; fewer means it's the last page, so we
 // can stop without fetching an empty next page.
 const FULL_PAGE = 90
-// The product list comes from this GraphQL query; each page waits for it
-// (up to FEED_WAIT) instead of a fixed time, since slower stores fire it late.
+// The product list comes from this GraphQL query. Each page waits for it
+// instead of a fixed time, since slower stores fire it late; the old pause
+// still counts from page load, so a quick store runs as fast as before. If the
+// store's first page has no feed at all within FEED_WAIT_FIRST, the store is
+// reported empty and its other categories are skipped.
 const FEED_OP = 'FilteredProducts'
-const FEED_WAIT = 15000
+const FEED_WAIT_FIRST = 10000
+const FEED_WAIT = 8000
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -197,8 +201,6 @@ function findProductArrays(node, out, depth = 0) {
 const isFeed = (r) => r.url().includes(FEED_OP) || (r.request().postData() || '').includes(FEED_OP)
 
 // Scrape every category from one menu ('dispensary' or 'embedded-menu').
-// Returns null when the very first page loads no product feed at all — the
-// menu isn't shown at that address — so the caller can try the other one.
 async function scrapeStore(page, storeId, slug, meta, menu = 'dispensary') {
   const base = `https://dutchie.com/${menu}/${slug}/products`
   const seen = new Map()
@@ -220,13 +222,15 @@ async function scrapeStore(page, storeId, slug, meta, menu = 'dispensary') {
       }
       page.on('response', handler)
       const url = pageNum === 1 ? `${base}/${category}` : `${base}/${category}?page=${pageNum}`
+      const first = category === CATEGORIES[0] && pageNum === 1
       // Listen before navigating so a fast feed response isn't missed.
-      const feed = page.waitForResponse(isFeed, { timeout: FEED_WAIT }).catch(() => null)
+      const feed = page.waitForResponse(isFeed, { timeout: first ? FEED_WAIT_FIRST : FEED_WAIT }).catch(() => null)
       let gotFeed = null
       try {
+        const t0 = Date.now()
         await page.goto(url, { waitUntil: 'domcontentloaded' })
         gotFeed = await feed
-        await sleep(T.load)
+        await sleep(Math.max(0, T.load - (Date.now() - t0)))
         for (let i = 0; i < T.scrolls; i++) {
           await page.evaluate('window.scrollTo(0, document.body.scrollHeight)').catch(() => {})
           await sleep(T.scrollWait)
@@ -238,9 +242,10 @@ async function scrapeStore(page, storeId, slug, meta, menu = 'dispensary') {
         break
       }
       page.off('response', handler)
-      if (!gotFeed && category === CATEGORIES[0] && pageNum === 1 && menu === 'dispensary') {
-        console.log(`    no product feed on dutchie.com/${menu}/${slug}`)
-        return null
+      if (!gotFeed && first) {
+        // No menu at this address: report it, don't spend time on 6 more pages.
+        console.log(`    no product feed on dutchie.com/${menu}/${slug} within ${FEED_WAIT_FIRST / 1000}s — skipping the store`)
+        return []
       }
 
       const pageIds = new Set()
@@ -303,11 +308,8 @@ export default {
     const meta = {}
     // Visit the store's info page once if we still lack its address/coords.
     if (!store.address || store.lat == null) await fetchStoreInfo(page, store.slug, meta)
-    let products = await scrapeStore(page, store.id, store.slug, meta)
-    if (products === null) {
-      console.log('    trying the embedded menu')
-      products = await scrapeStore(page, store.id, store.slug, meta, 'embedded-menu')
-    }
+    const menu = store.config?.menu === 'embedded-menu' ? 'embedded-menu' : 'dispensary'
+    const products = await scrapeStore(page, store.id, store.slug, meta, menu)
     return { products, meta }
   },
 
