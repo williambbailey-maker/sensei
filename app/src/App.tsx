@@ -188,7 +188,6 @@ export default function App() {
   const [way, setWay] = useState<'borough' | 'search' | null>(null)
   const [locating, setLocating] = useState(false)
   const [wayError, setWayError] = useState('')
-  const isHome = view === 'journey' && way === null
 
   // Every screen change starts at the top; the home's "Start here" block is
   // a long way down, and the next screen must not open at that offset.
@@ -196,10 +195,9 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }, [view, way])
 
-  // Browser history mirrors the screen, so the back button, and a swipe in
-  // from the left edge, step back inside the app instead of leaving the site.
+  // Browser history mirrors the screen, so the back button steps back inside
+  // the app instead of leaving the site.
   const cur = useRef({ view, way })
-  const lastPop = useRef(0)
   useEffect(() => {
     const prev = cur.current
     cur.current = { view, way }
@@ -219,7 +217,6 @@ export default function App() {
       /* ignore */
     }
     const onPop = (e: PopStateEvent) => {
-      lastPop.current = Date.now()
       const s = e.state
       // Menu and product-detail entries close themselves; only app screens here.
       if (!s || s.view === undefined) return
@@ -233,47 +230,6 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Swipe in from the left edge = back. Browsers with a native edge gesture
-  // fire popstate themselves; if one just did, we stay out of the way.
-  const [backHintSeen, setBackHintSeen] = useState(() => {
-    try {
-      return localStorage.getItem('sensei_back_hint') === '1'
-    } catch {
-      return false
-    }
-  })
-  useEffect(() => {
-    if (isHome) return
-    let start: { x: number; y: number } | null = null
-    const onStart = (e: TouchEvent) => {
-      const t = e.touches[0]
-      // Anywhere in the left third of the screen counts as the start zone.
-      start = t.clientX <= window.innerWidth / 3 ? { x: t.clientX, y: t.clientY } : null
-    }
-    const onEnd = (e: TouchEvent) => {
-      if (!start) return
-      const t = e.changedTouches[0]
-      const dx = t.clientX - start.x
-      const dy = Math.abs(t.clientY - start.y)
-      start = null
-      if (dx < 70 || dx < dy * 1.5) return
-      if (Date.now() - lastPop.current < 600) return
-      try {
-        localStorage.setItem('sensei_back_hint', '1')
-      } catch {
-        /* ignore */
-      }
-      setBackHintSeen(true)
-      track('swipe_back', {})
-      history.back()
-    }
-    document.addEventListener('touchstart', onStart, { passive: true })
-    document.addEventListener('touchend', onEnd, { passive: true })
-    return () => {
-      document.removeEventListener('touchstart', onStart)
-      document.removeEventListener('touchend', onEnd)
-    }
-  }, [isHome])
   const scrollTo = (id: string) =>
     requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   const pickWay = (w: Way) => {
@@ -382,14 +338,6 @@ export default function App() {
             Menu
           </button>
         </div>
-        {!isHome && !backHintSeen && (
-          <p className="meta back-hint" style={{ marginTop: 12 }}>
-            <span className="back-hint-arrow" aria-hidden="true">
-              ←
-            </span>
-            Swipe right from the left side to go back
-          </p>
-        )}
       </header>
 
       {cart && view !== 'cart' && (

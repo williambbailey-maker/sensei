@@ -48,7 +48,7 @@ export function Results({
 
   const waiting = loading && ranked.length === 0
 
-  // The detail panel is owned here so it can be swiped through the list:
+  // The detail panel is owned here so its arrows can step through the list:
   // openIndex points into `shown`, and stepping logs a product_view for the
   // product that comes into view.
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -63,9 +63,9 @@ export function Results({
         if (i == null) return i
         const n = i + delta
         if (n < 0 || n >= ranked.length) return i
-        // Swiping past the last loaded card loads the next 25 behind it.
+        // Stepping past the last loaded card loads the next 25 behind it.
         if (n >= limit) showUpTo(limit + PAGE)
-        track('product_view', { ...eventProps(ranked[n]), via: 'swipe' })
+        track('product_view', { ...eventProps(ranked[n]), via: 'arrow' })
         return n
       })
     },

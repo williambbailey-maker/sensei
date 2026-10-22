@@ -51,7 +51,7 @@ export function productFacts(p: Product, userLoc?: LatLng | null) {
 
 // A result row: thumb · name / brand · size · strain · THC / store · hood ·
 // distance · price. Tapping it opens the detail panel, which Results owns so
-// the panel can be swiped from product to product.
+// the panel can step from product to product.
 export function ProductCard({
   p,
   userLoc,

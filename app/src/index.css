@@ -35,6 +35,9 @@ body,
 html,
 body {
   overflow-x: clip;
+  /* No swiping anywhere: this also switches off the browser's own
+     swipe-to-go-back (Chrome on Android and desktop trackpads). */
+  overscroll-behavior-x: none;
 }
 
 body {
@@ -524,31 +527,6 @@ select:focus {
   text-underline-offset: 3px;
 }
 
-/* The one-time "swipe back" hint under the header. */
-.back-hint {
-  @apply flex items-center;
-  gap: 8px;
-}
-@keyframes sen-hintArrow {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-6px);
-  }
-}
-.back-hint-arrow {
-  display: inline-block;
-  color: #fff;
-  animation: sen-hintArrow 1.4s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .back-hint-arrow {
-    animation: none;
-  }
-}
-
 /* ---------- the menu sheet ---------- */
 .menu {
   @apply fixed inset-0 z-40 overflow-y-auto bg-field;
@@ -608,7 +586,6 @@ select:focus {
 /* ---------- product detail sheet ---------- */
 .sheet {
   @apply fixed inset-0 z-50 flex flex-col overflow-y-auto bg-field;
-  touch-action: pan-y;
   will-change: transform;
 }
 /* The sheet is a flex column; without this its frame shrinks to its content. */
@@ -628,44 +605,22 @@ select:focus {
 .sheet-in {
   animation: sen-sheetIn 0.22s ease both;
 }
-@keyframes sen-sheetNudge {
-  0% {
-    transform: translateY(24px);
-    opacity: 0;
-  }
-  35% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  60% {
-    transform: translateX(-22px);
-  }
-  80% {
-    transform: translateX(10px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-.sheet-nudge {
-  animation: sen-sheetNudge 0.9s ease both;
-}
-/* Deck motion: the next card slides in from the side you swiped toward; a
-   bump is the short shove at the end of the deck. */
+/* Arrow motion: the next product slides in from the side it came from; a
+   bump is the short shove at either end of the list. */
 @keyframes sen-enterR {
   from {
-    transform: translateX(110%) rotate(4deg);
+    transform: translateX(110%);
   }
   to {
-    transform: translateX(0) rotate(0);
+    transform: translateX(0);
   }
 }
 @keyframes sen-enterL {
   from {
-    transform: translateX(-110%) rotate(-4deg);
+    transform: translateX(-110%);
   }
   to {
-    transform: translateX(0) rotate(0);
+    transform: translateX(0);
   }
 }
 .sheet-enter-r {
@@ -724,18 +679,6 @@ select:focus {
   transform: scale(0.92);
 }
 .deck-btn:disabled {
-  opacity: 0.25;
-}
-.swipe {
-  @apply flex items-center justify-center;
-  gap: 14px;
-}
-.swipe-a {
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1;
-}
-.swipe-off {
   opacity: 0.25;
 }
 .detail-img {
@@ -803,7 +746,6 @@ select:focus {
 }
 @media (prefers-reduced-motion: reduce) {
   .sheet-in,
-  .sheet-nudge,
   .menu-in,
   .fade-in {
     animation: none;
