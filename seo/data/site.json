@@ -4,7 +4,7 @@
  "stats": {
   "shops": 126,
   "in_stock": 63854,
-  "neighborhoods": 31
+  "neighborhoods": 33
  },
  "brands": [
   {
@@ -99,7 +99,7 @@
      "slug": "happy-munkey",
      "borough": "Manhattan",
      "min_price": 5,
-     "neighborhood": null
+     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 44,
@@ -263,7 +263,7 @@
      "slug": "cannadreams",
      "borough": "Manhattan",
      "min_price": 28,
-     "neighborhood": null
+     "neighborhood": "Midtown"
     },
     {
      "n": 19,
@@ -428,7 +428,7 @@
      "slug": "vereleaf",
      "borough": "Manhattan",
      "min_price": 22,
-     "neighborhood": null
+     "neighborhood": "Chelsea & Flatiron"
     },
     {
      "n": 23,
@@ -452,7 +452,7 @@
      "slug": "housing-works-broadway",
      "borough": "Manhattan",
      "min_price": 24,
-     "neighborhood": null
+     "neighborhood": "East & West Village"
     },
     {
      "n": 23,
@@ -476,7 +476,7 @@
      "slug": "uplift-royal",
      "borough": "Manhattan",
      "min_price": 23.01,
-     "neighborhood": null
+     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 17,
@@ -484,7 +484,7 @@
      "slug": "cannadreams",
      "borough": "Manhattan",
      "min_price": 24,
-     "neighborhood": null
+     "neighborhood": "Midtown"
     },
     {
      "n": 17,
@@ -762,7 +762,7 @@
      "slug": "pure-blossoms",
      "borough": "Manhattan",
      "min_price": 12.39,
-     "neighborhood": null
+     "neighborhood": "Upper West Side"
     },
     {
      "n": 53,
@@ -770,7 +770,7 @@
      "slug": "cannadreams",
      "borough": "Manhattan",
      "min_price": 4.95,
-     "neighborhood": null
+     "neighborhood": "Midtown"
     },
     {
      "n": 47,
@@ -794,7 +794,7 @@
      "slug": "housing-works-broadway",
      "borough": "Manhattan",
      "min_price": 22,
-     "neighborhood": null
+     "neighborhood": "East & West Village"
     },
     {
      "n": 43,
@@ -1267,7 +1267,7 @@
      "slug": "housing-works-broadway",
      "borough": "Manhattan",
      "min_price": 18,
-     "neighborhood": null
+     "neighborhood": "East & West Village"
     },
     {
      "n": 13,
@@ -1299,7 +1299,7 @@
      "slug": "happy-munkey",
      "borough": "Manhattan",
      "min_price": 17,
-     "neighborhood": null
+     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 11,
@@ -1447,7 +1447,7 @@
      "slug": "chelsea-cannabis",
      "borough": "Manhattan",
      "min_price": 50,
-     "neighborhood": null
+     "neighborhood": "Chelsea & Flatiron"
     },
     {
      "n": 25,
@@ -1495,7 +1495,7 @@
      "slug": "housing-works-broadway",
      "borough": "Manhattan",
      "min_price": 50,
-     "neighborhood": null
+     "neighborhood": "East & West Village"
     }
    ]
   },
@@ -1763,7 +1763,7 @@
      "slug": "alto",
      "borough": "Manhattan",
      "min_price": 50,
-     "neighborhood": null
+     "neighborhood": "Tribeca"
     },
     {
      "n": 23,
@@ -2106,7 +2106,7 @@
      "slug": "housing-works-broadway",
      "borough": "Manhattan",
      "min_price": 12,
-     "neighborhood": null
+     "neighborhood": "East & West Village"
     },
     {
      "n": 43,
@@ -2146,7 +2146,7 @@
      "slug": "sofaclub-broadway",
      "borough": "Manhattan",
      "min_price": 14,
-     "neighborhood": null
+     "neighborhood": "Upper West Side"
     },
     {
      "n": 34,
@@ -2162,7 +2162,7 @@
      "slug": "vereleaf",
      "borough": "Manhattan",
      "min_price": 6.19,
-     "neighborhood": null
+     "neighborhood": "Chelsea & Flatiron"
     }
    ]
   },
@@ -2420,7 +2420,7 @@
      "slug": "alto",
      "borough": "Manhattan",
      "min_price": 30,
-     "neighborhood": null
+     "neighborhood": "Tribeca"
     },
     {
      "n": 6,
@@ -2444,7 +2444,7 @@
      "slug": "cannadreams",
      "borough": "Manhattan",
      "min_price": 32,
-     "neighborhood": null
+     "neighborhood": "Midtown"
     },
     {
      "n": 6,
@@ -2502,6 +2502,10 @@
    40.786,
    -73.972
   ],
+  "alto": [
+   40.7149,
+   -74.0083
+  ],
   "tedg": [
    40.701,
    -73.9255
@@ -2525,6 +2529,10 @@
   "enflor": [
    40.762,
    -73.883
+  ],
+  "nycbud": [
+   40.7493,
+   -73.9519
   ],
   "flowery": [
    40.712,
@@ -2552,11 +2560,15 @@
   ],
   "kushklub": [
    40.722,
-   -73.9882
+   -73.988
   ],
   "mad-ny-1": [
    40.8015,
    -73.9605
+  ],
+  "vereleaf": [
+   40.7493,
+   -73.9959
   ],
   "gmdss-llc": [
    40.6903,
@@ -2610,6 +2622,10 @@
    40.677,
    -73.971
   ],
+  "cannadreams": [
+   40.767,
+   -73.986
+  ],
   "cannaisseur": [
    40.7505,
    -74.0028
@@ -2642,6 +2658,10 @@
    40.7223,
    -74.0007
   ],
+  "flower-power": [
+   40.7727,
+   -73.9799
+  ],
   "good-company": [
    40.785,
    -73.979
@@ -2649,6 +2669,10 @@
   "green-jungle": [
    40.762,
    -73.918
+  ],
+  "happy-munkey": [
+   40.8635,
+   -73.9255
   ],
   "mighty-lucky": [
    40.7237,
@@ -2661,6 +2685,10 @@
   "twenty8gramz": [
    40.5975,
    -73.949
+  ],
+  "uplift-royal": [
+   40.788,
+   -73.9491
   ],
   "bud-and-honey": [
    40.7443,
@@ -2677,6 +2705,10 @@
   "oc-dispensary": [
    40.672,
    -73.957
+  ],
+  "pure-blossoms": [
+   40.7933,
+   -73.9713
   ],
   "sky-high-club": [
    40.725,
@@ -2726,6 +2758,10 @@
    40.6503,
    -73.956
   ],
+  "cannabis-on-lex": [
+   40.7534,
+   -73.9743
+  ],
   "case-management": [
    40.5885,
    -73.9585
@@ -2738,6 +2774,10 @@
    40.759,
    -73.985
   ],
+  "the-herbal-care": [
+   40.7839,
+   -73.9527
+  ],
   "bellanova-retail": [
    40.7283,
    -73.9858
@@ -2745,6 +2785,10 @@
   "cannabis-kingdom": [
    40.611,
    -74.001
+  ],
+  "chelsea-cannabis": [
+   40.7402,
+   -73.9989
   ],
   "green-genius-nyc": [
    40.736,
@@ -2774,13 +2818,25 @@
    40.76,
    -73.996
   ],
+  "sofaclub-broadway": [
+   40.7831,
+   -73.981
+  ],
   "terp-bros-astoria": [
    40.7709,
    -73.9207
   ],
+  "tetra-east-harlem": [
+   40.7991,
+   -73.9396
+  ],
   "twenty-one-thirty": [
    40.787,
    -73.9754
+  ],
+  "dazed-union-square": [
+   40.7369,
+   -73.9909
   ],
   "kayabliss-bayridge": [
    40.625,
@@ -2849,6 +2905,10 @@
   "highest-standards-fidi": [
    40.703,
    -74.0108
+  ],
+  "housing-works-broadway": [
+   40.7303,
+   -73.9923
   ],
   "hudson-haze-dispensary": [
    40.681,
@@ -3042,11 +3102,11 @@
    ],
    "neighborhoods": [
     {
-     "n": 387,
+     "n": 424,
      "neighborhood": "Midtown"
     },
     {
-     "n": 173,
+     "n": 243,
      "neighborhood": "Chelsea & Flatiron"
     },
     {
@@ -3054,28 +3114,28 @@
      "neighborhood": "Sheepshead Bay"
     },
     {
+     "n": 138,
+     "neighborhood": "Upper West Side"
+    },
+    {
      "n": 136,
      "neighborhood": "Williamsburg"
+    },
+    {
+     "n": 128,
+     "neighborhood": "East & West Village"
+    },
+    {
+     "n": 124,
+     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 115,
      "neighborhood": "Bay Ridge"
     },
     {
-     "n": 95,
-     "neighborhood": "Harlem & Washington Heights"
-    },
-    {
-     "n": 93,
-     "neighborhood": "Upper West Side"
-    },
-    {
      "n": 92,
      "neighborhood": "Crown Heights"
-    },
-    {
-     "n": 88,
-     "neighborhood": "East & West Village"
     },
     {
      "n": 87,
@@ -3086,8 +3146,8 @@
      "neighborhood": "FiDi"
     },
     {
-     "n": 64,
-     "neighborhood": "Brooklyn Heights & Downtown"
+     "n": 67,
+     "neighborhood": "Gramercy & Union Square"
     }
    ]
   },
@@ -3189,19 +3249,23 @@
    ],
    "neighborhoods": [
     {
-     "n": 1967,
+     "n": 2193,
      "neighborhood": "Midtown"
     },
     {
-     "n": 1096,
+     "n": 1326,
      "neighborhood": "Chelsea & Flatiron"
     },
     {
-     "n": 817,
+     "n": 1020,
      "neighborhood": "Upper West Side"
     },
     {
-     "n": 687,
+     "n": 891,
+     "neighborhood": "Harlem & Washington Heights"
+    },
+    {
+     "n": 867,
      "neighborhood": "East & West Village"
     },
     {
@@ -3211,10 +3275,6 @@
     {
      "n": 613,
      "neighborhood": "Williamsburg"
-    },
-    {
-     "n": 567,
-     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 552,
@@ -3336,28 +3396,32 @@
    ],
    "neighborhoods": [
     {
-     "n": 1653,
+     "n": 1842,
      "neighborhood": "Midtown"
+    },
+    {
+     "n": 917,
+     "neighborhood": "Chelsea & Flatiron"
+    },
+    {
+     "n": 857,
+     "neighborhood": "Harlem & Washington Heights"
+    },
+    {
+     "n": 757,
+     "neighborhood": "Upper West Side"
     },
     {
      "n": 705,
      "neighborhood": "Sheepshead Bay"
     },
     {
-     "n": 663,
-     "neighborhood": "Chelsea & Flatiron"
+     "n": 687,
+     "neighborhood": "East & West Village"
     },
     {
      "n": 627,
      "neighborhood": "Bushwick"
-    },
-    {
-     "n": 621,
-     "neighborhood": "Harlem & Washington Heights"
-    },
-    {
-     "n": 611,
-     "neighborhood": "Upper West Side"
     },
     {
      "n": 598,
@@ -3370,10 +3434,6 @@
     {
      "n": 557,
      "neighborhood": "Bay Ridge"
-    },
-    {
-     "n": 487,
-     "neighborhood": "East & West Village"
     },
     {
      "n": 436,
@@ -3483,16 +3543,24 @@
    ],
    "neighborhoods": [
     {
-     "n": 2238,
+     "n": 2479,
      "neighborhood": "Midtown"
     },
     {
-     "n": 1104,
+     "n": 1451,
      "neighborhood": "Chelsea & Flatiron"
     },
     {
-     "n": 1023,
+     "n": 1253,
      "neighborhood": "Upper West Side"
+    },
+    {
+     "n": 1100,
+     "neighborhood": "Harlem & Washington Heights"
+    },
+    {
+     "n": 980,
+     "neighborhood": "East & West Village"
     },
     {
      "n": 896,
@@ -3507,16 +3575,8 @@
      "neighborhood": "Bushwick"
     },
     {
-     "n": 735,
-     "neighborhood": "East & West Village"
-    },
-    {
      "n": 723,
      "neighborhood": "Williamsburg"
-    },
-    {
-     "n": 678,
-     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 619,
@@ -3630,16 +3690,24 @@
    ],
    "neighborhoods": [
     {
-     "n": 88,
+     "n": 108,
      "neighborhood": "Midtown"
     },
     {
-     "n": 65,
+     "n": 89,
      "neighborhood": "Chelsea & Flatiron"
     },
     {
-     "n": 41,
+     "n": 58,
      "neighborhood": "Upper West Side"
+    },
+    {
+     "n": 45,
+     "neighborhood": "Harlem & Washington Heights"
+    },
+    {
+     "n": 39,
+     "neighborhood": "East & West Village"
     },
     {
      "n": 38,
@@ -3648,10 +3716,6 @@
     {
      "n": 34,
      "neighborhood": "Williamsburg"
-    },
-    {
-     "n": 32,
-     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 30,
@@ -3672,10 +3736,6 @@
     {
      "n": 26,
      "neighborhood": "Bay Ridge"
-    },
-    {
-     "n": 25,
-     "neighborhood": "Crown Heights"
     }
    ]
   },
@@ -3777,24 +3837,32 @@
    ],
    "neighborhoods": [
     {
-     "n": 78,
+     "n": 85,
      "neighborhood": "Midtown"
+    },
+    {
+     "n": 61,
+     "neighborhood": "Chelsea & Flatiron"
+    },
+    {
+     "n": 43,
+     "neighborhood": "Upper West Side"
     },
     {
      "n": 35,
      "neighborhood": "SoHo"
     },
     {
-     "n": 31,
-     "neighborhood": "Chelsea & Flatiron"
-    },
-    {
-     "n": 25,
-     "neighborhood": "Upper West Side"
+     "n": 21,
+     "neighborhood": "East & West Village"
     },
     {
      "n": 20,
      "neighborhood": "Chinatown & LES"
+    },
+    {
+     "n": 20,
+     "neighborhood": "Harlem & Washington Heights"
     },
     {
      "n": 19,
@@ -3809,20 +3877,12 @@
      "neighborhood": "Brooklyn Heights & Downtown"
     },
     {
-     "n": 13,
-     "neighborhood": "East & West Village"
-    },
-    {
-     "n": 13,
-     "neighborhood": "Harlem & Washington Heights"
+     "n": 15,
+     "neighborhood": "Gramercy & Union Square"
     },
     {
      "n": 13,
      "neighborhood": "Sheepshead Bay"
-    },
-    {
-     "n": 12,
-     "neighborhood": "Bushwick"
     }
    ]
   },
@@ -3924,20 +3984,28 @@
    ],
    "neighborhoods": [
     {
-     "n": 2250,
+     "n": 2685,
      "neighborhood": "Midtown"
+    },
+    {
+     "n": 1216,
+     "neighborhood": "Chelsea & Flatiron"
+    },
+    {
+     "n": 1021,
+     "neighborhood": "Upper West Side"
     },
     {
      "n": 975,
      "neighborhood": "Sheepshead Bay"
     },
     {
-     "n": 955,
-     "neighborhood": "Chelsea & Flatiron"
+     "n": 694,
+     "neighborhood": "Harlem & Washington Heights"
     },
     {
-     "n": 816,
-     "neighborhood": "Upper West Side"
+     "n": 656,
+     "neighborhood": "East & West Village"
     },
     {
      "n": 608,
@@ -3956,20 +4024,12 @@
      "neighborhood": "Bushwick"
     },
     {
-     "n": 494,
-     "neighborhood": "East & West Village"
-    },
-    {
      "n": 489,
      "neighborhood": "SoHo"
     },
     {
      "n": 486,
      "neighborhood": "Williamsburg"
-    },
-    {
-     "n": 470,
-     "neighborhood": "Harlem & Washington Heights"
     }
    ]
   }
@@ -4331,12 +4391,12 @@
    "neighborhood": "Greenpoint"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.715,
+   "lng": -74.008,
    "name": "Alto Canna",
    "slug": "alto",
    "brands": 101,
-   "address": null,
+   "address": "110 Chambers Street, New York, NY 10007, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -4416,7 +4476,7 @@
      "brand": "Camino"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Tribeca"
   },
   {
    "lat": 40.762,
@@ -5469,13 +5529,13 @@
    "neighborhood": "Bensonhurst"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.753,
+   "lng": -73.974,
    "name": "Cannabis on Lex",
    "slug": "cannabis-on-lex",
    "brands": 48,
-   "address": null,
-   "borough": null,
+   "address": "459 Lexington Avenue, New York, NY 10017, USA",
+   "borough": "Manhattan",
    "featured": [
     {
      "url": "https://shop.cannabisonlex.com/shop/products/1906-new-highs-539095/edibles/1906-boost-30mg-pills-3-pack-5549701",
@@ -5554,15 +5614,15 @@
      "brand": "Camino"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Midtown"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.767,
+   "lng": -73.986,
    "name": "Cannadreams",
    "slug": "cannadreams",
    "brands": 90,
-   "address": null,
+   "address": "862 9th Avenue, New York, NY 10019, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -5643,7 +5703,7 @@
      "brand": "CANNABALS"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Midtown"
   },
   {
    "lat": 40.751,
@@ -5912,12 +5972,12 @@
    "neighborhood": "Coney Island"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.74,
+   "lng": -73.999,
    "name": "Chelsea Cannabis Co.",
    "slug": "chelsea-cannabis",
    "brands": 113,
-   "address": null,
+   "address": "104 7th Avenue, New York, NY 10011, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -5998,7 +6058,7 @@
      "brand": "PAX"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Chelsea & Flatiron"
   },
   {
    "lat": 40.718,
@@ -6443,13 +6503,13 @@
    "neighborhood": "FiDi"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.737,
+   "lng": -73.991,
    "name": "Dazed Union Square",
    "slug": "dazed-union-square",
    "brands": 40,
-   "address": null,
-   "borough": null,
+   "address": "33 Union Square West, New York, NY 10003, USA",
+   "borough": "Manhattan",
    "featured": [
     {
      "url": "https://dazed.fun/stores/dazed-cannabis-dispensary-union-square-nyc-ny/product/ayrloom_black_cherry___21___105mg___12oz___single___ayrloom",
@@ -6529,7 +6589,7 @@
      "brand": "Billy Clubs"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Gramercy & Union Square"
   },
   {
    "lat": 40.664,
@@ -7153,12 +7213,12 @@
    "neighborhood": "Bergen Beach"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.773,
+   "lng": -73.98,
    "name": "Flower Power",
    "slug": "flower-power",
    "brands": 34,
-   "address": null,
+   "address": "22 West 66th Street, New York, NY 10023, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -7239,7 +7299,7 @@
      "brand": "MFNY"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Upper West Side"
   },
   {
    "lat": 40.712,
@@ -8661,12 +8721,12 @@
    "neighborhood": "Bed-Stuy"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.863,
+   "lng": -73.926,
    "name": "Happy Munkey - Dyckman",
    "slug": "happy-munkey",
    "brands": 94,
-   "address": null,
+   "address": "151 Dyckman Street, New York, NY 10034, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -8747,7 +8807,7 @@
      "brand": "Drops"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Harlem & Washington Heights"
   },
   {
    "lat": 40.834,
@@ -9283,12 +9343,12 @@
    "neighborhood": "Williamsburg"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.73,
+   "lng": -73.992,
    "name": "Housing Works | Broadway",
    "slug": "housing-works-broadway",
    "brands": 85,
-   "address": null,
+   "address": "750 Broadway, New York, NY 10003, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -9369,7 +9429,7 @@
      "brand": "ayrloom"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "East & West Village"
   },
   {
    "lat": 40.681,
@@ -9999,7 +10059,7 @@
    "name": "KushKlub - New York, NY",
    "slug": "kushklub",
    "brands": 26,
-   "address": "186 Orchard Street, New York, New York, 10002",
+   "address": "186 Orchard Street, New York, NY 10002, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -10078,7 +10138,7 @@
      "brand": "Revert Cannabis"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Chinatown & LES"
   },
   {
    "lat": 40.719,
@@ -10782,12 +10842,12 @@
    "neighborhood": "Midtown"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.749,
+   "lng": -73.952,
    "name": "NYC Bud | Queens",
    "slug": "nycbud",
    "brands": 39,
-   "address": null,
+   "address": "44-45 Vernon Boulevard, Long Island City, NY 11101, USA",
    "borough": "Queens",
    "featured": [
     {
@@ -10867,7 +10927,7 @@
      "brand": "Florist Farms"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Long Island City"
   },
   {
    "lat": 40.672,
@@ -11223,12 +11283,12 @@
    "neighborhood": "East & West Village"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.793,
+   "lng": -73.971,
    "name": "Pure Blossoms",
    "slug": "pure-blossoms",
    "brands": 26,
-   "address": null,
+   "address": "716 Amsterdam Avenue, New York, NY 10025, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -11309,7 +11369,7 @@
      "brand": "Bouket"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Upper West Side"
   },
   {
    "lat": 40.699,
@@ -12111,12 +12171,12 @@
    "neighborhood": "Gramercy & Union Square"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.783,
+   "lng": -73.981,
    "name": "SOFACLUB (2195 Broadway)",
    "slug": "sofaclub-broadway",
    "brands": 49,
-   "address": null,
+   "address": "2195 Broadway, New York, NY 10024, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -12197,7 +12257,7 @@
      "brand": "Off Hours"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Upper West Side"
   },
   {
    "lat": 40.848,
@@ -13351,12 +13411,12 @@
    "neighborhood": "Midtown"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.799,
+   "lng": -73.94,
    "name": "Tetra East Harlem",
    "slug": "tetra-east-harlem",
    "brands": 38,
-   "address": null,
+   "address": "2152 3rd Avenue, New York, NY 10035, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -13437,7 +13497,7 @@
      "brand": "Rove"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Harlem & Washington Heights"
   },
   {
    "lat": 40.739,
@@ -13885,12 +13945,12 @@
    "neighborhood": "East & West Village"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.784,
+   "lng": -73.953,
    "name": "The Herbal Care",
    "slug": "the-herbal-care",
    "brands": 37,
-   "address": null,
+   "address": "1410 Lexington Avenue, New York, NY 10128, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -13971,7 +14031,7 @@
      "brand": "PAX"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Upper East Side"
   },
   {
    "lat": 40.662,
@@ -14595,12 +14655,12 @@
    "neighborhood": "Williamsburg"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.788,
+   "lng": -73.949,
    "name": "Uplift Royal",
    "slug": "uplift-royal",
    "brands": 37,
-   "address": null,
+   "address": "1557 Lexington Avenue, New York, NY 10029, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -14681,7 +14741,7 @@
      "brand": "Ruby Farms"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Harlem & Washington Heights"
   },
   {
    "lat": 40.745,
@@ -14862,12 +14922,12 @@
    "neighborhood": "Park Slope"
   },
   {
-   "lat": null,
-   "lng": null,
+   "lat": 40.749,
+   "lng": -73.996,
    "name": "VereLeaf",
    "slug": "vereleaf",
    "brands": 64,
-   "address": null,
+   "address": "383 8th Avenue, New York, NY 10001, USA",
    "borough": "Manhattan",
    "featured": [
     {
@@ -14948,7 +15008,7 @@
      "brand": "Dank By Definition"
     }
    ],
-   "neighborhood": null
+   "neighborhood": "Chelsea & Flatiron"
   },
   {
    "lat": 40.736,
@@ -15208,7 +15268,7 @@
    "neighborhood": "Astoria"
   },
   {
-   "stores": 8,
+   "stores": 9,
    "borough": "Manhattan",
    "featured": [
     {
@@ -15222,13 +15282,23 @@
      "strain_type": "Sativa"
     },
     {
-     "url": "https://dutchie.com/dispensary/pryzm/product/1906-boost-5-thc-drops-10mg-2pk",
-     "name": "1906 | Boost 5 | THC Drops 10mg | 2pk",
+     "url": "https://hwcannabis.co/menu/broadway/products/1906-thc-pill-easy-cannabis-wellness-for-adults-21-159877/edibles/1906-bliss-pills-2pk-10mg-edible-1803335",
+     "name": "1906 | Bliss Pills 2pk - 10mg Edible",
      "brand": "1906",
      "thc_pct": null,
      "category": "edibles",
-     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/b1aa709d44c843acf7d3068dedc0657c",
+     "image_url": "https://tymber-blaze-products.imgix.net/Screenshot_12-12-2025_113423_www-bing-com-ec5f701a-28f7-4b9d-91d4-8d98f127b957.jpeg",
      "price_min": 5,
+     "strain_type": "Sativa"
+    },
+    {
+     "url": "https://hwcannabis.co/menu/broadway/products/5-boro-320451/preroll/5-boro-amnesia-haze-blunt-15g-preroll-8659993",
+     "name": "5 Boro | Amnesia Haze Blunt - 1.5g - Preroll",
+     "brand": "5 BORO",
+     "thc_pct": 21.04,
+     "category": "pre-rolls",
+     "image_url": "https://tymber-blaze-products.imgix.net/Amnesia_Haze_5Boro_Blunt_2000x2000-a291719a-70f9-410a-bed2-d81a8ce9bc95.jpg",
+     "price_min": 18,
      "strain_type": "Sativa"
     },
     {
@@ -15240,29 +15310,25 @@
      "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/flower-stock-9-v1.jpg",
      "price_min": 57,
      "strain_type": "Sativa"
-    },
-    {
-     "url": "https://dutchie.com/dispensary/dagmar-cannabis-west-village/product/alchemy-pure-night-day-preroll-6pk",
-     "name": "Alchemy Pure Night + Day Preroll 6pk",
-     "brand": "Alchemy Pure",
-     "thc_pct": 35.65,
-     "category": "pre-rolls",
-     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/6f049658a7670c62ff398f48d5f55996",
-     "price_min": 29,
-     "strain_type": "THC"
     }
    ],
-   "in_stock": 2529,
+   "in_stock": 3378,
    "categories": {
-    "flower": 487,
-    "edibles": 687,
-    "topicals": 13,
-    "pre-rolls": 735,
-    "tinctures": 25,
-    "vaporizers": 494,
-    "concentrates": 88
+    "flower": 687,
+    "edibles": 867,
+    "topicals": 21,
+    "pre-rolls": 980,
+    "tinctures": 39,
+    "vaporizers": 656,
+    "concentrates": 128
    },
    "stores_list": [
+    {
+     "name": "Housing Works | Broadway",
+     "slug": "housing-works-broadway",
+     "address": "750 Broadway, New York, NY 10003, USA",
+     "in_stock": 849
+    },
     {
      "name": "Gotham - Bowery",
      "slug": "gotham-nyc-3rd-st",
@@ -15315,7 +15381,7 @@
    "neighborhood": "East & West Village"
   },
   {
-   "stores": 5,
+   "stores": 8,
    "borough": "Manhattan",
    "featured": [
     {
@@ -15329,45 +15395,45 @@
      "strain_type": "Hybrid"
     },
     {
-     "url": "https://dutchie.com/dispensary/sparkboro/product/1906-pills-2pk-bliss-drops-happiness-fast-acting-plant-based-10mg-thc-10mg-cbd-sceletium-theobromine",
-     "name": "1906 | Pills | 2pk | BLISS Drops | Happiness | Fast Acting | Plant Based | 10mg THC : 10mg CBD + Sceletium + Theobromine",
+     "url": "https://menus.dispenseapp.com/245e4aee1af46eb4/menu/1906/1906-boost-2-pack-10mg",
+     "name": "1906 | Boost | 2 Pack | 10mg",
      "brand": "1906",
-     "thc_pct": 0.69,
+     "thc_pct": null,
      "category": "edibles",
-     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/42cd03906f3a7bfd3be9d06e7645ba63",
-     "price_min": 5,
-     "strain_type": "Sativa"
+     "image_url": "https://imgix.dispenseapp.com/245e4aee1af46eb4_1781712069855-680420813-1906-NY-Drops-Pouch-Boost.png",
+     "price_min": 3.39,
+     "strain_type": "Na"
     },
     {
-     "url": "https://dutchie.com/dispensary/midnight-moon/product/animal-mints-flower-hybrid-eighth-3-5g-1937",
-     "name": "Animal Mints | Flower | Hybrid | Eighth (3.5g) | 1937",
+     "url": "https://happymunkey.com/shop/dyckman/products/1937-502796/flower/1937-flower-mixed-bud-black-cherry-gelato-35g-8518176",
+     "name": "1937 | Flower | Mixed Bud - Black Cherry Gelato | 3.5g",
      "brand": "1937",
-     "thc_pct": 26.82,
+     "thc_pct": 18.2,
      "category": "flower",
-     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/47c5dcd331edf04fa92b9ec633de2f64",
-     "price_min": 29,
+     "image_url": "https://tymber-blaze-products.imgix.net/1937-zelatti-3-5g-a2101157-3dd1-4af0-a8e6-f7b41e9f6a99.jpg",
+     "price_min": 20,
      "strain_type": "Hybrid"
     },
     {
-     "url": "https://dutchie.com/dispensary/gotham-buds/product/5-boro-hood-candyz-flower-indica-dom-29",
-     "name": "5 Boro ( HOOD CANDYZ FLOWER ) INDICA DOM 29%",
-     "brand": "5 Boro",
-     "thc_pct": 24.05,
+     "url": "https://happymunkey.com/shop/dyckman/products/5-boro-512516/flower/5-boro-flower-amnesia-haze-07g-5368422",
+     "name": "5-Boro | Flower | Amnesia Haze | 0.7g",
+     "brand": "5 BORO",
+     "thc_pct": null,
      "category": "flower",
-     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/e43e27613b6a37c413e47aad898016c8",
-     "price_min": 10,
-     "strain_type": "Indica-Hybrid"
+     "image_url": "https://tymber-blaze-products.imgix.net/Screenshot-2025-05-13-101053-7062d2df-b393-4933-ade1-023686c1f3be.png",
+     "price_min": 9,
+     "strain_type": "Sativa"
     }
    ],
-   "in_stock": 2476,
+   "in_stock": 3731,
    "categories": {
-    "flower": 621,
-    "edibles": 567,
-    "topicals": 13,
-    "pre-rolls": 678,
-    "tinctures": 32,
-    "vaporizers": 470,
-    "concentrates": 95
+    "flower": 857,
+    "edibles": 891,
+    "topicals": 20,
+    "pre-rolls": 1100,
+    "tinctures": 45,
+    "vaporizers": 694,
+    "concentrates": 124
    },
    "stores_list": [
     {
@@ -15375,6 +15441,12 @@
      "slug": "sparkboro",
      "address": "704 West 177th Street, New York, NY 10033, USA",
      "in_stock": 758
+    },
+    {
+     "name": "Happy Munkey - Dyckman",
+     "slug": "happy-munkey",
+     "address": "151 Dyckman Street, New York, NY 10034, USA",
+     "in_stock": 736
     },
     {
      "name": "Midnight Moon - A Cannabis Store",
@@ -15395,6 +15467,18 @@
      "in_stock": 394
     },
     {
+     "name": "Tetra East Harlem",
+     "slug": "tetra-east-harlem",
+     "address": "2152 3rd Avenue, New York, NY 10035, USA",
+     "in_stock": 321
+    },
+    {
+     "name": "Uplift Royal",
+     "slug": "uplift-royal",
+     "address": "1557 Lexington Avenue, New York, NY 10029, USA",
+     "in_stock": 198
+    },
+    {
      "name": "Mello Tymes - Dispensary",
      "slug": "mello-tymes-dispensary",
      "address": "1597 Saint Nicholas Avenue, New York, NY 10040, USA",
@@ -15404,7 +15488,7 @@
    "neighborhood": "Harlem & Washington Heights"
   },
   {
-   "stores": 2,
+   "stores": 3,
    "borough": "Manhattan",
    "featured": [
     {
@@ -15448,15 +15532,15 @@
      "strain_type": "Hybrid"
     }
    ],
-   "in_stock": 1329,
+   "in_stock": 1458,
    "categories": {
-    "flower": 273,
-    "edibles": 327,
-    "topicals": 8,
-    "pre-rolls": 347,
-    "tinctures": 14,
-    "vaporizers": 317,
-    "concentrates": 43
+    "flower": 294,
+    "edibles": 355,
+    "topicals": 11,
+    "pre-rolls": 391,
+    "tinctures": 16,
+    "vaporizers": 346,
+    "concentrates": 45
    },
    "stores_list": [
     {
@@ -15470,6 +15554,12 @@
      "slug": "the-emerald-dispensary-manhattan",
      "address": "1190 Lexington Avenue, New York, NY 10028, USA",
      "in_stock": 480
+    },
+    {
+     "name": "The Herbal Care",
+     "slug": "the-herbal-care",
+     "address": "1410 Lexington Avenue, New York, NY 10128, USA",
+     "in_stock": 129
     }
    ],
    "neighborhood": "Upper East Side"
@@ -15552,7 +15642,7 @@
    "neighborhood": "Coney Island"
   },
   {
-   "stores": 3,
+   "stores": 4,
    "borough": "Manhattan",
    "featured": [
     {
@@ -15596,15 +15686,15 @@
      "strain_type": "Indica"
     }
    ],
-   "in_stock": 1436,
+   "in_stock": 1596,
    "categories": {
-    "flower": 226,
-    "edibles": 382,
-    "topicals": 12,
-    "pre-rolls": 346,
-    "tinctures": 21,
-    "vaporizers": 391,
-    "concentrates": 58
+    "flower": 260,
+    "edibles": 412,
+    "topicals": 15,
+    "pre-rolls": 398,
+    "tinctures": 26,
+    "vaporizers": 418,
+    "concentrates": 67
    },
    "stores_list": [
     {
@@ -15624,12 +15714,18 @@
      "slug": "smiley-exotics",
      "address": "201 East 30th Street, New York, NY 10016, USA",
      "in_stock": 218
+    },
+    {
+     "name": "Dazed Union Square",
+     "slug": "dazed-union-square",
+     "address": "33 Union Square West, New York, NY 10003, USA",
+     "in_stock": 160
     }
    ],
    "neighborhood": "Gramercy & Union Square"
   },
   {
-   "stores": 4,
+   "stores": 7,
    "borough": "Manhattan",
    "featured": [
     {
@@ -15663,25 +15759,25 @@
      "strain_type": "Hybrid"
     },
     {
-     "url": "https://dutchie.com/dispensary/twenty-one-thirty/product/artisan-series-midnight-moon",
-     "name": "Artisan Series | Midnight Moon",
-     "brand": "Airo",
-     "thc_pct": 88.05,
-     "category": "vaporizers",
-     "image_url": "https://s3-us-west-2.amazonaws.com/dutchie-images/00914f985a2d1dacf89b494d0d8b364c",
-     "price_min": 75,
-     "strain_type": "Indica"
+     "url": "https://flowerpowerdispensers.com/shop/518-hollow/518-hollow-apple-fritter-pre-roll-1g",
+     "name": "518 Hollow | Apple Fritter | Pre-Roll | 1g",
+     "brand": "518 Hollow",
+     "thc_pct": 24.49,
+     "category": "pre-rolls",
+     "image_url": "https://imgix.dispenseapp.com/c4c23744785b3fe6_1784741924400-556778024-fd2e33022380d26b17f4ae5f32041149.avif",
+     "price_min": 14,
+     "strain_type": "Hybrid"
     }
    ],
-   "in_stock": 3426,
+   "in_stock": 4290,
    "categories": {
-    "flower": 611,
-    "edibles": 817,
-    "topicals": 25,
-    "pre-rolls": 1023,
-    "tinctures": 41,
-    "vaporizers": 816,
-    "concentrates": 93
+    "flower": 757,
+    "edibles": 1020,
+    "topicals": 43,
+    "pre-rolls": 1253,
+    "tinctures": 58,
+    "vaporizers": 1021,
+    "concentrates": 138
    },
    "stores_list": [
     {
@@ -15707,6 +15803,24 @@
      "slug": "good-company",
      "address": "2273 Broadway, New York, NY 10024, USA",
      "in_stock": 691
+    },
+    {
+     "name": "SOFACLUB (2195 Broadway)",
+     "slug": "sofaclub-broadway",
+     "address": "2195 Broadway, New York, NY 10024, USA",
+     "in_stock": 355
+    },
+    {
+     "name": "Flower Power",
+     "slug": "flower-power",
+     "address": "22 West 66th Street, New York, NY 10023, USA",
+     "in_stock": 264
+    },
+    {
+     "name": "Pure Blossoms",
+     "slug": "pure-blossoms",
+     "address": "716 Amsterdam Avenue, New York, NY 10025, USA",
+     "in_stock": 245
     }
    ],
    "neighborhood": "Upper West Side"
@@ -15783,7 +15897,7 @@
    "neighborhood": "Jackson Heights"
   },
   {
-   "stores": 9,
+   "stores": 11,
    "borough": "Manhattan",
    "featured": [
     {
@@ -15827,17 +15941,23 @@
      "strain_type": "Hybrid"
     }
    ],
-   "in_stock": 4087,
+   "in_stock": 5303,
    "categories": {
-    "flower": 663,
-    "edibles": 1096,
-    "topicals": 31,
-    "pre-rolls": 1104,
-    "tinctures": 65,
-    "vaporizers": 955,
-    "concentrates": 173
+    "flower": 917,
+    "edibles": 1326,
+    "topicals": 61,
+    "pre-rolls": 1451,
+    "tinctures": 89,
+    "vaporizers": 1216,
+    "concentrates": 243
    },
    "stores_list": [
+    {
+     "name": "Chelsea Cannabis Co.",
+     "slug": "chelsea-cannabis",
+     "address": "104 7th Avenue, New York, NY 10011, USA",
+     "in_stock": 801
+    },
     {
      "name": "Stoops NYC Cannabis Dispensary - Flatiron",
      "slug": "stoop",
@@ -15879,6 +15999,12 @@
      "slug": "bud-and-honey",
      "address": "241 5th Avenue, New York, NY 10016, USA",
      "in_stock": 456
+    },
+    {
+     "name": "VereLeaf",
+     "slug": "vereleaf",
+     "address": "383 8th Avenue, New York, NY 10001, USA",
+     "in_stock": 415
     },
     {
      "name": "Flynnstoned Chelsea",
@@ -15973,7 +16099,7 @@
    "neighborhood": "FiDi"
   },
   {
-   "stores": 16,
+   "stores": 18,
    "borough": "Manhattan",
    "featured": [
     {
@@ -16017,15 +16143,15 @@
      "strain_type": "Hybrid"
     }
    ],
-   "in_stock": 8661,
+   "in_stock": 9816,
    "categories": {
-    "flower": 1653,
-    "edibles": 1967,
-    "topicals": 78,
-    "pre-rolls": 2238,
-    "tinctures": 88,
-    "vaporizers": 2250,
-    "concentrates": 387
+    "flower": 1842,
+    "edibles": 2193,
+    "topicals": 85,
+    "pre-rolls": 2479,
+    "tinctures": 108,
+    "vaporizers": 2685,
+    "concentrates": 424
    },
    "stores_list": [
     {
@@ -16033,6 +16159,12 @@
      "slug": "qube-manhattan",
      "address": "1412 Broadway, New York, NY 10018, USA",
      "in_stock": 2041
+    },
+    {
+     "name": "Cannadreams",
+     "slug": "cannadreams",
+     "address": "862 9th Avenue, New York, NY 10019, USA",
+     "in_stock": 862
     },
     {
      "name": "NY Cannabis Co.",
@@ -16093,6 +16225,12 @@
      "slug": "organic-relief-leaf",
      "address": "977 2nd Avenue, New York, NY 10022, USA",
      "in_stock": 297
+    },
+    {
+     "name": "Cannabis on Lex",
+     "slug": "cannabis-on-lex",
+     "address": "459 Lexington Avenue, New York, NY 10017, USA",
+     "in_stock": 293
     },
     {
      "name": "Twinn Leaf",
@@ -16211,7 +16349,7 @@
    "neighborhood": "Bushwick"
   },
   {
-   "stores": 3,
+   "stores": 4,
    "borough": "Manhattan",
    "featured": [
     {
@@ -16255,15 +16393,15 @@
      "strain_type": "Sativa"
     }
    ],
-   "in_stock": 1596,
+   "in_stock": 1656,
    "categories": {
-    "flower": 282,
-    "edibles": 389,
+    "flower": 292,
+    "edibles": 406,
     "topicals": 20,
-    "pre-rolls": 448,
+    "pre-rolls": 473,
     "tinctures": 27,
-    "vaporizers": 368,
-    "concentrates": 62
+    "vaporizers": 375,
+    "concentrates": 63
    },
    "stores_list": [
     {
@@ -16283,6 +16421,12 @@
      "slug": "smelly-nelly-queens",
      "address": "70 Canal Street, New York, NY 10002, USA",
      "in_stock": 404
+    },
+    {
+     "name": "KushKlub - New York, NY",
+     "slug": "kushklub",
+     "address": "186 Orchard Street, New York, NY 10002, USA",
+     "in_stock": 60
     }
    ],
    "neighborhood": "Chinatown & LES"

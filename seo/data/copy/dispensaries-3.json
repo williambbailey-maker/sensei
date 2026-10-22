@@ -27,11 +27,11 @@
   },
   "gotham-nyc-3rd-st": {
     "intro": [
-      "Gotham's Bowery store is at 3 East 3rd Street, where the East Village meets the Bowery, with about {in_stock|about} products from {brands} brands. It is the largest of the {hood_shops|word} licensed dispensaries we track across the East and West Village, and edibles are its biggest section at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, with a {cat.concentrates}-item concentrate shelf and {cat.tinctures} tinctures.",
+      "Gotham's Bowery store is at 3 East 3rd Street, where the East Village meets the Bowery, with about {in_stock|about} products from {brands} brands. It is the second-largest of the {hood_shops|word} licensed dispensaries we track across the East and West Village, after Housing Works on Broadway, and edibles are its biggest section at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, with a {cat.concentrates}-item concentrate shelf and {cat.tinctures} tinctures.",
       "MFNY ({brand.MFNY}) is the anchor brand, giving it a strong live resin selection, with Ayrloom, Florist Farms, Rolling Green Cannabis, Ruby Farms and Off Hours alongside it. Gotham also runs stores in Chelsea and at Domino Park in Williamsburg with a similar edible-forward mix. The entry price is {min_price}, and TUNE infused seltzers in Blackberry Cardamom, Raspberry Lime and Sicilian Lemon Rose are among the cheapest items."
     ],
     "know": [
-      "Largest menu in the East and West Village: about {in_stock|about} products and {brands} brands.",
+      "Second-largest menu in the East and West Village, after Housing Works: about {in_stock|about} products and {brands} brands.",
       "Edible-led ({cat.edibles}), with MFNY and ElectraLeaf the main lines.",
       "Sister stores in Chelsea (10th Avenue) and Williamsburg (Domino Park).",
       "Near the Bowery and the Second Avenue F station; cheapest items start at {min_price}."
@@ -39,7 +39,7 @@
     "faq": [
       {
         "q": "Which Village dispensary has the biggest selection?",
-        "a": "Gotham Bowery, with about {in_stock|about} products. The Flowery East Village, The Flowery West Village and PRYZM follow. Across all {hood_shops|word} shops the Village is one of the densest clusters in Manhattan."
+        "a": "Housing Works on Broadway has the most, followed by Gotham Bowery with about {in_stock|about} products. The Flowery East Village, The Flowery West Village and PRYZM come next. Across all {hood_shops|word} shops the Village is one of the densest clusters in Manhattan."
       },
       {
         "q": "Is Gotham Bowery good for flower?",

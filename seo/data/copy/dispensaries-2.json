@@ -79,11 +79,11 @@
   },
   "stoop": {
     "intro": [
-      "Stoops NYC is at 182 Fifth Avenue in the Flatiron District, a block from Madison Square Park, and it is the largest of {hood_shops|word} licensed dispensaries we track across Chelsea and Flatiron with about {in_stock|about} products from {brands} brands. Pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) are the two big sections, with {cat.edibles} edibles and a smaller {cat.flower}-item flower selection, plus {cat.concentrates} concentrates.",
+      "Stoops NYC is at 182 Fifth Avenue in the Flatiron District, a block from Madison Square Park, and it is the second-largest of the {hood_shops|word} licensed dispensaries we track across Chelsea and Flatiron, after Chelsea Cannabis Co., with about {in_stock|about} products from {brands} brands. Pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) are the two big sections, with {cat.edibles} edibles and a smaller {cat.flower}-item flower selection, plus {cat.concentrates} concentrates.",
       "Jaunty and Florist Farms are stocked in depth here, covering all-in-one vapes and New York-grown pre-rolls respectively, and Select, Cannabals, Bonanza Cannabis and PAX fill in the vape and pod options. Stoops also has one of the lowest entry prices in Manhattan: Ayrloom 1:1 drinks at {min_price}, with Jaunty hash-infused gummy two-packs close behind. For flower, The Alchemy on 8th Avenue and Gotham on 10th Avenue are the nearby alternatives, though none of the Chelsea shops goes especially deep on it."
     ],
     "know": [
-      "Largest menu in Chelsea and Flatiron: about {in_stock|about} products and {brands} brands.",
+      "Second-largest menu in Chelsea and Flatiron, after Chelsea Cannabis Co.: about {in_stock|about} products and {brands} brands.",
       "Pre-rolls and vapes lead at {cat.pre-rolls} and {cat.vaporizers}; flower is lighter at about {cat.flower|about}.",
       "Jaunty ({brand.Jaunty} listings) and Florist Farms are among the main lines; PAX pods are stocked.",
       "Among the lowest entry prices in Manhattan, with infused drinks from {min_price}."

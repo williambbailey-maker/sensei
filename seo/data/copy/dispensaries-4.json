@@ -132,13 +132,13 @@
   "the-emerald-dispensary-manhattan": {
     "intro": [
       "The Emerald Dispensary is at 1190 Lexington Avenue on the Upper East Side, near 81st Street and a few blocks from the 86th Street station. It stocks about {in_stock|about} products, but from {brands} brands, one of the highest brand counts of any licensed dispensary we track in Manhattan outside Midtown. Edibles lead at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, with {cat.concentrates} concentrates.",
-      "Because the brand list is so long, no single label dominates. Ayrloom has {brand.ayrloom} products, Nanticoke {brand.Nanticoke} and Grön {brand.Grön}, with Florist Farms, Jaunty and STIIIZY also on the shelf. The entry price is {min_price} for a single Lussi caramel square or LEVEL's two-pack Slumber protabs, with 1906 drops a little more. The Emerald is one of {hood_shops|word} licensed shops on the Upper East Side; Sweetlife on 2nd Avenue is much larger, so The Emerald is the pick when you want to browse unfamiliar brands rather than the deepest stock."
+      "Because the brand list is so long, no single label dominates. Ayrloom has {brand.ayrloom} products, Nanticoke {brand.Nanticoke} and Grön {brand.Grön}, with Florist Farms, Jaunty and STIIIZY also on the shelf. The entry price is {min_price} for a single Lussi caramel square or LEVEL's two-pack Slumber protabs, with 1906 drops a little more. The Emerald is one of {hood_shops|word} licensed shops on the Upper East Side; Sweetlife on 1st Avenue is much larger, so The Emerald is the pick when you want to browse unfamiliar brands rather than the deepest stock."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands, one of the widest brand lists in uptown Manhattan.",
       "Edibles ({cat.edibles}) are the largest category; pre-rolls ({cat.pre-rolls}) are second.",
       "Entry price is {min_price} for Lussi caramels and LEVEL protabs.",
-      "Sweetlife on 2nd Avenue is the larger of the {hood_shops|word} Upper East Side shops."
+      "Sweetlife on 1st Avenue is the largest of the {hood_shops|word} Upper East Side shops."
     ],
     "faq": [
       {
@@ -262,7 +262,7 @@
   "torches-nyc": {
     "intro": [
       "Torches is at 12 East 42nd Street in Midtown, between 5th and Madison, directly across from the New York Public Library and a block from Grand Central. It stocks about {in_stock|about} products from {brands} brands, a mid-size menu among the {hood_shops|word} licensed dispensaries we track in Midtown. Pre-rolls lead at {cat.pre-rolls} listings, with vapes ({cat.vaporizers}) and edibles ({cat.edibles}) behind them, a smaller flower section ({cat.flower}) and a {cat.concentrates}-item concentrate case.",
-      "The vape depth comes from Jaunty ({brand.Jaunty}) and STIIIZY ({brand.STIIIZY}), plus Fernway and PAX. Ayrloom covers drinks and Hashtag Honey covers New York flower. The entry price is {min_price} for Ayrloom root beer and half-and-half cans and Layup lemonades. For commuters, it is the closest licensed shop to Grand Central; for a larger overall selection, Qube on Broadway at 39th Street lists far more products a ten-minute walk west."
+      "The vape depth comes from Jaunty ({brand.Jaunty}) and STIIIZY ({brand.STIIIZY}), plus Fernway and PAX. Ayrloom covers drinks and Hashtag Honey covers New York flower. The entry price is {min_price} for Ayrloom root beer and half-and-half cans and Layup lemonades. For commuters, it is one of the closest licensed shops to Grand Central; for a larger overall selection, Qube on Broadway at 39th Street lists far more products a ten-minute walk west."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; pre-rolls ({cat.pre-rolls}) are the largest category.",

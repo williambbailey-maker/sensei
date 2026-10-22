@@ -157,14 +157,14 @@
   },
   "sweet-life-nyc": {
     "intro": [
-      "Sweetlife is at 1662 First Avenue on the Upper East Side, near 86th Street, and with about {in_stock|about} products from {brands} brands it is the larger of the {hood_shops|word} licensed dispensaries we track in the neighborhood. Pre-rolls are its biggest category at around {cat.pre-rolls|about} listings, with vapes close behind at {cat.vaporizers}, then {cat.edibles} edibles and {cat.flower} flower options, plus a {cat.concentrates}-item concentrate shelf.",
+      "Sweetlife is at 1662 First Avenue on the Upper East Side, near 86th Street, and with about {in_stock|about} products from {brands} brands it is the largest of the {hood_shops|word} licensed dispensaries we track in the neighborhood. Pre-rolls are its biggest category at around {cat.pre-rolls|about} listings, with vapes close behind at {cat.vaporizers}, then {cat.edibles} edibles and {cat.flower} flower options, plus a {cat.concentrates}-item concentrate shelf.",
       "The brand depth is unusual for the Upper East Side. EUREKA, a vape maker, has {brand.EUREKA} listings here, the most of any brand at the shop, and Rove adds another {brand.Rove}, so between them Sweetlife has one of the strongest vape walls east of Central Park. Jeeter and STIIIZY cover pre-rolls and all-in-ones, Ruby Farms supplies New York-grown pre-rolls, and Smokiez handles gummies. The cheapest items are Ayrloom drinks at {min_price}."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands, the biggest menu on the Upper East Side.",
       "EUREKA ({brand.EUREKA} listings) and Rove ({brand.Rove}) make this one of the deepest vape selections in Manhattan.",
       "Pre-rolls lead the shelf at about {cat.pre-rolls|about}, with Jeeter and Ruby Farms the main lines.",
-      "The Emerald Dispensary on Lexington Avenue is the other licensed UES option, with a smaller menu."
+      "The Emerald Dispensary and The Herbal Care, both on Lexington Avenue, are the other licensed UES options, each with a smaller menu."
     ],
     "faq": [
       {

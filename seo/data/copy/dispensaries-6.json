@@ -34,7 +34,7 @@
       "About {in_stock|about} products from {brands} brands; edibles ({cat.edibles}) are the biggest share of the menu.",
       "The brand list is led by 1906; {cat.concentrates} concentrates is a solid case for the size.",
       "Entry price is {min_price} for 1906 drop pouches in four formulas.",
-      "Closest licensed dispensary to the Theater District's west side; Qube is the larger Midtown option."
+      "One of the closer licensed shops to the Theater District's west side; Qube is the larger Midtown option."
     ],
     "faq": [
       {
@@ -125,7 +125,7 @@
       },
       {
         "q": "Does Smacked carry flower?",
-        "a": "A small selection, {cat.flower} listings. The menu is weighted toward edibles and pre-rolls. For flower in the Village, The Flowery's Village stores and PRYZM on Avenue A have more."
+        "a": "A small selection, {cat.flower} listings. The menu is weighted toward edibles and pre-rolls. For flower in the Village, The Flowery's Village stores and PRYZM on Avenue B have more."
       }
     ]
   },
@@ -236,13 +236,13 @@
   "sky-high-club": {
     "intro": [
       "Sky High Club is at 129 Loisaida Avenue in the East Village, which is Avenue C near 8th Street, deep in Alphabet City. It is the smallest licensed dispensary we track in the East and West Village, with about {in_stock|about} products from {brands} brands. Edibles lead at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, with {cat.concentrates|word} concentrates.",
-      "BLOOM, Off Hours, Cheech & Chong, BudJet, nama and Eaton Botanicals are among the brands stocked. The entry price is {min_price}, and single pre-rolls from Road Trip, Cheech & Chong, BudJet and Sunday, including a Blue Dream and a Lemon Cherry Gelato, are among the cheaper items. PRYZM on Avenue A and Gotham on the Bowery each carry far more products within a ten-minute walk, so Sky High Club is the convenient option for the far east side of the neighborhood."
+      "BLOOM, Off Hours, Cheech & Chong, BudJet, nama and Eaton Botanicals are among the brands stocked. The entry price is {min_price}, and single pre-rolls from Road Trip, Cheech & Chong, BudJet and Sunday, including a Blue Dream and a Lemon Cherry Gelato, are among the cheaper items. PRYZM on Avenue B and Gotham on the Bowery each carry far more products within a ten-minute walk, so Sky High Club is the convenient option for the far east side of the neighborhood."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) lead, with flower at {cat.flower}.",
       "Cheech & Chong and BudJet pre-rolls are among the more distinctive lines stocked.",
       "Entry price is {min_price}; single pre-rolls are among the cheaper items.",
-      "PRYZM on Avenue A is the nearest larger licensed menu."
+      "PRYZM on Avenue B is the nearest larger licensed menu."
     ],
     "faq": [
       {
