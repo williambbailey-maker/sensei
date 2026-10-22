@@ -1,6 +1,6 @@
 // Normalize products — triggers the deterministic normalize_products() function
 // in Supabase (clean_brand, clean_name, potency_tier, price_band,
-// experience_level). The nightly scrape calls this automatically; run it by
+// experience_level). Every scrape calls this automatically; run it by
 // hand to re-normalize on demand:
 //
 //   npm run normalize          # incremental — only rows missing a field

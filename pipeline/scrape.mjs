@@ -420,7 +420,7 @@ async function main() {
   } else if (sweepStoreIds.length) {
     // One database call (sweep_out_of_stock, supabase/pipeline_functions.sql)
     // with its own 2-minute timeout: a plain PATCH hits the API's 8s limit
-    // when a backlog of sold-out items builds up after missed nights. A
+    // when a backlog of sold-out items builds up after a long gap between runs. A
     // failure is recorded and alerted, never a crash, so the run still logs.
     try {
       const n = await sb('rpc/sweep_out_of_stock', {

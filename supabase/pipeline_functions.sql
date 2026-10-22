@@ -1,4 +1,4 @@
--- Pipeline helpers called by the nightly scraper (pipeline/scrape.mjs) with the
+-- Pipeline helpers called by the scraper (pipeline/scrape.mjs) with the
 -- service_role key. Applied to the Supabase project as the migration
 -- `pipeline_sweep_and_timeouts`; kept here version-controlled.
 --

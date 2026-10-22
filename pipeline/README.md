@@ -113,7 +113,7 @@ Every run now protects the live menu and records how it went:
   Resend vars it still logs the warning and writes the run row; it just doesn't
   email. See the alert block in `.env.example`.
 
-**Test it safely** before trusting a nightly run:
+**Test it safely** before a full run:
 
 ```bash
 STORE_LIMIT=3 npm run scrape     # scrapes 3 stores, writes a pipeline_runs row
@@ -147,43 +147,18 @@ on `clean_brand`.
 This pass is deterministic and needs no API key. A future enhancement can add a
 Haiku pass for true brand canonicalization (merging variants) and vibe tagging.
 
-## Automate it (nightly, on your Mac)
+## Runs are manual
 
-Dutchie's Cloudflare blocks cloud IPs, so the scrape has to run from your Mac.
-`launchd` (macOS's built-in scheduler) runs it each night. Your Mac just needs
-to be **on** — if it's asleep at the scheduled time, the job runs once when it
-next wakes.
+There's no schedule: run the scrape when you want fresh menus, with
+`refresh-inventory.command` (above) or `npm run scrape`. Your Mac needs to be
+awake for the run; the refresh script keeps it awake (`caffeinate`) and saves
+the output to `logs/`.
 
-**Install (once), from the repo root:**
+If you installed the old nightly schedule, remove it once:
 
 ```bash
-# 1. make the wrapper executable
-chmod +x pipeline/scrape-nightly.sh
-
-# 2. test it runs end-to-end first (watch the browser, check the log)
-bash pipeline/scrape-nightly.sh && tail -n 20 pipeline/logs/scrape-*.log
-
-# 3. install the schedule (fills in your repo path automatically)
-sed "s#__REPO__#$PWD#g" pipeline/com.sensei.scrape.plist > ~/Library/LaunchAgents/com.sensei.scrape.plist
-
-# 4. load it
-launchctl load ~/Library/LaunchAgents/com.sensei.scrape.plist
-
-# 5. (optional) run it right now to confirm the schedule works
-launchctl start com.sensei.scrape
-tail -f pipeline/logs/scrape-*.log     # Ctrl-C to stop watching
+launchctl unload ~/Library/LaunchAgents/com.sensei.scrape.plist 2>/dev/null; rm -f ~/Library/LaunchAgents/com.sensei.scrape.plist
 ```
-
-Runs at **3:30am local**. To change the time, edit `Hour`/`Minute` in
-`~/Library/LaunchAgents/com.sensei.scrape.plist`, then
-`launchctl unload …` and `launchctl load …` it again.
-
-- **Hide the browser:** set `HEADLESS=1` in `scrape-nightly.sh` (less reliable
-  past Cloudflare — a visible window is the default for that reason).
-- **Stop automation:** `launchctl unload ~/Library/LaunchAgents/com.sensei.scrape.plist`
-- **Logs:** `pipeline/logs/` (git-ignored; last 30 runs kept).
-- **Wake the Mac to run even when asleep** (optional):
-  `sudo pmset repeat wakeorpoweron MTWRFSU 03:25:00`
 
 ## Menu platforms
 
@@ -208,7 +183,6 @@ Anything a platform doesn't provide is left empty, never guessed.
 - `stores.config.json` — per-store platform details for non-Dutchie menus.
 - `probe.mjs` — `node probe.mjs <menu url>`: lists the data requests a menu page
   makes (to work out a new platform's API). Reads only.
-- `scrape-nightly.sh` — wrapper launchd runs each night (pull, caffeinate, log).
-- `com.sensei.scrape.plist` — launchd schedule template (`__REPO__` filled at install).
+- `refresh-inventory.command` — one-step manual refresh (key, install, run, log).
 - `package.json` — Node deps (Playwright).
 - `.env.example` — copy to `.env` and add your key (+ optional alert vars).
