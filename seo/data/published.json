@@ -565,5 +565,11 @@
  },
  "/nyc/vaporizers/": {
   "type": "category"
+ },
+ "/privacy/": {
+  "type": "legal"
+ },
+ "/terms/": {
+  "type": "legal"
  }
 }

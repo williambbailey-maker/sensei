@@ -522,5 +522,13 @@
  "/nyc/vaporizers/": {
   "date": "2026-10-21",
   "hash": "140eda00a42e3068"
+ },
+ "/privacy/": {
+  "date": "2026-10-22",
+  "hash": "c3f9285f6769e51f"
+ },
+ "/terms/": {
+  "date": "2026-10-22",
+  "hash": "b06450b0eaeb29cc"
  }
 }

@@ -242,6 +242,9 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .foot-mark{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:40px}.foot-mark .bullets{gap:8px;margin:0}.foot-mark .mb{width:34px;height:34px;font-size:17px}.foot-mark .wm{color:var(--ink)}
 .ft{margin:34px 0 0;font-size:12px;color:var(--mist);line-height:1.6}
 .ft .foot-rule{width:100%;max-width:720px;height:1px;margin:32px auto 0;background:var(--line)}.ft .legal{margin:24px 0 0;text-align:center}
+.ft .legal-links{display:flex;justify-content:center;gap:20px;margin:24px 0 0}
+.ft .legal-links a{color:var(--mist)}.ft .legal-links a:hover{color:var(--ink)}
+.ft .legal-links+.legal{margin-top:12px}
 .ft .contact{display:flex;align-items:center;justify-content:center;gap:24px;margin:0;color:var(--ink)}
 .ft .contact a{color:var(--ink);text-decoration:none}
 .ft .contact .ic{display:inline-flex}
@@ -253,6 +256,15 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .kicker+h1{margin-top:12px}
 .addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
 .addr .dir{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+/* terms + privacy: plain reading pages */
+.upd{margin:14px 0 0}
+.doc{margin-top:8px;max-width:680px}
+.doc h2{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:32px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+.doc p{margin:12px 0 0;font-size:15px;line-height:1.6}
+.doc ul{margin:12px 0 0;padding:0;list-style:none}
+.doc li{position:relative;margin:0 0 8px;padding-left:22px;font-size:15px;line-height:1.5}
+.doc li::before{content:"\2192";position:absolute;left:0;font-weight:700}
+.doc a{text-decoration:underline;text-underline-offset:3px}
 /* editorial copy */
 .intro{margin-top:22px}
 .intro p{margin:0 0 12px;font-size:15px;font-weight:400;line-height:1.55;color:var(--ink)}
@@ -513,6 +525,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="#" class="ic" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="foot-mark" aria-label="Sensei NYC"><span class="wm">Sensei</span><div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div></div>
 <div class="foot-rule"></div>
+<nav class="legal-links" aria-label="Legal"><a href="/terms/">Terms</a><a href="/privacy/">Privacy Policy</a></nav>
 <p class="legal"><b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.</p></footer>
 </div>
 </div>{menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
@@ -877,6 +890,44 @@ def build_index_categories():
                   "neighborhoods where the selection runs deepest.",
                   rows, "Products", {"exclude_cat": "__none__"})
 
+# ---------- terms + privacy ----------
+# Written in seo/legal/*.md and rendered as plain reading pages: headings,
+# paragraphs, bold and "- " lists are all the Markdown they use.
+LEGAL = [("/terms/", "terms.md", "Terms"), ("/privacy/", "privacy.md", "Privacy Policy")]
+
+def _md_inline(t):
+    t = esc(t)
+    t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
+    return t.replace("hello@sensei.nyc", '<a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a>')
+
+def _md(src):
+    title, updated, out, lst = "", "", [], []
+    def flush():
+        if lst: out.append("<ul>" + "".join(f"<li>{x}</li>" for x in lst) + "</ul>"); lst.clear()
+    for block in src.strip().split("\n\n"):
+        for line in block.split("\n"):
+            line = line.strip()
+            if line.startswith("- "): lst.append(_md_inline(line[2:])); continue
+            flush()
+            if line.startswith("# "): title = line[2:]
+            elif line.startswith("## "): out.append(f"<h2>{_md_inline(line[3:])}</h2>")
+            elif line.startswith("**Last updated"): updated = line.strip("*")
+            elif line: out.append(f"<p>{_md_inline(line)}</p>")
+        flush()
+    return title, updated, "".join(out)
+
+def build_legal(path, fname, crumb):
+    title, updated, html = _md((ROOT / "legal" / fname).read_text())
+    body = f"""
+<p class="crumb"><a href="/">Sensei</a> › {esc(crumb)}</p>
+<h1>{esc(title)}</h1>
+<p class="meta upd">{esc(updated)}</p>
+<div class="doc">{html}</div>
+"""
+    desc = f"Sensei's {title.lower()}. Sensei is an independent guide to New York's licensed dispensaries for adults 21 and over."
+    write(path, page(f"{title} | Sensei", desc, path, [breadcrumb([("Sensei", "/"), (crumb, path)])], body, "legal", None))
+    return path
+
 # ---------- truthful sitemap dates ----------
 # A page's <lastmod> moves only when what Google reads on it changes: its
 # title, description and <main> content. Design-only rebuilds (CSS, menu,
@@ -1011,6 +1062,7 @@ if __name__ == "__main__":
     paths.append(build_index_brands())
     paths.append(build_index_categories())
     build_home(paths)
+    for lp, lf, lc in LEGAL: paths.append(build_legal(lp, lf, lc))
     # Every built page with what a redirect needs if it ever disappears.
     meta = {"/": {"type": "home"}}
     for d in SITE["dispensaries"]:
@@ -1019,6 +1071,7 @@ if __name__ == "__main__":
     for b in SITE["brands"]: meta[f"/brands/{slugify(b['brand'])}/"] = {"type": "brand"}
     for c in SITE["categories"]: meta[f"/nyc/{c['category']}/"] = {"type": "category"}
     for p in ("/neighborhoods/", "/brands/", "/nyc/"): meta[p] = {"type": "hub"}
+    for lp, _, _ in LEGAL: meta[lp] = {"type": "legal"}
     assert set(meta) == set(paths), sorted(set(meta) ^ set(paths))
     redirects = update_published(meta)
     block = home_block()

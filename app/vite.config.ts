@@ -22,13 +22,15 @@ export default defineConfig({
         cacheId: 'sensei-v2',
         cleanupOutdatedCaches: true,
         navigateFallback: '/index.html',
-        // Don't precache the ~107 static SEO pages (they're network-served, not
+        // Don't precache the static SEO and legal pages (they're network-served, not
         // part of the app shell) — keeps the service worker small.
         globIgnores: [
           '**/dispensaries/**',
           '**/neighborhoods/**',
           '**/brands/**',
           '**/nyc/**',
+          '**/terms/**',
+          '**/privacy/**',
           'sitemap.xml',
           'robots.txt',
         ],
@@ -37,6 +39,8 @@ export default defineConfig({
           /^\/neighborhoods\//,
           /^\/brands\//,
           /^\/nyc\//,
+          /^\/terms\//,
+          /^\/privacy\//,
           /^\/sitemap\.xml$/,
           /^\/robots\.txt$/,
         ],
