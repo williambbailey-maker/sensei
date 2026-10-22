@@ -13,6 +13,12 @@ create or replace view public.live_stores with (security_invoker = true) as
     and exists (select 1 from public.products p where p.store_id = s.id and p.in_stock);
 grant select on public.live_stores to anon, authenticated, service_role;
 
+-- In-stock rows per store, kept small so live_stores and site_stats() count
+-- from the index alone (migration `products_in_stock_store_partial_idx`):
+-- without it the count read the whole products table and passed the 3s anon
+-- timeout once the menu grew past ~60k items.
+create index if not exists products_store_in_stock_idx on public.products (store_id) where in_stock;
+
 create or replace function public.site_stats()
 returns json
 language sql
