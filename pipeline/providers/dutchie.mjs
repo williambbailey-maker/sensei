@@ -3,7 +3,10 @@
 // (Dutchie's GraphQL) — exact prices, every pack size, strain, potency —
 // instead of scraping the rendered HTML (which varies per store template).
 //
-// store.slug is the Dutchie cName (dutchie.com/dispensary/<slug>).
+// store.slug is the Dutchie cName (dutchie.com/dispensary/<slug>). A store that
+// only shows its menu inside its own website can be read from Dutchie's
+// embedded menu instead: set {"menu": "embedded-menu"} for it in
+// stores.config.json. Nothing is tried automatically.
 import { cleanDescription, extractEffects, normCategory, num, potencyPct, PRODUCT_FIELDS } from '../lib/product.mjs'
 
 const CATEGORIES = ['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals']
@@ -14,11 +17,19 @@ const T = SLOW
 // A "full" page returns ~100 products; fewer means it's the last page, so we
 // can stop without fetching an empty next page.
 const FULL_PAGE = 90
+// The product list comes from this GraphQL query. Each page waits for it
+// instead of a fixed time, since slower stores fire it late; the old pause
+// still counts from page load, so a quick store runs as fast as before. If the
+// store's first page has no feed at all within FEED_WAIT_FIRST, the store is
+// reported empty and its other categories are skipped.
+const FEED_OP = 'FilteredProducts'
+const FEED_WAIT_FIRST = 10000
+const FEED_WAIT = 8000
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 // --- Parse a Dutchie GraphQL product object into a Supabase row -------------
-export function mapApiProduct(prod, storeId, slug, fallbackCat) {
+export function mapApiProduct(prod, storeId, slug, fallbackCat, menu = 'dispensary') {
   const options = Array.isArray(prod.Options) ? prod.Options : []
   const rec = Array.isArray(prod.recPrices) && prod.recPrices.length
     ? prod.recPrices
@@ -60,7 +71,7 @@ export function mapApiProduct(prod, storeId, slug, fallbackCat) {
     cbd_pct: potencyPct(prod.CBDContent) ?? num(prod.CBD),
     variants,
     price_min: priceMin,
-    url: cName ? `https://dutchie.com/dispensary/${slug}/product/${cName}` : null,
+    url: cName ? `https://dutchie.com/${menu}/${slug}/product/${cName}` : null,
     image_url: image,
     in_stock: true,
     last_seen: new Date().toISOString(),
@@ -185,8 +196,13 @@ function findProductArrays(node, out, depth = 0) {
   }
 }
 
-async function scrapeStore(page, storeId, slug, meta) {
-  const base = `https://dutchie.com/dispensary/${slug}/products`
+// Is this response the product feed? The operation name rides in the query
+// string (GET) or the body (POST).
+const isFeed = (r) => r.url().includes(FEED_OP) || (r.request().postData() || '').includes(FEED_OP)
+
+// Scrape every category from one menu ('dispensary' or 'embedded-menu').
+async function scrapeStore(page, storeId, slug, meta, menu = 'dispensary') {
+  const base = `https://dutchie.com/${menu}/${slug}/products`
   const seen = new Map()
   for (const category of CATEGORIES) {
     let pageNum = 1
@@ -206,9 +222,15 @@ async function scrapeStore(page, storeId, slug, meta) {
       }
       page.on('response', handler)
       const url = pageNum === 1 ? `${base}/${category}` : `${base}/${category}?page=${pageNum}`
+      const first = category === CATEGORIES[0] && pageNum === 1
+      // Listen before navigating so a fast feed response isn't missed.
+      const feed = page.waitForResponse(isFeed, { timeout: first ? FEED_WAIT_FIRST : FEED_WAIT }).catch(() => null)
+      let gotFeed = null
       try {
+        const t0 = Date.now()
         await page.goto(url, { waitUntil: 'domcontentloaded' })
-        await sleep(T.load)
+        gotFeed = await feed
+        await sleep(Math.max(0, T.load - (Date.now() - t0)))
         for (let i = 0; i < T.scrolls; i++) {
           await page.evaluate('window.scrollTo(0, document.body.scrollHeight)').catch(() => {})
           await sleep(T.scrollWait)
@@ -220,11 +242,16 @@ async function scrapeStore(page, storeId, slug, meta) {
         break
       }
       page.off('response', handler)
+      if (!gotFeed && first) {
+        // No menu at this address: report it, don't spend time on 6 more pages.
+        console.log(`    no product feed on dutchie.com/${menu}/${slug} within ${FEED_WAIT_FIRST / 1000}s — skipping the store`)
+        return []
+      }
 
       const pageIds = new Set()
       let added = 0
       for (const prod of captured) {
-        const row = mapApiProduct(prod, storeId, slug, category)
+        const row = mapApiProduct(prod, storeId, slug, category, menu)
         if (!row.external_id || row.external_id === 'undefined') continue
         pageIds.add(row.external_id)
         if (!seen.has(row.external_id)) {
@@ -281,7 +308,8 @@ export default {
     const meta = {}
     // Visit the store's info page once if we still lack its address/coords.
     if (!store.address || store.lat == null) await fetchStoreInfo(page, store.slug, meta)
-    const products = await scrapeStore(page, store.id, store.slug, meta)
+    const menu = store.config?.menu === 'embedded-menu' ? 'embedded-menu' : 'dispensary'
+    const products = await scrapeStore(page, store.id, store.slug, meta, menu)
     return { products, meta }
   },
 

@@ -324,6 +324,8 @@ async function main() {
   let failed = 0
   let seen = 0
   const byProvider = {} // provider -> { ok, empty, failed }
+  const emptySlugs = []
+  const failedSlugs = []
   // Stores that returned products this run — only these get the out-of-stock
   // sweep, so a store that failed or returned nothing keeps its inventory.
   const sweepStoreIds = []
@@ -365,12 +367,14 @@ async function main() {
       } else {
         empty++
         tally.empty++
+        emptySlugs.push(store.slug)
         console.log(`  EMPTY ${store.slug}: no products returned`)
       }
       seen += list.length
     } catch (err) {
       failed++
       tally.failed++
+      failedSlugs.push(store.slug)
       console.log(`  FAILED ${store.slug}: ${err.message}`)
     }
     if (i < stores.length - 1) await sleep(STORE_GAP_MS[0] + Math.random() * (STORE_GAP_MS[1] - STORE_GAP_MS[0]))
@@ -381,6 +385,11 @@ async function main() {
   const tallies = Object.entries(byProvider)
     .map(([p, t]) => `${p} ${t.ok} ok/${t.empty} empty/${t.failed} failed`)
     .join(' · ')
+  // Name the problem stores so they can be looked at one by one.
+  const problems = []
+  if (emptySlugs.length) problems.push(`empty(${emptySlugs.length}): ${emptySlugs.slice(0, 15).join(', ')}${emptySlugs.length > 15 ? '…' : ''}`)
+  if (failedSlugs.length) problems.push(`failed(${failedSlugs.length}): ${failedSlugs.slice(0, 15).join(', ')}${failedSlugs.length > 15 ? '…' : ''}`)
+  if (problems.length) console.log(`\nStores needing a look:\n  ${problems.join('\n  ')}`)
   if (DRY_RUN) {
     console.log(`\nDry run done: ${tallies || 'no stores'} · ${seen} products · nothing written.`)
     return
@@ -392,7 +401,7 @@ async function main() {
   const attempted = ok + empty + failed
   const prevSeen = await guardBaseline(attempted)
   const label = `local node scrape${TEST_RUN ? ` · test run (${TEST_RUN})` : ''}`
-  const head = [tallies, skippedNote ? `skipped ${skippedNote}` : null].filter(Boolean)
+  const head = [tallies, ...problems, skippedNote ? `skipped ${skippedNote}` : null].filter(Boolean)
   const runRow = { stores_ok: ok, stores_failed: empty + failed, products_seen: seen }
   try {
     const rows = await sb('pipeline_runs', {

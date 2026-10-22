@@ -8,8 +8,10 @@
 // status, which custom headers it sent, and whether the response holds a list
 // of products. Also lists any embedded menu frames. The full capture is saved
 // to logs/probe-<host>-<time>.json. Reads only; writes nothing to Supabase.
-import { chromium } from 'playwright'
-import { mkdirSync, writeFileSync } from 'node:fs'
+//
+// To print sample items from a saved capture (for Claude to read the shape):
+//   node probe.mjs --show logs/probe-<file>.json <text in the request url>
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 
 const urls = process.argv.slice(2)
 if (!urls.length) {
@@ -24,7 +26,7 @@ function largestArray(node, depth = 0, best = { len: 0, path: '', keys: [] }, pa
   if (!node || typeof node !== 'object' || depth > 12) return best
   if (Array.isArray(node)) {
     const objs = node.filter((x) => x && typeof x === 'object' && !Array.isArray(x))
-    if (objs.length > best.len) Object.assign(best, { len: objs.length, path, keys: Object.keys(objs[0]).slice(0, 25) })
+    if (objs.length > best.len) Object.assign(best, { len: objs.length, path, keys: Object.keys(objs[0]).slice(0, 25), items: objs })
     node.slice(0, 50).forEach((v, i) => largestArray(v, depth + 1, best, `${path}[${i}]`))
   } else {
     for (const k of Object.keys(node)) largestArray(node[k], depth + 1, best, `${path}.${k}`)
@@ -32,6 +34,31 @@ function largestArray(node, depth = 0, best = { len: 0, path: '', keys: [] }, pa
   return best
 }
 
+// --show: the matching requests from a saved capture, with their two first
+// items (trimmed), so a new platform's product shape can be read.
+if (urls[0] === '--show') {
+  const [, file, match = ''] = urls
+  const { calls } = JSON.parse(readFileSync(file, 'utf8'))
+  const hits = calls.filter((c) => `${c.host}${c.path}${c.query}${c.post}`.includes(match))
+  console.log(`${hits.length} of ${calls.length} requests match "${match}"`)
+  for (const c of hits.slice(0, 4)) {
+    console.log(`\n--- ${c.status} ${c.method} ${c.host}${c.path}`)
+    if (c.query) console.log(`query: ${decodeURIComponent(c.query).slice(0, 600)}`)
+    if (c.post) console.log(`post: ${c.post.slice(0, 400)}`)
+    if (c.headers.length) console.log(`headers: ${c.headers.join(' ')}`)
+    if (typeof c.body !== 'object') {
+      console.log(`body: ${c.body}`)
+      continue
+    }
+    const big = largestArray(c.body)
+    console.log(`top-level keys: ${Object.keys(c.body || {}).join(', ')}`)
+    console.log(`biggest list: ${big.len} items at ${big.path}`)
+    for (const item of (big.items || []).slice(0, 2)) console.log(JSON.stringify(item, null, 1).slice(0, 3000))
+  }
+  process.exit(0)
+}
+
+const { chromium } = await import('playwright')
 const browser = await chromium.launch({ headless: false })
 mkdirSync('logs', { recursive: true })
 for (const url of urls) {
