@@ -483,8 +483,16 @@ select:focus {
   color: rgba(255, 255, 255, 0.6);
 }
 /* The disclosure: the last line of the page, centered under the sign-off. */
+/* A hairline between the Sensei NYC sign-off and the disclaimer. */
+.foot-rule {
+  width: 100%;
+  max-width: 720px;
+  height: 1px;
+  margin: 32px auto 0;
+  background: rgba(255, 255, 255, 0.16);
+}
 .foot {
-  margin-top: 28px;
+  margin-top: 24px;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.6;

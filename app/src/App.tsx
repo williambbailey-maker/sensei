@@ -468,6 +468,7 @@ export default function App() {
           </a>
         </div>
         <FooterMark />
+        <div className="foot-rule" aria-hidden="true" />
         <p className="foot">
           <b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is
           not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.

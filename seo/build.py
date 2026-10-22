@@ -241,7 +241,7 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .notice.drop .ghost{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--mist);cursor:pointer}
 .foot-mark{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:40px}.foot-mark .bullets{gap:8px;margin:0}.foot-mark .mb{width:34px;height:34px;font-size:17px}.foot-mark .wm{color:var(--ink)}
 .ft{margin:34px 0 0;font-size:12px;color:var(--mist);line-height:1.6}
-.ft .legal{margin:28px 0 0;text-align:center}
+.ft .foot-rule{width:100%;max-width:720px;height:1px;margin:32px auto 0;background:var(--line)}.ft .legal{margin:24px 0 0;text-align:center}
 .ft .contact{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;margin:0;font-size:14px;font-weight:700;color:var(--ink)}
 .ft .contact a{color:var(--ink);text-decoration:none}
 .ft .contact span{font-weight:400;color:var(--mist)}
@@ -514,6 +514,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 </div>
 <footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="foot-mark" aria-label="Sensei NYC"><span class="wm">Sensei</span><div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div></div>
+<div class="foot-rule"></div>
 <p class="legal"><b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.</p></footer>
 </div>
 </div>{menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
