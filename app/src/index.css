@@ -501,23 +501,16 @@ select:focus {
 .foot b {
   color: #fff;
 }
-/* The contact line: email centered, Instagram beside it. */
+/* Footer contact: an envelope (mailto) and Instagram, side by side. */
 .contact {
-  @apply flex flex-col items-center text-center;
-  gap: 8px;
+  @apply flex items-center justify-center;
+  gap: 24px;
   margin-top: 34px;
-  font-size: 14px;
-  font-weight: 700;
   color: #fff;
 }
-.contact span {
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
-}
-.contact .ig {
+.contact .ic {
   display: inline-flex;
   color: #fff;
-  margin-top: 8px;
 }
 
 /* Results: "Load more" under the list (25 at a time). */

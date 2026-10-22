@@ -96,10 +96,9 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .foot-mark{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:40px}.foot-mark .bullets{gap:8px;margin:0}.foot-mark .mb{width:34px;height:34px;font-size:17px}.foot-mark .wm{color:var(--ink)}
 .ft{margin:34px 0 0;font-size:12px;color:var(--mist);line-height:1.6}
 .ft .foot-rule{width:100%;max-width:720px;height:1px;margin:32px auto 0;background:var(--line)}.ft .legal{margin:24px 0 0;text-align:center}
-.ft .contact{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;margin:0;font-size:14px;font-weight:700;color:var(--ink)}
+.ft .contact{display:flex;align-items:center;justify-content:center;gap:24px;margin:0;color:var(--ink)}
 .ft .contact a{color:var(--ink);text-decoration:none}
-.ft .contact span{font-weight:400;color:var(--mist)}
-.ft .contact .ig{display:inline-flex;margin-top:8px}
+.ft .contact .ic{display:inline-flex}
 .ft b{color:var(--ink)}
 /* page heads */
 .crumb{font-size:13px;font-weight:400;color:var(--mist);margin:30px 0 0}
@@ -254,7 +253,7 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 <form class="inp" id="drop-form"><input type="email" name="email" placeholder="Your email for the weekly drop" aria-label="Email address for the weekly drop mailing list" autocomplete="email" required><button type="submit" class="ghost">Join the list</button></form>
 <p class="dd ok" id="drop-ok" hidden>You're on the list. The first drop lands next week.</p>
 </div>
-<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a><a href="#" class="ig" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
+<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="#" class="ic" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="foot-mark" aria-label="Sensei NYC"><span class="wm">Sensei</span><div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div></div>
 <div class="foot-rule"></div>
 <p class="legal"><b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.</p></footer>
@@ -276,7 +275,6 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 </div>
 <div class="grp"><div class="k">You</div>
 <a class="mi" href="https://sensei.nyc/?entry=cart" data-ev="chip" data-cat="menu:cart"><span class="ml"><span><span class="mt">Cart</span><span class="md">Open in the app</span></span></span><span class="ma">→</span></a>
-<a class="mi" href="https://sensei.nyc/#drop" data-ev="chip" data-cat="menu:the weekly drop"><span class="ml"><span><span class="mt">The weekly drop</span><span class="md">Deals and standouts by email</span></span></span><span class="ma">→</span></a>
 </div>
 <div class="grp"><div class="k">About</div>
 <p class="about">Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.</p>

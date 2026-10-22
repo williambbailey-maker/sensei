@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { Newsletter } from './Newsletter'
 import { track } from '../lib/analytics'
 import { prettyStore } from '../lib/labels'
 import { WAYS, type Way } from './Ways'
@@ -162,15 +161,6 @@ export function Menu({
         </div>
 
         <div className="menu-extra">
-          <div>
-            <p className="k" style={{ marginTop: 30 }}>
-              The weekly drop
-              <small>deals and standouts by email</small>
-            </p>
-            <div className="mt-3">
-              <Newsletter source="menu" compact />
-            </div>
-          </div>
           <div>
             <p className="k" style={{ marginTop: 30 }}>
               About

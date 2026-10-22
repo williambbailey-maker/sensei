@@ -121,7 +121,7 @@ export default function App() {
   }, [view, filters, stores])
 
 
-  // /#drop (the SEO menu's "weekly drop" row) lands on the footer sign-up.
+  // /#drop (older links to the sign-up) lands on the footer sign-up.
   useEffect(() => {
     if (window.location.hash !== '#drop') return
     const t = setTimeout(() => document.getElementById('drop')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400)
@@ -462,8 +462,10 @@ export default function App() {
           <Newsletter source="footer" compact />
         </div>
         <div className="contact">
-          <a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a>
-          <a href="#" aria-label="Instagram" className="ig" onClick={(e) => e.preventDefault()}>
+          <a href="mailto:hello@sensei.nyc" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc" className="ic">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" className="ic" onClick={(e) => e.preventDefault()}>
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>
