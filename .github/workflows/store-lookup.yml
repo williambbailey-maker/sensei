@@ -1,0 +1,93 @@
+name: Store lookup
+
+# Manual helper for store records the menu platforms don't fill in.
+#   extract: fetch each shop's website and print the street addresses it shows
+#            (JSON-LD first, then any "123 Street, New York, NY 10001" text).
+#   geocode: look up each address with NYC GeoSearch (the city's own geocoder)
+#            and print coordinates, borough and neighborhood.
+# Input lines are "slug|url" (extract) or "slug|address" (geocode), separated
+# by newlines or semicolons. Nothing is written anywhere; read the job log.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: extract or geocode
+        required: true
+        default: extract
+      items:
+        description: 'slug|url or slug|address, separated by ";"'
+        required: true
+
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look up
+        env:
+          MODE: ${{ github.event.inputs.mode }}
+          ITEMS: ${{ github.event.inputs.items }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, urllib.parse, urllib.request
+          UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"}
+          def get(url):
+              req = urllib.request.Request(url, headers=UA)
+              with urllib.request.urlopen(req, timeout=20) as r:
+                  return r.read().decode("utf-8", "replace")
+          items = [x.strip() for x in re.split(r"[;\n]", os.environ["ITEMS"]) if x.strip()]
+          ADDR = re.compile(r"\b\d{1,5}[A-Za-z]?(?:-\d+)?\s+(?:[NSEW]\.?\s+|East\s+|West\s+)?[A-Z0-9][\w.'-]*(?:\s+[\w.'-]+){0,4}?\s+"
+                            r"(?:Street|St\.?|Avenue|Ave\.?|Broadway|Boulevard|Blvd\.?|Place|Pl\.?|Road|Rd\.?|Parkway|Pkwy|Way|Bowery|Plaza)"
+                            r"(?:[^<>{}\n]{0,60}?\b(?:NY|New York)\b[^<>{}\n]{0,12}?\b1[01]\d{3}\b)?", re.I)
+          def ld_addresses(html):
+              out = []
+              for m in re.finditer(r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>', html, re.S | re.I):
+                  try:
+                      data = json.loads(m.group(1))
+                  except Exception:
+                      continue
+                  stack = [data]
+                  while stack:
+                      x = stack.pop()
+                      if isinstance(x, dict):
+                          a = x.get("address")
+                          if isinstance(a, dict) and a.get("streetAddress"):
+                              out.append(", ".join(str(a.get(k)) for k in ("streetAddress", "addressLocality", "addressRegion", "postalCode") if a.get(k)))
+                          elif isinstance(a, str):
+                              out.append(a)
+                          stack.extend(x.values())
+                      elif isinstance(x, list):
+                          stack.extend(x)
+              return out
+          for it in items:
+              slug, _, val = it.partition("|")
+              slug, val = slug.strip(), val.strip()
+              print(f"\n=== {slug}  {val}")
+              if os.environ["MODE"] == "geocode":
+                  try:
+                      d = json.loads(get("https://geosearch.planninglabs.nyc/v2/search?size=1&text=" + urllib.parse.quote(val)))
+                      f = (d.get("features") or [None])[0]
+                      if not f:
+                          print("  no match"); continue
+                      p, (lng, lat) = f["properties"], f["geometry"]["coordinates"]
+                      print(f"  RESULT {slug}|{p.get('label')}|{lat:.6f}|{lng:.6f}|{p.get('borough')}|{p.get('neighbourhood')}|confidence={p.get('confidence')}")
+                  except Exception as e:
+                      print("  error:", e)
+                  continue
+              u = urllib.parse.urlparse(val)
+              root = f"{u.scheme}://{u.netloc}"
+              seen = []
+              for page in dict.fromkeys([val, root + "/", root + "/contact", root + "/about", root + "/locations"]):
+                  try:
+                      html = get(page)
+                  except Exception as e:
+                      print(f"  {page}: {str(e)[:80]}"); continue
+                  text = re.sub(r"<[^>]+>", " ", html)
+                  text = re.sub(r"&nbsp;|\s+", " ", text)
+                  found = [("ld", a) for a in ld_addresses(html)] + [("text", m.group(0).strip()) for m in ADDR.finditer(text)]
+                  for kind, a in found:
+                      a = re.sub(r"\s+", " ", a)
+                      if a not in seen and len(seen) < 8:
+                          seen.append(a); print(f"  [{kind}] {a}   <- {page}")
+              if not seen:
+                  print("  no address found")
+          PY
