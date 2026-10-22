@@ -43,7 +43,7 @@ export function CartView({
             <span className="row-l">
               <span className="thumb">{p.image_url ? <img src={p.image_url} alt="" /> : null}</span>
               <span className="min-w-0">
-                <span className="label block truncate">{cleanTitle(p.clean_name ?? p.name ?? 'Unknown')}</span>
+                <span className="label block truncate">{cleanTitle(p.clean_name ?? p.name ?? 'Unknown', p.clean_brand ?? p.brand)}</span>
                 <span className="meta block truncate">
                   {p.price_min != null ? `$${p.price_min} each` : 'price at store'}
                   {p.url && (

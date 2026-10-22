@@ -77,11 +77,11 @@ export function Results({
   // the loaded result set, which already spans every shop in scope.
   const same = useMemo(() => {
     if (!openProductItem) return { shops: 0, lowest: null as number | null }
-    const key = productKey(openProductItem.clean_brand ?? openProductItem.brand, cleanTitle(openProductItem.clean_name ?? openProductItem.name ?? ''))
+    const key = productKey(openProductItem.clean_brand ?? openProductItem.brand, cleanTitle(openProductItem.clean_name ?? openProductItem.name ?? '', openProductItem.clean_brand ?? openProductItem.brand))
     const stores = new Set<string>()
     let lowest: number | null = null
     for (const p of products) {
-      if (productKey(p.clean_brand ?? p.brand, cleanTitle(p.clean_name ?? p.name ?? '')) !== key) continue
+      if (productKey(p.clean_brand ?? p.brand, cleanTitle(p.clean_name ?? p.name ?? '', p.clean_brand ?? p.brand)) !== key) continue
       if (p.store?.slug) stores.add(p.store.slug)
       if (p.price_min != null && (lowest == null || p.price_min < lowest)) lowest = p.price_min
     }

@@ -20,7 +20,7 @@ export function formatPrice(n: number): string {
 // The six mandated properties for every product event. page_type + source
 // come from the registered super-properties.
 export function eventProps(p: Product) {
-  const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown')
+  const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown', p.clean_brand ?? p.brand)
   const brand = p.clean_brand ?? p.brand
   return {
     brand: brand ?? null,
@@ -33,7 +33,7 @@ export function eventProps(p: Product) {
 
 // What a product row and its detail panel both show.
 export function productFacts(p: Product, userLoc?: LatLng | null) {
-  const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown')
+  const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown', p.clean_brand ?? p.brand)
   const brand = p.clean_brand ?? p.brand
   const price = p.price_min != null ? `$${formatPrice(p.price_min)}` : '—'
   const weights = ((p.variants?.map((v) => v.weight).filter(Boolean) as string[]) ?? [])

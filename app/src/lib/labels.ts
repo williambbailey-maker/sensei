@@ -96,17 +96,63 @@ export function prettyStore(slug: string): string {
     .replace(/\bLlc\b/g, 'LLC')
 }
 
-// Display-clean a product title: keep only what comes before '|' (the brand
-// usually follows it) and drop number-bearing terms — dosages (100mg, 3.5g),
-// ratios (2:1), counts (10-pack, 20 Pack) — plus a unit word a count was
-// qualifying. Falls back to the raw name if stripping leaves nothing.
-export function cleanTitle(raw: string): string {
-  const base = raw.split('|')[0]
-  let s = base
-    .replace(/\(?\b\d[\w:.%/-]*\)?(\s+(packs?|pks?|cts?|counts?|pcs?|pieces?|servings?))?/gi, ' ')
+// Display-clean a product title. Menus write names many ways: "Lobotomy",
+// "FLAMER | Lobotomy | Indica | Pre-Roll", "5 Boro - Fuel Pump - 3.5g",
+// "Nyce | Alien Mints | Live Hash Rosin AIO | 1g". The card already shows the
+// brand, strain type, category and size, so drop those from the title and
+// keep the product's own name: the brand (wherever it sits, or as a prefix),
+// pipe-separated parts that are only a strain type, a bare category word or a
+// size, and number-bearing terms (dosages, ratios, counts). Falls back to the
+// raw name if stripping leaves nothing.
+const STRAIN =
+  /^(true\s+)?(indica|sativa|hybrid|balanced)([- /](dominant|dom|hybrid|indica|sativa))?$|^(cbd|thc|thcv|cbn|cbg|cbc)([\s:/+&-]*(cbd|thc|thcv|cbn|cbg|cbc))*$/i
+const CATEGORY_WORD =
+  /^(flower|whole flower|indoor flower|pre-?rolls?|pre rolls?|joints?|blunts?|vapes?|vape pens?|cartridges?|carts?|aio|vape aio|all[- ]in[- ]one|disposables?|pods?|edibles?|gummies|gummy|chocolates?|beverages?|drinks?|concentrates?|tinctures?|topicals?|capsules?|tablets?|accessories|eighth|quarter|half[- ]ounce|ounce|single|singles|jar)$/i
+const squash = (x: string) => x.toLowerCase().replace(/[^a-z0-9]/g, '')
+
+// Sizes, doses, counts, ratios and potencies, but not numbers that are part
+// of a product's name ("Afternoon Delight #4", "RZ-11", "GG4").
+function stripNumbers(x: string): string {
+  return x
+    .replace(/\((?:[ISH](?:\/[ISH])?)\)/gi, ' ')
+    .replace(/\(?\b\d+(?:\.\d+)?\s*(?:x\s*\d+(?:\.\d+)?\s*)?-?\s*(?:mg|g|gram|grams|gr|oz|ml|pk|pks|pack|packs|ct|cts|count|counts|pc|pcs|piece|pieces|servings?)\b\)?/gi, ' ')
+    .replace(/(^|[\s(])\.\d+\s*(?:mg|g)\b\)?/gi, ' ')
+    .replace(/\b\d+(?:\.\d+)?(?:\s*:\s*\d+(?:\.\d+)?)+\b/g, ' ')
+    .replace(/\b\d+(?:\.\d+)?\s?%/g, ' ')
+    .replace(/\(\s*\d+\s*x\s*\)|\(\s*\)|\(\s*x\s*\)/gi, ' ')
     .replace(/[()[\]]/g, ' ')
     .replace(/\s{2,}/g, ' ')
-    .replace(/^[\s\-–·,&]+|[\s\-–·,&]+$/g, '')
+    .replace(/^[\s\-–·,&|:.]+|[\s\-–·,&|:.]+$/g, '')
     .trim()
-  return s || base.trim() || raw
+    .replace(/(\s+\d+)?\s+x$/i, '')
+    .replace(/\s+[ISH]$/, '')
+    .trim()
+}
+
+export function cleanTitle(raw: string, brand?: string | null): string {
+  const b = squash(brand ?? '')
+  // "Jetty" for Jetty Extracts, "Dank" for Dank By Definition, "Packs" for
+  // Packs Los Angeles: a part that is the brand or the start of it.
+  const isBrand = (x: string) => {
+    const q = squash(x)
+    return !!b && !!q && (q === b || q === b.replace(/s$/, '') || (q.length >= 4 && b.startsWith(q)))
+  }
+  const parts = raw.split('|').map((x) => x.trim()).filter(Boolean)
+  const kept = parts
+    .filter((x) => !isBrand(x))
+    .map((x) => {
+      // "5 Boro - Fuel Pump" / "Ruby Farms Doobies": drop a leading brand.
+      if (!b) return x
+      const words = x.split(/\s+/)
+      for (let i = 1; i < words.length; i++) {
+        const head = squash(words.slice(0, i).join(' '))
+        if (head === b) return words.slice(i).join(' ').replace(/^[-–:]\s*/, '') || x
+        if (head.length >= b.length) break
+      }
+      return x
+    })
+    .map(stripNumbers)
+    .filter((x) => x.replace(/[^a-z0-9]/gi, '').length >= 2 && !STRAIN.test(x) && !CATEGORY_WORD.test(x))
+  const out = kept.join(' · ')
+  return out || stripNumbers(parts[0] ?? raw) || raw.trim() || raw
 }
