@@ -1,7 +1,29 @@
 {
   "_about": "Per-store platform details, keyed by stores.slug (e.g. a Dispense venue id, a Blaze shop id, the menu URL). The scraper hands each store's entry to its platform module as store.config. Dutchie stores need nothing here (their slug is the Dutchie cName) unless the menu is only shown inside the store's own website: then {\"menu\": \"embedded-menu\"} reads it from dutchie.com/embedded-menu/<slug>.",
   "stores": {
-    "cannadreams": { "provider": "dispense", "menu_url": "https://cannadreams.nyc/menu" },
-    "tetra-east-harlem": { "provider": "dispense", "menu_url": "https://menus.dispenseapp.com/245e4aee1af46eb4/menu" }
+    "cannadreams": {
+      "provider": "dispense",
+      "menu_url": "https://cannadreams.nyc/menu"
+    },
+    "tetra-east-harlem": {
+      "provider": "dispense",
+      "menu_url": "https://menus.dispenseapp.com/245e4aee1af46eb4/menu"
+    },
+    "flower-power": {
+      "provider": "dispense",
+      "menu_url": "https://flowerpowerdispensers.com/menu"
+    },
+    "pure-blossoms": {
+      "provider": "dispense",
+      "menu_url": "https://pureblossomsnyc.com/shop"
+    },
+    "the-herbal-care": {
+      "provider": "dispense",
+      "menu_url": "https://thctheherbalcare.com/shop"
+    },
+    "uplift-royal": {
+      "provider": "dispense",
+      "menu_url": "https://upliftroyal.com/shop"
+    }
   }
 }

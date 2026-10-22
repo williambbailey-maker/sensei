@@ -20,7 +20,7 @@ if (!urls.length) {
   process.exit(1)
 }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
-const MAX_BODY = 200_000
+const MAX_BODY = 3_000_000
 
 // The longest array of objects anywhere in a JSON body, as a product hint.
 function largestArray(node, depth = 0, best = { len: 0, path: '', keys: [] }, path = '$') {
@@ -91,15 +91,18 @@ mkdirSync('logs', { recursive: true })
 for (const url of urls) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } })
   const calls = []
+  const other = [] // xhr/fetch responses that weren't JSON (so nothing is missed)
   page.on('response', async (r) => {
     const req = r.request()
     const ct = r.headers()['content-type'] || ''
-    if (!/json|graphql/i.test(ct) && !['xhr', 'fetch'].includes(req.resourceType())) return
+    const isXhr = ['xhr', 'fetch'].includes(req.resourceType())
+    if (!/json|graphql/i.test(ct) && !isXhr) return
     let body = null
     try {
       const text = await r.text()
       body = JSON.parse(text)
     } catch {
+      if (isXhr) other.push(`${r.status()} ${req.method()} ${new URL(r.url()).host}${new URL(r.url()).pathname} (${ct.split(';')[0] || 'no content-type'})`)
       return // not JSON
     }
     const u = new URL(r.url())
@@ -128,7 +131,17 @@ for (const url of urls) {
   console.log(`\n=== ${url}`)
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 })
-    await sleep(6000)
+    await sleep(4000)
+    // Age gate: click the first "I'm 21 / Yes / Enter" style button, if any,
+    // since many menus don't load products until it's answered.
+    const gate = page.locator('button, a, [role="button"]').filter({ hasText: /\b(21|yes|enter|i am|i'm|agree|confirm|continue)\b/i }).first()
+    if (await gate.isVisible({ timeout: 1500 }).catch(() => false)) {
+      const label = (await gate.innerText().catch(() => '')).trim().slice(0, 40)
+      await gate.click({ timeout: 3000 }).catch(() => {})
+      console.log(`  clicked "${label}" (age gate?)`)
+      await sleep(5000)
+    }
+    await sleep(2000)
     for (let i = 0; i < 3; i++) {
       await page.evaluate('window.scrollTo(0, document.body.scrollHeight)').catch(() => {})
       await sleep(1500)
@@ -156,6 +169,8 @@ for (const url of urls) {
   if (embedded.length) console.log(`  embedded data:\n${embedded.map((e) => `    ${e}`).join('\n')}`)
   const frames = page.frames().map((f) => f.url()).filter((f) => f && f !== 'about:blank' && f !== page.url())
   if (frames.length) console.log(`  embedded frames:\n${frames.slice(0, 8).map((f) => `    ${f.slice(0, 160)}`).join('\n')}`)
+  await page.screenshot({ path: `logs/probe-${new URL(url).host}-${Date.now()}.png`, fullPage: false }).catch(() => {})
+  if (other.length) console.log(`  non-JSON data requests:\n${[...new Set(other)].slice(0, 10).map((o) => `    ${o}`).join('\n')}`)
   console.log(`  ${calls.length} JSON requests:`)
   for (const c of calls.slice(0, 40)) {
     const op = (c.query.match(/operationName=([^&]+)/) || c.post.match(/"operationName":"([^"]+)"/) || [])[1]
@@ -171,7 +186,7 @@ for (const url of urls) {
   const file = `logs/probe-${new URL(url).host}-${Date.now()}.json`
   writeFileSync(file, JSON.stringify({ url, landed: page.url(), frames, embedded, calls }, null, 2))
   writeFileSync(file.replace(/\.json$/, '.html'), html)
-  console.log(`  saved: ${file} (+ .html)`)
+  console.log(`  saved: ${file} (+ .html, .png screenshot)`)
   await page.close()
   await sleep(3000) // polite gap between pages
 }

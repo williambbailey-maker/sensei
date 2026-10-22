@@ -164,7 +164,8 @@ function venueMeta(v) {
   if (!o || typeof o !== 'object') return meta
   const a = o.address && typeof o.address === 'object' ? o.address : o
   const street = a.address1 || a.street || a.line1 || (typeof o.address === 'string' ? o.address : null)
-  if (street && /^\d/.test(String(street).trim())) meta.address = [street, a.city, a.state, a.zip || a.postalCode].filter(Boolean).join(', ')
+  // Needs a house number: "9th Avenue" alone is not an address.
+  if (street && /^\d+[a-z]?\s+\S/i.test(String(street).trim()) && !/^\d+(st|nd|rd|th)\b/i.test(String(street).trim())) meta.address = [street, a.city, a.state, a.zip || a.postalCode].filter(Boolean).join(', ')
   if (typeof a.city === 'string') meta.city = a.city.trim()
   const lat = o.latitude ?? o.lat ?? o.location?.latitude ?? o.location?.lat ?? o.location?.coordinates?.[1]
   const lng = o.longitude ?? o.lng ?? o.location?.longitude ?? o.location?.lng ?? o.location?.coordinates?.[0]
@@ -174,7 +175,7 @@ function venueMeta(v) {
 
 export default {
   name: 'dispense',
-  enabled: false, // switch on after a dry run on one store looks right
+  enabled: true, // dry run on cannadreams: 865 products, potency mapped
   needsBrowser: (store) => !(store.config?.venue && store.config?.api_key),
   fields: PRODUCT_FIELDS,
 
