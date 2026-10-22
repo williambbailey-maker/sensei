@@ -206,6 +206,8 @@ Anything a platform doesn't provide is left empty, never guessed.
 - `providers/` — one module per menu platform; `providers/index.mjs` lists them.
 - `lib/product.mjs` — shared product cleanup (categories, potency, descriptions).
 - `stores.config.json` — per-store platform details for non-Dutchie menus.
+- `probe.mjs` — `node probe.mjs <menu url>`: lists the data requests a menu page
+  makes (to work out a new platform's API). Reads only.
 - `scrape-nightly.sh` — wrapper launchd runs each night (pull, caffeinate, log).
 - `com.sensei.scrape.plist` — launchd schedule template (`__REPO__` filled at install).
 - `package.json` — Node deps (Playwright).

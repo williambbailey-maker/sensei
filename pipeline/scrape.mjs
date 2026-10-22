@@ -185,8 +185,8 @@ async function liveIds(storeId) {
 async function dryRunReport(store, provider, products, meta) {
   const cov = fieldCoverage(products)
   console.log(`\n  ${products.length} products (nothing written)`)
-  console.log('  field coverage (% of products with a value):')
-  for (const f of PRODUCT_FIELDS) {
+  if (products.length) console.log('  field coverage (% of products with a value):')
+  for (const f of products.length ? PRODUCT_FIELDS : []) {
     const note = provider.fields.includes(f) ? '' : '   ← not provided by this platform (left null)'
     console.log(`    ${f.padEnd(18)} ${String(cov[f]).padStart(3)}%${note}`)
   }
