@@ -69,6 +69,7 @@ jobs:
           echo "envelope mailto:  $(grep -c 'href="mailto:hello@sensei.nyc"' seo.html)"
           echo "drop row in menu: $(sed -n '/id="menu"/,$p' seo.html | grep -ci 'weekly drop')"
           echo "legal links:      $(grep -c 'class="legal-links"' seo.html)"
+          echo "simple sign-up:   $(grep -c '<div class="signup" id="drop">' seo.html)  old box: $(grep -c 'notice drop' seo.html)"
           for p in /terms/ /privacy/; do
             curl $C -o legal.html -w "%{http_code}  $p  " "$B$p"; grep -oE '<h1>[^<]*</h1>' legal.html
           done

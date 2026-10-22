@@ -256,7 +256,7 @@ select:focus {
   font-size: 17px;
 }
 
-/* The notice box (the mailing list in the footer). */
+/* The notice box. */
 .notice {
   border: 2px solid #fff;
   padding: 18px 20px;
@@ -301,6 +301,32 @@ select:focus {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* The footer sign-up: a small centered title over one underlined field
+   with an arrow. No box, no copy. */
+.signup {
+  width: 100%;
+}
+.signup-k {
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+.signup-inp {
+  margin-top: 14px;
+}
+.signup-go {
+  flex: none;
+  font-size: 24px;
+  line-height: 1;
+  color: #fff;
+}
+.signup-msg {
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
 }
 
 /* Text input: underline only. */
@@ -865,16 +891,15 @@ select:focus {
     margin-top: 20px;
   }
 
-  /* Footer: one centered column, like on phones: the mailing list box,
+  /* Footer: one centered column, like on phones: the mailing list sign-up,
      then the email and Instagram, then the sign-off and the disclaimer. */
   .site-foot {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .site-foot > .notice {
-    width: 100%;
-    max-width: 560px;
+  .site-foot > .signup {
+    max-width: 420px;
   }
   .site-foot > .contact {
     margin-top: 40px;

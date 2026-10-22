@@ -458,8 +458,8 @@ export default function App() {
       )}
 
       <footer className="wrap site-foot" style={{ paddingTop: 96, paddingBottom: 80 }}>
-        <div id="drop" className="notice">
-          <Newsletter source="footer" compact />
+        <div id="drop" className="signup">
+          <Newsletter source="footer" />
         </div>
         <div className="contact">
           <a href="mailto:hello@sensei.nyc" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc" className="ic">
