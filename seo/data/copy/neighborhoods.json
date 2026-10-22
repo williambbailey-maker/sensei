@@ -1,14 +1,14 @@
 {
   "astoria": {
     "intro": [
-      "Astoria has {shops|word} licensed dispensaries with about {in_stock|about} products between them, which makes it the best-served neighborhood in Queens. Terp Bros on Ditmars Boulevard is the largest at roughly {shop.terp-bros-astoria|about} listings, Cannavita on Steinway Street is close behind at about {shop.green-jungle|about}, and Astoria Bud Boutique on Astoria Boulevard is a small {shop.dominica62}-item shop a block from the N and W. All of them are within a 15-minute walk of each other along the Ditmars-to-Astoria Boulevard corridor.",
-      "The neighborhood menu is balanced in a way most of Manhattan is not: {cat.pre-rolls} pre-rolls, {cat.flower} flower listings, {cat.vaporizers} vapes and {cat.edibles} edibles, with a {cat.concentrates}-item concentrate selection concentrated at Terp Bros and Cannavita. Cannavita carries the deepest MFNY and Dank By Definition runs in the city, and Terp Bros is one of the strongest Jetty Extracts stops. Prices start low, with 1906 drop pouches and 5 Boro dime bags at the bottom of the range. If you are coming from Long Island City or the Grand Central Parkway, Astoria Bud Boutique is the quick stop; for a full browse, Terp Bros and Cannavita are both worth the extra blocks."
+      "Astoria has {shops|word} licensed dispensaries with about {in_stock|about} products between them, more shops and more products than any other Queens neighborhood we track. Terp Bros at 36-10 Ditmars Boulevard is the largest at about {shop.terp-bros-astoria|about} products. Cannavita at 30-30 Steinway Street is second at about {shop.green-jungle|about}, and Astoria Bud Boutique at 30-12 Astoria Boulevard is a much smaller shop with about {shop.dominica62|about}, close to the Astoria Boulevard N and W station.",
+      "The neighborhood menu gives flower a bigger share than most Manhattan neighborhoods do: {cat.vaporizers} vapes, {cat.pre-rolls} pre-rolls, {cat.flower} flower listings and {cat.edibles} edibles, with {cat.concentrates} concentrates, nearly all of them at Terp Bros and Cannavita. Cannavita carries more Dank By Definition products than any other shop we track, along with deep Rove and Grön selections. Terp Bros is strong in STIIIZY, Ayrloom, MFNY and Jaunty and has the biggest flower selection of the {shops|word}. Astoria Bud Boutique's short menu leans on Boukét, Kings & Queens and Muha Meds. Prices start at {min_price}, with 1906 Boost Drops at Cannavita at the bottom of the range. For a quick stop near the train, Astoria Bud Boutique works; for a full browse, Terp Bros and Cannavita are both worth the extra blocks."
     ],
     "know": [
-      "Astoria has {shops|word} licensed shops: Terp Bros (about {shop.terp-bros-astoria|about} products), Cannavita (about {shop.green-jungle|about}) and Astoria Bud Boutique (about {shop.dominica62|about}).",
-      "Flower and pre-rolls are unusually strong, at {cat.flower} and {cat.pre-rolls} listings across the neighborhood.",
-      "Cannavita has the deepest MFNY and Dank By Definition selections of any shop we track.",
-      "All of them are near the N and W line, between Astoria Boulevard and Ditmars."
+      "Terp Bros on Ditmars Boulevard is the largest shop, with about {shop.terp-bros-astoria|about} products.",
+      "Cannavita on Steinway lists about {shop.green-jungle|about}, and Astoria Bud Boutique on Astoria Boulevard about {shop.dominica62|about}.",
+      "Cannavita has the most Dank By Definition products of any shop we track.",
+      "Flower is strong at {cat.flower} listings across the neighborhood."
     ],
     "faq": [
       {
@@ -17,7 +17,7 @@
       },
       {
         "q": "Is Astoria good for flower?",
-        "a": "Yes. With {cat.flower} flower listings across {shops|word} shops it has more loose flower than most Manhattan neighborhoods, including some with more stores. Cannavita and Terp Bros both carry large flower walls with New York growers."
+        "a": "Yes. With {cat.flower} flower listings across {shops|word} shops, it has more loose flower than SoHo or FiDi, which have as many or more stores. Terp Bros and Cannavita both carry large flower selections."
       },
       {
         "q": "Can I buy cannabis in Astoria without a New York ID?",
@@ -27,23 +27,23 @@
   },
   "east-west-village": {
     "intro": [
-      "The East and West Village together have {shops|word} licensed dispensaries and about {in_stock|about} products, the most shops of any Manhattan neighborhood below 14th Street. Gotham on the Bowery lists about {shop.gotham-nyc-3rd-st|about} products, The Flowery's East Village store on 10th Street about {shop.the-flowery-east-village|about} and PRYZM on Avenue B about {shop.pryzm|about}, and The Flowery's West Village store on Christopher Street lists about {shop.weedkraft|about}. Dagmar on Jane Street, Smacked on Bleecker and Sky High Club on Avenue C are smaller, more focused shops.",
-      "Pre-rolls lead the combined menu at {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates. The Flowery's East and West Village stores and Gotham Bowery carry the widest brand lists, while Dagmar is the pick for Ruby Farms pre-rolls and Smacked for Plug Play pods. Entry prices are low, with 1906 drops and single-serve drinks the cheapest items at most of the larger shops. Because the stores are spread from the Hudson to Avenue C, the right choice depends mostly on which side of Broadway you are on."
+      "The East and West Village together have {shops|word} licensed dispensaries and about {in_stock|about} products, the most shops of any Manhattan neighborhood we cover below 14th Street. Gotham on the Bowery is the largest at about {shop.gotham-nyc-3rd-st|about} products, followed by The Flowery's East Village store on 10th Street at about {shop.the-flowery-east-village|about}, The Flowery's West Village store on Christopher Street at about {shop.weedkraft|about} and PRYZM on Avenue B at about {shop.pryzm|about}. The smaller shops are Smacked on Bleecker Street (about {shop.temeka-bleecker|about}), Dagmar on Jane Street (about {shop.dagmar-cannabis-west-village|about}), Bellanova at 331 East 9th Street (about {shop.bellanova-retail|about}) and Sky High Club on Avenue C (about {shop.sky-high-club|about}).",
+      "Pre-rolls lead the combined menu at {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates. Gotham Bowery has the most edibles and the longest brand list in the neighborhood, with MFNY at the top. The Flowery East Village carries the most vapes, PRYZM the most pre-rolls and flower, and The Flowery West Village is strong in To The Moon and Ayrloom. Dagmar is the pick for Ruby Farms, which leads its menu, and Smacked for Plug Play pods. Bellanova's list is led by Camino and MFNY. Because the stores are spread from the Hudson to Avenue C, the right choice depends mostly on which side of Broadway you are on."
     ],
     "know": [
-      "The Village has {shops|word} licensed shops: the big east-side menus at Gotham Bowery, The Flowery East Village and PRYZM, The Flowery on Christopher Street, and smaller stores at Dagmar, Smacked and Sky High Club.",
+      "The Village has {shops|word} licensed shops: Gotham Bowery, The Flowery East Village and PRYZM on the east side, The Flowery on Christopher Street, and smaller stores at Smacked, Dagmar, Bellanova and Sky High Club.",
       "Pre-rolls ({cat.pre-rolls}) are the largest category, then edibles ({cat.edibles}), vapes ({cat.vaporizers}) and flower ({cat.flower}).",
       "Gotham Bowery and The Flowery East Village are the deepest menus east of Broadway; The Flowery West Village is the deepest west.",
-      "Entry prices are low for drinks and drops at most shops."
+      "PRYZM on Avenue B has the most pre-rolls and flower in the neighborhood."
     ],
     "faq": [
       {
         "q": "Which Village dispensary is the largest?",
-        "a": "Gotham on the Bowery, at about {shop.gotham-nyc-3rd-st|about} products, with The Flowery East Village at about {shop.the-flowery-east-village|about} and PRYZM at about {shop.pryzm|about}. The three are within a ten-minute walk of each other in the East Village."
+        "a": "Gotham on the Bowery, at about {shop.gotham-nyc-3rd-st|about} products, with The Flowery East Village at about {shop.the-flowery-east-village|about} and The Flowery West Village at about {shop.weedkraft|about}. PRYZM on Avenue B is close behind at about {shop.pryzm|about}."
       },
       {
         "q": "Is there a licensed dispensary in the West Village?",
-        "a": "Yes. The Flowery on Christopher Street has about {shop.weedkraft|about} products and is the larger. Dagmar on Jane Street has about {shop.dagmar-cannabis-west-village|about}, heavy on pre-rolls, and is the westernmost shop in the neighborhood."
+        "a": "Yes. The Flowery on Christopher Street has about {shop.weedkraft|about} products and is the largest shop west of Broadway. Smacked on Bleecker Street lists about {shop.temeka-bleecker|about}, and Dagmar on Jane Street has about {shop.dagmar-cannabis-west-village|about}, heavy on pre-rolls, and is the westernmost shop in the neighborhood."
       },
       {
         "q": "Where can I smoke after buying in the Village?",
@@ -53,39 +53,39 @@
   },
   "harlem-washington-heights": {
     "intro": [
-      "Harlem and Washington Heights share about {in_stock|about} products across their active licensed dispensaries, with another, Hibernica Central Park on 110th Street, listed but publishing no menu at our last pull. Gotham Buds on 125th Street lists about {shop.gotham-buds|about} products, and Broadway Strains at 161st and Broadway lists about {shop.healthy-choice|about}. They sit three miles apart, so most people will use whichever is closer rather than compare them.",
-      "The combined menu is balanced: {cat.pre-rolls} pre-rolls, {cat.flower} flower listings, {cat.edibles} edibles and {cat.vaporizers} vapes, with only {cat.concentrates} concentrates, the thinnest dab selection of any neighborhood we track. Broadway Strains has the larger flower wall and Gotham Buds the deeper Jaunty and Grön runs. At the low end of the menu are 1906 sleep pouches and 5 Boro dime bags. For anyone north of 96th Street, these are the only licensed options before the Bronx, so they are busy stops for the whole upper Manhattan market."
+      "Harlem and Washington Heights have {shops|word} licensed dispensaries with about {in_stock|about} products between them. Sparkboro at 704 West 177th Street is the largest at about {shop.sparkboro|about} products, with one of the longest brand lists in Manhattan. Midnight Moon at 1536 Amsterdam Avenue is second at about {shop.midnight-moon|about}, followed by Broadway Strains at 3858 Broadway near 161st Street at about {shop.healthy-choice|about} and Gotham Buds at 248 West 125th Street at about {shop.gotham-buds|about}. Mello Tymes at 1597 Saint Nicholas Avenue is the smallest, with about {shop.mello-tymes-dispensary|about}. The shops stretch from 125th Street well into Washington Heights, so most people will use whichever is closest rather than compare them all.",
+      "The combined menu is balanced: {cat.pre-rolls} pre-rolls, {cat.flower} flower listings, {cat.edibles} edibles and {cat.vaporizers} vapes, plus {cat.concentrates} concentrates, most of them at Midnight Moon and Sparkboro. Sparkboro and Midnight Moon also have the biggest flower selections here, with Broadway Strains not far behind. Sparkboro carries one of the deepest Jaunty runs in the city along with plenty of STIIIZY and Doobie Labs, and Midnight Moon is strong in Florist Farms, MFNY and Ayrloom. Gotham Buds leans on Ayrloom, Nanticoke and Grön, Broadway Strains on Jaunty and Hashtag Honey, and Mello Tymes on The Budcracker and Ayrloom. 1906 pills at Sparkboro are among the lower-priced items in the neighborhood."
     ],
     "know": [
-      "Active shops: Gotham Buds on 125th Street (about {shop.gotham-buds|about} products) and Broadway Strains at 161st (about {shop.healthy-choice|about}).",
-      "Hibernica Central Park on 110th Street is listed but had no menu published at our last pull.",
-      "Broadway Strains has the most flower listings in upper Manhattan.",
-      "Concentrates are thin at {cat.concentrates} across the neighborhood; Midtown is the nearest deep selection."
+      "Sparkboro on West 177th Street is the largest shop here, with about {shop.sparkboro|about} products.",
+      "Midnight Moon on Amsterdam Avenue (about {shop.midnight-moon|about}) and Broadway Strains at 161st (about {shop.healthy-choice|about}) are next.",
+      "Gotham Buds on 125th Street lists about {shop.gotham-buds|about}, and Mello Tymes on Saint Nicholas Avenue about {shop.mello-tymes-dispensary|about}.",
+      "Flower is deep at {cat.flower} listings; most of the {cat.concentrates} concentrates are at Midnight Moon and Sparkboro."
     ],
     "faq": [
       {
         "q": "Is there a dispensary in Washington Heights?",
-        "a": "Yes, Broadway Strains at 3858 Broadway near 161st Street, with about {shop.healthy-choice|about} products and the largest flower selection north of Central Park. It is a short walk from the 1 train."
+        "a": "Yes. Sparkboro at 704 West 177th Street is the largest in the neighborhood, with about {shop.sparkboro|about} products. Broadway Strains at 3858 Broadway near 161st Street lists about {shop.healthy-choice|about} and is a short walk from the 1 train, and Mello Tymes at 1597 Saint Nicholas Avenue lists about {shop.mello-tymes-dispensary|about}."
       },
       {
-        "q": "Which is better, Gotham Buds or Broadway Strains?",
-        "a": "They are similar in size. Broadway Strains leans toward flower and carries the longer brand list; Gotham Buds has deeper Jaunty, Grön and Cannabals runs. Choose by location: 125th Street versus 161st Street."
+        "q": "What is the biggest dispensary in Harlem and Washington Heights?",
+        "a": "Sparkboro on West 177th Street, with about {shop.sparkboro|about} products and one of the longest brand lists in Manhattan. Midnight Moon on Amsterdam Avenue is second at about {shop.midnight-moon|about} and carries the most concentrates in the neighborhood."
       },
       {
-        "q": "Why isn’t Hibernica Central Park listed with a menu?",
-        "a": "Our last menu pull returned no listings for Hibernica Central Park. That usually means the shop had not published an online menu or it was temporarily empty. Check the store directly before visiting."
+        "q": "Is there a dispensary on 125th Street?",
+        "a": "Yes. Gotham Buds is at 248 West 125th Street with about {shop.gotham-buds|about} products. Its deepest brands are Ayrloom, Nanticoke and Grön, and its menu leans toward pre-rolls and edibles."
       }
     ]
   },
   "upper-east-side": {
     "intro": [
-      "The Upper East Side has {shops|word} licensed dispensaries with about {in_stock|about} products combined. Sweetlife on 1st Avenue near 87th Street is the larger by a wide margin at roughly {shop.sweet-life-nyc|about} listings, among the biggest menus in the city. The Emerald on Lexington near 81st has about {shop.the-emerald-dispensary-manhattan|about} products but one of the longest brand lists in Manhattan. The two are about a 15-minute walk apart.",
-      "The neighborhood menu runs {cat.edibles} edibles, {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, with a {cat.concentrates}-item concentrate selection, most of it at Sweetlife. Sweetlife also ties for the deepest Wyld run in the city and carries one of the deeper Off Hours selections. Entry-level picks include Lussi caramels and LEVEL protabs at The Emerald and 1906 tablets. For depth, go to Sweetlife; for variety across smaller New York brands, The Emerald is the more interesting browse."
+      "The Upper East Side has {shops|word} licensed dispensaries with about {in_stock|about} products combined. Sweetlife at 1662 1st Avenue near 87th Street is the larger by a wide margin at about {shop.sweet-life-nyc|about} products, one of the larger menus in Manhattan. The Emerald at 1190 Lexington Avenue near 81st Street lists about {shop.the-emerald-dispensary-manhattan|about} products, but its brand list is one of the longer ones in Manhattan and nearly as long as Sweetlife's. Sweetlife and The Emerald are about a 15-minute walk apart.",
+      "The neighborhood menu runs {cat.pre-rolls} pre-rolls, {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options, with {cat.concentrates} concentrates, most of them at Sweetlife. Sweetlife carries more EUREKA products than any other shop we track and one of the deepest Rove selections in the city, along with plenty of Smokiez Edibles, Jeeter and Ruby Farms. The Emerald's deepest brands are Ayrloom, Nanticoke, Florist Farms, Jaunty and Grön, and its cheapest items start a little lower than Sweetlife's. 1906 Boost tablets at The Emerald are an easy low-dose starting point. For depth, go to Sweetlife; for a wide spread of brands in a smaller shop, The Emerald is the more interesting browse."
     ],
     "know": [
-      "The Upper East Side has {shops|word} licensed shops: Sweetlife (about {shop.sweet-life-nyc|about} products) and The Emerald (about {shop.the-emerald-dispensary-manhattan|about} products, one of the longest brand lists in Manhattan).",
-      "Edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) lead; {cat.concentrates} concentrates, mostly at Sweetlife.",
-      "Sweetlife ties for the deepest Wyld selection of any shop we track.",
+      "Sweetlife on 1st Avenue is the larger shop, with about {shop.sweet-life-nyc|about} products.",
+      "The Emerald on Lexington lists about {shop.the-emerald-dispensary-manhattan|about} products from one of the longer brand lists in Manhattan.",
+      "Sweetlife carries more EUREKA products than any other dispensary we track.",
       "Entry prices are a little lower at The Emerald than at Sweetlife."
     ],
     "faq": [
@@ -105,75 +105,75 @@
   },
   "coney-island": {
     "intro": [
-      "Coney Island and the Gravesend stretch of Coney Island Avenue have {shops|word} licensed dispensaries with about {in_stock|about} products between them, both large. Grow Together on Coney Island Avenue near Avenue U lists about {shop.grow-together-brooklyn|about} products, and High Tidez on Surf Avenue, right by the boardwalk and the Stillwell Avenue terminal, lists about {shop.cbj-retail|about}. They are a few miles apart, so Grow Together serves Gravesend and Sheepshead Bay traffic while High Tidez serves the beach.",
-      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.vaporizers} vapes, {cat.flower} flower options and {cat.edibles} edibles. Concentrates are modest at {cat.concentrates}. Grow Together carries one of the deepest Ruby Farms runs in the city, and both shops stock the usual New York staples. The cheapest items include 1906 Chill pouches, 5 Boro dime bags and Amnesia Haze pre-rolls. In summer, High Tidez is the natural stop for a beach day; the rest of the year, Grow Together's location on a major avenue makes it the easier drive."
+      "Coney Island and the Gravesend stretch of Coney Island Avenue have {shops|word} licensed dispensaries with about {in_stock|about} products between them. High Tidez on Surf Avenue, right by the boardwalk and the Stillwell Avenue terminal, is the largest at about {shop.cbj-retail|about} products, with Grow Together on Coney Island Avenue near Avenue U close behind at about {shop.grow-together-brooklyn|about}. Coney Island Cannabis at 875 Neptune Avenue is much smaller, at about {shop.mzdz-corp|about}. Grow Together is a few miles north of the beach, so it serves Gravesend and Sheepshead Bay traffic while High Tidez serves the beach.",
+      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.vaporizers} vapes, {cat.flower} flower options and {cat.edibles} edibles. Concentrates are modest at {cat.concentrates}, most of them at High Tidez. High Tidez's biggest brands are Honey King, Jaunty and Picc, while Grow Together leans on STIIIZY, Rove and Ruby Farms and has more vapes and flower than High Tidez. Coney Island Cannabis has a short menu built mostly around Hashtag Honey. Entry-level items include 1906 Chill pouches and 5 Boro dime bags. In summer, High Tidez is the natural stop for a beach day; the rest of the year, Grow Together's location on a major avenue makes it the easier drive."
     ],
     "know": [
-      "Coney Island has {shops|word} licensed shops, both large: Grow Together (about {shop.grow-together-brooklyn|about} products) and High Tidez (about {shop.cbj-retail|about}).",
+      "Coney Island has {shops|word} licensed shops: High Tidez (about {shop.cbj-retail|about} products), Grow Together (about {shop.grow-together-brooklyn|about}) and Coney Island Cannabis (about {shop.mzdz-corp|about}).",
       "Pre-rolls ({cat.pre-rolls}) lead, with vapes ({cat.vaporizers}) and flower ({cat.flower}) next; edibles trail at {cat.edibles}.",
       "High Tidez is on Surf Avenue near the Stillwell Avenue D, F, N and Q terminal and the boardwalk.",
-      "Entry-level items include 1906 pouches and 5 Boro dime bags."
+      "Grow Together carries the most vapes and flower in the neighborhood."
     ],
     "faq": [
       {
         "q": "Is there a dispensary near the Coney Island boardwalk?",
-        "a": "Yes, High Tidez at 1029 Surf Avenue, with about {shop.cbj-retail|about} products. It is a short walk from the Stillwell Avenue subway terminal and the amusement area. You cannot consume on the boardwalk or beach, which are park property."
+        "a": "Yes, High Tidez at 1029 Surf Avenue, the largest menu in the neighborhood at about {shop.cbj-retail|about} products. It is a short walk from the Stillwell Avenue subway terminal and the amusement area. Coney Island Cannabis at 875 Neptune Avenue has a much smaller menu. You cannot consume on the boardwalk or beach, which are park property."
       },
       {
         "q": "Is Grow Together actually in Coney Island?",
         "a": "It is on Coney Island Avenue in Gravesend, a few miles north of the beach. Sensei groups it here by its avenue, but it is closer to Sheepshead Bay's shops than to High Tidez."
       },
       {
-        "q": "Which has more flower?",
-        "a": "Both carry large flower walls. Together they list {cat.flower} flower products, one of the larger totals in Brooklyn. Check both menus if you want a specific strain."
+        "q": "Which Coney Island dispensary has the most flower?",
+        "a": "Grow Together lists more flower than High Tidez, though both carry large flower walls. Together the neighborhood lists {cat.flower} flower products. Check both menus if you want a specific strain."
       }
     ]
   },
   "gramercy-union-square": {
     "intro": [
-      "Gramercy, Union Square and Kips Bay have {shops|word} licensed dispensaries with about {in_stock|about} products. The Travel Agency's Union Square store on Broadway at 13th Street lists about {shop.the-doe-store|about}, Green Genius on 3rd Avenue at 19th Street lists about {shop.green-genius-nyc|about}, and Smiley Exotics on East 30th Street is a small {shop.smiley-exotics}-item shop serving Kips Bay and Murray Hill.",
-      "This is one of the few Manhattan neighborhoods where vapes outnumber every other category, at {cat.vaporizers} listings against {cat.edibles} edibles, {cat.flower} flower options and {cat.pre-rolls} pre-rolls. Green Genius drives that with the deepest vape selection and the most brands in the area. Concentrates total {cat.concentrates}. At the low end of the price range are Ayrloom drinks at Green Genius and 5 Boro dime bags at The Travel Agency."
+      "Gramercy, Union Square and Kips Bay have {shops|word} licensed dispensaries with about {in_stock|about} products. Green Genius on 3rd Avenue near 19th Street is the largest at about {shop.green-genius-nyc|about}, with the longest brand list of the three. The Travel Agency's Union Square store on Broadway at 13th Street lists about {shop.the-doe-store|about}, and Smiley Exotics on East 30th Street is the smallest at about {shop.smiley-exotics|about}, serving Kips Bay and Murray Hill.",
+      "Vapes are the largest category at {cat.vaporizers} listings, just ahead of {cat.edibles} edibles, with {cat.pre-rolls} pre-rolls and {cat.flower} flower options behind them. Green Genius drives the totals with the most vapes, edibles, pre-rolls and flower in the area, and its brand list is led by Ayrloom, Florist Farms, ZIPS and STIIIZY. The Travel Agency leans toward vapes, its largest category, with RYTHM and Ruby Farms at the top of its list. Smiley Exotics is a compact menu led by Ayrloom and Revert. Concentrates total {cat.concentrates}, tinctures {cat.tinctures} and topicals {cat.topicals}. The Travel Agency and Green Genius are a short walk apart near Union Square, while Smiley Exotics covers the blocks farther north toward Murray Hill."
     ],
     "know": [
-      "Gramercy has {shops|word} licensed shops: The Travel Agency Union Square (about {shop.the-doe-store|about} products), Green Genius (about {shop.green-genius-nyc|about}) and Smiley Exotics (about {shop.smiley-exotics|about}).",
-      "Vapes ({cat.vaporizers}) are the largest category, driven by Green Genius' deep vape selection.",
-      "Green Genius has the most brands in the area.",
-      "Smiley Exotics is the only licensed shop between 23rd and 34th Streets on the east side."
+      "Gramercy has {shops|word} licensed shops: Green Genius (about {shop.green-genius-nyc|about} products), The Travel Agency Union Square (about {shop.the-doe-store|about}) and Smiley Exotics (about {shop.smiley-exotics|about}).",
+      "Vapes ({cat.vaporizers}) are the largest category, just ahead of edibles ({cat.edibles}).",
+      "Green Genius is the largest shop and has the most brands in the area.",
+      "Smiley Exotics on East 30th Street is the option for Kips Bay and Murray Hill."
     ],
     "faq": [
       {
-        "q": "Which dispensary is closest to Union Square?",
-        "a": "The Travel Agency at 835 Broadway, about a block north of the square, with about {shop.the-doe-store|about} products. Green Genius is a six-block walk east on 3rd Avenue."
+        "q": "Is there a dispensary near Union Square?",
+        "a": "Yes. The Travel Agency at 835 Broadway, at 13th Street a block from the square, lists about {shop.the-doe-store|about} products. Green Genius at 214 3rd Avenue, a short walk east, is larger at about {shop.green-genius-nyc|about}."
+      },
+      {
+        "q": "What is the biggest dispensary in Gramercy?",
+        "a": "Green Genius at 214 3rd Avenue near 19th Street, with about {shop.green-genius-nyc|about} products and the longest brand list in the area. It also has the deepest vape selection of the neighborhood's shops."
       },
       {
         "q": "Is there a dispensary in Kips Bay or Murray Hill?",
-        "a": "Smiley Exotics at 201 East 30th Street, with about {shop.smiley-exotics|about} products and a deep Ayrloom run. For a larger menu, Green Genius at 19th Street or Bud & Honey on 5th Avenue at 27th are the nearest."
-      },
-      {
-        "q": "Why so few pre-rolls in this neighborhood?",
-        "a": "Pre-rolls trail vapes and edibles here, at {cat.pre-rolls} listings, so the area is lighter on joints than most of Manhattan. Green Genius and The Travel Agency both carry them, so check both menus for a specific pre-roll."
+        "a": "Smiley Exotics at 201 East 30th Street, with about {shop.smiley-exotics|about} products; Ayrloom is the most-stocked brand on its menu. For a larger menu, Green Genius on 3rd Avenue at 19th Street is the biggest shop in the neighborhood."
       }
     ]
   },
   "upper-west-side": {
     "intro": [
-      "The Upper West Side has {shops|word} licensed dispensaries with about {in_stock|about} products combined, a deep menu for so few stores. The Flowery's Upper West Side store on Broadway near 92nd Street lists about {shop.twenty-one-thirty|about} products, one of the largest menus in New York, and Superfly on West 86th Street near Columbus lists about {shop.afny|about}. They are a ten-minute walk apart.",
-      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.vaporizers} vapes, {cat.flower} flower options and {cat.edibles} edibles, plus {cat.concentrates} concentrates. The Flowery ties for the deepest Jaunty run in the city and carries strong Ayrloom, Florist Farms and Grön selections, and it is one of the better stops for Jetty Extracts and Camino. Superfly is a strong Dank By Definition shop and one of the few places carrying Good Tide and a deep Cannabals run. Drinks and drops at The Flowery and 5 Boro dime bags sit at the low end of the price range."
+      "The Upper West Side has {shops|word} licensed dispensaries with about {in_stock|about} products combined, one of the deepest neighborhood menus in Manhattan. The Flowery's Upper West Side store at 2465 Broadway near 92nd Street is the largest at about {shop.twenty-one-thirty|about} products, one of the biggest menus in the city. TRU Cannabis at 256 Manhattan Avenue is second at about {shop.mad-ny-1|about}, Superfly at 57 West 86th Street near Columbus Avenue lists about {shop.afny|about}, and Good Company at 2273 Broadway lists about {shop.good-company|about}. The Flowery and Superfly are about a ten-minute walk apart.",
+      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates. The Flowery carries more Ruby Farms products than any other shop we track, along with deep Ayrloom, Florist Farms and Wizard Trees runs. TRU Cannabis is strong in Florist Farms, Ayrloom and Nanticoke and has a large flower selection of its own. Superfly is close behind The Flowery on Ruby Farms and also carries a deep Zips selection. Good Company leans on STIIIZY, Ayrloom and Nanticoke and has the most edibles of the {shops|word} but the smallest flower selection."
     ],
     "know": [
-      "The Upper West Side has {shops|word} licensed shops: The Flowery Upper West Side (about {shop.twenty-one-thirty|about} products) and Superfly (about {shop.afny|about}).",
-      "Pre-rolls ({cat.pre-rolls}), vapes ({cat.vaporizers}) and flower ({cat.flower}) are all deep; edibles total {cat.edibles}.",
-      "The Flowery UWS ties for the most Jaunty products of any dispensary we track.",
-      "Superfly is the Dank By Definition stop; both are near the 1, 2 and 3 trains."
+      "The Flowery Upper West Side is the largest shop here, with about {shop.twenty-one-thirty|about} products.",
+      "TRU Cannabis (about {shop.mad-ny-1|about}), Superfly (about {shop.afny|about}) and Good Company (about {shop.good-company|about}) round out the neighborhood.",
+      "The Flowery UWS carries the most Ruby Farms products of any dispensary we track.",
+      "Pre-rolls ({cat.pre-rolls}) lead; edibles ({cat.edibles}) and vapes ({cat.vaporizers}) are close to even."
     ],
     "faq": [
       {
         "q": "What is the largest dispensary on the Upper West Side?",
-        "a": "The Flowery at 2465 Broadway near 92nd Street, with about {shop.twenty-one-thirty|about} products. Only Qube in Midtown and a handful of Brooklyn shops list more in our data."
+        "a": "The Flowery at 2465 Broadway near 92nd Street, with about {shop.twenty-one-thirty|about} products, one of the largest menus in Manhattan. TRU Cannabis on Manhattan Avenue is second at about {shop.mad-ny-1|about}."
       },
       {
-        "q": "Is Superfly worth visiting if The Flowery is bigger?",
-        "a": "Yes. Superfly carries Dank By Definition, Cannabals and Good Tide deeply, and the two menus overlap less than you would expect."
+        "q": "Is there a dispensary on West 86th Street?",
+        "a": "Yes. Superfly is at 57 West 86th Street near Columbus Avenue, with about {shop.afny|about} products and one of the deepest Ruby Farms selections in the city. The Flowery near 92nd Street is about a ten-minute walk away."
       },
       {
         "q": "Can I bring cannabis into Central Park?",
@@ -183,75 +183,75 @@
   },
   "jackson-heights": {
     "intro": [
-      "Jackson Heights has {shops|word} licensed dispensaries with about {in_stock|about} products between them. Purple Buds on Roosevelt Avenue near 75th Street, steps from the 74th Street and Roosevelt Avenue transit hub, lists about {shop.purple-buds-inc-recreational|about} products. ENFLOR on 85th Street near Northern Boulevard lists about {shop.enflor|about}. They are a 15-minute walk apart and serve slightly different crowds: Purple Buds the subway corridor, ENFLOR the Northern Boulevard side toward East Elmhurst.",
-      "Pre-rolls dominate at {cat.pre-rolls} listings, with {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower options. Concentrates are thin at {cat.concentrates}, but tinctures are relatively strong at {cat.tinctures}. ENFLOR has the deepest Florist Farms, Ruby Farms and Jaunty runs in Queens and one of the fullest Ayrloom and Off Hours selections anywhere. Entry-level picks include 1906 Boost pouches at Purple Buds and LEVEL protabs at ENFLOR. Together they make Jackson Heights the best-served part of central Queens."
+      "Jackson Heights has {shops|word} licensed dispensaries with about {in_stock|about} products between them. Purple Buds at 75-20 Roosevelt Avenue, steps from the 74th Street and Roosevelt Avenue transit hub, is the larger at about {shop.purple-buds-inc-recreational|about} products. ENFLOR at 32-64 85th Street near Northern Boulevard lists about {shop.enflor|about}. They serve slightly different parts of the neighborhood: Purple Buds the subway corridor along Roosevelt Avenue, ENFLOR the Northern Boulevard side toward East Elmhurst.",
+      "Pre-rolls dominate at {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options. Concentrates are thin at {cat.concentrates}, nearly all of them at Purple Buds, while ENFLOR carries most of the {cat.tinctures} tinctures. Purple Buds has the bigger flower selection and is strong in Hashtag Honey, Ruby Farms and Ayrloom. ENFLOR carries more Ayrloom, Ruby Farms and Florist Farms products than any other Queens shop we track, plus one of the deeper Off Hours selections in the city. The lowest price in the neighborhood is {min_price}, for a 1906 Boost pouch at Purple Buds. For loose flower, Astoria's shops list considerably more."
     ],
     "know": [
-      "Jackson Heights has {shops|word} licensed shops: Purple Buds (about {shop.purple-buds-inc-recreational|about} products) and ENFLOR (about {shop.enflor|about}).",
-      "Pre-rolls ({cat.pre-rolls}) are by far the largest category; flower is a modest {cat.flower}.",
-      "ENFLOR carries deep Florist Farms, Ayrloom and Ruby Farms runs.",
-      "1906 pouches at Purple Buds are among the cheapest items we track in Queens."
+      "Purple Buds on Roosevelt Avenue is the larger shop, with about {shop.purple-buds-inc-recreational|about} products.",
+      "ENFLOR near Northern Boulevard lists about {shop.enflor|about} products.",
+      "Pre-rolls ({cat.pre-rolls}) are by far the largest category; concentrates are thin at {cat.concentrates}.",
+      "ENFLOR carries the most Ayrloom, Ruby Farms and Florist Farms of any Queens shop we track."
     ],
     "faq": [
       {
         "q": "Which Jackson Heights dispensary is closest to the subway?",
-        "a": "Purple Buds at 75-20 Roosevelt Avenue, a short walk from the 74th Street and Roosevelt Avenue station on the 7, E, F, M and R. ENFLOR is about 15 minutes north near Northern Boulevard."
+        "a": "Purple Buds at 75-20 Roosevelt Avenue, a short walk from the 74th Street and Roosevelt Avenue station on the 7, E, F, M and R. ENFLOR is farther north at 32-64 85th Street, near Northern Boulevard."
       },
       {
         "q": "Does Jackson Heights have a good flower selection?",
-        "a": "It is modest at {cat.flower} listings across both shops. Pre-rolls are the strength here at {cat.pre-rolls}. For loose flower in Queens, Astoria's shops list considerably more."
+        "a": "It is modest at {cat.flower} listings across the neighborhood, most of them at Purple Buds. Pre-rolls are the strength here at {cat.pre-rolls}. For loose flower in Queens, Astoria's shops list considerably more."
       },
       {
         "q": "What is the cheapest cannabis product in Jackson Heights?",
-        "a": "1906 Boost pouches at Purple Buds, two low-dose tablets per pouch and the lowest price in the neighborhood before tax. At ENFLOR, LEVEL protabs and Ayrloom drinks are the cheapest items."
+        "a": "A two-piece 1906 Boost pouch at Purple Buds, at {min_price} before tax, the lowest price in the neighborhood. ENFLOR's lowest-priced items start a little higher."
       }
     ]
   },
   "chelsea-flatiron": {
     "intro": [
-      "Chelsea and Flatiron have {shops|word} licensed dispensaries and about {in_stock|about} products, the second-deepest neighborhood in the city after Midtown. Stoops on 5th Avenue at 23rd Street is the largest at about {shop.stoop|about}; The Alchemy on 8th Avenue near 25th lists about {shop.blazinup|about}, Poppin on 10th Avenue about {shop.cannaisseur|about}, Gotham Chelsea on 10th Avenue near the High Line about {shop.gotham-chelsea|about}, Bud & Honey on 5th Avenue at 27th about {shop.bud-and-honey|about} and Verdi on 23rd Street about {shop.verdi|about}.",
-      "The combined menu is broad: {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower options, with {cat.concentrates} concentrates, {cat.tinctures} tinctures and {cat.topicals} topicals. Stoops carries one of the deepest Florist Farms runs in the city and Poppin one of the deepest Ayrloom runs. Bud & Honey is the cartridge specialist with Heavy Hitters and Rove, while Gotham Chelsea is a concentrate stop on the west side. 1906 drops and single-serve drinks are the cheapest items at most of the shops, with 5 Boro dime bags also near the bottom of the range. The stores span 5th to 10th Avenue, so there is one within a few blocks of anywhere between 14th and 30th Streets."
+      "Chelsea and Flatiron have {shops|word} licensed dispensaries and about {in_stock|about} products, the second-deepest neighborhood in the city after Midtown. Stoops on 5th Avenue at 23rd Street is the largest at about {shop.stoop|about}. The Alchemy on 8th Avenue near 25th lists about {shop.blazinup|about}, Gotham Chelsea on 10th Avenue near the High Line about {shop.gotham-chelsea|about}, Poppin farther up 10th Avenue about {shop.cannaisseur|about}, The Alchemy's Flatiron store on West 18th Street about {shop.the-alchemy-flatiron|about}, Verdi on 23rd Street about {shop.verdi|about} and Bud & Honey on 5th Avenue at 27th about {shop.bud-and-honey|about}. Flynnstoned at 206 8th Avenue lists about {shop.bright-elephant-dispensary|about}, and Erbquest at 52 West 27th Street is the smallest, with about {shop.taozen-27th|about} items.",
+      "Pre-rolls and edibles lead the combined menu at {cat.pre-rolls} and {cat.edibles} listings, with {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates, {cat.tinctures} tinctures and {cat.topicals} topicals. Stoops carries the most vapes and edibles in the neighborhood, with STIIIZY and Ayrloom at the top of its brand list. Poppin is built around pre-rolls and has one of the deepest Ruby Farms selections in the city. Bud & Honey and Verdi both lean toward vapes, with Heavy Hitters and Rove leading at Bud & Honey, while Gotham Chelsea and The Alchemy Flatiron are strong MFNY stops and Flynnstoned's list is led by Kushy Punch. The stores span 5th to 10th Avenue, so there is one within a few blocks of most of the area between 14th and 30th Streets."
     ],
     "know": [
       "Chelsea and Flatiron have {shops|word} licensed shops from 5th to 10th Avenue, led by Stoops at about {shop.stoop|about} products.",
-      "About {in_stock|about} products total: {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles, {cat.flower} flower.",
-      "Stoops is the largest; Bud & Honey is the vape specialist; Gotham Chelsea is a concentrate stop on the west side.",
-      "Entry prices are low at most shops, starting with 1906 drops and single-serve drinks."
+      "About {in_stock|about} products total: {cat.pre-rolls} pre-rolls, {cat.edibles} edibles, {cat.vaporizers} vapes, {cat.flower} flower.",
+      "Stoops has the most vapes and edibles in the area; Poppin is the pre-roll specialist with a deep Ruby Farms shelf.",
+      "Gotham Chelsea and Poppin are both on 10th Avenue, a block from the High Line."
     ],
     "faq": [
       {
         "q": "What is the biggest dispensary in Chelsea?",
-        "a": "Stoops at 182 5th Avenue near 23rd Street, with about {shop.stoop|about} products and a deep Florist Farms selection. The Alchemy on 8th Avenue lists about {shop.blazinup|about}."
+        "a": "Stoops at 182 5th Avenue near 23rd Street, with about {shop.stoop|about} products. The Alchemy at 302 8th Avenue is second at about {shop.blazinup|about}, and Gotham Chelsea on 10th Avenue is third at about {shop.gotham-chelsea|about}."
       },
       {
         "q": "Is there a dispensary near the High Line?",
-        "a": "Yes. Gotham Chelsea at 146 10th Avenue near 18th Street and Poppin at 317 10th Avenue near 28th Street are both a block from the High Line. Gotham is the edibles and concentrate stop; Poppin's overall menu is about the same size."
+        "a": "Yes. Gotham Chelsea at 146 10th Avenue near 18th Street and Poppin at 317 10th Avenue near 28th Street are both a block from the High Line. Gotham has the larger edibles shelf; Poppin's menu is about the same size overall and leans toward pre-rolls."
       },
       {
         "q": "Which Chelsea shop is best for vapes?",
-        "a": "Bud & Honey on 5th Avenue at 27th, with a vape-heavy menu and Heavy Hitters, Rove and EUREKA stocked deeply. The Alchemy and Stoops also carry large cartridge selections."
+        "a": "Stoops carries the most vapes in the neighborhood. Verdi on 23rd Street and Bud & Honey on 5th Avenue at 27th are next, and at both vapes are the largest part of the menu; Bud & Honey's list is led by Heavy Hitters and Rove."
       }
     ]
   },
   "fidi": {
     "intro": [
-      "The Financial District has {shops|word} licensed dispensaries with about {in_stock|about} products. Highest Standards at Coenties Slip near South Ferry is the larger at about {shop.highest-standards-fidi|about} listings, among the bigger menus in lower Manhattan. Green Klub on South Street near the Seaport lists about {shop.green-klub|about}, built around edibles and pre-rolls. They are a 15-minute walk apart along the East River side of the district.",
-      "The combined menu has {cat.edibles} edibles, {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates. Highest Standards carries one of the deepest Jaunty runs in the city and strong Jetty Extracts and Eaton Botanicals selections. Green Klub is the only shop we track with a deep Dumbo Electric run. 1906 pouches and LEVEL protabs sit at the low end of the menu, with 1Slice pre-rolls a step up. For most of FiDi, Highest Standards is the full-menu stop; Green Klub is the convenient choice for the Seaport and Brooklyn Bridge side."
+      "The Financial District has {shops|word} licensed dispensaries with about {in_stock|about} products. Dankley at 85 Nassau Street is the largest at about {shop.dankley-manhattan|about}, one of the biggest licensed menus in Manhattan. Highest Standards at Coenties Slip near South Ferry is second at about {shop.highest-standards-fidi|about} listings, and Green Klub on South Street near the Seaport lists about {shop.green-klub|about}, built around edibles and pre-rolls.",
+      "Pre-rolls and vapes lead the combined menu at {cat.pre-rolls} and {cat.vaporizers} listings, with {cat.edibles} edibles and {cat.flower} flower options, plus {cat.concentrates} concentrates and {cat.tinctures} tinctures. Dankley carries the most pre-rolls, vapes and brands in the district, with one of the deepest Florist Farms and Jaunty selections in the city. Highest Standards has the most flower and the deepest Jetty Extracts selection we track, plus strong Claybourne Co. and MFNY runs. Green Klub's list is led by Dumbo Electric and Moon Dust. For most of FiDi, Dankley and Highest Standards are the full-menu stops; Green Klub is the convenient choice for the Seaport and Brooklyn Bridge side."
     ],
     "know": [
-      "FiDi has {shops|word} licensed shops: Highest Standards (about {shop.highest-standards-fidi|about} products) near South Ferry and Green Klub (about {shop.green-klub|about}) near the Seaport.",
-      "Edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) lead; flower is a modest {cat.flower}.",
-      "Highest Standards carries deep Jaunty and Jetty Extracts runs.",
-      "The cheapest items at both shops are 1906 and LEVEL low-dose products."
+      "FiDi has {shops|word} licensed shops: Dankley (about {shop.dankley-manhattan|about} products) on Nassau Street, Highest Standards (about {shop.highest-standards-fidi|about}) near South Ferry and Green Klub (about {shop.green-klub|about}) near the Seaport.",
+      "Pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) lead; flower is a smaller {cat.flower}.",
+      "Highest Standards has the deepest Jetty Extracts selection we track.",
+      "Dankley is one of the largest licensed menus in Manhattan, with deep Florist Farms and Jaunty shelves."
     ],
     "faq": [
       {
-        "q": "Which FiDi dispensary is closest to Wall Street?",
-        "a": "Both are close. Highest Standards at 2 Coenties Slip is a few blocks south of Wall Street near South Ferry; Green Klub at 108 South Street is a few blocks northeast near the Seaport."
+        "q": "What is the biggest dispensary in FiDi?",
+        "a": "Dankley at 85 Nassau Street, with about {shop.dankley-manhattan|about} products and the longest brand list in the district. Highest Standards at 2 Coenties Slip is second at about {shop.highest-standards-fidi|about}."
       },
       {
-        "q": "Is Highest Standards the biggest dispensary downtown?",
-        "a": "In FiDi, yes at about {shop.highest-standards-fidi|about} products. It also lists more than The Travel Agency SoHo and Gotham Bowery, so Highest Standards is the largest south of Houston Street."
+        "q": "Is there a dispensary near Wall Street?",
+        "a": "Yes. Highest Standards at 2 Coenties Slip is a few blocks south of Wall Street near South Ferry, Green Klub at 108 South Street is a few blocks northeast near the Seaport, and Dankley is at 85 Nassau Street, which runs north from Wall Street."
       },
       {
         "q": "Can I bring cannabis onto the Staten Island Ferry?",
@@ -261,19 +261,19 @@
   },
   "midtown": {
     "intro": [
-      "Midtown has {shops|word} licensed dispensaries and about {in_stock|about} products, the deepest neighborhood menu in New York by a wide margin. Qube on Broadway at 39th Street is the largest licensed dispensary in the city at about {shop.qube-manhattan|about} products from the longest brand list we track. NY Canna Co on 5th Avenue at 36th lists about {shop.ny-canna-co-5th-ave|about}, The Daily Green on 7th Avenue in Times Square about {shop.the-daily-green|about}, Culture House near Herald Square about {shop.culture-house|about}, Torches across from the main library about {shop.torches-nyc|about}, Urban Leaf in Midtown East about {shop.organic-relief-leaf|about} and Nicklz in the Theater District about {shop.baiked|about}.",
-      "Vapes and pre-rolls lead at {cat.vaporizers} and {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.flower} flower options and {cat.concentrates} concentrates, each the largest total of any neighborhood, plus {cat.tinctures} tinctures and {cat.topicals} topicals. Qube alone carries deep pre-roll and vape walls. NY Canna Co has the deepest Ayrloom and Cannabals runs in the city, and The Daily Green is a strong MFNY and Off Hours stop. 1906 Boost pills at Qube are among the cheapest items in the neighborhood. Because every shop is within a 15-minute walk of Times Square, Penn Station or Grand Central, Midtown is the easiest place in the city to compare several menus in one trip."
+      "Midtown has {shops|word} licensed dispensaries and about {in_stock|about} products, the deepest neighborhood menu in New York by a wide margin. Qube on Broadway at 39th Street is the largest licensed dispensary in the city at about {shop.qube-manhattan|about} products from the longest brand list we track. NY Cannabis Co. on 9th Avenue lists about {shop.ny-canna-co|about}, NY Canna Co on 5th Avenue at 36th about {shop.ny-canna-co-5th-ave|about}, The Daily Green on 7th Avenue in Times Square about {shop.the-daily-green|about}, Culture House near Herald Square about {shop.culture-house|about} and Herbwell on Madison Avenue about {shop.herbwell-madison-ave|about}. Green Rise on 10th Avenue lists about {shop.green-rise-retail|about} and The Travel Agency on 5th Avenue about {shop.terrapin-greens-llc|about}. The rest, including Torches across from the main library, Urban Leaf in Midtown East and Nicklz in the Theater District, are smaller.",
+      "Vapes and pre-rolls lead at {cat.vaporizers} and {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.flower} flower options and {cat.concentrates} concentrates, each the largest total of any neighborhood, plus {cat.tinctures} tinctures and {cat.topicals} topicals. Qube lists more vapes than any other shop we track and the deepest Jeeter selection in the city. NY Cannabis Co. and NY Canna Co have the two deepest Cannabals selections in New York, and The Daily Green is a strong STIIIZY, MFNY and Off Hours stop. Herbwell has the largest topical shelf in Midtown, and Indoor Treez on Fashion Avenue is mostly flower. Most of the shops sit west of 5th Avenue, from Broadway out to Rezidue on 11th Avenue, so Midtown is the easiest place in the city to compare several menus in one trip."
     ],
     "know": [
       "Midtown has {shops|word} licensed shops, including Qube, the largest licensed dispensary in New York at about {shop.qube-manhattan|about} products.",
       "About {in_stock|about} products total: {cat.vaporizers} vapes, {cat.pre-rolls} pre-rolls, {cat.edibles} edibles, {cat.flower} flower, {cat.concentrates} concentrates.",
-      "NY Canna Co has the deepest Ayrloom selection we track; Torches is the closest shop to Grand Central.",
-      "1906 Boost pills at Qube are among the cheapest items in Manhattan."
+      "NY Cannabis Co. on 9th Avenue and NY Canna Co on 5th Avenue have the deepest Cannabals selections we track.",
+      "Most shops are west of 5th Avenue; on the east side, Torches, Herbwell and Urban Leaf are the options."
     ],
     "faq": [
       {
         "q": "What is the largest dispensary in New York City?",
-        "a": "Qube at 1412 Broadway near 39th Street, with about {shop.qube-manhattan|about} products from the longest brand list in our data. It lists far more products than the next-largest shop in the city."
+        "a": "Qube at 1412 Broadway near 39th Street, with about {shop.qube-manhattan|about} products from the longest brand list in our data. It also lists more vapes than any other licensed shop we track."
       },
       {
         "q": "Which Midtown dispensary is closest to Times Square?",
@@ -281,46 +281,46 @@
       },
       {
         "q": "Is there a dispensary near Grand Central?",
-        "a": "Torches at 12 East 42nd Street, across from the New York Public Library, is about five minutes west of Grand Central with about {shop.torches-nyc|about} products and a strong vape selection. Urban Leaf on 2nd Avenue at 52nd serves Midtown East."
+        "a": "Torches at 12 East 42nd Street, across from the New York Public Library, is about five minutes west of Grand Central with about {shop.torches-nyc|about} products. The Travel Agency at 587 5th Avenue and Herbwell at 519 Madison Avenue have larger menus, and Urban Leaf on 2nd Avenue at 52nd serves Midtown East."
       }
     ]
   },
   "bushwick": {
     "intro": [
-      "Bushwick has {shops|word} licensed dispensaries with about {in_stock|about} products between them. Stash Master on Broadway near Myrtle Avenue is one of the largest menus in Brooklyn at about {shop.stash-master|about} products, and RNR Dispensary on Harrison Place, in the warehouse blocks near the Morgan Avenue L, lists about {shop.rnr-dispensary|about}. They are about a 20-minute walk apart and cover opposite ends of the neighborhood.",
-      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.vaporizers} vapes, {cat.flower} flower options and {cat.edibles} edibles. The {cat.concentrates}-item concentrate selection is one of the larger in Brooklyn. Stash Master carries deep Jaunty, Grön and Dank By Definition runs, and RNR is one of the stronger Grön stops too. 1906 Genius drops and 5 Boro dime bags sit at the low end of the price range, with Adirondack Flowers and other upstate growers represented on the flower side. For anyone in Bushwick, Bed-Stuy or Ridgewood, Stash Master is the destination menu."
+      "Bushwick has {shops|word} licensed dispensaries with about {in_stock|about} products between them. Stash Master on Broadway near Myrtle Avenue is by far the largest at about {shop.stash-master|about} products, one of the biggest menus in Brooklyn. RNR Dispensary on Harrison Place, in the warehouse blocks near the Morgan Avenue L, is second at about {shop.rnr-dispensary|about}. The Emerald Dispensary at 85 Suydam Street lists about {shop.tedg|about}, and Herbology at 304 Ellery Street about {shop.1106-rebecca-street-llc|about}. Stash Master and RNR are about a 20-minute walk apart and cover opposite ends of the neighborhood.",
+      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.flower} flower options, {cat.vaporizers} vapes and {cat.edibles} edibles, and the flower count is one of the largest of any Brooklyn neighborhood. Concentrates are thinner at {cat.concentrates}, most of them at RNR and Stash Master. Stash Master's flower wall is one of the largest in the city, and its deepest brands are Jaunty, Ayrloom, Hashtag Honey and MFNY. RNR leans on Ayrloom, STIIIZY, Claybourne Co. and Jaunty. The Emerald Dispensary's top brands include Bodega Boyz, Jeeter and Grön, and Herbology is strongest in Cannabals and 1937. 1906 Bliss drops are one of the entry-level items in the neighborhood."
     ],
     "know": [
-      "Bushwick has {shops|word} licensed shops: Stash Master (about {shop.stash-master|about} products) and RNR Dispensary (about {shop.rnr-dispensary|about}).",
-      "Pre-rolls ({cat.pre-rolls}) lead, with flower at {cat.flower}; {cat.concentrates} concentrates is one of the larger totals in Brooklyn.",
-      "Stash Master is one of the largest menus in Brooklyn and carries deep Jaunty and Dank By Definition runs.",
-      "Entry-level items include 1906 drops and 5 Boro dime bags."
+      "Bushwick has {shops|word} licensed shops: Stash Master (about {shop.stash-master|about} products), RNR Dispensary (about {shop.rnr-dispensary|about}), The Emerald Dispensary (about {shop.tedg|about}) and Herbology (about {shop.1106-rebecca-street-llc|about}).",
+      "Pre-rolls ({cat.pre-rolls}) lead, with flower at {cat.flower}, one of the largest flower totals in Brooklyn.",
+      "Stash Master is one of the largest menus in Brooklyn, with deep Jaunty and Hashtag Honey runs.",
+      "Most of the {cat.concentrates} concentrates are at RNR and Stash Master."
     ],
     "faq": [
       {
         "q": "What is the biggest dispensary in Bushwick?",
-        "a": "Stash Master at 1119 Broadway, with about {shop.stash-master|about} products, one of the largest menus in Brooklyn. It is near the Myrtle Avenue J, M and Z station."
+        "a": "Stash Master at 1119 Broadway, with about {shop.stash-master|about} products, one of the largest menus in Brooklyn. It is near the Myrtle Avenue J, M and Z station. RNR Dispensary is second at about {shop.rnr-dispensary|about}."
       },
       {
         "q": "Is RNR Dispensary near the Morgan Avenue L?",
-        "a": "Yes. Harrison Place is a short walk from the Morgan Avenue L stop, in the industrial blocks that house most of Bushwick's venues. It lists about {shop.rnr-dispensary|about} products with a strong Grön selection."
+        "a": "Yes. Harrison Place is a short walk from the Morgan Avenue L stop, in the industrial blocks that house most of Bushwick's venues. It lists about {shop.rnr-dispensary|about} products, with Ayrloom, STIIIZY and Claybourne Co. among its biggest brands."
       },
       {
         "q": "Does Bushwick have a good concentrate selection?",
-        "a": "One of the better in Brooklyn, with {cat.concentrates} listings across both shops. Midtown, Sheepshead Bay and Chelsea list the most dabs and live resin in our data."
+        "a": "A moderate one, with {cat.concentrates} listings across the neighborhood, most of them at RNR and Stash Master. Midtown, Chelsea and Sheepshead Bay list the most dabs and live resin in our data."
       }
     ]
   },
   "chinatown-les": {
     "intro": [
-      "Chinatown and the Lower East Side have about {in_stock|about} products across {shops|word} licensed dispensaries. CONBUD on Delancey Street near Essex is the largest at about {shop.conbud-les|about} products, Mighty Lucky on the Bowery near Houston lists about {shop.mighty-lucky|about}, and The Flowery's Chinatown store on Canal Street lists about {shop.smelly-nelly-queens|about}. CONBUD and Mighty Lucky are a ten-minute walk apart.",
-      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options. The {cat.concentrates}-item concentrate selection is decent, and the {cat.topicals} topicals and {cat.tinctures} tinctures are more than most neighborhoods this size. CONBUD carries one of the deepest Ruby Farms runs in the city and a solid Eaton Botanicals selection, and both shops stock Eaton Botanicals more deeply than most. 1906 Boost pouches and 5 Boro dime bags sit at the low end of the price range. For the whole stretch from Canal to Houston east of the Bowery, these are the full-menu options."
+      "Chinatown and the Lower East Side have about {in_stock|about} products across {shops|word} licensed dispensaries. CONBUD at 85 Delancey Street near Essex is the largest at about {shop.conbud-les|about} products. Mighty Lucky at 259 Bowery near Houston is second at about {shop.mighty-lucky|about}, and The Flowery's Chinatown store at 70 Canal Street is the smallest at about {shop.smelly-nelly-queens|about}. CONBUD and Mighty Lucky are about a ten-minute walk apart, and both are a short walk from Canal Street.",
+      "Pre-rolls lead at {cat.pre-rolls} listings, followed by {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates. The {cat.topicals} topicals and {cat.tinctures} tinctures are more than most neighborhoods with a similar number of shops carry. CONBUD has the most flower here and deep Claybourne Co., Ayrloom, Ruby Farms and Off Hours runs. Mighty Lucky has the most edibles and concentrates in the neighborhood, with MFNY, Ayrloom, Ithaca Organics and STIIIZY among its biggest brands. The Flowery Chinatown leans on Jaunty, MFNY, Wizard Trees and Jetty Extracts. 1906 Boost pouches at Mighty Lucky are among the cheapest items in the neighborhood."
     ],
     "know": [
-      "Active shops: CONBUD on Delancey (about {shop.conbud-les|about} products) and Mighty Lucky on the Bowery (about {shop.mighty-lucky|about}).",
-      "The Flowery Chinatown on Canal Street now publishes its menu, with about {shop.smelly-nelly-queens|about} products listed.",
-      "Pre-rolls ({cat.pre-rolls}) lead; CONBUD carries a deep Ruby Farms run.",
-      "1906 Boost pouches are among the cheapest items here."
+      "CONBUD on Delancey is the largest shop here, with about {shop.conbud-les|about} products.",
+      "Mighty Lucky on the Bowery lists about {shop.mighty-lucky|about}, and The Flowery Chinatown on Canal Street about {shop.smelly-nelly-queens|about}.",
+      "Pre-rolls ({cat.pre-rolls}) lead; CONBUD has the deepest flower selection of the {shops|word}.",
+      "1906 Boost pouches at Mighty Lucky are among the cheapest items here."
     ],
     "faq": [
       {
@@ -328,8 +328,8 @@
         "a": "Yes. The Flowery has a store at 70 Canal Street with about {shop.smelly-nelly-queens|about} products listed. Mighty Lucky on the Bowery and CONBUD on Delancey are both about a ten-minute walk from Canal Street."
       },
       {
-        "q": "Which is bigger, CONBUD or Mighty Lucky?",
-        "a": "CONBUD at about {shop.conbud-les|about} products, with a deeper Ruby Farms pre-roll selection. Mighty Lucky lists about {shop.mighty-lucky|about}. Both carry the main New York brands, so check both for a specific item."
+        "q": "What is the biggest dispensary on the Lower East Side?",
+        "a": "CONBUD at 85 Delancey Street, with about {shop.conbud-les|about} products, ahead of Mighty Lucky on the Bowery at about {shop.mighty-lucky|about}. CONBUD has more flower; Mighty Lucky has more edibles and concentrates, so check both for a specific item."
       },
       {
         "q": "Is CONBUD near the Delancey-Essex subway?",
@@ -339,40 +339,40 @@
   },
   "soho": {
     "intro": [
-      "SoHo and Nolita have {shops|word} licensed dispensaries with about {in_stock|about} products. The Travel Agency on Broadway near Houston is the largest at about {shop.tango-hotel-charlie-ventures|about}, Alta on Kenmare Street on the Nolita side lists about {shop.alta-lower-manhattan|about}, The Flowery's SoHo store on Broadway near Broome lists about {shop.elevate-soho|about}, and Dagmar on West Broadway is a {shop.robin-hood-cannabis-west-broadway}-item pre-roll shop. All of them are within a ten-minute walk of each other.",
-      "Edibles and pre-rolls lead, at {cat.edibles} and {cat.pre-rolls} listings, with {cat.vaporizers} vapes and {cat.flower} flower options. The {cat.topicals} topicals are among the most of any neighborhood, driven by Alta's topical shelf, and tinctures total {cat.tinctures}. The Travel Agency carries one of the deepest Ruby Farms runs in the city and a strong Camino and Wyld selection; Alta is the MFNY and 1906 stop. 1906 pouches at Alta and 5 Boro dime bags at The Travel Agency sit at the low end of the price range. For shoppers on Broadway, The Travel Agency and The Flowery are a few blocks apart on the same street."
+      "SoHo and Nolita have {shops|word} licensed dispensaries with about {in_stock|about} products. The Travel Agency on Broadway near Houston is the largest at about {shop.tango-hotel-charlie-ventures|about}, followed by Lighthouse Cannabis at 381 Broadway at about {shop.lighthouse-cannabis-dispensary|about} and Alta on Kenmare Street on the Nolita side at about {shop.alta-lower-manhattan|about}. The Flowery's SoHo store on Broadway near Broome lists about {shop.elevate-soho|about}, and Dagmar on West Broadway is the smallest at about {shop.robin-hood-cannabis-west-broadway|about}, with pre-rolls its largest category.",
+      "Pre-rolls and edibles lead, at {cat.pre-rolls} and {cat.edibles} listings, with {cat.vaporizers} vapes and {cat.flower} flower options. The {cat.topicals} topicals are the second-most of any neighborhood after Midtown, driven by Alta's shelf, the largest in SoHo, and tinctures total {cat.tinctures}. The Travel Agency has the most vapes and flower in the area, with RYTHM, Ruby Farms and Select at the top of its brand list. Lighthouse has the most pre-rolls in SoHo and one of the deepest Cannabals selections in the city. Alta is the MFNY and 1906 stop, and The Flowery leans on PAX, Ayrloom and To The Moon. The Travel Agency, Lighthouse and The Flowery are all on Broadway, so shoppers walking that street can compare their menus in one trip."
     ],
     "know": [
-      "SoHo has {shops|word} licensed shops: The Travel Agency (about {shop.tango-hotel-charlie-ventures|about} products), Alta (about {shop.alta-lower-manhattan|about}), The Flowery SoHo (about {shop.elevate-soho|about}) and Dagmar West Broadway (about {shop.robin-hood-cannabis-west-broadway|about}).",
-      "Edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) lead; {cat.topicals} topicals is among the most in the city.",
-      "The Travel Agency is the full-menu stop; Alta has the largest topical shelf we track.",
-      "Entry prices are lowest at Alta."
+      "SoHo has {shops|word} licensed shops: The Travel Agency (about {shop.tango-hotel-charlie-ventures|about} products), Lighthouse Cannabis (about {shop.lighthouse-cannabis-dispensary|about}), Alta (about {shop.alta-lower-manhattan|about}), The Flowery SoHo (about {shop.elevate-soho|about}) and Dagmar West Broadway (about {shop.robin-hood-cannabis-west-broadway|about}).",
+      "Pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}) lead; the topical count ({cat.topicals}) is second only to Midtown.",
+      "The Travel Agency is the full-menu stop; Alta has the largest topical shelf in SoHo.",
+      "Lighthouse Cannabis has the most pre-rolls in SoHo and a deep Cannabals selection."
     ],
     "faq": [
       {
         "q": "What is the largest dispensary in SoHo?",
-        "a": "The Travel Agency at 598 Broadway near Houston Street, with about {shop.tango-hotel-charlie-ventures|about} products. It is one of the bigger licensed menus between 14th Street and the Financial District."
+        "a": "The Travel Agency at 598 Broadway near Houston Street, with about {shop.tango-hotel-charlie-ventures|about} products. Lighthouse Cannabis at 381 Broadway is next at about {shop.lighthouse-cannabis-dispensary|about}."
       },
       {
         "q": "Where can I buy cannabis topicals in SoHo?",
-        "a": "Alta on Kenmare Street, which lists more topical products than any other licensed dispensary we track. Balms, lotions and patches with THC, CBD or both are all represented."
+        "a": "Alta on Kenmare Street, which has the largest topical shelf in SoHo and one of the largest of any licensed dispensary we track. The Travel Agency on Broadway has the next-largest topical selection in the neighborhood."
       },
       {
         "q": "Is Dagmar West Broadway worth a stop?",
-        "a": "For a quick pre-roll or gummy, yes. Pre-rolls are the largest part of its menu of about {shop.robin-hood-cannabis-west-broadway|about} listings, with Heady Tree and Stone Road stocked. For vapes or flower, Alta and The Travel Agency carry far more."
+        "a": "For a quick pre-roll or edible, yes. Pre-rolls are the largest part of its menu of about {shop.robin-hood-cannabis-west-broadway|about} listings, with Ruby Farms and Nanticoke at the top of its brand list. For vapes or flower, The Travel Agency and Lighthouse carry far more."
       }
     ]
   },
   "brooklyn-heights-downtown": {
     "intro": [
-      "Brooklyn Heights, Downtown Brooklyn, Cobble Hill and Carroll Gardens have active licensed dispensaries with about {in_stock|about} products, plus Kaya Bliss on Henry Street, which was listed but publishing no menu at our last pull. The Travel Agency's Downtown Brooklyn store on Flatbush Avenue near Atlantic Terminal is the largest at about {shop.gmdss-llc|about} products. Buzzy on Court Street lists about {shop.buzzy-ny|about} and The Garden Club on Smith Street in Carroll Gardens about {shop.dizzpensary|about}.",
-      "Edibles lead at {cat.edibles} listings, with {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.flower} flower options, and the {cat.concentrates} concentrates, {cat.tinctures} tinctures and {cat.topicals} topicals are all solid for a neighborhood this size. The Travel Agency carries one of the deepest Ruby Farms runs in the city and the deepest Camino run too. Buzzy has the largest concentrate case in the area, and The Garden Club is one of the few shops stocking Wizard Trees flower. 1906 Boost+ pills and 2x Baked cookies sit at the low end of the price range, with 5 Boro blunts a step up. The shops run north to south along Court, Smith and Flatbush, so there is one near every stop on the F and G between Bergen and Carroll."
+      "This page covers Brooklyn Heights, Downtown Brooklyn, Cobble Hill and the Smith Street side of Carroll Gardens, with {shops|word} licensed dispensaries and about {in_stock|about} products between them. The Travel Agency's Downtown Brooklyn store on Flatbush Avenue near Atlantic Terminal is the largest at about {shop.gmdss-llc|about} products. Buzzy on Court Street is close behind at about {shop.buzzy-ny|about}, and The Garden Club on Smith Street in Carroll Gardens lists about {shop.dizzpensary|about}. Emerald Dispensary also has a Carroll Gardens store at 548 Court Street, which we list separately.",
+      "Edibles lead at {cat.edibles} listings, with {cat.vaporizers} vapes, {cat.pre-rolls} pre-rolls and {cat.flower} flower options, and the {cat.concentrates} concentrates, {cat.tinctures} tinctures and {cat.topicals} topicals are all solid for a neighborhood this size. The Travel Agency carries more RYTHM than any other shop we track, along with deep Ruby Farms and Heavy Hitters runs. Buzzy has the largest concentrate case in the area and leans on Jaunty, Heavy Hitters and Rove. The Garden Club's top brands are Ayrloom, Drops and Timeless. 1906 Bliss drops and 2x Baked cookies are among the entry-level items. The shops run north to south along Flatbush, Court and Smith, from Atlantic Terminal down to Carroll Gardens."
     ],
     "know": [
-      "Active shops: The Travel Agency Downtown Brooklyn (about {shop.gmdss-llc|about} products), Buzzy (about {shop.buzzy-ny|about}) and The Garden Club (about {shop.dizzpensary|about}).",
-      "Kaya Bliss on Henry Street is listed but had no menu published at our last pull.",
-      "Edibles ({cat.edibles}) lead; The Travel Agency carries one of the deepest Ruby Farms runs we track.",
-      "Buzzy has the largest concentrate case in the area."
+      "Licensed shops: The Travel Agency Downtown Brooklyn (about {shop.gmdss-llc|about} products), Buzzy (about {shop.buzzy-ny|about}) and The Garden Club (about {shop.dizzpensary|about}).",
+      "Edibles ({cat.edibles}) lead, ahead of vapes ({cat.vaporizers}) and pre-rolls ({cat.pre-rolls}).",
+      "The Travel Agency carries more RYTHM than any other shop we track.",
+      "Buzzy on Court Street has the largest concentrate case in the area."
     ],
     "faq": [
       {
@@ -381,81 +381,81 @@
       },
       {
         "q": "Which shop serves Carroll Gardens?",
-        "a": "The Garden Club at 277 Smith Street, near Degraw, with about {shop.dizzpensary|about} products. It is the only licensed dispensary we track in Carroll Gardens; Buzzy on Court Street is a ten-minute walk north."
+        "a": "The Garden Club at 277 Smith Street, near Degraw, with about {shop.dizzpensary|about} products. Emerald Dispensary also has a Carroll Gardens store at 548 Court Street, and Buzzy on Court Street is a ten-minute walk north of The Garden Club."
       },
       {
-        "q": "Why isn’t Kaya Bliss listed with a menu?",
-        "a": "Our last menu pull returned no listings for Kaya Bliss on Henry Street. That usually means the shop had not published an online menu. Confirm directly with the store before visiting."
+        "q": "Which shop has the best concentrate selection?",
+        "a": "Buzzy at 137 Court Street has the largest concentrate case in the area, with The Travel Agency next. The Garden Club carries only a handful. Across the neighborhood there are {cat.concentrates} concentrate listings."
       }
     ]
   },
   "williamsburg": {
     "intro": [
-      "Williamsburg has {shops|word} licensed dispensaries with about {in_stock|about} products, the most shops of any Brooklyn neighborhood. Gotham's Domino store on Kent Avenue by the waterfront is the largest at about {shop.hybrid-nyc|about} products. The Flowery's Brooklyn store on Grand Street lists about {shop.flowery|about}, Grams on Graham Avenue about {shop.gram-cannabis-dispensary|about}, Sunflower on Metropolitan about {shop.sunflower-dispensary-retail|about}, Dagmar on North 11th about {shop.dagmar-cannabis-williamsburg|about} and Twisted Vibrations on Broadway in south Williamsburg about {shop.twisted-vibrations-retail|about}.",
-      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options, plus {cat.concentrates} concentrates. Grams carries the deepest Florist Farms run anywhere we track and one of the larger concentrate cases in the neighborhood. The Flowery is the vape stop with Jaunty, STIIIZY and Fernway, and Dagmar is the Ruby Farms pre-roll shop. 1906 Bliss drops and Layup and Ayrloom drinks sit at the low end of the price range, with 5 Boro dime bags a step up. The shops are spread from Kent Avenue to Graham Avenue to Broadway, so each serves its own corner: the waterfront, the L corridor and the south side."
+      "Williamsburg has {shops|word} licensed dispensaries with about {in_stock|about} products between them, the most shops of any Brooklyn neighborhood. Hii Williamsburg at 152 Bedford Avenue is the largest at about {shop.hii-williamsburg|about} products. Gotham's Domino store on Kent Avenue by the waterfront is second at about {shop.hybrid-nyc|about}, followed by Grams on Graham Avenue at about {shop.gram-cannabis-dispensary|about}, The Flowery's Brooklyn store on Grand Street at about {shop.flowery|about}, Sunflower on Metropolitan Avenue at about {shop.sunflower-dispensary-retail|about}, Dagmar on North 11th Street at about {shop.dagmar-cannabis-williamsburg|about} and Twisted Vibrations on Broadway in south Williamsburg at about {shop.twisted-vibrations-retail|about}.",
+      "Pre-rolls lead at {cat.pre-rolls} listings, with {cat.edibles} edibles, {cat.flower} flower options and {cat.vaporizers} vapes, plus {cat.concentrates} concentrates, the second-largest concentrate total of any Brooklyn neighborhood after Sheepshead Bay. Hii Williamsburg carries more MFNY than any other shop we track and the biggest concentrate case in the neighborhood, with Jaunty and Wizard Trees also deep. Grams has one of the deepest Florist Farms runs in the city. Gotham Domino leans on MFNY, Ayrloom, Florist Farms and Off Hours, and The Flowery's top brands are PAX, Jaunty and To The Moon. Dagmar's menu leans on pre-rolls, with Ruby Farms its biggest brand, and Twisted Vibrations is flower-heavy. 1906 Boost drops start at {min_price}, with 5 Boro dime bags a step up. The shops are spread from Kent Avenue to Graham Avenue to Broadway, so each serves its own corner: the waterfront, the L corridor and the south side."
     ],
     "know": [
-      "Williamsburg has {shops|word} licensed shops, from Gotham Domino (about {shop.hybrid-nyc|about} products) down to Twisted Vibrations (about {shop.twisted-vibrations-retail|about}).",
+      "Williamsburg has {shops|word} licensed shops, the most of any Brooklyn neighborhood, from Hii Williamsburg (about {shop.hii-williamsburg|about} products) down to Twisted Vibrations (about {shop.twisted-vibrations-retail|about}).",
       "Pre-rolls ({cat.pre-rolls}) and edibles ({cat.edibles}) lead; {cat.concentrates} concentrates across the neighborhood.",
-      "Grams on Graham Avenue has more Florist Farms products than any other shop we track.",
-      "Entry prices are similar at every shop, with drinks and drops the cheapest items."
+      "Hii Williamsburg on Bedford Avenue has more MFNY products than any other shop we track.",
+      "Grams on Graham Avenue has one of the deepest Florist Farms runs in the city."
     ],
     "faq": [
       {
         "q": "Which Williamsburg dispensary is closest to the Bedford L?",
-        "a": "Dagmar at 61 North 11th Street is about five minutes west toward the river, and Gotham Domino on Kent Avenue is about ten minutes southwest. Sunflower on Metropolitan Avenue is a similar walk east toward Lorimer."
+        "a": "Hii Williamsburg is at 152 Bedford Avenue, on the avenue the station is named for. Dagmar at 61 North 11th Street is about five minutes west toward the river, and Gotham Domino on Kent Avenue is about ten minutes southwest. Sunflower on Metropolitan Avenue is a similar walk east toward Lorimer."
       },
       {
         "q": "What is the biggest dispensary in Williamsburg?",
-        "a": "Gotham Domino at 296 Kent Avenue, with about {shop.hybrid-nyc|about} products, near Domino Park. The Flowery Brooklyn lists about {shop.flowery|about} and Grams about {shop.gram-cannabis-dispensary|about}."
+        "a": "Hii Williamsburg at 152 Bedford Avenue, with about {shop.hii-williamsburg|about} products. Gotham Domino at 296 Kent Avenue, near Domino Park, is second at about {shop.hybrid-nyc|about}, and Grams on Graham Avenue lists about {shop.gram-cannabis-dispensary|about}."
       },
       {
         "q": "Is there a dispensary in south Williamsburg?",
-        "a": "Twisted Vibrations at 301 Broadway, a block from the Marcy Avenue J, M and Z, with about {shop.twisted-vibrations-retail|about} products and a flower-heavy menu. It is the only licensed shop we track south of Grand Street."
+        "a": "Yes. Twisted Vibrations at 301 Broadway, a block from the Marcy Avenue J, M and Z, has about {shop.twisted-vibrations-retail|about} products and a flower-heavy menu. Gotham Domino at 296 Kent Avenue, by Domino Park, is also south of Grand Street, closer to the river, with a much larger menu."
       }
     ]
   },
   "sheepshead-bay": {
     "intro": [
-      "Sheepshead Bay has {shops|word} licensed dispensaries with about {in_stock|about} products, the deepest neighborhood in Brooklyn and among the deepest in the city. Twenty8gramz on Avenue U lists about {shop.twenty8gramz|about} products and Quality Control on Coney Island Avenue about {shop.case-management|about}, both among the biggest licensed menus in Brooklyn, and Greene Street on Nostrand Avenue near Avenue U lists about {shop.green-street-brooklyn|about}. All of them are within a 15-minute walk along the Avenue U corridor.",
-      "Vapes lead at {cat.vaporizers} listings, the second-largest vape total of any neighborhood, with {cat.pre-rolls} pre-rolls, {cat.edibles} edibles and {cat.flower} flower options. The {cat.concentrates}-item concentrate selection is one of the largest in the city. Twenty8gramz carries one of the deepest Off Hours runs we track plus strong Ayrloom, Cannabals and Fernway selections; Quality Control has the deepest Grön run in the city and a strong MFNY and Ayrloom lineup. Ayrloom drinks are among the cheapest items in the neighborhood. For southern Brooklyn, this is the destination neighborhood."
+      "Sheepshead Bay has {shops|word} licensed dispensaries with about {in_stock|about} products, the deepest neighborhood in Brooklyn and among the deepest in the city. Twenty8gramz on Avenue U is the largest at about {shop.twenty8gramz|about} products, and Quality Control on Coney Island Avenue near the Belt Parkway lists about {shop.case-management|about}; both are among the biggest licensed menus in Brooklyn. Green Room at 2253 Emmons Avenue lists about {shop.green-room-dispensary|about}, and Greene Street on Nostrand Avenue near Avenue U about {shop.green-street-brooklyn|about}. Twenty8gramz and Greene Street both sit along the Avenue U corridor.",
+      "Vapes lead at {cat.vaporizers} listings, one of the largest vape totals of any neighborhood, with {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.edibles} edibles. The {cat.concentrates}-item concentrate selection is among the largest in the city, and Twenty8gramz alone carries more concentrates than any other shop we track. Twenty8gramz also has the most vapes of any Brooklyn shop, the deepest Off Hours and Claybourne Co. runs we track and one of the deepest STIIIZY selections in the city. Quality Control is strong in STIIIZY, MFNY and Jetpacks, Green Room leans on Ayrloom, Jaunty and MFNY, and Greene Street on STIIIZY, Ayrloom and Wizard Trees. For southern Brooklyn, this is the destination neighborhood."
     ],
     "know": [
-      "Sheepshead Bay has {shops|word} licensed shops: Twenty8gramz (about {shop.twenty8gramz|about} products), Quality Control (about {shop.case-management|about}) and Greene Street (about {shop.green-street-brooklyn|about}).",
+      "Sheepshead Bay has {shops|word} licensed shops: Twenty8gramz (about {shop.twenty8gramz|about} products), Quality Control (about {shop.case-management|about}), Green Room (about {shop.green-room-dispensary|about}) and Greene Street (about {shop.green-street-brooklyn|about}).",
       "Vapes ({cat.vaporizers}) lead; {cat.concentrates} concentrates is one of the largest totals of any neighborhood.",
-      "Twenty8gramz and Quality Control are among the largest licensed menus in Brooklyn; Quality Control has the deepest Grön run we track.",
-      "All of them are along the Avenue U corridor near the B and Q."
+      "Twenty8gramz has the largest concentrate case of any shop we track and the deepest Off Hours run.",
+      "It is the deepest neighborhood in Brooklyn by product count."
     ],
     "faq": [
       {
-        "q": "What is the biggest dispensary in Brooklyn?",
-        "a": "The biggest Brooklyn menus in our data include Twenty8gramz at 2201 Avenue U in Sheepshead Bay, with about {shop.twenty8gramz|about} products, Quality Control nearby at about {shop.case-management|about} and Stash Master in Bushwick."
+        "q": "What is the biggest dispensary in Sheepshead Bay?",
+        "a": "Twenty8gramz at 2201 Avenue U, with about {shop.twenty8gramz|about} products, one of the largest menus in Brooklyn. Quality Control at 3169 Coney Island Avenue is second at about {shop.case-management|about}."
       },
       {
         "q": "Is Sheepshead Bay good for concentrates?",
-        "a": "Yes. With {cat.concentrates} listings across {shops|word} shops it is one of the strongest neighborhoods for dabs and live resin. Twenty8gramz and Quality Control carry most of them, with MFNY among the main brands."
+        "a": "Yes. With {cat.concentrates} listings across {shops|word} shops it is one of the strongest neighborhoods for dabs and live resin. Twenty8gramz carries the largest concentrate case of any shop we track, and Quality Control has the next-largest in the neighborhood."
       },
       {
         "q": "Can I drive to these shops?",
-        "a": "All three are on major avenues with street parking, and Quality Control is on Coney Island Avenue near the Belt Parkway. Sensei does not track lots, so check each store's listing for parking details."
+        "a": "All of them are on major avenues, and Quality Control is on Coney Island Avenue near the Belt Parkway. Sensei does not track parking, so check each store's listing before you go."
       }
     ]
   },
   "park-slope": {
     "intro": [
-      "Park Slope has {shops|word} licensed dispensaries with about {in_stock|about} products, the smallest neighborhood total we track in Brooklyn. Be. on Flatbush Avenue near the Bergen Street station, on the Prospect Heights border a few blocks from Barclays Center, lists about {shop.be-brooklyn-ny|about} products. Verdi's Park Slope store on 7th Avenue near 10th Street, in the South Slope, lists about {shop.verdi-park-slope|about}. They are a 25-minute walk apart and serve opposite ends of the neighborhood.",
-      "The combined menu is even: {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower options, with {cat.concentrates} concentrates. Be. is the flower and vape stop with Find., ISH, Select, Grassroots and RYTHM, a lineup heavier on multi-state brands than most New York shops. Verdi is the edibles and concentrate stop, with MFNY, Cannabals and 1906, and 1906 Boost tablets as its entry-level item. Alchemy Pure dime bags and Alien Labs pre-rolls are a step up. For a larger menu, The Travel Agency's Downtown Brooklyn store is a few blocks north of Be."
+      "Park Slope has {shops|word} licensed dispensaries with about {in_stock|about} products between them. Be. on Flatbush Avenue near the Bergen Street station, on the Prospect Heights border a few blocks from Barclays Center, is the largest at about {shop.be-brooklyn-ny|about} products. DISPO Brooklyn at 588 4th Avenue is close behind at about {shop.dispo-brooklyn|about}. Verdi's Park Slope store on 7th Avenue near 10th Street, in the South Slope, lists about {shop.verdi-park-slope|about}. Be. and Verdi are a 25-minute walk apart and serve opposite ends of the neighborhood.",
+      "The combined menu is even: {cat.edibles} edibles, {cat.vaporizers} vapes, {cat.pre-rolls} pre-rolls and {cat.flower} flower options, with {cat.concentrates} concentrates. Be. is the flower and vape stop, built around multi-state brands such as Find., RYTHM, ISH, Grassroots and Select, and it also has the most concentrates in the neighborhood. DISPO leans on Rove, Ayrloom and PAX, with vapes and edibles making up most of its menu. Verdi is the edibles stop, with Animal House, Ayrloom, Cannabals and 1906, and 1906 Boost tablets at {min_price} as its entry-level item. For a larger menu, The Travel Agency's Downtown Brooklyn store is a few blocks north of Be."
     ],
     "know": [
-      "Park Slope has {shops|word} licensed shops: Be. on Flatbush Avenue (about {shop.be-brooklyn-ny|about} products) and Verdi on 7th Avenue (about {shop.verdi-park-slope|about}).",
-      "Balanced menu: {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles, {cat.flower} flower.",
-      "Be. carries Find., ISH, Select and Grassroots; Verdi carries MFNY, Cannabals and 1906.",
+      "Park Slope has {shops|word} licensed shops: Be. on Flatbush Avenue (about {shop.be-brooklyn-ny|about} products), DISPO Brooklyn on 4th Avenue (about {shop.dispo-brooklyn|about}) and Verdi on 7th Avenue (about {shop.verdi-park-slope|about}).",
+      "Balanced menu: {cat.edibles} edibles, {cat.vaporizers} vapes, {cat.pre-rolls} pre-rolls, {cat.flower} flower.",
+      "Be. carries Find., RYTHM, ISH and Grassroots; DISPO leans on Rove; Verdi on Animal House and Cannabals.",
       "Entry prices are much lower at Verdi than at Be."
     ],
     "faq": [
       {
-        "q": "Which Park Slope dispensary is bigger?",
-        "a": "Be. at 206 Flatbush Avenue, with about {shop.be-brooklyn-ny|about} products and a strong flower and vape selection. Verdi on 7th Avenue is smaller at about {shop.verdi-park-slope|about} but has a deeper edible and concentrate shelf."
+        "q": "Which Park Slope dispensary is the biggest?",
+        "a": "Be. at 206 Flatbush Avenue, with about {shop.be-brooklyn-ny|about} products and a strong flower and vape selection. DISPO Brooklyn at 588 4th Avenue is close behind at about {shop.dispo-brooklyn|about}, and Verdi on 7th Avenue is the smallest at about {shop.verdi-park-slope|about} but has the deepest edible shelf in the neighborhood."
       },
       {
         "q": "Is there a dispensary near Prospect Park?",
@@ -463,7 +463,7 @@
       },
       {
         "q": "What is the cheapest product in Park Slope?",
-        "a": "1906 Boost tablets at Verdi Park Slope, sold as a two-pack. Be.'s floor is much higher."
+        "a": "1906 Boost tablets at Verdi Park Slope, sold as a two-pack for {min_price}. Be.'s cheapest items cost much more."
       }
     ]
   }
