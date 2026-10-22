@@ -123,6 +123,11 @@
   "store": "bud-city-cannabis-llc",
   "type": "dispensary"
  },
+ "/dispensaries/bud-city-cannabis/": {
+  "hood": "east-new-york",
+  "store": "bud-city-cannabis-llc",
+  "type": "dispensary"
+ },
  "/dispensaries/buzzy-ny/": {
   "hood": "brooklyn-heights-downtown",
   "store": "buzzy-ny",
@@ -186,6 +191,11 @@
  "/dispensaries/culture-house/": {
   "hood": "midtown",
   "store": "culture-house",
+  "type": "dispensary"
+ },
+ "/dispensaries/dagmar-cannabis-west-broadway/": {
+  "hood": "soho",
+  "store": "robin-hood-cannabis-west-broadway",
   "type": "dispensary"
  },
  "/dispensaries/dagmar-cannabis-west-village/": {
@@ -273,6 +283,11 @@
   "store": "good-company",
   "type": "dispensary"
  },
+ "/dispensaries/gotham-bowery/": {
+  "hood": "east-west-village",
+  "store": "gotham-nyc-3rd-st",
+  "type": "dispensary"
+ },
  "/dispensaries/gotham-buds/": {
   "hood": "harlem-washington-heights",
   "store": "gotham-buds",
@@ -294,6 +309,11 @@
   "type": "dispensary"
  },
  "/dispensaries/gram-cannabis-dispensary/": {
+  "hood": "williamsburg",
+  "store": "gram-cannabis-dispensary",
+  "type": "dispensary"
+ },
+ "/dispensaries/grams-cannabis/": {
   "hood": "williamsburg",
   "store": "gram-cannabis-dispensary",
   "type": "dispensary"
@@ -338,12 +358,22 @@
   "store": "green-street-brooklyn",
   "type": "dispensary"
  },
+ "/dispensaries/greene-street-brooklyn/": {
+  "hood": "sheepshead-bay",
+  "store": "green-street-brooklyn",
+  "type": "dispensary"
+ },
  "/dispensaries/grow-together-brooklyn/": {
   "hood": "coney-island",
   "store": "grow-together-brooklyn",
   "type": "dispensary"
  },
  "/dispensaries/happy-buds-brooklyn-dispensary/": {
+  "hood": "bed-stuy",
+  "store": "happy-buds-brooklyn-dispensary",
+  "type": "dispensary"
+ },
+ "/dispensaries/happy-buds-brooklyn/": {
   "hood": "bed-stuy",
   "store": "happy-buds-brooklyn-dispensary",
   "type": "dispensary"
@@ -458,6 +488,11 @@
   "store": "mighty-lucky",
   "type": "dispensary"
  },
+ "/dispensaries/milligrams-greenpoint/": {
+  "hood": "greenpoint",
+  "store": "brooklyn-greenpoint-ny",
+  "type": "dispensary"
+ },
  "/dispensaries/nicklz/": {
   "hood": "midtown",
   "store": "baiked",
@@ -513,6 +548,11 @@
   "store": "purple-buds-inc-recreational",
   "type": "dispensary"
  },
+ "/dispensaries/purple-buds/": {
+  "hood": "jackson-heights",
+  "store": "purple-buds-inc-recreational",
+  "type": "dispensary"
+ },
  "/dispensaries/q-dispensary/": {
   "hood": "flatbush",
   "store": "oet-inc",
@@ -548,6 +588,11 @@
   "store": "sky-high-club",
   "type": "dispensary"
  },
+ "/dispensaries/smacked-bleecker/": {
+  "hood": "east-west-village",
+  "store": "temeka-bleecker",
+  "type": "dispensary"
+ },
  "/dispensaries/smiley-exotics/": {
   "hood": "gramercy-union-square",
   "store": "smiley-exotics",
@@ -578,12 +623,22 @@
   "store": "stoop",
   "type": "dispensary"
  },
+ "/dispensaries/sunflower-cannabis/": {
+  "hood": "williamsburg",
+  "store": "sunflower-dispensary-retail",
+  "type": "dispensary"
+ },
  "/dispensaries/sunflower-dispensary-retail/": {
   "hood": "williamsburg",
   "store": "sunflower-dispensary-retail",
   "type": "dispensary"
  },
  "/dispensaries/sunset-cannabis-club/": {
+  "hood": "sunset-park",
+  "store": "sunset-cannabis-club",
+  "type": "dispensary"
+ },
+ "/dispensaries/sunset-cannabis-co/": {
   "hood": "sunset-park",
   "store": "sunset-cannabis-club",
   "type": "dispensary"
@@ -653,6 +708,11 @@
   "store": "the-emerald-dispensary-manhattan",
   "type": "dispensary"
  },
+ "/dispensaries/the-flowery-brooklyn/": {
+  "hood": "williamsburg",
+  "store": "flowery",
+  "type": "dispensary"
+ },
  "/dispensaries/the-flowery-chinatown/": {
   "hood": "chinatown-les",
   "store": "smelly-nelly-queens",
@@ -661,6 +721,11 @@
  "/dispensaries/the-flowery-east-village/": {
   "hood": "east-west-village",
   "store": "the-flowery-east-village",
+  "type": "dispensary"
+ },
+ "/dispensaries/the-flowery-soho/": {
+  "hood": "soho",
+  "store": "elevate-soho",
   "type": "dispensary"
  },
  "/dispensaries/the-flowery-upper-west-side/": {
@@ -743,9 +808,24 @@
   "store": "twisted-vibrations-retail",
   "type": "dispensary"
  },
+ "/dispensaries/twisted-vibrations/": {
+  "hood": "williamsburg",
+  "store": "twisted-vibrations-retail",
+  "type": "dispensary"
+ },
  "/dispensaries/uplift-royal/": {
   "hood": "harlem-washington-heights",
   "store": "uplift-royal",
+  "type": "dispensary"
+ },
+ "/dispensaries/urban-leaf/": {
+  "hood": "midtown",
+  "store": "organic-relief-leaf",
+  "type": "dispensary"
+ },
+ "/dispensaries/verdi-chelsea/": {
+  "hood": "chelsea-flatiron",
+  "store": "verdi",
   "type": "dispensary"
  },
  "/dispensaries/verdi-park-slope/": {

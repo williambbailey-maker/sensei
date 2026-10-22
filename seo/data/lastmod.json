@@ -21,15 +21,15 @@
  },
  "/brands/cannabals/": {
   "date": "2026-10-22",
-  "hash": "d4d13afc57dcec18"
+  "hash": "7329ad96fec0df2a"
  },
  "/brands/dank-by-definition/": {
   "date": "2026-10-22",
-  "hash": "f56a4e029e68cec4"
+  "hash": "16ca4bcc58e6a618"
  },
  "/brands/eaton-botanicals/": {
   "date": "2026-10-22",
-  "hash": "5f22ba53308099e4"
+  "hash": "6f750cff040f8f95"
  },
  "/brands/fernway/": {
   "date": "2026-10-22",
@@ -37,11 +37,11 @@
  },
  "/brands/florist-farms/": {
   "date": "2026-10-22",
-  "hash": "97f7503742688064"
+  "hash": "7a0ef10c6dfb02cf"
  },
  "/brands/good-tide/": {
   "date": "2026-10-22",
-  "hash": "bc14570fd085abec"
+  "hash": "f02d98476bb12d4e"
  },
  "/brands/gr-n/": {
   "date": "2026-10-22",
@@ -49,11 +49,11 @@
  },
  "/brands/jaunty/": {
   "date": "2026-10-22",
-  "hash": "cacfcb053b46defb"
+  "hash": "7a070d45acec8397"
  },
  "/brands/jetty-extracts/": {
   "date": "2026-10-22",
-  "hash": "7fa6c9439584209d"
+  "hash": "12cfe83db1d2e44f"
  },
  "/brands/mfny/": {
   "date": "2026-10-22",
@@ -65,11 +65,11 @@
  },
  "/brands/ruby-farms/": {
   "date": "2026-10-22",
-  "hash": "840cf9290a0f13a9"
+  "hash": "394199c3211f6986"
  },
  "/brands/wyld/": {
   "date": "2026-10-22",
-  "hash": "cd98bc6be61395a2"
+  "hash": "7528d039ab6c80cd"
  },
  "/dispensaries/afny/": {
   "date": "2026-10-21",
@@ -127,6 +127,10 @@
   "date": "2026-10-22",
   "hash": "160a73b1e61e4ac4"
  },
+ "/dispensaries/bud-city-cannabis/": {
+  "date": "2026-10-22",
+  "hash": "160a73b1e61e4ac4"
+ },
  "/dispensaries/buzzy-ny/": {
   "date": "2026-10-22",
   "hash": "c403eac792ca3891"
@@ -178,6 +182,10 @@
  "/dispensaries/culture-house/": {
   "date": "2026-10-22",
   "hash": "80561a179519f77a"
+ },
+ "/dispensaries/dagmar-cannabis-west-broadway/": {
+  "date": "2026-10-22",
+  "hash": "13b1214b05b52f9f"
  },
  "/dispensaries/dagmar-cannabis-west-village/": {
   "date": "2026-10-22",
@@ -247,6 +255,10 @@
   "date": "2026-10-22",
   "hash": "f71e8f0bbe1011dc"
  },
+ "/dispensaries/gotham-bowery/": {
+  "date": "2026-10-22",
+  "hash": "278f60e6f3cdfa37"
+ },
  "/dispensaries/gotham-buds/": {
   "date": "2026-10-22",
   "hash": "0d772697dfbd7c83"
@@ -264,6 +276,10 @@
   "hash": "278f60e6f3cdfa37"
  },
  "/dispensaries/gram-cannabis-dispensary/": {
+  "date": "2026-10-22",
+  "hash": "e4eedd123dc52ccc"
+ },
+ "/dispensaries/grams-cannabis/": {
   "date": "2026-10-22",
   "hash": "e4eedd123dc52ccc"
  },
@@ -299,11 +315,19 @@
   "date": "2026-10-22",
   "hash": "11e915bfe89a9dd3"
  },
+ "/dispensaries/greene-street-brooklyn/": {
+  "date": "2026-10-22",
+  "hash": "11e915bfe89a9dd3"
+ },
  "/dispensaries/grow-together-brooklyn/": {
   "date": "2026-10-22",
   "hash": "589275bb286e7fe0"
  },
  "/dispensaries/happy-buds-brooklyn-dispensary/": {
+  "date": "2026-10-22",
+  "hash": "5e05a989bda45cce"
+ },
+ "/dispensaries/happy-buds-brooklyn/": {
   "date": "2026-10-22",
   "hash": "5e05a989bda45cce"
  },
@@ -395,6 +419,10 @@
   "date": "2026-10-22",
   "hash": "9272414dfa6bfdef"
  },
+ "/dispensaries/milligrams-greenpoint/": {
+  "date": "2026-10-22",
+  "hash": "7659db24f7de075d"
+ },
  "/dispensaries/nicklz/": {
   "date": "2026-10-22",
   "hash": "f83148f0879a0114"
@@ -439,6 +467,10 @@
   "date": "2026-10-22",
   "hash": "579e3c68be827331"
  },
+ "/dispensaries/purple-buds/": {
+  "date": "2026-10-22",
+  "hash": "579e3c68be827331"
+ },
  "/dispensaries/q-dispensary/": {
   "date": "2026-10-22",
   "hash": "4c9325ee87b723d3"
@@ -467,6 +499,10 @@
   "date": "2026-10-22",
   "hash": "a20ab9c7df73b0cc"
  },
+ "/dispensaries/smacked-bleecker/": {
+  "date": "2026-10-22",
+  "hash": "4df1cc4f84b32d78"
+ },
  "/dispensaries/smiley-exotics/": {
   "date": "2026-10-22",
   "hash": "2c1a9179b7cc46fb"
@@ -491,11 +527,19 @@
   "date": "2026-10-22",
   "hash": "7e3c324f2290db95"
  },
+ "/dispensaries/sunflower-cannabis/": {
+  "date": "2026-10-22",
+  "hash": "1a771d261a75c047"
+ },
  "/dispensaries/sunflower-dispensary-retail/": {
   "date": "2026-10-22",
   "hash": "1a771d261a75c047"
  },
  "/dispensaries/sunset-cannabis-club/": {
+  "date": "2026-10-22",
+  "hash": "e5ff36023a34ee45"
+ },
+ "/dispensaries/sunset-cannabis-co/": {
   "date": "2026-10-22",
   "hash": "e5ff36023a34ee45"
  },
@@ -551,6 +595,10 @@
   "date": "2026-10-22",
   "hash": "609349fc81bee2d0"
  },
+ "/dispensaries/the-flowery-brooklyn/": {
+  "date": "2026-10-22",
+  "hash": "f62634f8ca70ce2c"
+ },
  "/dispensaries/the-flowery-chinatown/": {
   "date": "2026-10-22",
   "hash": "5fbcdd746051bb75"
@@ -558,6 +606,10 @@
  "/dispensaries/the-flowery-east-village/": {
   "date": "2026-10-22",
   "hash": "43269bc9db0b5024"
+ },
+ "/dispensaries/the-flowery-soho/": {
+  "date": "2026-10-22",
+  "hash": "528b160f9f370c00"
  },
  "/dispensaries/the-flowery-upper-west-side/": {
   "date": "2026-10-22",
@@ -623,9 +675,21 @@
   "date": "2026-10-22",
   "hash": "4aa6e4cef7f81ad8"
  },
+ "/dispensaries/twisted-vibrations/": {
+  "date": "2026-10-22",
+  "hash": "4aa6e4cef7f81ad8"
+ },
  "/dispensaries/uplift-royal/": {
   "date": "2026-10-22",
   "hash": "509b9a56387beaf3"
+ },
+ "/dispensaries/urban-leaf/": {
+  "date": "2026-10-22",
+  "hash": "2bc4cc6c0150b411"
+ },
+ "/dispensaries/verdi-chelsea/": {
+  "date": "2026-10-22",
+  "hash": "f8e9d11830d0d3d1"
  },
  "/dispensaries/verdi-park-slope/": {
   "date": "2026-10-22",
@@ -669,7 +733,7 @@
  },
  "/neighborhoods/chelsea-flatiron/": {
   "date": "2026-10-22",
-  "hash": "047621b574231252"
+  "hash": "3c192f9861fe916a"
  },
  "/neighborhoods/chinatown-les/": {
   "date": "2026-10-22",
@@ -681,7 +745,7 @@
  },
  "/neighborhoods/east-west-village/": {
   "date": "2026-10-22",
-  "hash": "0f6e1222f08b1396"
+  "hash": "a396a18403811d82"
  },
  "/neighborhoods/fidi/": {
   "date": "2026-10-22",
@@ -697,11 +761,11 @@
  },
  "/neighborhoods/jackson-heights/": {
   "date": "2026-10-22",
-  "hash": "93afb7afaf98fe04"
+  "hash": "00af52090f61855f"
  },
  "/neighborhoods/midtown/": {
   "date": "2026-10-22",
-  "hash": "2c6de72fbb887d0a"
+  "hash": "0d6924865e6d1dfd"
  },
  "/neighborhoods/park-slope/": {
   "date": "2026-10-22",
@@ -709,11 +773,11 @@
  },
  "/neighborhoods/sheepshead-bay/": {
   "date": "2026-10-22",
-  "hash": "bc83409f789f09ce"
+  "hash": "8eec6f1571d9f530"
  },
  "/neighborhoods/soho/": {
   "date": "2026-10-22",
-  "hash": "912b62156e000cbc"
+  "hash": "f08e727991763bf6"
  },
  "/neighborhoods/upper-east-side/": {
   "date": "2026-10-22",
@@ -725,7 +789,7 @@
  },
  "/neighborhoods/williamsburg/": {
   "date": "2026-10-22",
-  "hash": "f56b926059880aa1"
+  "hash": "947ee7f9cd3ee396"
  },
  "/nyc/": {
   "date": "2026-10-22",

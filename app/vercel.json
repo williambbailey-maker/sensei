@@ -35,6 +35,26 @@
       "statusCode": 301
     },
     {
+      "source": "/dispensaries/brooklyn-greenpoint-ny/",
+      "destination": "/dispensaries/milligrams-greenpoint/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/brooklyn-greenpoint-ny",
+      "destination": "/dispensaries/milligrams-greenpoint/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/bud-city-cannabis-llc/",
+      "destination": "/dispensaries/bud-city-cannabis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/bud-city-cannabis-llc",
+      "destination": "/dispensaries/bud-city-cannabis/",
+      "statusCode": 301
+    },
+    {
       "source": "/dispensaries/cannaisseur/",
       "destination": "/dispensaries/poppin/",
       "statusCode": 301
@@ -85,6 +105,26 @@
       "statusCode": 301
     },
     {
+      "source": "/dispensaries/elevate-soho/",
+      "destination": "/dispensaries/the-flowery-soho/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/elevate-soho",
+      "destination": "/dispensaries/the-flowery-soho/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/flowery/",
+      "destination": "/dispensaries/the-flowery-brooklyn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/flowery",
+      "destination": "/dispensaries/the-flowery-brooklyn/",
+      "statusCode": 301
+    },
+    {
       "source": "/dispensaries/gmdss-llc/",
       "destination": "/dispensaries/the-travel-agency-downtown-brooklyn/",
       "statusCode": 301
@@ -95,6 +135,26 @@
       "statusCode": 301
     },
     {
+      "source": "/dispensaries/gotham-nyc-3rd-st/",
+      "destination": "/dispensaries/gotham-bowery/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/gotham-nyc-3rd-st",
+      "destination": "/dispensaries/gotham-bowery/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/gram-cannabis-dispensary/",
+      "destination": "/dispensaries/grams-cannabis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/gram-cannabis-dispensary",
+      "destination": "/dispensaries/grams-cannabis/",
+      "statusCode": 301
+    },
+    {
       "source": "/dispensaries/green-jungle/",
       "destination": "/dispensaries/cannavita/",
       "statusCode": 301
@@ -102,6 +162,26 @@
     {
       "source": "/dispensaries/green-jungle",
       "destination": "/dispensaries/cannavita/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/green-street-brooklyn/",
+      "destination": "/dispensaries/greene-street-brooklyn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/green-street-brooklyn",
+      "destination": "/dispensaries/greene-street-brooklyn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/happy-buds-brooklyn-dispensary/",
+      "destination": "/dispensaries/happy-buds-brooklyn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/happy-buds-brooklyn-dispensary",
+      "destination": "/dispensaries/happy-buds-brooklyn/",
       "statusCode": 301
     },
     {
@@ -135,6 +215,36 @@
       "statusCode": 301
     },
     {
+      "source": "/dispensaries/organic-relief-leaf/",
+      "destination": "/dispensaries/urban-leaf/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/organic-relief-leaf",
+      "destination": "/dispensaries/urban-leaf/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/purple-buds-inc-recreational/",
+      "destination": "/dispensaries/purple-buds/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/purple-buds-inc-recreational",
+      "destination": "/dispensaries/purple-buds/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/robin-hood-cannabis-west-broadway/",
+      "destination": "/dispensaries/dagmar-cannabis-west-broadway/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/robin-hood-cannabis-west-broadway",
+      "destination": "/dispensaries/dagmar-cannabis-west-broadway/",
+      "statusCode": 301
+    },
+    {
       "source": "/dispensaries/stoop/",
       "destination": "/dispensaries/stoops-flatiron/",
       "statusCode": 301
@@ -145,6 +255,26 @@
       "statusCode": 301
     },
     {
+      "source": "/dispensaries/sunflower-dispensary-retail/",
+      "destination": "/dispensaries/sunflower-cannabis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/sunflower-dispensary-retail",
+      "destination": "/dispensaries/sunflower-cannabis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/sunset-cannabis-club/",
+      "destination": "/dispensaries/sunset-cannabis-co/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/sunset-cannabis-club",
+      "destination": "/dispensaries/sunset-cannabis-co/",
+      "statusCode": 301
+    },
+    {
       "source": "/dispensaries/tango-hotel-charlie-ventures/",
       "destination": "/dispensaries/the-travel-agency-soho/",
       "statusCode": 301
@@ -152,6 +282,16 @@
     {
       "source": "/dispensaries/tango-hotel-charlie-ventures",
       "destination": "/dispensaries/the-travel-agency-soho/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/temeka-bleecker/",
+      "destination": "/dispensaries/smacked-bleecker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/temeka-bleecker",
+      "destination": "/dispensaries/smacked-bleecker/",
       "statusCode": 301
     },
     {
@@ -172,6 +312,26 @@
     {
       "source": "/dispensaries/twenty-one-thirty",
       "destination": "/dispensaries/the-flowery-upper-west-side/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/twisted-vibrations-retail/",
+      "destination": "/dispensaries/twisted-vibrations/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/twisted-vibrations-retail",
+      "destination": "/dispensaries/twisted-vibrations/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/verdi/",
+      "destination": "/dispensaries/verdi-chelsea/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dispensaries/verdi",
+      "destination": "/dispensaries/verdi-chelsea/",
       "statusCode": 301
     },
     {
