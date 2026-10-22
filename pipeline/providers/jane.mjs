@@ -11,6 +11,7 @@ import { captureRequest, pageFetchRetry, pickStoreMeta } from '../lib/browser.mj
 const PAGE = 100
 const CALL_GAP_MS = 500
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 const titleCase = (s) => (s ? String(s).toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase()) : null)
 
 // Jane prices one field per weight: price_each, price_gram, price_eighth_ounce…
@@ -61,8 +62,8 @@ export function mapProduct(p, storeId, menuUrl) {
     cbd_pct: pct(a.percent_cbd ?? pot?.cbd_potency),
     variants,
     price_min: prices.length ? Math.min(...prices) : null,
-    // Unconfirmed: Jane menus link products as <menu>/menu/products/<id>.
-    url: `${menuUrl.replace(/\/$/, '')}/menu/products/${id}`,
+    // Unconfirmed: Jane menus link products as <menu>/menu/products/<id>/<name-slug>.
+    url: `${menuUrl.replace(/\/$/, '')}/menu/products/${id}/${slugify(a.name)}`,
     image_url: Array.isArray(a.image_urls) && typeof a.image_urls[0] === 'string' ? a.image_urls[0] : null,
     in_stock: true,
     last_seen: new Date().toISOString(),

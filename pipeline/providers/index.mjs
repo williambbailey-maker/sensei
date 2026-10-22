@@ -12,5 +12,6 @@ import dutchie from './dutchie.mjs'
 import dispense from './dispense.mjs'
 import carrot from './carrot.mjs'
 import jane from './jane.mjs'
+import blaze from './blaze.mjs'
 
-export const PROVIDERS = { dutchie, dispense, carrot, jane }
+export const PROVIDERS = { dutchie, dispense, carrot, jane, blaze }

@@ -144,9 +144,14 @@ for (const url of urls) {
     await sleep(4000)
     // Age gate: click the first "I'm 21 / Yes / Enter" style button, if any,
     // since many menus don't load products until it's answered.
-    const gate = page.locator('button, a, [role="button"]').filter({ hasText: /\b(21|yes|enter|i am|i'm|agree|confirm|continue)\b/i }).first()
-    if (await gate.isVisible({ timeout: 1500 }).catch(() => false)) {
-      const label = (await gate.innerText().catch(() => '')).trim().slice(0, 40)
+    // Only a short button whose whole label reads like a gate answer.
+    const gate = page
+      .locator('button, a, [role="button"]')
+      .filter({ hasText: /^\s*(i'?m|i am|yes|enter|confirm|agree|continue)\b|\b21\b/i })
+      .filter({ hasNot: page.locator('img') })
+      .first()
+    const label = (await gate.innerText({ timeout: 1500 }).catch(() => '')).trim().slice(0, 40)
+    if (label && label.length <= 40 && (await gate.isVisible().catch(() => false))) {
       await gate.click({ timeout: 3000 }).catch(() => {})
       console.log(`  clicked "${label}" (age gate?)`)
       await sleep(5000)

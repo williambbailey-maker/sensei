@@ -8,6 +8,11 @@ export async function captureRequest(page, url, pattern, { timeout = 30000 } = {
   const found = page.waitForRequest((r) => pattern.test(r.url()), { timeout })
   await page.goto(url, { waitUntil: 'domcontentloaded' })
   const req = await found
+  // Sites often redirect right after this (a trailing slash, /nyc -> /nyc/menu);
+  // a fetch started during that navigation is cancelled ("Failed to fetch").
+  await page.waitForLoadState('load').catch(() => {})
+  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {})
+  await new Promise((r) => setTimeout(r, 1500))
   let body = req.postData() || null
   try {
     body = body ? JSON.parse(body) : null
@@ -25,14 +30,25 @@ export async function pageFetch(page, url, { method = 'GET', headers = {}, body 
     if (/^(x-|api-key|apikey|authorization|content-type|accept$)/i.test(k) && !/^x-request-id$/i.test(k)) h[k] = v
   }
   if (body !== undefined && !h['content-type']) h['content-type'] = 'application/json'
-  const res = await page.evaluate(
+  let res
+  // A navigation in progress cancels in-page fetches; wait and try again.
+  for (let attempt = 0; ; attempt++) {
+    try {
+      res = await page.evaluate(
     async ({ url, method, h, body }) => {
       const r = await fetch(url, { method, headers: h, body: body === undefined ? undefined : typeof body === 'string' ? body : JSON.stringify(body), credentials: 'include' })
       const text = await r.text()
       return { status: r.status, ok: r.ok, text }
     },
     { url, method, h, body },
-  )
+      )
+      break
+    } catch (e) {
+      if (!/Failed to fetch|context was destroyed|navigation/i.test(e.message) || attempt >= 3) throw e
+      await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {})
+      await new Promise((r) => setTimeout(r, 2000))
+    }
+  }
   if (!res.ok) throw new Error(`${res.status} ${method} ${url.slice(0, 120)}`)
   return JSON.parse(res.text)
 }
