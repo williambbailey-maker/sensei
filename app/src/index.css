@@ -303,23 +303,29 @@ select:focus {
   object-fit: cover;
 }
 
-/* The footer sign-up: a small centered title over one underlined field
-   with an arrow. No box, no copy. */
+/* The footer sign-up: one "Get the weekly drop →" link; a tap swaps in an
+   underlined field with a Join button. */
 .signup {
   width: 100%;
 }
-.signup-k {
-  font-size: 13px;
-  font-weight: 700;
+.signup-link-row {
   text-align: center;
 }
-.signup-inp {
-  margin-top: 14px;
+.signup-link {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 3px;
+}
+.signup-link span {
+  font-weight: 400;
 }
 .signup-go {
   flex: none;
-  font-size: 24px;
-  line-height: 1;
+  font-size: 14px;
+  font-weight: 700;
   color: #fff;
 }
 .signup-msg {

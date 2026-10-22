@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { addSubscriber } from '../lib/supabase'
 import { track } from '../lib/analytics'
 
-// The weekly-drop sign-up: a small title over one underlined field and an
-// arrow. The title says what the address is for, so it never reads as a login.
+// The weekly-drop sign-up: one "Get the weekly drop →" link. Tapping it swaps
+// in an underlined email field with a Join button. A /#drop link opens it.
 export function Newsletter({ source }: { source: string }) {
+  const [open, setOpen] = useState(() => window.location.hash === '#drop')
   const [email, setEmail] = useState('')
   const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
 
@@ -25,10 +26,19 @@ export function Newsletter({ source }: { source: string }) {
     return <p className="signup-msg">You're on the list. The first drop lands next week.</p>
   }
 
+  if (!open) {
+    return (
+      <div className="signup-link-row">
+        <button type="button" className="signup-link" onClick={() => setOpen(true)}>
+          Get the weekly drop <span>→</span>
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <p className="signup-k">The weekly drop</p>
-      <form onSubmit={submit} className="inp signup-inp">
+      <form onSubmit={submit} className="inp">
         <input
           type="email"
           value={email}
@@ -36,14 +46,10 @@ export function Newsletter({ source }: { source: string }) {
           placeholder="Your email"
           aria-label="Email address for the weekly drop mailing list"
           autoComplete="email"
+          autoFocus
         />
-        <button
-          type="submit"
-          disabled={state === 'loading'}
-          className="signup-go disabled:opacity-50"
-          aria-label="Join the weekly drop"
-        >
-          {state === 'loading' ? '…' : '→'}
+        <button type="submit" disabled={state === 'loading'} className="signup-go disabled:opacity-50">
+          {state === 'loading' ? '…' : 'Join'}
         </button>
       </form>
       {state === 'error' && <p className="signup-msg">Something went wrong. Try again.</p>}

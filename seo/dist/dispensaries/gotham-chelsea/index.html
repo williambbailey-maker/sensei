@@ -86,12 +86,14 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .board a,.board div{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;letter-spacing:-.02em}
 .board span:last-child{font-weight:400;color:var(--mist);font-size:13px}
 .signup{width:100%;margin-top:96px}
-.signup .k{margin:0;text-align:center}
-.signup .inp{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--line-strong);padding-bottom:10px;margin-top:14px}
+.signup .sl{text-align:center}
+.signup .sl button{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--ink);border-bottom:2px solid var(--ink);padding-bottom:3px}
+.signup .sl span{font-weight:400}
+.signup .inp{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--line-strong);padding-bottom:10px}
 .signup .inp:focus-within{border-bottom-color:var(--ink)}
 .signup input{flex:1;min-width:0;background:none;border:0;color:var(--ink);font:inherit;font-size:17px;outline:none}
 .signup input::placeholder{color:var(--mist)}
-.signup button{flex:none;font-size:24px;line-height:1;color:var(--ink)}
+.signup .inp button{flex:none;font-size:14px;font-weight:700;color:var(--ink)}
 .signup .dd{margin:10px 0 0;font-size:13px;color:var(--mist);text-align:center}
 .signup [hidden]{display:none}
 .foot-mark{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:40px}.foot-mark .bullets{gap:8px;margin:0}.foot-mark .mb{width:34px;height:34px;font-size:17px}.foot-mark .wm{color:var(--ink)}
@@ -257,8 +259,8 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 <div class="rule"></div>
 <div class="end">
 <div class="signup" id="drop">
-<div class="k">The weekly drop</div>
-<form class="inp" id="drop-form"><input type="email" name="email" placeholder="Your email" aria-label="Email address for the weekly drop mailing list" autocomplete="email" required><button type="submit" aria-label="Join the weekly drop">→</button></form>
+<div class="sl"><button type="button" id="drop-open">Get the weekly drop <span>→</span></button></div>
+<form class="inp" id="drop-form" hidden><input type="email" name="email" placeholder="Your email" aria-label="Email address for the weekly drop mailing list" autocomplete="email" required><button type="submit">Join</button></form>
 <p class="dd ok" id="drop-ok" hidden>You're on the list. The first drop lands next week.</p>
 </div>
 <footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="#" class="ic" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
@@ -330,7 +332,7 @@ posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,
 var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};
 if(CFG.category)base.category=CFG.category;posthog.register(base);PH=true;}catch(e){}}
 function ev(name,p){p=p||{};sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
-var df=document.getElementById('drop-form');if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
+var df=document.getElementById('drop-form');var dop=document.getElementById('drop-open');function dopen(){if(!df||!dop)return;dop.parentNode.hidden=true;df.hidden=false;df.email.focus();}if(dop)dop.addEventListener('click',dopen);if(location.hash==='#drop')dopen();if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}
 try{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){ev('product_impression',cp(x.target));io.unobserve(x.target);}});},{threshold:0.5});
