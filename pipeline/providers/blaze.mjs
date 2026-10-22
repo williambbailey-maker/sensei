@@ -4,10 +4,8 @@
 // copied from the menu page's own filters request, then the product list is
 // read from inside the page.
 //
-// The list endpoint and its paging were not seen in a probe (the site builds
-// the first page server-side), so the module tries the API's product
-// listing with the limit/offset/order style its other calls use and reports
-// which worked. Confirm with a dry run before switching on.
+// The list is GET /api/v1/products/?limit&offset&order (v2 is tried first
+// and 404s today; kept in case it appears).
 //
 // Config (stores.config.json): { "menu_url": "https://altocanna.nyc/menu" }
 import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
@@ -23,11 +21,20 @@ const cents = (v) => {
   return n != null ? Math.round(n) / 100 : null
 }
 
-// Potency only when the units are a percentage; mg (edibles) is skipped.
-function pct(p, key) {
+// Potency: `thc` / `cbd` are { units, amount }; `potency` has { thc, cbd,
+// units }. Only a percentage maps; mg (edibles) is skipped. `composition`
+// carries no units, so it is not used.
+function pct(a, key) {
+  const isPct = (u) => !u || String(u).trim() === '%' || /^percent/i.test(String(u))
+  const own = a[key]
+  if (own && typeof own === 'object' && own.amount != null) {
+    if (!isPct(own.units)) return null
+    const n = num(own.amount)
+    return n != null && n > 0 && n <= 100 ? n : null
+  }
+  const p = a.potency
   if (!p || typeof p !== 'object') return null
-  const units = String(p.units || '').toLowerCase()
-  if (units && units !== '%' && !units.startsWith('percent')) return null
+  if (!isPct(p.units)) return null
   const n = num(p[key] ?? p[`max_${key}`])
   return n != null && n > 0 && n <= 100 ? n : null
 }
@@ -74,8 +81,8 @@ export function mapProduct(item, storeId, included) {
     effects: extractEffects([...(effects?.primary || []), ...(effects?.secondary || [])]),
     category,
     strain_type: strain && !/^(n\/a|none)$/i.test(strain) ? titleCase(strain) : null,
-    thc_pct: pct(a.potency, 'thc'),
-    cbd_pct: pct(a.potency, 'cbd'),
+    thc_pct: pct(a, 'thc'),
+    cbd_pct: pct(a, 'cbd'),
     variants,
     price_min: prices.length ? Math.min(...prices) : null,
     url: typeof a.store_url === 'string' ? a.store_url : null,
@@ -87,7 +94,7 @@ export function mapProduct(item, storeId, included) {
 
 export default {
   name: 'blaze',
-  enabled: false, // switch on after a dry run on one store looks right
+  enabled: true, // dry run on alto: 629 products via /api/v1/products/
   needsBrowser: true,
   fields: PRODUCT_FIELDS,
 

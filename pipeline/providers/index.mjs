@@ -13,5 +13,7 @@ import dispense from './dispense.mjs'
 import carrot from './carrot.mjs'
 import jane from './jane.mjs'
 import blaze from './blaze.mjs'
+import gapcommerce from './gapcommerce.mjs'
+import joint from './joint.mjs'
 
-export const PROVIDERS = { dutchie, dispense, carrot, jane, blaze }
+export const PROVIDERS = { dutchie, dispense, carrot, jane, blaze, gapcommerce, joint }

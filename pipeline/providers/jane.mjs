@@ -62,7 +62,7 @@ export function mapProduct(p, storeId, menuUrl) {
     cbd_pct: pct(a.percent_cbd ?? pot?.cbd_potency),
     variants,
     price_min: prices.length ? Math.min(...prices) : null,
-    // Unconfirmed: Jane menus link products as <menu>/menu/products/<id>/<name-slug>.
+    // Jane menus link products as <menu>/menu/products/<id>/<name-slug> (checked).
     url: `${menuUrl.replace(/\/$/, '')}/menu/products/${id}/${slugify(a.name)}`,
     image_url: Array.isArray(a.image_urls) && typeof a.image_urls[0] === 'string' ? a.image_urls[0] : null,
     in_stock: true,
@@ -74,21 +74,15 @@ export default {
   name: 'jane',
   enabled: false, // switch on after a dry run on one store looks right
   needsBrowser: true,
-  fields: PRODUCT_FIELDS.filter((f) => !['url', 'brand_description'].includes(f)),
+  fields: PRODUCT_FIELDS.filter((f) => f !== 'brand_description'),
 
   async scrape({ page }, store) {
     const menuUrl = store.config?.menu_url
     if (!menuUrl) throw new Error(`no menu_url for ${store.slug} in stores.config.json`)
     // The menu's own list request (not the top-row carousel).
-    const cap = await captureRequest(page, menuUrl, /dmerch\.iheartjane\.com\/v2\/multi/, { timeout: 30000 })
-    let body = cap.body
-    let table = body?.placements?.find((pl) => pl.placement === 'menu_inline_table')
-    if (!table) {
-      // The first /v2/multi was a carousel; wait for the table one.
-      const req = await page.waitForRequest((r) => /dmerch\.iheartjane\.com\/v2\/multi/.test(r.url()) && /menu_inline_table/.test(r.postData() || ''), { timeout: 20000 })
-      body = JSON.parse(req.postData())
-      table = body.placements.find((pl) => pl.placement === 'menu_inline_table')
-    }
+    const cap = await captureRequest(page, menuUrl, (r) => /dmerch\.iheartjane\.com\/v2\/multi/.test(r.url()) && /menu_inline_table/.test(r.postData() || ''), { timeout: 30000 })
+    const body = cap.body
+    const table = body.placements.find((pl) => pl.placement === 'menu_inline_table')
     const storeIdJane = body.store_id
     const seen = new Map()
     let sample = null

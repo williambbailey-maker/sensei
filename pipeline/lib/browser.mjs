@@ -2,10 +2,12 @@
 // the menu page once, copy the request the site makes, then replay it from
 // inside that page so cookies, origin and referer match exactly.
 
-// Load `url` and return the first request whose URL matches `pattern`
-// ({ url, method, headers, body }), or throw after `timeout` ms.
+// Load `url` and return the first request matching `pattern` (a RegExp on
+// the URL, or a function of the Playwright request) as
+// { url, method, headers, body }, or throw after `timeout` ms.
 export async function captureRequest(page, url, pattern, { timeout = 30000 } = {}) {
-  const found = page.waitForRequest((r) => pattern.test(r.url()), { timeout })
+  const match = typeof pattern === 'function' ? pattern : (r) => pattern.test(r.url())
+  const found = page.waitForRequest(match, { timeout })
   await page.goto(url, { waitUntil: 'domcontentloaded' })
   const req = await found
   // Sites often redirect right after this (a trailing slash, /nyc -> /nyc/menu);
@@ -36,7 +38,9 @@ export async function pageFetch(page, url, { method = 'GET', headers = {}, body 
     try {
       res = await page.evaluate(
     async ({ url, method, h, body }) => {
-      const r = await fetch(url, { method, headers: h, body: body === undefined ? undefined : typeof body === 'string' ? body : JSON.stringify(body), credentials: 'include' })
+      // Default credentials (same-origin): an API that answers "any origin"
+      // is refused by the browser when cookies are forced onto the request.
+      const r = await fetch(url, { method, headers: h, body: body === undefined ? undefined : typeof body === 'string' ? body : JSON.stringify(body) })
       const text = await r.text()
       return { status: r.status, ok: r.ok, text }
     },

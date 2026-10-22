@@ -11,7 +11,7 @@ export const num = (x) => {
 export function normCategory(type, fallback) {
   const t = String(type || '').toLowerCase()
   if (t.includes('pre-roll') || t.includes('preroll') || t.includes('pre roll')) return 'pre-rolls'
-  if (t.includes('vap')) return 'vaporizers'
+  if (t.includes('vap') || t.includes('cartridge') || t.includes('disposable')) return 'vaporizers'
   if (t.includes('edible')) return 'edibles'
   if (t.includes('flower')) return 'flower'
   if (t.includes('concentrate') || t.includes('extract')) return 'concentrates'

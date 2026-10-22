@@ -45,13 +45,21 @@
       "provider": "jane",
       "menu_url": "https://menu.kushklub.com/nyc"
     },
-    "sofaclub-1": {
-      "provider": "dispense",
-      "menu_url": "https://menus.dispenseapp.com/1cf9ea9a5cfa24d2/menu"
-    },
     "alto": {
       "provider": "blaze",
       "menu_url": "https://altocanna.nyc/menu"
+    },
+    "sofaclub-broadway": {
+      "provider": "dispense",
+      "menu_url": "https://menus.dispenseapp.com/1cf9ea9a5cfa24d2/menu"
+    },
+    "bliss-lex": {
+      "provider": "gapcommerce",
+      "menu_url": "https://blissandlex.com/shop"
+    },
+    "dazed-union-square": {
+      "provider": "joint",
+      "menu_url": "https://dazed.fun/stores/dazed-cannabis-dispensary-union-square-nyc-ny/"
     }
   }
 }

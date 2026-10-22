@@ -10,7 +10,7 @@
 // to logs/probe-<host>-<time>.json. Reads only; writes nothing to Supabase.
 //
 // To print sample items from a saved capture (for Claude to read the shape):
-//   node probe.mjs --show logs/probe-<file>.json <text in the request url>
+//   node probe.mjs --show logs/probe-<file>.json <text in the request url> [path.in.body]
 //   node probe.mjs --show logs/probe-<file>.html [<text in the data path>]
 // To click around first (a store picker), e.g. 45 seconds:
 //   node probe.mjs --wait 45 <menu url>
@@ -48,7 +48,9 @@ function largestArray(node, depth = 0, best = { len: 0, path: '', keys: [] }, pa
 // --show: the matching requests from a saved capture, with their two first
 // items (trimmed), so a new platform's product shape can be read.
 if (urls[0] === '--show') {
-  const [, file, match = ''] = urls
+  const [, file, match = '', at = ''] = urls
+  // A dotted path (hits.hits[0]._source) prints that spot of the first match.
+  const dig = (o, path) => path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean).reduce((x, k) => (x == null ? x : x[k]), o)
   if (file.endsWith('.html')) {
     const nd = readFileSync(file, 'utf8').match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/)
     if (!nd) {
@@ -85,6 +87,10 @@ if (urls[0] === '--show') {
     if (c.headers.length) console.log(`headers: ${c.headers.join(' ')}`)
     if (typeof c.body !== 'object') {
       console.log(`body: ${c.body}`)
+      continue
+    }
+    if (at) {
+      console.log(`${at}:\n${JSON.stringify(dig(c.body, at), null, 1)?.slice(0, 6000)}`)
       continue
     }
     const big = largestArray(c.body)
