@@ -354,13 +354,12 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 .side .hero{margin-top:34px}
 .intro p{font-size:16px}.intro p:first-child{font-size:19px}
 .shops{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:56px}
-.end{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:88px;align-items:center}
-.end .notice.drop{margin-top:96px}
-.end .ft{display:contents}
-.end .ft .contact{grid-column:2;grid-row:1;margin-top:96px}
-.end .ft .foot-mark,.end .ft .legal{grid-column:1/-1}
-.end .ft .foot-mark{margin-top:64px}
-.end .ft .legal{max-width:720px;justify-self:center;font-size:12px;color:var(--mist);line-height:1.6}
+.end{display:flex;flex-direction:column;align-items:center}
+.end .notice.drop{width:100%;max-width:560px;margin-top:96px}
+.end .ft{width:100%;margin:0;display:flex;flex-direction:column;align-items:center}
+.end .ft .contact{margin-top:40px}
+.end .ft .foot-mark{margin-top:48px}
+.end .ft .legal{max-width:720px}
 #ag .box{max-width:820px;padding:0 48px 60px}
 #menu .mbody{max-width:1160px;padding:0 48px 56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:48px;align-items:start}
 #menu .mbody>.top{grid-column:1/-1}

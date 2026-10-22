@@ -845,25 +845,24 @@ select:focus {
     margin-top: 20px;
   }
 
-  /* Footer: mailing list left, contact right; sign-off and disclosure below. */
+  /* Footer: one centered column, like on phones: the mailing list box,
+     then the email and Instagram, then the sign-off and the disclaimer. */
   .site-foot {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 88px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
   }
-  .site-foot > .contact {
-    margin-top: 0;
+  .site-foot > .notice {
+    width: 100%;
+    max-width: 560px;
   }
-  .site-foot > .foot-mark,
-  .site-foot > .foot {
-    grid-column: 1 / -1;
+  .site-foot > .contact {
+    margin-top: 40px;
   }
   .site-foot > .foot-mark {
-    margin-top: 64px;
+    margin-top: 48px;
   }
   .site-foot > .foot {
     max-width: 720px;
-    justify-self: center;
   }
 }
