@@ -2,6 +2,9 @@
  "/": {
   "type": "home"
  },
+ "/about/": {
+  "type": "legal"
+ },
  "/brands/": {
   "type": "hub"
  },

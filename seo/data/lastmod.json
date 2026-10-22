@@ -3,6 +3,10 @@
   "date": "2026-10-21",
   "hash": "1ac0799a3a2a7bdf"
  },
+ "/about/": {
+  "date": "2026-10-22",
+  "hash": "e2ca8eb5afe908b3"
+ },
  "/brands/": {
   "date": "2026-10-21",
   "hash": "0aa206980beab12c"
@@ -525,10 +529,10 @@
  },
  "/privacy/": {
   "date": "2026-10-22",
-  "hash": "c3f9285f6769e51f"
+  "hash": "dca58afd647faaea"
  },
  "/terms/": {
   "date": "2026-10-22",
-  "hash": "b06450b0eaeb29cc"
+  "hash": "a2d34083018156fe"
  }
 }

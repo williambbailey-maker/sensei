@@ -474,6 +474,7 @@ export default function App() {
         <nav className="foot-links" aria-label="Legal">
           <a href="/terms/">Terms</a>
           <a href="/privacy/">Privacy Policy</a>
+          <a href="/about/">About</a>
         </nav>
         <p className="foot">
           <b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is

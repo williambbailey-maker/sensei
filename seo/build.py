@@ -259,6 +259,30 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .kicker+h1{margin-top:12px}
 .addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
 .addr .dir{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+/* secondary pages (terms, privacy, about): a pinned back bar on top, a
+   back-to-Sensei exit and the legal links at the bottom. Never hides on scroll. */
+.sh-bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--field);border-bottom:1px solid var(--line);padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));transition:box-shadow .2s ease}
+.sh-bar::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:env(safe-area-inset-top,0px);background:var(--field)}
+.sh-bar.scrolled{box-shadow:0 6px 16px rgba(0,0,0,.06)}
+@media (prefers-reduced-motion:reduce){.sh-bar{transition:none}}
+.sh-in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px;max-width:464px;margin:0 auto}
+@media (min-width:700px){.sh-in{max-width:504px}}
+.sh-back{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--ink);font-size:18px;font-weight:600;letter-spacing:-.03em}
+.sh-back svg{flex:none}
+.sh-name{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sh-sentinel{position:absolute;top:0;left:0;width:1px;height:8px;pointer-events:none}
+.sf{margin-top:56px}
+.sf-pill{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:56px;border-radius:28px;padding:0 22px;background:var(--ink);color:var(--field);font-size:17px;font-weight:700;letter-spacing:-.02em}
+.sf-pill .l{display:inline-flex;align-items:center;gap:6px}
+.sf-pill .r{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+.sf-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:0 4px;margin-top:16px;font-size:13px;color:var(--mist)}
+.sf-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;color:var(--mist)}
+.sf-links a[aria-current]{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.sf .legal{margin:16px 0 0;font-size:12px;line-height:1.6;color:var(--mist);text-align:center}
+.sf .legal b{color:var(--ink)}
+.sh-back:focus-visible,.sf-pill:focus-visible,.sf-links a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sec .wrap{padding-top:8px}
+.doc-head h1{margin-top:30px}
 /* terms + privacy: plain reading pages */
 .upd{margin:14px 0 0}
 .doc{margin-top:8px;max-width:680px}
@@ -492,7 +516,7 @@ else if(t==='directions')ev('directions_click',{dispensary:a.getAttribute('data-
 else if(t==='menu')ev('menu_click',{brand:a.getAttribute('data-brand')||CFG.brand||null,dispensary:a.getAttribute('data-dispensary')||CFG.dispensary||null,url:a.getAttribute('href')||null});},true);
 })();
 </script>""" % json.dumps(cfg)
-def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
+def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=None):
     canon = SITE_URL + path
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j)}</script>' for j in jsonld)
     # The top line's right side names the borough on shop and neighborhood
@@ -513,11 +537,22 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-<style>{CSS}</style>{ld}</head><body>
-<div class="wrap">
-<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
+<style>{CSS}</style>{ld}</head><body{' class="sec"' if secondary else ''}>
+{_secondary_open(secondary) if secondary else ''}<div class="wrap">
+{'' if secondary else _TOP}
 <main>{body}</main>
-<div class="rule"></div>
+{_secondary_close(secondary) if secondary else _END + menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
+"""
+
+_TOP = '<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>'
+
+def _secondary_open(sec):
+    return '<div class="sh-sentinel" id="sh-sentinel" aria-hidden="true"></div>' + secondary_header(sec[1])
+
+def _secondary_close(sec):
+    return secondary_footer(sec[0]) + '</div>' + SECONDARY_JS
+
+_END = """<div class="rule"></div>
 <div class="end">
 <div class="signup" id="drop">
 <div class="sl"><button type="button" id="drop-open">Get the weekly drop <span>→</span></button></div>
@@ -527,11 +562,42 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None):
 <footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="#" class="ic" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="foot-mark" aria-label="Sensei NYC"><span class="wm">Sensei</span><div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div></div>
 <div class="foot-rule"></div>
-<nav class="legal-links" aria-label="Legal"><a href="/terms/">Terms</a><a href="/privacy/">Privacy Policy</a></nav>
+<nav class="legal-links" aria-label="Legal"><a href="/terms/">Terms</a><a href="/privacy/">Privacy Policy</a><a href="/about/">About</a></nav>
 <p class="legal"><b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver cannabis and is not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.</p></footer>
 </div>
-</div>{menu_html(path, MENU_COUNTS)}{AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
-"""
+</div>"""
+
+# ---------- secondary pages: one shared chrome ----------
+# Terms, Privacy and About aren't discovery pages, so instead of the menu they
+# get a pinned bar with a way back, and a big exit at the bottom. "Back" is a
+# real link to "/"; when the visitor came from another Sensei page it steps
+# back in history instead, so they land where they were.
+CHEVRON = ('<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" '
+           'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>')
+SECONDARY_PAGES = [("terms", "/terms/", "Terms"), ("privacy", "/privacy/", "Privacy"), ("about", "/about/", "About")]
+
+def secondary_header(name):
+    return (f'<header class="sh-bar" id="sh-bar"><div class="sh-in">'
+            f'<a class="sh-back" href="/" data-back aria-label="Back to Sensei">{CHEVRON}<span>Sensei</span></a>'
+            f'<span class="sh-name">{esc(name)}</span></div></header>')
+
+def secondary_footer(current):
+    cur = ' aria-current="page"'
+    links = '<span aria-hidden="true">·</span>'.join(
+        f'<a href="{href}"{cur if key == current else ""}>{esc(label)}</a>'
+        for key, href, label in SECONDARY_PAGES)
+    return (f'<footer class="sf"><a class="sf-pill" href="/" data-back>'
+            f'<span class="l">{CHEVRON}Back to Sensei</span><span class="r">Dispensaries</span></a>'
+            f'<nav class="sf-links" aria-label="Legal">{links}</nav>'
+            f'<p class="legal"><b>Sensei</b> is an independent guide for adults 21 and over. Sensei does not sell or deliver '
+            f'cannabis and is not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.</p></footer>')
+
+SECONDARY_JS = """<script>(function(){
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-back]');if(!a)return;
+try{if(document.referrer&&new URL(document.referrer).origin===location.origin&&history.length>1){e.preventDefault();history.back();}}catch(_){}});
+var bar=document.getElementById('sh-bar'),s=document.getElementById('sh-sentinel');
+if(bar&&s&&'IntersectionObserver' in window){new IntersectionObserver(function(en){bar.classList.toggle('scrolled',!en[0].isIntersecting);}).observe(s);}
+})();</script>"""
 
 def breadcrumb(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList",
@@ -920,14 +986,32 @@ def _md(src):
 
 def build_legal(path, fname, crumb):
     title, updated, html = _md((ROOT / "legal" / fname).read_text())
+    key = {"/terms/": "terms", "/privacy/": "privacy"}[path]
     body = f"""
-<p class="crumb"><a href="/">Sensei</a> › {esc(crumb)}</p>
-<h1>{esc(title)}</h1>
-<p class="meta upd">{esc(updated)}</p>
+<div class="doc-head"><h1>{esc(title)}</h1>
+<p class="meta upd">{esc(updated)}</p></div>
 <div class="doc">{html}</div>
 """
     desc = f"Sensei's {title.lower()}. Sensei is an independent guide to New York's licensed dispensaries for adults 21 and over."
-    write(path, page(f"{title} | Sensei", desc, path, [breadcrumb([("Sensei", "/"), (crumb, path)])], body, "legal", None))
+    write(path, page(f"{title} | Sensei", desc, path, [breadcrumb([("Sensei", "/"), (crumb, path)])], body, "legal", None,
+                     secondary=(key, dict((k, n) for k, _, n in SECONDARY_PAGES)[key])))
+    return path
+
+# The About page says what the menu's About block says, plus the counts.
+def build_about():
+    path = "/about/"
+    body = f"""
+<div class="doc-head"><h1>About Sensei</h1></div>
+<div class="doc">
+<p>Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each shop's live menu and refresh nightly. We don't sell anything; you order on the dispensary's own site.</p>
+<p>Right now that's {STATS["shops"]} licensed shops across {STATS["neighborhoods"]} neighborhoods.</p>
+<p>21+ only · adults in New York State.</p>
+<p>Questions or corrections? Email <a href="mailto:hello@sensei.nyc">hello@sensei.nyc</a>.</p>
+</div>
+"""
+    desc = "Sensei is an independent guide to New York's licensed dispensaries for adults 21 and over."
+    write(path, page("About | Sensei", desc, path, [breadcrumb([("Sensei", "/"), ("About", path)])], body, "legal", None,
+                     secondary=("about", "About")))
     return path
 
 # ---------- truthful sitemap dates ----------
@@ -1065,6 +1149,7 @@ if __name__ == "__main__":
     paths.append(build_index_categories())
     build_home(paths)
     for lp, lf, lc in LEGAL: paths.append(build_legal(lp, lf, lc))
+    paths.append(build_about())
     # Every built page with what a redirect needs if it ever disappears.
     meta = {"/": {"type": "home"}}
     for d in SITE["dispensaries"]:
@@ -1074,6 +1159,7 @@ if __name__ == "__main__":
     for c in SITE["categories"]: meta[f"/nyc/{c['category']}/"] = {"type": "category"}
     for p in ("/neighborhoods/", "/brands/", "/nyc/"): meta[p] = {"type": "hub"}
     for lp, _, _ in LEGAL: meta[lp] = {"type": "legal"}
+    meta["/about/"] = {"type": "legal"}
     assert set(meta) == set(paths), sorted(set(meta) ^ set(paths))
     redirects = update_published(meta)
     block = home_block()
