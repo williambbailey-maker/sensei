@@ -70,6 +70,9 @@ export function initMetaPixel(): void {
       s.src = 'https://connect.facebook.net/en_US/fbevents.js'
       document.head.appendChild(s)
     }
+    // Turn off Meta's automatic button-click logging: it captures button text,
+    // which can include product and brand names.
+    window.fbq('set', 'autoConfig', false, PIXEL_ID)
     window.fbq('init', PIXEL_ID)
     window.fbq('track', 'PageView', {}, { eventID: eid() })
     on = true
