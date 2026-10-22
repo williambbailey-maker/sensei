@@ -153,8 +153,9 @@ async function loadStores() {
   if (DRY_RUN && STORE) {
     stores = await sb(`stores?slug=eq.${encodeURIComponent(STORE)}&${cols}`)
     if (!stores.length) {
-      if (!PROVIDER) throw new Error(`No store "${STORE}" in the stores table. Add PROVIDER=<name> to dry-run it anyway.`)
-      stores = [{ id: null, slug: STORE, provider: PROVIDER, borough: null, address: null, lat: null }]
+      const provider = PROVIDER || loadStoreConfig()[STORE]?.provider
+      if (!provider) throw new Error(`No store "${STORE}" in the stores table. Add PROVIDER=<name> to dry-run it anyway.`)
+      stores = [{ id: null, slug: STORE, provider, borough: null, address: null, lat: null }]
     } else if (PROVIDER) {
       stores = stores.map((s) => ({ ...s, provider: PROVIDER }))
     }
@@ -182,12 +183,12 @@ async function liveIds(storeId) {
 
 // DRY_RUN output for one store: field coverage, a few sample rows, the diff
 // against what's live, and the full list saved to logs/ for a closer look.
-async function dryRunReport(store, provider, products, meta) {
+async function dryRunReport(store, provider, products, meta, sample) {
   const cov = fieldCoverage(products)
   console.log(`\n  ${products.length} products (nothing written)`)
   if (products.length) console.log('  field coverage (% of products with a value):')
   for (const f of products.length ? PRODUCT_FIELDS : []) {
-    const note = provider.fields.includes(f) ? '' : '   ← not provided by this platform (left null)'
+    const note = provider.fields.includes(f) ? '' : cov[f] ? '   ← unconfirmed for this platform (check the raw sample)' : '   ← not provided by this platform (left null)'
     console.log(`    ${f.padEnd(18)} ${String(cov[f]).padStart(3)}%${note}`)
   }
   const patch = storePatch(store, meta)
@@ -206,9 +207,14 @@ async function dryRunReport(store, provider, products, meta) {
     }
   }
   for (const p of products.slice(0, DRY_RUN_SHOW)) console.log(JSON.stringify(p, null, 2))
+  if (sample) {
+    // One raw item as the platform sends it, so unmapped fields can be found.
+    console.log(`  raw sample item (${provider.name}) keys: ${Object.keys(sample).join(', ')}`)
+    console.log(JSON.stringify(sample, null, 1).slice(0, 4000))
+  }
   mkdirSync(new URL('./logs/', import.meta.url), { recursive: true })
   const file = new URL(`./logs/dry-run-${store.slug}-${Date.now()}.json`, import.meta.url)
-  writeFileSync(file, JSON.stringify({ store: store.slug, provider: provider.name, coverage: cov, meta, products }, null, 2))
+  writeFileSync(file, JSON.stringify({ store: store.slug, provider: provider.name, coverage: cov, meta, sample, products }, null, 2))
   console.log(`  full list: ${file.pathname}`)
 }
 
@@ -278,7 +284,13 @@ async function main() {
 
   let browser = null
   const ctx = {}
-  if (stores.some((s) => PROVIDERS[s.provider].needsBrowser)) {
+  // A module's needsBrowser is a flag, or a function of the store (a store
+  // with its API details in stores.config.json may not need one).
+  const needsBrowser = (s) => {
+    const n = PROVIDERS[s.provider].needsBrowser
+    return typeof n === 'function' ? n(s) : !!n
+  }
+  if (stores.some(needsBrowser)) {
     const { chromium } = await import('playwright')
     browser = await chromium.launch({ headless: HEADLESS })
     ctx.page = await browser.newPage()
@@ -335,9 +347,9 @@ async function main() {
     const tally = (byProvider[provider.name] ||= { ok: 0, empty: 0, failed: 0 })
     console.log(`\n[${i + 1}/${stores.length}] ${store.slug}${provider.name === 'dutchie' ? '' : ` (${provider.name})`}`)
     try {
-      const { products: list, meta } = await provider.scrape(ctx, store)
+      const { products: list, meta, sample } = await provider.scrape(ctx, store)
       if (DRY_RUN) {
-        await dryRunReport(store, provider, list, meta)
+        await dryRunReport(store, provider, list, meta, sample)
       } else {
         if (list.length) {
           await sb('products?on_conflict=store_id,external_id', {

@@ -9,12 +9,12 @@ export const num = (x) => {
 
 // Platform category labels -> the seven categories the app knows.
 export function normCategory(type, fallback) {
-  const t = String(type || '').toLowerCase()
+  const t = String(type || '').toLowerCase().replace(/_/g, '-')
   if (t.includes('pre-roll') || t.includes('preroll') || t.includes('pre roll')) return 'pre-rolls'
-  if (t.includes('vap')) return 'vaporizers'
+  if (t.includes('vap') || t.includes('cartridge') || t.includes('disposable')) return 'vaporizers'
   if (t.includes('edible')) return 'edibles'
   if (t.includes('flower')) return 'flower'
-  if (t.includes('concentrate')) return 'concentrates'
+  if (t.includes('concentrate') || t.includes('extract')) return 'concentrates'
   if (t.includes('tincture')) return 'tinctures'
   if (t.includes('topical')) return 'topicals'
   return fallback || (type ? t : null)
@@ -93,4 +93,19 @@ export function fieldCoverage(rows) {
     out[f] = rows.length ? Math.round((n / rows.length) * 100) : 0
   }
   return out
+}
+
+// Why items were left out, for a dry run to explain a low count:
+//   const drops = dropCounter(); drops.add('category: gear'); drops.report()
+export function dropCounter() {
+  const counts = new Map()
+  return {
+    add(reason) {
+      counts.set(reason, (counts.get(reason) || 0) + 1)
+    },
+    report() {
+      const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8)
+      return top.length ? `dropped: ${top.map(([r, n]) => `${r} ×${n}`).join(', ')}` : ''
+    },
+  }
 }

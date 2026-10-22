@@ -2,6 +2,7 @@
 # Sensei — one self-healing command for everything. No setup, no git needed.
 #
 #   bash <(curl -fsSL https://raw.githubusercontent.com/williambbailey-maker/sensei/main/sensei.sh) scrape
+#       (the full inventory refresh — the one line to save)
 #   bash <(curl -fsSL https://raw.githubusercontent.com/williambbailey-maker/sensei/main/sensei.sh) discover
 #   bash <(curl -fsSL https://raw.githubusercontent.com/williambbailey-maker/sensei/main/sensei.sh) app
 #
@@ -26,8 +27,15 @@ rm -rf "$TMP"
 
 cd "$DEST/pipeline"
 
-# Key check — everything except the app needs the service key.
+# Key check — everything except the app needs the service key. A key saved
+# elsewhere on this Mac (the refresh script's save spot, or an older
+# downloaded copy) is picked up automatically.
 if [ "$TASK" != "app" ]; then
+  if [ ! -f .env ]; then
+    for f in "$HOME/.config/sensei/pipeline.env" "$HOME"/Downloads/sensei-*/pipeline/.env; do
+      if [ -f "$f" ] && grep -Eq '^SUPABASE_SERVICE_ROLE_KEY=.{20,}' "$f"; then cp "$f" .env; echo "==> Using your saved Supabase key."; break; fi
+    done
+  fi
   if [ ! -f .env ]; then
     cp .env.example .env
     echo
@@ -55,8 +63,10 @@ npm install --no-audit --no-fund --loglevel=error || {
 
 case "$TASK" in
   scrape)
-    echo "==> Scraping all active stores…"
-    npm run scrape
+    echo "==> Scraping all active stores (1–2 hours; leave the Chrome window alone)…"
+    mkdir -p logs
+    # caffeinate keeps the Mac awake; the log is kept in pipeline/logs/.
+    caffeinate -i npm run scrape 2>&1 | tee "logs/scrape-$(date +%Y%m%d-%H%M).log"
     ;;
   discover)
     echo "==> Discovering new Dutchie stores in Manhattan / Brooklyn / Bronx…"
