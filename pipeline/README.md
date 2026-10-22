@@ -60,7 +60,29 @@ Optional knobs (prefix the command):
 - `SLOW=1 npm run scrape` — cautious pacing if a run gets flaky.
 
 Manage which stores are scraped in the Supabase `stores` table (`active` flag),
-not in the code.
+not in the code. Each store's `provider` column picks the menu platform module
+that scrapes it (see **Menu platforms** below).
+
+## Dry run (try one store, write nothing)
+
+```bash
+DRY_RUN=1 STORE=conbud-les npm run scrape
+```
+
+Scrapes that one store and prints what it *would* save: how many products,
+which fields are filled (and which the platform doesn't provide, left empty),
+how the list compares with what's live in Supabase, and a few sample products.
+The full list is saved to `logs/dry-run-<slug>-….json`. Nothing is written to
+Supabase: no products, no store details, no `pipeline_runs` row, no sweep, no
+alerts. It doesn't need the service key.
+
+To try a store that isn't in the `stores` table yet, name its platform:
+
+```bash
+DRY_RUN=1 STORE=maison-canal PROVIDER=dutchie npm run scrape
+```
+
+`DRY_RUN_SHOW=10` prints more sample products (default 3).
 
 ## Pipeline health (self-checks each run)
 
@@ -72,6 +94,17 @@ Every run now protects the live menu and records how it went:
   snapshot is kept — a block or feed change can't empty the menu. Only stores
   that returned products this run are ever swept, so a failed store keeps its
   inventory.
+- **The guard ignores test runs.** It compares against the last run that wasn't
+  a `STORE=`/`STORE_LIMIT=` test (those are marked `test run` in the notes) and
+  covered at least half as many stores, so a one-store test can't switch it off.
+- **Empty stores count as failed.** A store that returns no products is logged
+  `EMPTY` and counted in `stores_failed` (its inventory is kept, as before).
+  The notes show the split per platform, e.g. `dutchie 68 ok/45 empty/0 failed`.
+- **The run is recorded before the heavy steps.** The `pipeline_runs` row is
+  written right after the scrape and finished at the end, so a run that dies
+  during the sweep or normalize still leaves its counts (and a `CRASHED` note).
+- **Polite pacing.** Stores run one at a time with a random 3–6 second pause
+  between them.
 - **Match rate + stale stores.** After the run it logs match rate (in-stock rows
   with `clean_brand`, target ≥90%) and any store with no product update in 3+
   days, into the `pipeline_runs.notes` for that run.
@@ -86,8 +119,9 @@ Every run now protects the live menu and records how it went:
 STORE_LIMIT=3 npm run scrape     # scrapes 3 stores, writes a pipeline_runs row
 ```
 
-Then check the newest `pipeline_runs` row in Supabase — its `notes` should show
-`match …% · … · sweep applied`. To test an alert email, set the Resend vars and
+Then check the newest `pipeline_runs` row in Supabase — its `notes` start with
+`local node scrape · test run (STORE_LIMIT=3)` and end with the sweep result
+(a 3-store test is far below a full run, so the guard skips the sweep). To test an alert email, set the Resend vars and
 run with `STORE_LIMIT=0` against a blocked network (or temporarily lower the
 guard) so it reports zero changes.
 
@@ -151,9 +185,27 @@ Runs at **3:30am local**. To change the time, edit `Hour`/`Minute` in
 - **Wake the Mac to run even when asleep** (optional):
   `sudo pmset repeat wakeorpoweron MTWRFSU 03:25:00`
 
+## Menu platforms
+
+`scrape.mjs` is the runner; each menu platform is a small module in
+`providers/`, picked by the store's `provider` column. A module returns
+products already in the `products` row shape, using the shared helpers in
+`lib/product.mjs`, and lists in `fields` which columns its platform can fill.
+Anything a platform doesn't provide is left empty, never guessed.
+
+- `providers/dutchie.mjs` — Dutchie (the only platform switched on today).
+- A store whose platform has no module yet, or whose module has
+  `enabled: false`, is skipped and noted, not counted as failed. Dry runs try
+  disabled modules, so a new platform is tested on one store before it's on.
+- Platform details a store needs (a venue or shop id, its menu URL) go in
+  `stores.config.json`, keyed by slug. Dutchie stores need none.
+
 ## Files
 
-- `scrape.mjs` — the scraper (GraphQL feed capture + Supabase upsert + health).
+- `scrape.mjs` — the runner (store list, upsert, sweep, guard, health, alerts).
+- `providers/` — one module per menu platform; `providers/index.mjs` lists them.
+- `lib/product.mjs` — shared product cleanup (categories, potency, descriptions).
+- `stores.config.json` — per-store platform details for non-Dutchie menus.
 - `scrape-nightly.sh` — wrapper launchd runs each night (pull, caffeinate, log).
 - `com.sensei.scrape.plist` — launchd schedule template (`__REPO__` filled at install).
 - `package.json` — Node deps (Playwright).

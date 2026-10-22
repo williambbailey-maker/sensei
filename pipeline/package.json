@@ -2,7 +2,7 @@
   "name": "sensei-pipeline",
   "private": true,
   "type": "module",
-  "description": "Local Dutchie scraper — run on your own computer (residential IP).",
+  "description": "Local menu scraper (Dutchie + other platforms) — run on your own computer (residential IP).",
   "scripts": {
     "scrape": "node --env-file-if-exists=.env scrape.mjs",
     "normalize": "node --env-file-if-exists=.env normalize.mjs",
