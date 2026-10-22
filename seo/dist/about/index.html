@@ -300,7 +300,7 @@ var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null
 if(CFG.category)base.category=CFG.category;posthog.register(base);PH=true;}catch(e){}}
 var FB=false;if(!INT&&!BOT&&CFG.meta){try{
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init',CFG.meta);FB=true;fbq('track','PageView',{},{eventID:Math.random().toString(36).slice(2)+Date.now().toString(36)});}catch(e){}}
+fbq('set','autoConfig',false,CFG.meta);fbq('init',CFG.meta);FB=true;fbq('track','PageView',{},{eventID:Math.random().toString(36).slice(2)+Date.now().toString(36)});}catch(e){}}
 function eid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
 function eng(){try{if(sessionStorage.getItem('sensei_meta_engaged'))return;sessionStorage.setItem('sensei_meta_engaged','1');}catch(e){}fbq('trackCustom','MenuEngaged',{},{eventID:eid()});}
 function fb(name){if(!FB)return;try{var o={eventID:eid()};
