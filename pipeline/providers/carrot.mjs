@@ -86,10 +86,24 @@ export default {
     if (!cap.body?.searches?.length) throw new Error('search-products request had no searches body')
     const seen = new Map()
     let sample = null
+    let perPage = PAGE
     for (let pageNum = 1; ; pageNum++) {
       // Same search the site makes, but every product, 100 at a time.
-      const search = { ...cap.body.searches[0], q: '*', per_page: PAGE, page: pageNum }
-      const res = await pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: { ...cap.body, searches: [search] } })
+      const search = { ...cap.body.searches[0], q: '*', per_page: perPage, page: pageNum }
+      let res
+      try {
+        res = await pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: { ...cap.body, searches: [search] } })
+      } catch (e) {
+        if (!/^403/.test(e.message) || pageNum > 1) throw e
+        // Refused: find out whether the site's own request (unchanged) is
+        // accepted, then a smaller page, so the cause is clear.
+        const exact = await pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: cap.body }).then(() => 'accepted', (x) => x.message.slice(0, 30))
+        const small = await pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: { ...cap.body, searches: [{ ...cap.body.searches[0], per_page: 50, page: 1 }] } }).then((r) => r, () => null)
+        console.log(`    403 on the full-menu search · site's exact request: ${exact} · per_page 50: ${small ? 'accepted' : 'refused'}`)
+        if (!small) throw e
+        perPage = 50
+        res = small
+      }
       const hits = res?.results?.[0]?.hits ?? []
       let added = 0
       for (const h of hits) {
@@ -103,7 +117,7 @@ export default {
         }
       }
       console.log(`    page ${pageNum}: ${hits.length} hits, +${added}`)
-      if (hits.length < PAGE || added === 0) break
+      if (hits.length < perPage || added === 0) break
       await sleep(CALL_GAP_MS)
     }
     let meta = {}

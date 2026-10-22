@@ -94,3 +94,18 @@ export function fieldCoverage(rows) {
   }
   return out
 }
+
+// Why items were left out, for a dry run to explain a low count:
+//   const drops = dropCounter(); drops.add('category: gear'); drops.report()
+export function dropCounter() {
+  const counts = new Map()
+  return {
+    add(reason) {
+      counts.set(reason, (counts.get(reason) || 0) + 1)
+    },
+    report() {
+      const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8)
+      return top.length ? `dropped: ${top.map(([r, n]) => `${r} ×${n}`).join(', ')}` : ''
+    },
+  }
+}

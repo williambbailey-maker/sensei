@@ -51,15 +51,40 @@
     },
     "sofaclub-broadway": {
       "provider": "dispense",
-      "menu_url": "https://menus.dispenseapp.com/1cf9ea9a5cfa24d2/menu"
+      "menu_url": "https://menus.dispenseapp.com/1cf9ea9a5cfa24d2/menu",
+      "link": "menu"
     },
     "bliss-lex": {
       "provider": "gapcommerce",
-      "menu_url": "https://blissandlex.com/shop"
+      "menu_url": "https://blissandlex.com"
     },
     "dazed-union-square": {
       "provider": "joint",
       "menu_url": "https://dazed.fun/stores/dazed-cannabis-dispensary-union-square-nyc-ny/"
+    },
+    "cannabis-on-lex": {
+      "provider": "blaze",
+      "menu_url": "https://shop.cannabisonlex.com"
+    },
+    "chelsea-cannabis": {
+      "provider": "blaze",
+      "menu_url": "https://shop.chelseacannabis.co/menu"
+    },
+    "happy-munkey": {
+      "provider": "blaze",
+      "menu_url": "https://happymunkey.com/shop/dyckman"
+    },
+    "housing-works-broadway": {
+      "provider": "blaze",
+      "menu_url": "https://hwcannabis.co/menu/broadway"
+    },
+    "nycbud": {
+      "provider": "blaze",
+      "menu_url": "https://nycbud.com/shop"
+    },
+    "vereleaf": {
+      "provider": "blaze",
+      "menu_url": "https://shop.vereleaf.com/shop"
     }
   }
 }

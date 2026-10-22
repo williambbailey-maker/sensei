@@ -5,12 +5,14 @@
 // inside the page as a plain paged query (no aggregations, no category
 // filter). Products are hits[]._source.
 //
-// Field names below are read from the first dry run's raw sample; anything
-// not found stays null.
+// Fields (from a Dazed sample): name, brandName, brandDescription, category
+// (FLOWER/EDIBLES/…), strainType, effects, primaryImage, urlFragment,
+// variants [{ option, price, specialPrice, quantity }], potencies
+// [{ type: 'THC', rangeHigh, unit: '%' | 'mg' }], jointId, isDeleted.
 //
 // Config (stores.config.json):
 //   { "menu_url": "https://dazed.fun/stores/dazed-cannabis-dispensary-union-square-nyc-ny/" }
-import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry } from '../lib/browser.mjs'
 
 const PAGE = 100
@@ -19,8 +21,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const titleCase = (s) => (s ? String(s).toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase()) : null)
 const CATS = ['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals']
 
-function pct(v) {
-  const n = num(v)
+// potencies: [{ type: 'THC', rangeLow, rangeHigh, unit }] — percent only.
+function potency(s, type) {
+  const list = Array.isArray(s.potencies) ? s.potencies : []
+  const hit = list.find((p) => String(p.type).toUpperCase() === type)
+  if (!hit || String(hit.unit || '').trim() !== '%') return null
+  const n = num(hit.rangeHigh ?? hit.rangeLow ?? hit.displayValue)
   return n != null && n > 0 && n <= 100 ? n : null
 }
 
@@ -33,36 +39,53 @@ function wholeMenuQuery(q) {
   return { bool: { ...q.bool, must: keep(q.bool.must), filter: keep(q.bool.filter), should: keep(q.bool.should) } }
 }
 
-export function mapProduct(hit, storeId, menuUrl) {
+export function mapProduct(hit, storeId, menuUrl, drops) {
   const s = hit._source ?? hit
-  const category = normCategory(s.category || s.categoryName || s.productType, null)
-  if (!CATS.includes(category)) return null
-  if (s.inStock === false || s.isHidden === true || (typeof s.quantity === 'number' && s.quantity <= 0)) return null
-  const id = s.posId ?? s.id ?? s.productId ?? hit._id
-  if (!id) return null
-  const base = num(s.price ?? s.regularPrice ?? s.unitPrice)
-  const sale = num(s.salePrice ?? s.discountedPrice ?? s.specialPrice)
-  const price = sale && sale > 0 && base && sale < base ? sale : base
-  const weight = s.weight ?? s.size ?? s.unitOfMeasure ?? null
-  const variants = price != null ? [{ weight: weight != null ? String(weight) : null, price }] : []
-  const strain = s.strainType ?? s.strain ?? s.classification
-  const img = s.imageUrl ?? s.image ?? s.images?.[0]?.url ?? s.images?.[0] ?? s.thumbnail
-  const slug = s.slug ?? s.permalink ?? s.url
+  const category = normCategory(s.category || s.posCategory, null)
+  if (!CATS.includes(category)) {
+    drops?.add(`category "${s.category || s.posCategory}"`)
+    return null
+  }
+  if (s.isDeleted || s.deletedAt) {
+    drops?.add('deleted')
+    return null
+  }
+  const id = s.jointId ?? s.globalProductId ?? s.posId ?? hit._id
+  if (!id) {
+    drops?.add('no id')
+    return null
+  }
+  const variants = (Array.isArray(s.variants) ? s.variants : [])
+    .filter((v) => !(typeof num(v.quantity) === 'number' && num(v.quantity) <= 0))
+    .map((v) => {
+      const base = num(v.price)
+      const sale = num(v.specialPrice)
+      return { weight: v.option != null ? String(v.option) : null, price: sale && sale > 0 && base && sale < base ? sale : base }
+    })
+    .filter((v) => v.price != null)
+  if (!variants.length) {
+    drops?.add('no priced size in stock')
+    return null
+  }
+  const prices = variants.map((v) => v.price).filter((p) => p > 0)
+  const strain = s.strainType
+  const img = s.primaryImage ?? (Array.isArray(s.images) ? s.images[0] : null)
   return {
     store_id: storeId,
     external_id: String(id),
-    name: s.name ?? s.productName ?? s.title ?? null,
-    brand: s.brandName ?? s.brand?.name ?? (typeof s.brand === 'string' ? s.brand : null),
-    description: cleanDescription(s.description),
-    brand_description: null,
+    name: s.name ?? null,
+    brand: s.brandName ?? null,
+    description: cleanDescription(s.description ?? s.descriptionHtml),
+    brand_description: cleanDescription(s.brandDescription),
     effects: extractEffects(s.effects),
     category,
     strain_type: strain && !/^(n\/a|none)$/i.test(strain) ? titleCase(strain) : null,
-    thc_pct: pct(s.thcPercent ?? s.thc ?? s.thcContent ?? s.labResults?.thc),
-    cbd_pct: pct(s.cbdPercent ?? s.cbd ?? s.cbdContent ?? s.labResults?.cbd),
+    thc_pct: potency(s, 'THC'),
+    cbd_pct: potency(s, 'CBD'),
     variants,
-    price_min: price != null && price > 0 ? price : null,
-    url: typeof slug === 'string' && slug.startsWith('http') ? slug : slug ? `${menuUrl.replace(/\/$/, '')}/product/${slug}` : null,
+    price_min: prices.length ? Math.min(...prices) : null,
+    // Unconfirmed: the store page plus /product/<urlFragment>.
+    url: s.urlFragment ? `${menuUrl.replace(/\/$/, '')}/product/${s.urlFragment}` : null,
     image_url: typeof img === 'string' && img.startsWith('http') ? img : null,
     in_stock: true,
     last_seen: new Date().toISOString(),
@@ -73,7 +96,7 @@ export default {
   name: 'joint',
   enabled: false, // switch on after a dry run on one store looks right
   needsBrowser: true,
-  fields: PRODUCT_FIELDS.filter((f) => !['url', 'brand_description', 'effects', 'strain_type', 'thc_pct', 'cbd_pct'].includes(f)),
+  fields: PRODUCT_FIELDS.filter((f) => f !== 'url'),
 
   async scrape({ page }, store) {
     const menuUrl = store.config?.menu_url
@@ -82,21 +105,22 @@ export default {
     if (!cap.body || typeof cap.body !== 'object') throw new Error('_search request had no JSON body')
     const query = wholeMenuQuery(cap.body.query)
     const seen = new Map()
+    const drops = dropCounter()
     let sample = null
     for (let from = 0; ; from += PAGE) {
       const res = await pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: { query, from, size: PAGE } })
       const hits = res?.hits?.hits ?? []
       let added = 0
       for (const h of hits) {
-        const row = mapProduct(h, store.id, menuUrl)
+        const row = mapProduct(h, store.id, menuUrl, drops)
         if (!row) continue
         if (!sample) sample = h._source ?? h
         if (!seen.has(row.external_id)) {
           seen.set(row.external_id, row)
           added++
-        }
+        } else drops.add('duplicate id')
       }
-      console.log(`    from ${from}: ${hits.length} hits, +${added}`)
+      console.log(`    from ${from}: ${hits.length} hits, +${added}${drops.report() ? ` · ${drops.report()}` : ''}`)
       if (hits.length < PAGE || added === 0) break
       await sleep(CALL_GAP_MS)
     }

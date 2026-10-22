@@ -5,7 +5,7 @@
 // come from api.iheartjane.com/v1/stores/<id>.
 //
 // Config (stores.config.json): { "menu_url": "https://menu.kushklub.com/nyc" }
-import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry, pickStoreMeta } from '../lib/browser.mjs'
 
 const PAGE = 100
@@ -31,13 +31,22 @@ function pct(v) {
   return n != null && n > 0 && n <= 100 ? n : null
 }
 
-export function mapProduct(p, storeId, menuUrl) {
+export function mapProduct(p, storeId, menuUrl, drops) {
   const a = p.search_attributes ?? p
   const category = normCategory(a.kind || a.custom_product_type, null)
-  if (!['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals'].includes(category)) return null
-  if (a.at_visible_store === false) return null
+  if (!['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals'].includes(category)) {
+    drops?.add(`category "${a.kind || a.custom_product_type}"`)
+    return null
+  }
+  if (a.at_visible_store === false) {
+    drops?.add('not visible at store')
+    return null
+  }
   const id = a.product_id ?? p.product_id ?? a.objectID
-  if (!id) return null
+  if (!id) {
+    drops?.add('no id')
+    return null
+  }
   const variants = []
   for (const [key, label] of WEIGHTS) {
     const price = num(a[`price_${key}`])
@@ -85,6 +94,7 @@ export default {
     const table = body.placements.find((pl) => pl.placement === 'menu_inline_table')
     const storeIdJane = body.store_id
     const seen = new Map()
+    const drops = dropCounter()
     let sample = null
     for (let pageNum = 0; ; pageNum++) {
       // Same request, but the whole menu (no special filter), 100 at a time.
@@ -93,15 +103,15 @@ export default {
       const items = res?.placements?.[0]?.products ?? []
       let added = 0
       for (const p of items) {
-        const row = mapProduct(p, store.id, menuUrl)
+        const row = mapProduct(p, store.id, menuUrl, drops)
         if (!row) continue
         if (!sample) sample = p.search_attributes ?? p
         if (!seen.has(row.external_id)) {
           seen.set(row.external_id, row)
           added++
-        }
+        } else drops.add('duplicate id')
       }
-      console.log(`    page ${pageNum + 1}: ${items.length} items, +${added}`)
+      console.log(`    page ${pageNum + 1}: ${items.length} items, +${added}${drops.report() ? ` · ${drops.report()}` : ''}`)
       if (items.length < PAGE || added === 0) break
       await sleep(CALL_GAP_MS)
     }

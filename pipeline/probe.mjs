@@ -15,6 +15,7 @@
 // To click around first (a store picker), e.g. 45 seconds:
 //   node probe.mjs --wait 45 <menu url>
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { clickAgeGate } from './lib/browser.mjs'
 
 const urls = process.argv.slice(2)
 // --wait <seconds>: keep the page open that long before recording, so a
@@ -148,20 +149,8 @@ for (const url of urls) {
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 })
     await sleep(4000)
-    // Age gate: click the first "I'm 21 / Yes / Enter" style button, if any,
-    // since many menus don't load products until it's answered.
-    // Only a short button whose whole label reads like a gate answer.
-    const gate = page
-      .locator('button, a, [role="button"]')
-      .filter({ hasText: /^\s*(i'?m|i am|yes|enter|confirm|agree|continue)\b|\b21\b/i })
-      .filter({ hasNot: page.locator('img') })
-      .first()
-    const label = (await gate.innerText({ timeout: 1500 }).catch(() => '')).trim().slice(0, 40)
-    if (label && label.length <= 40 && (await gate.isVisible().catch(() => false))) {
-      await gate.click({ timeout: 3000 }).catch(() => {})
-      console.log(`  clicked "${label}" (age gate?)`)
-      await sleep(5000)
-    }
+    // Age gate: many menus don't load products until it's answered.
+    if (await clickAgeGate(page)) await sleep(2000)
     await sleep(2000)
     if (WAIT) {
       console.log(`  waiting ${WAIT}s — click through the site now (pick a location, etc.)`)

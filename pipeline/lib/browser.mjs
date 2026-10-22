@@ -7,9 +7,17 @@
 // { url, method, headers, body }, or throw after `timeout` ms.
 export async function captureRequest(page, url, pattern, { timeout = 30000 } = {}) {
   const match = typeof pattern === 'function' ? pattern : (r) => pattern.test(r.url())
-  const found = page.waitForRequest(match, { timeout })
+  let found = page.waitForRequest(match, { timeout })
+  found.catch(() => {}) // handled below
   await page.goto(url, { waitUntil: 'domcontentloaded' })
-  const req = await found
+  // Many menus only load once an age gate is answered: if nothing matched
+  // after a few seconds, answer it and keep waiting.
+  const early = await Promise.race([found.then((r) => r), new Promise((r) => setTimeout(() => r(null), 6000))])
+  let req = early
+  if (!req) {
+    if (await clickAgeGate(page)) found = found.catch(() => page.waitForRequest(match, { timeout }))
+    req = await found
+  }
   // Sites often redirect right after this (a trailing slash, /nyc -> /nyc/menu);
   // a fetch started during that navigation is cancelled ("Failed to fetch").
   await page.waitForLoadState('load').catch(() => {})
@@ -68,6 +76,22 @@ export async function pageFetchRetry(page, url, opts) {
       await new Promise((r) => setTimeout(r, 2000 * 2 ** attempt))
     }
   }
+}
+
+// Click a short "I'm 21 / Yes / Enter" style button if one is showing.
+// Returns true when something was clicked.
+export async function clickAgeGate(page) {
+  const gate = page
+    .locator('button, a, [role="button"]')
+    .filter({ hasText: /^\s*(i'?m|i am|yes|enter|confirm|agree|continue)\b|\b21\b/i })
+    .filter({ hasNot: page.locator('img') })
+    .first()
+  const label = (await gate.innerText({ timeout: 1500 }).catch(() => '')).trim()
+  if (!label || label.length > 40 || !(await gate.isVisible().catch(() => false))) return false
+  await gate.click({ timeout: 3000 }).catch(() => {})
+  console.log(`    clicked "${label.slice(0, 30)}" (age gate)`)
+  await new Promise((r) => setTimeout(r, 3000))
+  return true
 }
 
 // Store name/address/coords from a store record, matched defensively.

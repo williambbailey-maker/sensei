@@ -115,7 +115,7 @@ function firstImage(prod) {
   return null
 }
 
-export function mapProduct(prod, storeId) {
+export function mapProduct(prod, storeId, cfg = {}) {
   const category = normCategory(prod.productCategoryName || prod.subType || prod.cannabisComplianceType, null)
   if (!CATEGORIES.has(category)) return null // accessories, apparel, …
   if (prod.deleted || prod.enable === false) return null
@@ -148,7 +148,8 @@ export function mapProduct(prod, storeId) {
     cbd_pct: cbd,
     variants,
     price_min: prices.length ? Math.min(...prices) : null,
-    url: typeof prod.productUrl === 'string' ? prod.productUrl : null,
+    // A site whose product pages don't resolve (SOFACLUB) links to its menu.
+    url: cfg.link === 'menu' ? cfg.menu_url : typeof prod.productUrl === 'string' ? prod.productUrl : null,
     image_url: firstImage(prod),
     in_stock: true,
     last_seen: new Date().toISOString(),
@@ -198,7 +199,7 @@ export default {
         const res = await call(`${path}?skip=${skip}&limit=${PAGE}&orderPickUpType=IN_STORE`, creds, ctx)
         const items = Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : []
         for (const p of items) {
-          const row = mapProduct(p, store.id)
+          const row = mapProduct(p, store.id, store.config)
           if (!row) continue
           if (!sample) sample = p
           if (!seen.has(row.external_id)) {
