@@ -10,5 +10,7 @@
 // tested on one store before it's switched on.
 import dutchie from './dutchie.mjs'
 import dispense from './dispense.mjs'
+import carrot from './carrot.mjs'
+import jane from './jane.mjs'
 
-export const PROVIDERS = { dutchie, dispense }
+export const PROVIDERS = { dutchie, dispense, carrot, jane }

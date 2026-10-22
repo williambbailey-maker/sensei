@@ -14,7 +14,7 @@ export function normCategory(type, fallback) {
   if (t.includes('vap')) return 'vaporizers'
   if (t.includes('edible')) return 'edibles'
   if (t.includes('flower')) return 'flower'
-  if (t.includes('concentrate')) return 'concentrates'
+  if (t.includes('concentrate') || t.includes('extract')) return 'concentrates'
   if (t.includes('tincture')) return 'tinctures'
   if (t.includes('topical')) return 'topicals'
   return fallback || (type ? t : null)

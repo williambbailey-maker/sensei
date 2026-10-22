@@ -12,9 +12,19 @@
 // To print sample items from a saved capture (for Claude to read the shape):
 //   node probe.mjs --show logs/probe-<file>.json <text in the request url>
 //   node probe.mjs --show logs/probe-<file>.html [<text in the data path>]
+// To click around first (a store picker), e.g. 45 seconds:
+//   node probe.mjs --wait 45 <menu url>
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 
 const urls = process.argv.slice(2)
+// --wait <seconds>: keep the page open that long before recording, so a
+// store picker or age gate can be clicked by hand.
+let WAIT = 0
+const wi = urls.indexOf('--wait')
+if (wi >= 0) {
+  WAIT = parseInt(urls[wi + 1], 10) || 30
+  urls.splice(wi, 2)
+}
 if (!urls.length) {
   console.error('Usage: node probe.mjs <menu url> [more urls…]')
   process.exit(1)
@@ -142,6 +152,10 @@ for (const url of urls) {
       await sleep(5000)
     }
     await sleep(2000)
+    if (WAIT) {
+      console.log(`  waiting ${WAIT}s — click through the site now (pick a location, etc.)`)
+      await sleep(WAIT * 1000)
+    }
     for (let i = 0; i < 3; i++) {
       await page.evaluate('window.scrollTo(0, document.body.scrollHeight)').catch(() => {})
       await sleep(1500)

@@ -24,6 +24,26 @@
     "uplift-royal": {
       "provider": "dispense",
       "menu_url": "https://upliftroyal.com/shop"
+    },
+    "carnegie-hill": {
+      "provider": "carrot",
+      "menu_url": "https://carnegiehillcannabis.com/store/manhattan"
+    },
+    "elevation-hq": {
+      "provider": "carrot",
+      "menu_url": "https://elevationhqnyc.com/store"
+    },
+    "hornbill": {
+      "provider": "carrot",
+      "menu_url": "https://hornbillnyc.com/store"
+    },
+    "lenox-hill": {
+      "provider": "carrot",
+      "menu_url": "https://lenoxhillcannabis.com/store/main-location"
+    },
+    "kushklub": {
+      "provider": "jane",
+      "menu_url": "https://menu.kushklub.com/nyc"
     }
   }
 }
