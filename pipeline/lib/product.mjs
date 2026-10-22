@@ -9,7 +9,7 @@ export const num = (x) => {
 
 // Platform category labels -> the seven categories the app knows.
 export function normCategory(type, fallback) {
-  const t = String(type || '').toLowerCase()
+  const t = String(type || '').toLowerCase().replace(/_/g, '-')
   if (t.includes('pre-roll') || t.includes('preroll') || t.includes('pre roll')) return 'pre-rolls'
   if (t.includes('vap') || t.includes('cartridge') || t.includes('disposable')) return 'vaporizers'
   if (t.includes('edible')) return 'edibles'

@@ -85,6 +85,34 @@
     "vereleaf": {
       "provider": "blaze",
       "menu_url": "https://shop.vereleaf.com/shop"
+    },
+    "le-flora": {
+      "provider": "gapcommerce",
+      "menu_url": "https://www.lefloracannabis.com"
+    },
+    "mary-jane": {
+      "provider": "gapcommerce",
+      "menu_url": "https://maryjanecannabisco.com"
+    },
+    "yetti-club": {
+      "provider": "gapcommerce",
+      "menu_url": "https://www.theyetti.club"
+    },
+    "freshly-baked": {
+      "provider": "sweed",
+      "menu_url": "https://freshlybaked.nyc/stores/midtown/shop/menu"
+    },
+    "buzzwick": {
+      "provider": "sweed",
+      "menu_url": "https://buzzwicknyc.com/store/menu"
+    },
+    "new-amsterdam": {
+      "provider": "sweed",
+      "menu_url": "https://shop.newamsterdam.nyc/newamsterdam/menu"
+    },
+    "sanctuary-garden": {
+      "provider": "sweed",
+      "menu_url": "https://store.thesanctuarygarden.co/garden/menu"
     }
   }
 }

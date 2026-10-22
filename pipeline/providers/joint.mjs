@@ -94,7 +94,7 @@ export function mapProduct(hit, storeId, menuUrl, drops) {
 
 export default {
   name: 'joint',
-  enabled: false, // switch on after a dry run on one store looks right
+  enabled: true, // dry run on dazed-union-square: 90+ products, fields mapped
   needsBrowser: true,
   fields: PRODUCT_FIELDS.filter((f) => f !== 'url'),
 

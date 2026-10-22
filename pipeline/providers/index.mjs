@@ -15,5 +15,6 @@ import jane from './jane.mjs'
 import blaze from './blaze.mjs'
 import gapcommerce from './gapcommerce.mjs'
 import joint from './joint.mjs'
+import sweed from './sweed.mjs'
 
-export const PROVIDERS = { dutchie, dispense, carrot, jane, blaze, gapcommerce, joint }
+export const PROVIDERS = { dutchie, dispense, carrot, jane, blaze, gapcommerce, joint, sweed }

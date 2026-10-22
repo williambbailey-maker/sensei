@@ -37,7 +37,7 @@ export async function captureRequest(page, url, pattern, { timeout = 30000 } = {
 export async function pageFetch(page, url, { method = 'GET', headers = {}, body } = {}) {
   const h = {}
   for (const [k, v] of Object.entries(headers)) {
-    if (/^(x-|api-key|apikey|authorization|content-type|accept$)/i.test(k) && !/^x-request-id$/i.test(k)) h[k] = v
+    if (/^(x-|api-key|apikey|authorization|content-type|accept$|storeid$)/i.test(k) && !/^x-request-id$/i.test(k)) h[k] = v
   }
   if (body !== undefined && !h['content-type']) h['content-type'] = 'application/json'
   let res

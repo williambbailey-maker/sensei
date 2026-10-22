@@ -35,7 +35,8 @@ export function mapProduct(p, storeId, menuUrl, drops) {
   const a = p.search_attributes ?? p
   const category = normCategory(a.kind || a.custom_product_type, null)
   if (!['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals'].includes(category)) {
-    drops?.add(`category "${a.kind || a.custom_product_type}"`)
+    // An item with no kind at all isn't a product row; say what it is.
+    drops?.add(a.kind || a.custom_product_type ? `category "${a.kind || a.custom_product_type}"` : `no kind (keys: ${Object.keys(p).slice(0, 6).join(',')})`)
     return null
   }
   if (a.at_visible_store === false) {
@@ -81,7 +82,7 @@ export function mapProduct(p, storeId, menuUrl, drops) {
 
 export default {
   name: 'jane',
-  enabled: false, // switch on after a dry run on one store looks right
+  enabled: true, // dry run on kushklub: 63 products, link format checked
   needsBrowser: true,
   fields: PRODUCT_FIELDS.filter((f) => f !== 'brand_description'),
 

@@ -85,14 +85,33 @@ export default {
     if (!menuUrl) throw new Error(`no menu_url for ${store.slug} in stores.config.json`)
     const cap = await captureRequest(page, menuUrl, /gapcommerceapi\.com\/product\/search/)
     if (!cap.body || typeof cap.body !== 'object') throw new Error('product/search request had no JSON body')
-    const query = wholeMenuQuery(cap.body.query)
+    let query = wholeMenuQuery(cap.body.query)
+    let size = PAGE
     const hits = []
-    for (let from = 0; ; from += PAGE) {
-      const res = await pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: { ...cap.body, query, from, size: PAGE } })
+    for (let from = 0; ; from += size) {
+      let res
+      try {
+        res = await pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: { ...cap.body, query, from, size } })
+      } catch (e) {
+        if (!/^400/.test(e.message) || from > 0) throw e
+        // Rejected: try the site's own query untouched, then its own page size.
+        const tryBody = (b) => pageFetchRetry(page, cap.url, { method: 'POST', headers: cap.headers, body: b }).then((r) => r, () => null)
+        res = await tryBody({ ...cap.body, from: 0, size })
+        if (res) {
+          query = cap.body.query
+          console.log('    (full-menu query rejected; using the site\'s own query)')
+        } else {
+          res = await tryBody({ ...cap.body, from: 0 })
+          if (!res) throw e
+          query = cap.body.query
+          size = cap.body.size || 20
+          console.log(`    (only the site's own search accepted; paging ${size} at a time)`)
+        }
+      }
       const page_ = res?.hits?.hits ?? []
       hits.push(...page_)
       console.log(`    from ${from}: ${page_.length} hits`)
-      if (page_.length < PAGE) break
+      if (page_.length < size) break
       await sleep(CALL_GAP_MS)
     }
     // Prices come either in dollars or in cents; a menu whose top price is
