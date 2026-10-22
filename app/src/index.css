@@ -274,21 +274,42 @@ select:focus {
   gap: 12px;
 }
 
-/* Journey borough rows: the row picks the whole borough; the arrow on the
-   right opens its neighborhoods underneath, indented. */
-.boro-head {
-  @apply flex w-full items-stretch;
+/* Journey borough rows: the big row (with its →) picks the whole borough;
+   the smaller "Or pick a neighborhood" line under it opens its neighborhoods,
+   indented. */
+.boro {
   border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 .boro-pick {
-  @apply flex min-w-0 flex-1 items-center text-left;
-  gap: 12px;
-  padding: 16px 0;
+  @apply flex w-full items-center justify-between text-left;
+  gap: 14px;
+  padding: 20px 0 12px;
+}
+.boro-pick:last-child {
+  padding-bottom: 20px;
+}
+.boro-t {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.boro-all {
+  display: block;
+  margin-top: 2px;
+  font-size: 15px;
+  font-weight: 500;
 }
 .boro-tog {
-  @apply flex flex-none items-center justify-center;
-  width: 52px;
-  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  @apply flex items-center;
+  gap: 6px;
+  padding: 0 0 18px 24px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.12s;
+}
+.boro-tog:hover {
   color: #fff;
 }
 .boro-tog svg {
@@ -298,7 +319,8 @@ select:focus {
   transform: rotate(180deg);
 }
 .boro-hoods {
-  padding-left: 24px;
+  margin-left: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 .boro-hoods .label {
   font-size: 15px;
@@ -306,6 +328,9 @@ select:focus {
 }
 .boro-hoods .row {
   padding: 14px 0;
+}
+.boro-hoods .row:last-child {
+  border-bottom: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .boro-tog svg {

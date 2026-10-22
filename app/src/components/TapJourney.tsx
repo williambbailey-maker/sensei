@@ -134,39 +134,42 @@ export function TapJourney({
       </div>
 
       {step === 0 && (
-        <Step title="Where are you" hint="Tap a borough for all of it, or open its arrow to pick a neighborhood.">
+        <Step title="Where are you" hint="Tap a borough to see all of it. Every step after this is skippable.">
           {BOROUGHS.map((b) => {
             const hoods = hoodsFor(b)
             const isOpen = open === b && hoods.length > 0
             const id = `hoods-${b.replace(/\W/g, '')}`
             return (
               <div key={b} className="boro">
-                <div className="boro-head">
-                  <button type="button" onClick={() => pick({ borough: b, neighborhood: null })} className="boro-pick">
+                <button type="button" onClick={() => pick({ borough: b, neighborhood: null })} className="boro-pick">
+                  <span className="row-l">
                     <span className={`disc ${f.borough === b && !f.neighborhood ? 'disc-on' : ''}`} />
                     <span className="min-w-0">
-                      <span className="label block">{b}</span>
-                      <span className="meta block">
+                      <span className="boro-t">{b}</span>
+                      <span className="boro-all">
                         All of {b}
                         {boroughCounts[b] ? ` · ${shops(boroughCounts[b])}` : ''}
                       </span>
                     </span>
+                  </span>
+                  <span className="way-a" aria-hidden="true">
+                    →
+                  </span>
+                </button>
+                {hoods.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? null : b)}
+                    className="boro-tog"
+                    aria-expanded={isOpen}
+                    aria-controls={id}
+                  >
+                    {isOpen ? 'Hide neighborhoods' : 'Or pick a neighborhood'}
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" className={isOpen ? 'up' : ''}>
+                      <path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" strokeWidth="2" />
+                    </svg>
                   </button>
-                  {hoods.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => setOpen(isOpen ? null : b)}
-                      className="boro-tog"
-                      aria-expanded={isOpen}
-                      aria-controls={id}
-                      aria-label={`${isOpen ? 'Hide' : 'Show'} neighborhoods in ${b}`}
-                    >
-                      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" className={isOpen ? 'up' : ''}>
-                        <path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" strokeWidth="2" />
-                      </svg>
-                    </button>
-                  )}
-                </div>
+                )}
                 {isOpen && (
                   <div id={id} className="boro-hoods">
                     {hoods.map((n) => (
