@@ -330,7 +330,7 @@ window.addEventListener('popstate',close);document.addEventListener('keydown',fu
 var y=document.getElementById('agy');if(y)y.onclick=function(){document.documentElement.classList.add('ag-ok');try{sessionStorage.setItem(K,'1')}catch(e){}}})();</script>
 <noscript><style>#ag{display:none}</style></noscript>
 <script>
-(function(){var CFG={"key": "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX", "host": "https://us.i.posthog.com", "page_type": "neighborhood", "sb_url": "https://dywrisybvcorpfhbwgtg.supabase.co", "sb_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw", "neighborhood": "Upper East Side"};
+(function(){var CFG={"key": "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX", "host": "https://us.i.posthog.com", "meta": "1429430855347256", "page_type": "neighborhood", "sb_url": "https://dywrisybvcorpfhbwgtg.supabase.co", "sb_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw", "neighborhood": "Upper East Side"};
 function src(){try{var q=new URLSearchParams(location.search),s=(q.get('src')||'').toLowerCase();
 if(s.indexOf('qr')===0)return'qr';var m=(q.get('utm_medium')||'').toLowerCase(),u=(q.get('utm_source')||'').toLowerCase();
 if(['cpc','ppc','paid','paidsearch','display'].indexOf(m)>=0||/ad/.test(u))return'ad';
@@ -354,7 +354,17 @@ if(!INT&&CFG.key&&CFG.key.indexOf('__')!==0){try{
 posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,person_profiles:'identified_only'});
 var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};
 if(CFG.category)base.category=CFG.category;posthog.register(base);PH=true;}catch(e){}}
-function ev(name,p){p=p||{};sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
+var FB=false;if(!INT&&!BOT&&CFG.meta){try{
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init',CFG.meta);FB=true;fbq('track','PageView',{},{eventID:Math.random().toString(36).slice(2)+Date.now().toString(36)});}catch(e){}}
+function eid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function eng(){try{if(sessionStorage.getItem('sensei_meta_engaged'))return;sessionStorage.setItem('sensei_meta_engaged','1');}catch(e){}fbq('trackCustom','MenuEngaged',{},{eventID:eid()});}
+function fb(name){if(!FB)return;try{var o={eventID:eid()};
+if(name==='brand_view')fbq('track','ViewContent',{content_type:'brand'},o);
+else if(name==='chip_tap')fbq('track','Search',{},o);
+else if(name==='menu_click'||name==='directions_click'){fbq('track','Lead',{content_category:name==='menu_click'?'menu':'directions'},o);eng();}
+else if(name==='signup')fbq('track','CompleteRegistration',{},o);}catch(e){}}
+function ev(name,p){p=p||{};fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
 var df=document.getElementById('drop-form');var dop=document.getElementById('drop-open');function dopen(){if(!df||!dop)return;dop.parentNode.hidden=true;df.hidden=false;df.email.focus();}if(dop)dop.addEventListener('click',dopen);if(location.hash==='#drop')dopen();if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}
