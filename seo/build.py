@@ -36,6 +36,8 @@ APP = "https://sensei.nyc"  # the Sensei web app (SPA at the domain root)
 # value starting "__" makes the inline script no-op. See ANALYTICS-EVENTS.md.
 POSTHOG_KEY = os.environ.get("SENSEI_POSTHOG_KEY", "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX")
 POSTHOG_HOST = os.environ.get("SENSEI_POSTHOG_HOST", "https://us.i.posthog.com")
+# Meta Pixel (dataset "sensei.nyc"). Public ID. Set SENSEI_META_PIXEL_ID="" to disable.
+META_PIXEL_ID = os.environ.get("SENSEI_META_PIXEL_ID", "1429430855347256")
 
 # Supabase — for the first-party pageview beacon. The anon key is public by
 # design (ships in the app bundle; insert-only on pageviews via RLS).
@@ -474,7 +476,7 @@ def pkey(brand, name):
 # product_view/compare_view/save/signup have no surface on these pages — they
 # live in the app. See reports/README.md for the full mapping.
 def analytics_js(page_type, ctx):
-    cfg = {"key": POSTHOG_KEY, "host": POSTHOG_HOST, "page_type": page_type,
+    cfg = {"key": POSTHOG_KEY, "host": POSTHOG_HOST, "meta": META_PIXEL_ID, "page_type": page_type,
            "sb_url": SUPABASE_URL, "sb_key": SUPABASE_ANON}
     for k, v in (ctx or {}).items():
         if v:
@@ -504,7 +506,17 @@ if(!INT&&CFG.key&&CFG.key.indexOf('__')!==0){try{
 posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,person_profiles:'identified_only'});
 var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};
 if(CFG.category)base.category=CFG.category;posthog.register(base);PH=true;}catch(e){}}
-function ev(name,p){p=p||{};sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
+var FB=false;if(!INT&&!BOT&&CFG.meta){try{
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init',CFG.meta);FB=true;fbq('track','PageView',{},{eventID:Math.random().toString(36).slice(2)+Date.now().toString(36)});}catch(e){}}
+function eid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function eng(){try{if(sessionStorage.getItem('sensei_meta_engaged'))return;sessionStorage.setItem('sensei_meta_engaged','1');}catch(e){}fbq('trackCustom','MenuEngaged',{},{eventID:eid()});}
+function fb(name){if(!FB)return;try{var o={eventID:eid()};
+if(name==='brand_view')fbq('track','ViewContent',{content_type:'brand'},o);
+else if(name==='chip_tap')fbq('track','Search',{},o);
+else if(name==='menu_click'||name==='directions_click'){fbq('track','Lead',{content_category:name==='menu_click'?'menu':'directions'},o);eng();}
+else if(name==='signup')fbq('track','CompleteRegistration',{},o);}catch(e){}}
+function ev(name,p){p=p||{};fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
 var df=document.getElementById('drop-form');var dop=document.getElementById('drop-open');function dopen(){if(!df||!dop)return;dop.parentNode.hidden=true;df.hidden=false;df.email.focus();}if(dop)dop.addEventListener('click',dopen);if(location.hash==='#drop')dopen();if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}

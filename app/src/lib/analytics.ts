@@ -13,6 +13,7 @@
 // and reloads don't inflate pageviews.
 import posthog from 'posthog-js'
 import { supabase } from './supabase'
+import { initMetaPixel, metaTrack } from './metaPixel'
 
 // The project key is public (write-only, ships in the bundle) — baked as a
 // fallback like the Supabase anon key, so analytics works out of the box. Env
@@ -134,7 +135,9 @@ export function initAnalytics(): void {
   source = deriveSource()
   internal = internalFlag()
   beacon()
-  // Internal devices are logged (flagged) in Supabase but kept out of PostHog.
+  // Internal devices and bots are logged (flagged) in Supabase but kept out of
+  // PostHog and Meta.
+  if (!internal && !isBot()) initMetaPixel()
   if (internal || !KEY || KEY.startsWith('__')) return
   posthog.init(KEY, {
     api_host: HOST,
@@ -182,6 +185,7 @@ export function track(event: string, props: Props = {}): void {
   } catch {
     /* never let analytics break the app */
   }
+  metaTrack(event)
   if (!on) return
   posthog.capture(event, full)
 }
