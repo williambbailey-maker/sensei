@@ -38,6 +38,17 @@ function largestArray(node, depth = 0, best = { len: 0, path: '', keys: [] }, pa
 // items (trimmed), so a new platform's product shape can be read.
 if (urls[0] === '--show') {
   const [, file, match = ''] = urls
+  if (file.endsWith('.html')) {
+    const nd = readFileSync(file, 'utf8').match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/)
+    if (!nd) {
+      console.log('no __NEXT_DATA__ in that page')
+      process.exit(0)
+    }
+    const big = largestArray(JSON.parse(nd[1]))
+    console.log(`__NEXT_DATA__: biggest list ${big.len} items at ${big.path}`)
+    for (const item of (big.items || []).slice(0, 2)) console.log(JSON.stringify(item, null, 1).slice(0, 3000))
+    process.exit(0)
+  }
   const { calls } = JSON.parse(readFileSync(file, 'utf8'))
   const hits = calls.filter((c) => `${c.host}${c.path}${c.query}${c.post}`.includes(match))
   console.log(`${hits.length} of ${calls.length} requests match "${match}"`)
@@ -110,6 +121,23 @@ for (const url of urls) {
     console.log(`  page error: ${e.message.slice(0, 120)}`)
   }
   console.log(`  landed on: ${page.url()}`)
+  // Server-rendered sites ship the first page of products inside the HTML
+  // (Next.js __NEXT_DATA__ and the like) rather than fetching it.
+  const html = await page.content().catch(() => '')
+  const embedded = []
+  const nd = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/)
+  if (nd) {
+    try {
+      const big = largestArray(JSON.parse(nd[1]))
+      embedded.push(`__NEXT_DATA__ (${Math.round(nd[1].length / 1024)} KB) · biggest list ${big.len} items at ${big.path} · item fields: ${big.keys.join(', ')}`)
+    } catch {
+      embedded.push(`__NEXT_DATA__ (${Math.round(nd[1].length / 1024)} KB, unparseable)`)
+    }
+  }
+  for (const name of ['__NUXT__', '__INITIAL_STATE__', '__PRELOADED_STATE__', '__APOLLO_STATE__']) {
+    if (html.includes(name)) embedded.push(`${name} present in the HTML`)
+  }
+  if (embedded.length) console.log(`  embedded data:\n${embedded.map((e) => `    ${e}`).join('\n')}`)
   const frames = page.frames().map((f) => f.url()).filter((f) => f && f !== 'about:blank' && f !== page.url())
   if (frames.length) console.log(`  embedded frames:\n${frames.slice(0, 8).map((f) => `    ${f.slice(0, 160)}`).join('\n')}`)
   console.log(`  ${calls.length} JSON requests:`)
@@ -125,8 +153,9 @@ for (const url of urls) {
   const best = [...calls].sort((a, b) => b.products - a.products)[0]
   if (best?.products) console.log(`  biggest list: ${best.products} items from ${best.host}${best.path}\n  item fields: ${best.itemKeys.join(', ')}`)
   const file = `logs/probe-${new URL(url).host}-${Date.now()}.json`
-  writeFileSync(file, JSON.stringify({ url, landed: page.url(), frames, calls }, null, 2))
-  console.log(`  saved: ${file}`)
+  writeFileSync(file, JSON.stringify({ url, landed: page.url(), frames, embedded, calls }, null, 2))
+  writeFileSync(file.replace(/\.json$/, '.html'), html)
+  console.log(`  saved: ${file} (+ .html)`)
   await page.close()
   await sleep(3000) // polite gap between pages
 }
