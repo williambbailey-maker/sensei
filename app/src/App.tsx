@@ -458,9 +458,12 @@ export default function App() {
       )}
 
       <footer className="wrap site-foot" style={{ paddingTop: 96, paddingBottom: 80 }}>
-        <div id="drop" className="signup">
-          <Newsletter source="footer" />
-        </div>
+        {/* The weekly-drop sign-up shows on the home only. */}
+        {view === 'journey' && way === null && (
+          <div id="drop" className="signup">
+            <Newsletter source="footer" />
+          </div>
+        )}
         <div className="contact">
           <a href="mailto:hello@sensei.nyc" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc" className="ic">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg>

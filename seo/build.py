@@ -571,7 +571,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=No
 {_secondary_open(secondary) if secondary else ''}<div class="wrap">
 {'' if secondary else _TOP}
 <main>{body}</main>
-{_secondary_close(secondary) if secondary else _END + menu_html(path, MENU_COUNTS)}{'' if secondary else AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
+{_secondary_close(secondary) if secondary else _end(path) + menu_html(path, MENU_COUNTS)}{'' if secondary else AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
 """
 
 _TOP = '<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>'
@@ -582,14 +582,20 @@ def _secondary_open(sec):
 def _secondary_close(sec):
     return secondary_footer(sec[0]) + '</div>' + SECONDARY_JS
 
-_END = """<div class="rule"></div>
-<div class="end">
-<div class="signup" id="drop">
+# The weekly-drop sign-up shows on the home only, not on shop, neighborhood,
+# brand or product pages.
+def _end(path):
+    return _END.replace("{signup}", _SIGNUP if path == "/" else "")
+
+_SIGNUP = """<div class="signup" id="drop">
 <div class="sl"><button type="button" id="drop-open">Get the weekly drop <span>→</span></button></div>
 <form class="inp" id="drop-form" hidden><input type="email" name="email" placeholder="Your email" aria-label="Email address for the weekly drop mailing list" autocomplete="email" required><button type="submit">Join</button></form>
 <p class="dd ok" id="drop-ok" hidden>You're on the list. The first drop lands next week.</p>
-</div>
-<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="#" class="ic" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
+</div>"""
+
+_END = """<div class="rule"></div>
+<div class="end">
+{signup}<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="#" class="ic" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="foot-mark" aria-label="Sensei NYC"><span class="wm">Sensei</span><div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div></div>
 <div class="foot-rule"></div>
 <nav class="legal-links" aria-label="Legal"><a href="/terms/">Terms</a><a href="/privacy/">Privacy Policy</a><a href="/about/">About</a></nav>
