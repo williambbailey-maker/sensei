@@ -95,11 +95,32 @@ function internalFlag(): boolean {
   }
 }
 
+// Coarse location (country / region / city) from /api/geo, which reads Vercel's
+// edge headers. Fetched once per session and cached; no IP is ever stored.
+type Geo = { country: string | null; region: string | null; city: string | null }
+const NO_GEO: Geo = { country: null, region: null, city: null }
+let geo: Geo = NO_GEO
+async function loadGeo(): Promise<Geo> {
+  try {
+    const cached = sessionStorage.getItem('sensei_geo')
+    if (cached) return (geo = JSON.parse(cached) as Geo)
+    const r = await fetch('/api/geo', { cache: 'no-store' })
+    if (!r.ok) return NO_GEO
+    const g = (await r.json()) as Geo
+    geo = { country: g.country ?? null, region: g.region ?? null, city: g.city ?? null }
+    sessionStorage.setItem('sensei_geo', JSON.stringify(geo))
+    return geo
+  } catch {
+    return NO_GEO
+  }
+}
+
 // First-party pageview → Supabase. Deduped: one row per page per session per
 // 30 minutes, so reloads and service-worker refreshes don't count twice.
-function beacon(): void {
+async function beacon(): Promise<void> {
   try {
     if (isBot()) return
+    await loadGeo()
     const k = 'sensei_pv_' + location.pathname
     const last = Number(sessionStorage.getItem(k) || 0)
     if (Date.now() - last < 30 * 60 * 1000) return
@@ -121,6 +142,7 @@ function beacon(): void {
         visitor_id: visitorId(),
         device: device(),
         internal,
+        ...geo,
       })
       .then(
         () => undefined,
@@ -134,7 +156,7 @@ function beacon(): void {
 export function initAnalytics(): void {
   source = deriveSource()
   internal = internalFlag()
-  beacon()
+  void beacon()
   // Internal devices and bots are logged (flagged) in Supabase but kept out of
   // PostHog and Meta.
   if (!internal && !isBot()) initMetaPixel()
@@ -175,6 +197,7 @@ export function track(event: string, props: Props = {}): void {
           neighborhood: (neighborhood as string | null) ?? null,
           category: (category as string | null | undefined) ?? null,
           internal,
+          ...geo,
           props: rest,
         })
         .then(
