@@ -271,8 +271,23 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .ft .contact .ic{display:inline-flex}
 .ft b{color:var(--ink)}
 /* page heads */
-.crumb{font-size:13px;font-weight:400;color:var(--mist);margin:30px 0 0}
-.crumb a{color:var(--mist)}
+.trail{display:flex;align-items:flex-start;gap:12px;margin:26px 0 0}
+.trail-back{width:44px;height:44px;flex:none;border-radius:50%;background:var(--ink);color:var(--field);display:flex;align-items:center;justify-content:center}
+.trail-line{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.trail-line::-webkit-scrollbar{display:none}
+.trail-stops{position:relative;display:flex;justify-content:space-between;gap:10px;margin:0;padding:15px 0 0;list-style:none}
+.trail-stops::before{content:"";position:absolute;left:7px;right:7px;top:19px;height:6px;background:#00933C}
+.trail-stop{flex:0 1 auto;min-width:min-content}
+.trail-stop,.trail-stop>a{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:44px;font-size:11.5px;font-weight:400;line-height:1.25;color:rgba(255,255,255,.75);text-decoration:none}
+.trail-stop>a:hover{color:var(--ink)}
+.trail-stop:first-child,.trail-stop:first-child>a{align-items:flex-start}
+.trail-stop:last-child,.trail-stop:last-child>a{align-items:flex-end}
+.trail-stop span:last-child{text-align:center}
+.trail-stop:first-child span:last-child{text-align:left}
+.trail-stop:last-child span:last-child{text-align:right}
+.trail-dot{width:14px;height:14px;border-radius:50%;box-sizing:border-box;background:var(--ink);border:3px solid var(--ink)}
+.trail-stop.now{color:var(--ink);font-weight:700}
+.trail-stop.now .trail-dot{background:var(--field)}
 .kicker{font-size:13px;font-weight:700;margin:26px 0 0}
 .kicker+h1{margin-top:12px}
 .addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
@@ -573,7 +588,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=No
 {_secondary_open(secondary) if secondary else ''}<div class="wrap">
 {'' if secondary else _TOP}
 <main>{body}</main>
-{_secondary_close(secondary) if secondary else _end(path) + menu_html(path, MENU_COUNTS)}{'' if secondary else AGE_GATE}{analytics_js(page_type, ctx)}</body></html>
+{_secondary_close(secondary) if secondary else _end(path) + menu_html(path, MENU_COUNTS)}{'' if secondary else AGE_GATE + TRAIL_JS}{analytics_js(page_type, ctx)}</body></html>
 """
 
 _TOP = '<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>'
@@ -637,6 +652,26 @@ var bar=document.getElementById('sh-bar'),s=document.getElementById('sh-sentinel
 if(bar&&s&&'IntersectionObserver' in window){new IntersectionObserver(function(en){bar.classList.toggle('scrolled',!en[0].isIntersecting);}).observe(s);}
 })();</script>"""
 
+# The route trail (same as the app's): a round back button, then a green
+# line with a stop per level, this page last. It shows the same levels as the
+# page's BreadcrumbList. ← goes back to the previous Sensei page when the
+# visitor came from one (TRAIL_JS), else up one level (its href).
+def trail(items):
+    stops = "".join(
+        f'<li class="trail-stop now" aria-current="page"><span class="trail-dot"></span><span>{esc(n)}</span></li>'
+        if i == len(items) - 1 else
+        f'<li class="trail-stop"><a href="{u}"><span class="trail-dot"></span><span>{esc(n)}</span></a></li>'
+        for i, (n, u) in enumerate(items))
+    up = items[-2][1] if len(items) > 1 else "/"
+    return (f'<nav class="trail" aria-label="Breadcrumb"><a class="trail-back" href="{up}" aria-label="Back">'
+            '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>'
+            f'</a><div class="trail-line"><ol class="trail-stops">{stops}</ol></div></nav>')
+
+TRAIL_JS = """<script>(function(){var l=document.querySelector('.trail-line');if(l)l.scrollLeft=l.scrollWidth;
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a.trail-back');if(!a)return;
+try{if(document.referrer&&new URL(document.referrer).origin===location.origin&&history.length>1){e.preventDefault();history.back();}}catch(_){}});
+})();</script>"""
+
 def breadcrumb(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList",
             "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n,
@@ -694,6 +729,11 @@ def directions_url(name, address, lat, lng):
 def build_dispensary(d):
     path = disp_path(d["slug"])
     hoodslug = slugify(d["neighborhood"]) if d.get("neighborhood") else None
+    # Sensei → the shop's neighborhood page (or the neighborhoods index when
+    # it has none) → the shop: the trail and the BreadcrumbList.
+    crumbs = [("Sensei", "/"),
+              (d["neighborhood"], f"/neighborhoods/{hoodslug}/") if hoodslug in HOOD_SLUGS else ("Neighborhoods", "/neighborhoods/"),
+              (d["name"], path)]
     title = f"{d['name']} — Cannabis Menu, Prices & Deals | Sensei"
     desc = (f"{d['name']} in {d.get('neighborhood') or d.get('borough') or 'NYC'}: "
             f"{d['in_stock']} products in stock from {d['brands']} brands, from {money(d['min_price'])}. "
@@ -708,11 +748,9 @@ def build_dispensary(d):
            "address": addr, "geo": {"@type": "GeoCoordinates", "latitude": d.get("lat"), "longitude": d.get("lng")},
            "hasMap": maps,
            "areaServed": f"{d.get('borough') or 'New York'}, NY"},
-          breadcrumb([("Sensei", "/"), ("Dispensaries", "/dispensaries/"),
-                      (d["name"], path)])]
+          breadcrumb(crumbs)]
     cp = get_copy("dispensary", d["slug"], d["name"])
     ld.append(faq_ld(cp))
-    hood_link = f'<a href="/neighborhoods/{hoodslug}/">{esc(d["neighborhood"])}</a>' if hoodslug in HOOD_SLUGS else esc(d.get("neighborhood") or "")
     # brand chips -> brand pages where they exist
     bchips = ""
     for b in (d.get("top_brands") or []):
@@ -724,7 +762,7 @@ def build_dispensary(d):
     feat = "".join(pcard(p) for p in (d.get("featured") or [])[:4])
     body = f"""
 <div class="lay"><div class="lead">
-<p class="crumb"><a href="/">Sensei</a> › {hood_link} › Dispensary</p>
+{trail(crumbs)}
 <p class="kicker">{esc(d.get('neighborhood') or '')} · {esc(d.get('borough') or '')}</p>
 <h1>{esc(d['name'])}</h1>
 <p class="addr">{f'<span>{esc(full_addr)}</span>' if full_addr else ''}<a class="dir" href="{esc(maps)}" target="_blank" rel="noopener" data-ev="directions" data-dispensary="{esc(d['name'])}">Directions in Google Maps →</a></p>
@@ -768,7 +806,7 @@ def build_neighborhood(n):
     feat = "".join(pcard(p) for p in (n.get("featured") or [])[:4])
     body = f"""
 <div class="lay"><div class="lead">
-<p class="crumb"><a href="/">Sensei</a> › {esc(n['borough'])} › Neighborhood</p>
+{trail([("Sensei", "/"), ("Neighborhoods", "/neighborhoods/"), (n["neighborhood"], path)])}
 <p class="kicker">{esc(n['borough'])}</p>
 <h1>Weed in {esc(n['neighborhood'])}</h1>
 {copy_intro(cp)}
@@ -813,7 +851,7 @@ def build_brand(b):
     feat = "".join(pcard({**p, "brand": b["brand"]}) for p in (b.get("featured") or [])[:4])
     body = f"""
 <div class="lay"><div class="lead">
-<p class="crumb"><a href="/">Sensei</a> › Brands › {esc(b['brand'])}</p>
+{trail([("Sensei", "/"), ("Brands", "/brands/"), (b["brand"], path)])}
 <p class="kicker">Brand</p>
 <h1>{esc(b['brand'])} in NYC</h1>
 {copy_intro(cp)}
@@ -840,7 +878,7 @@ def build_category(c):
     desc = (f"Compare {label.lower()} across {c['stores']} NYC dispensaries: {c['in_stock']} in stock "
             f"from {c['brands']} brands, starting at {money(c['min_price'])}. Filter by price and neighborhood on Sensei.")
     ld = [itemlist(f"{label} in New York City", [((p.get('brand') or '') + ' ' + (p.get('name') or '')).strip() for p in (c.get("featured") or [])]),
-          breadcrumb([("Sensei", "/"), ("NYC", "/nyc/"), (label, path)])]
+          breadcrumb([("Sensei", "/"), ("Products", "/nyc/"), (label, path)])]
     cp = get_copy("category", cat, label)
     ld.append(faq_ld(cp))
     bchips = ""
@@ -854,7 +892,7 @@ def build_category(c):
     feat = "".join(pcard({**p, "category": cat}) for p in (c.get("featured") or [])[:6])
     body = f"""
 <div class="lay"><div class="lead">
-<p class="crumb"><a href="/">Sensei</a> › NYC › {esc(label)}</p>
+{trail([("Sensei", "/"), ("Products", "/nyc/"), (label, path)])}
 <p class="kicker">New York City</p>
 <h1>{esc(label)} in NYC</h1>
 {copy_intro(cp)}
@@ -957,7 +995,7 @@ def _index(path, title, h1, lede, rows, crumb_name, exclude):
         f'<div class="sd">{esc(sub)}</div></div></div><div class="sn"><b>{n}</b>{esc(unit)}</div></a>'
         for name, sub, n, unit, href in rows)
     body = f"""
-<p class="crumb"><a href="/">Sensei</a> › {esc(crumb_name)}</p>
+{trail([("Sensei", "/"), (crumb_name, path)])}
 <h1>{esc(h1)}</h1>
 <p class="lede sm">{esc(lede)}</p>
 <div class="sh">{len(rows)} {esc(crumb_name.lower())}</div><div class="shops">{body_rows}</div>

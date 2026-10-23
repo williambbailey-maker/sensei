@@ -5,7 +5,8 @@ import { ProductCard, eventProps } from './ProductCard'
 import { ProductDetail } from './ProductDetail'
 import { track, productKey } from '../lib/analytics'
 import { rankProducts } from '../lib/rank'
-import { cleanTitle, prettyStore } from '../lib/labels'
+import { cleanTitle, prettyStore, stepValue } from '../lib/labels'
+import { Trail, type Stop } from './Trail'
 import type { Filters, Product } from '../lib/types'
 
 export function Results({
@@ -13,7 +14,7 @@ export function Results({
   filters,
   neighborhoodsByBorough,
   onChange,
-  onHome,
+  onBack,
   onEdit,
   onAdd,
   loading = false,
@@ -22,8 +23,8 @@ export function Results({
   filters: Filters
   neighborhoodsByBorough: Record<string, string[]>
   onChange: (f: Filters) => void
-  onHome: () => void
-  onEdit: () => void
+  onBack: () => void
+  onEdit: (step: number) => void
   onAdd?: (p: Product) => void
   loading?: boolean
 }) {
@@ -47,6 +48,20 @@ export function Results({
       : (filters.neighborhood ?? filters.borough)
 
   const waiting = loading && ranked.length === 0
+
+  // The trail: where, then each choice that narrows the list, then Results.
+  // Tapping a stop reopens the journey at that step.
+  const trail: Stop[] = [
+    {
+      label: filters.store ? (filters.storeName ?? prettyStore(filters.store)) : stepValue(0, filters),
+      onClick: () => onEdit(0),
+    },
+  ]
+  if (filters.format) trail.push({ label: stepValue(1, filters), onClick: () => onEdit(1) })
+  if (filters.strain) trail.push({ label: stepValue(2, filters), onClick: () => onEdit(2) })
+  if (filters.format === 'flower' && filters.size) trail.push({ label: stepValue(3, filters), onClick: () => onEdit(3) })
+  if (filters.priceCeiling != null) trail.push({ label: stepValue(4, filters), onClick: () => onEdit(4) })
+  trail.push({ label: 'Results' })
 
   // The detail panel is owned here so its arrows can step through the list:
   // openIndex points into `shown`, and stepping logs a product_view for the
@@ -90,14 +105,7 @@ export function Results({
 
   return (
     <div className="wrap" style={{ paddingTop: 28 }}>
-      <div className="flex items-center justify-between">
-        <button type="button" onClick={onHome} className="ghost">
-          Home
-        </button>
-        <button type="button" onClick={onEdit} className="ghost">
-          Edit
-        </button>
-      </div>
+      <Trail stops={trail} onBack={onBack} />
 
       <h1 className="poster" style={{ marginTop: 26 }}>
         {where ?? 'All of New York'}

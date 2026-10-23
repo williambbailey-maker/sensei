@@ -107,8 +107,23 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .ft .contact .ic{display:inline-flex}
 .ft b{color:var(--ink)}
 /* page heads */
-.crumb{font-size:13px;font-weight:400;color:var(--mist);margin:30px 0 0}
-.crumb a{color:var(--mist)}
+.trail{display:flex;align-items:flex-start;gap:12px;margin:26px 0 0}
+.trail-back{width:44px;height:44px;flex:none;border-radius:50%;background:var(--ink);color:var(--field);display:flex;align-items:center;justify-content:center}
+.trail-line{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.trail-line::-webkit-scrollbar{display:none}
+.trail-stops{position:relative;display:flex;justify-content:space-between;gap:10px;margin:0;padding:15px 0 0;list-style:none}
+.trail-stops::before{content:"";position:absolute;left:7px;right:7px;top:19px;height:6px;background:#00933C}
+.trail-stop{flex:0 1 auto;min-width:min-content}
+.trail-stop,.trail-stop>a{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:44px;font-size:11.5px;font-weight:400;line-height:1.25;color:rgba(255,255,255,.75);text-decoration:none}
+.trail-stop>a:hover{color:var(--ink)}
+.trail-stop:first-child,.trail-stop:first-child>a{align-items:flex-start}
+.trail-stop:last-child,.trail-stop:last-child>a{align-items:flex-end}
+.trail-stop span:last-child{text-align:center}
+.trail-stop:first-child span:last-child{text-align:left}
+.trail-stop:last-child span:last-child{text-align:right}
+.trail-dot{width:14px;height:14px;border-radius:50%;box-sizing:border-box;background:var(--ink);border:3px solid var(--ink)}
+.trail-stop.now{color:var(--ink);font-weight:700}
+.trail-stop.now .trail-dot{background:var(--field)}
 .kicker{font-size:13px;font-weight:700;margin:26px 0 0}
 .kicker+h1{margin-top:12px}
 .addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
@@ -261,7 +276,7 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 <div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>
 <div class="lay"><div class="lead">
-<p class="crumb"><a href="/">Sensei</a> › Manhattan › Neighborhood</p>
+<nav class="trail" aria-label="Breadcrumb"><a class="trail-back" href="/neighborhoods/" aria-label="Back"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg></a><div class="trail-line"><ol class="trail-stops"><li class="trail-stop"><a href="/"><span class="trail-dot"></span><span>Sensei</span></a></li><li class="trail-stop"><a href="/neighborhoods/"><span class="trail-dot"></span><span>Neighborhoods</span></a></li><li class="trail-stop now" aria-current="page"><span class="trail-dot"></span><span>SoHo</span></li></ol></div></nav>
 <p class="kicker">Manhattan</p>
 <h1>Weed in SoHo</h1>
 <div class="intro"><p>SoHo and Nolita have five licensed dispensaries with about 2,100 products. The Travel Agency on Broadway near Houston is the largest at about 560, followed by Lighthouse Cannabis at 381 Broadway at about 460 and Alta on Kenmare Street on the Nolita side at about 430. The Flowery's SoHo store on Broadway near Broome lists about 390, and Dagmar on West Broadway is the smallest at about 260, with pre-rolls its largest category.</p><p>Pre-rolls and edibles lead, at 619 and 536 listings, with 489 vapes and 336 flower options. The 35 topicals are the second-most of any neighborhood after Midtown, driven by Alta's shelf, the largest in SoHo, and tinctures total 30. The Travel Agency has the most vapes and flower in the area, with RYTHM, Ruby Farms and Select at the top of its brand list. Lighthouse has the most pre-rolls in SoHo and one of the deepest Cannabals selections in the city. Alta is the MFNY and 1906 stop, and The Flowery leans on PAX, Ayrloom and To The Moon. The Travel Agency, Lighthouse and The Flowery are all on Broadway, so shoppers walking that street can compare their menus in one trip.</p></div>
@@ -324,7 +339,10 @@ window.addEventListener('popstate',close);document.addEventListener('keydown',fu
 <script>(function(){var K='sensei_age_ok';try{if(sessionStorage.getItem(K)==='1')document.documentElement.classList.add('ag-ok')}catch(e){}
 var y=document.getElementById('agy');if(y)y.onclick=function(){document.documentElement.classList.add('ag-ok');try{sessionStorage.setItem(K,'1')}catch(e){}}})();</script>
 <noscript><style>#ag{display:none}</style></noscript>
-<script>
+<script>(function(){var l=document.querySelector('.trail-line');if(l)l.scrollLeft=l.scrollWidth;
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a.trail-back');if(!a)return;
+try{if(document.referrer&&new URL(document.referrer).origin===location.origin&&history.length>1){e.preventDefault();history.back();}}catch(_){}});
+})();</script><script>
 (function(){var CFG={"key": "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX", "host": "https://us.i.posthog.com", "meta": "1429430855347256", "page_type": "neighborhood", "sb_url": "https://dywrisybvcorpfhbwgtg.supabase.co", "sb_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw", "neighborhood": "SoHo"};
 function src(){try{var q=new URLSearchParams(location.search),s=(q.get('src')||'').toLowerCase();
 if(s.indexOf('qr')===0)return'qr';var m=(q.get('utm_medium')||'').toLowerCase(),u=(q.get('utm_source')||'').toLowerCase();
@@ -339,7 +357,9 @@ function id(store,k){try{var v=store.getItem(k);if(!v){v=Math.random().toString(
 var SID=id(sessionStorage,'sensei_sid'),VID=id(localStorage,'sensei_vid');
 var DEV=/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop';
 var INT=false;try{var mq=new URLSearchParams(location.search).get('me');if(mq==='1')localStorage.setItem('sensei_internal','1');else if(mq==='0')localStorage.removeItem('sensei_internal');INT=localStorage.getItem('sensei_internal')==='1';}catch(e){}
-function sb(table,row){if(BOT||!CFG.sb_url||!CFG.sb_key)return;try{fetch(CFG.sb_url+'/rest/v1/'+table,{method:'POST',keepalive:true,headers:{'apikey':CFG.sb_key,'Authorization':'Bearer '+CFG.sb_key,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)}).catch(function(){});}catch(e){}}
+var NOGEO={country:null,region:null,city:null};
+var GEO=(function(){try{var c=sessionStorage.getItem('sensei_geo');if(c)return Promise.resolve(JSON.parse(c));return fetch('/api/geo',{cache:'no-store'}).then(function(r){return r.ok?r.json():NOGEO;}).then(function(g){g={country:g.country||null,region:g.region||null,city:g.city||null};try{sessionStorage.setItem('sensei_geo',JSON.stringify(g));}catch(e){}return g;}).catch(function(){return NOGEO;});}catch(e){return Promise.resolve(NOGEO);}})();
+function sb(table,row){if(BOT||!CFG.sb_url||!CFG.sb_key)return;GEO.then(function(g){try{row.country=g.country;row.region=g.region;row.city=g.city;fetch(CFG.sb_url+'/rest/v1/'+table,{method:'POST',keepalive:true,headers:{'apikey':CFG.sb_key,'Authorization':'Bearer '+CFG.sb_key,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)}).catch(function(){});}catch(e){}});}
 try{var pk='sensei_pv_'+location.pathname,last=+(sessionStorage.getItem(pk)||0);
 if(Date.now()-last>1800000){sessionStorage.setItem(pk,String(Date.now()));var ref=null;try{ref=document.referrer?new URL(document.referrer).hostname:null;}catch(e){}
 sb('pageviews',{path:location.pathname,page_type:CFG.page_type,source:SRC,referrer:ref,session_id:SID,visitor_id:VID,device:DEV,internal:INT,brand:CFG.brand||null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null});}}catch(e){}

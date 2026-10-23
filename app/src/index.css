@@ -274,6 +274,106 @@ select:focus {
   gap: 12px;
 }
 
+/* Route trail (components/Trail.tsx): a white round back button, then a
+   green line with a stop per choice so far; the current stop is hollow and
+   bold. Earlier stops are buttons. Long trails scroll sideways. */
+.trail {
+  @apply flex items-start;
+  gap: 12px;
+}
+.trail-back {
+  @apply flex flex-none items-center justify-center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b0b0b;
+}
+.trail-line {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.trail-line::-webkit-scrollbar {
+  display: none;
+}
+.trail-stops {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0;
+  padding: 15px 0 0;
+  list-style: none;
+}
+.trail-stops::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  top: 19px;
+  height: 6px;
+  background: #00933c;
+}
+.trail-stops.one::before {
+  display: none;
+}
+.trail-stop,
+.trail-stop > button {
+  @apply flex flex-col items-center;
+  position: relative;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 11.5px;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.75);
+}
+/* Stops shrink and long names wrap so the whole trail fits; only a trail
+   of unbreakable names wider than the screen scrolls. */
+.trail-stop {
+  flex: 0 1 auto;
+  min-width: min-content;
+}
+.trail-stop span:last-child {
+  text-align: center;
+}
+.trail-stop:first-child span:last-child {
+  text-align: left;
+}
+.trail-stop:last-child span:last-child {
+  text-align: right;
+}
+.trail-stop > button:hover {
+  color: #fff;
+}
+.trail-stop:first-child,
+.trail-stop:first-child > button {
+  align-items: flex-start;
+}
+.trail-stop:last-child,
+.trail-stop:last-child > button {
+  align-items: flex-end;
+}
+.trail-stops.one .trail-stop {
+  align-items: flex-start;
+}
+.trail-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: #fff;
+  border: 3px solid #fff;
+}
+.trail-stop.now {
+  color: #fff;
+  font-weight: 700;
+}
+.trail-stop.now .trail-dot {
+  background: #0b0b0b;
+}
+
 /* Journey borough rows: the big row (with its →) picks the whole borough;
    the smaller "Or pick a neighborhood" line under it opens its neighborhoods,
    indented. */

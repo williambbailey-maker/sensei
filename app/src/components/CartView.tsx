@@ -1,5 +1,6 @@
 import { cleanTitle, prettyStore } from '../lib/labels'
 import type { Cart } from '../lib/types'
+import { Trail } from './Trail'
 
 // The dummy cart: one store, quantities, a running minimum total, and the
 // hand-off to Dutchie (which can't accept prefilled carts from outside).
@@ -21,11 +22,11 @@ export function CartView({
 
   return (
     <div className="wrap wrap-mid" style={{ paddingTop: 28 }}>
-      <div className="flex items-center justify-between">
-        <button type="button" onClick={onBack} className="ghost">
-          Keep shopping
-        </button>
-        <button type="button" onClick={onClear} className="ghost">
+      <div className="flex items-start gap-4">
+        <div className="min-w-0 flex-1">
+          <Trail stops={[{ label: 'Results', onClick: onBack }, { label: 'Cart' }]} onBack={onBack} backLabel="Keep shopping" />
+        </div>
+        <button type="button" onClick={onClear} className="ghost shrink-0" style={{ marginTop: 12 }}>
           Clear cart
         </button>
       </div>

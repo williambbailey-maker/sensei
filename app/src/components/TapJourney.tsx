@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { requestLocation } from '../lib/geo'
-import { BOROUGHS, BUDGETS, FORMATS, SIZES, STRAINS } from '../lib/labels'
+import { BOROUGHS, BUDGETS, FORMATS, SIZES, STRAINS, stepValue } from '../lib/labels'
+import { canGoBack, pushScreen } from '../lib/nav'
+import { Trail } from './Trail'
 import { EMPTY_FILTERS, type Filters } from '../lib/types'
 import { track } from '../lib/analytics'
 
@@ -8,9 +10,11 @@ import { track } from '../lib/analytics'
 // list of hairline rows with a disc marker.
 // Borough (a whole borough, or one of its neighborhoods under its arrow) →
 // Product type → Strain → Quantity (flower only) → Price → the product list.
-// One tap advances each step; every step is skippable.
+// One tap advances each step; every step is skippable. Each step is a history
+// entry, so the phone's back gesture and the trail's ← step back one at a time.
 export function TapJourney({
   initial,
+  startStep = 0,
   neighborhoodsByBorough,
   boroughCounts,
   neighborhoodCounts,
@@ -18,13 +22,19 @@ export function TapJourney({
   onClose,
 }: {
   initial: Filters
+  startStep?: number
   neighborhoodsByBorough: Record<string, string[]>
   boroughCounts: Record<string, number>
   neighborhoodCounts: Record<string, number>
   onDone: (f: Filters) => void
   onClose: () => void
 }) {
-  const [step, setStep] = useState(0)
+  // Returning to the journey with the back gesture lands on the step that
+  // history entry recorded.
+  const [step, setStep] = useState(() => {
+    const s = history.state
+    return s?.view === 'journey' && s?.way === 'borough' && typeof s.step === 'number' ? s.step : startStep
+  })
   const [f, setF] = useState<Filters>({ ...EMPTY_FILTERS, ...initial })
   const [locating, setLocating] = useState(false)
   const [locError, setLocError] = useState('')
@@ -33,7 +43,26 @@ export function TapJourney({
   const [open, setOpen] = useState<string | null>(initial.neighborhood ? initial.borough : null)
 
   const STEPS = ['Borough', 'Product type', 'Strain', 'Quantity', 'Price']
+  const NOW = ['Where', 'Type', 'Strain', 'Size', 'Budget']
   const LAST = STEPS.length - 1
+
+  // A move to another step is a new history entry; the back gesture (or ←)
+  // pops it and this puts the step back. The entry that opened the journey
+  // has no step: that one is where it started.
+  const start = useRef(startStep)
+  const goStep = (n: number) => {
+    pushScreen({ view: 'journey', way: 'borough', step: n })
+    setStep(n)
+  }
+  useEffect(() => {
+    const onPop = (e: PopStateEvent) => {
+      const s = e.state
+      if (s?.view !== 'journey' || s?.way !== 'borough') return
+      setStep(typeof s.step === 'number' ? s.step : start.current)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   const hoodsFor = (borough: string | null) =>
     borough ? (neighborhoodsByBorough[borough] ?? []) : []
@@ -54,9 +83,12 @@ export function TapJourney({
       track('journey_step', { step: 'done' })
       return onDone(draft)
     }
-    setStep(n)
+    goStep(n)
   }
+  // ← returns to whatever came before (the last step, or the screen that
+  // opened the journey); without history it steps back by hand.
   const goBack = (from: number) => {
+    if (canGoBack()) return history.back()
     let p = from - 1
     while (p >= 0 && !stepVisible(p, f)) p--
     if (p < 0) return onClose()
@@ -114,12 +146,16 @@ export function TapJourney({
 
   return (
     <div id="journey" className="wrap wrap-mid" style={{ paddingTop: 36 }}>
-      <div className="flex items-center justify-between">
-        <button type="button" onClick={() => goBack(step)} className="ghost">
-          {step === 0 ? 'Home' : 'Back'}
-        </button>
+      <Trail
+        stops={visibleSteps
+          .filter((i) => i <= step)
+          .map((i) => (i === step ? { label: NOW[i] } : { label: stepValue(i, f), onClick: () => goStep(i) }))}
+        onBack={() => goBack(step)}
+        backLabel={step === 0 ? 'Back to home' : 'Back'}
+      />
+      <div className="flex items-center justify-between" style={{ marginTop: 18 }}>
         <span className="meta">
-          {pad(currentPos + 1)} / {pad(visibleSteps.length)}
+          Step {pad(currentPos + 1)} of {pad(visibleSteps.length)}
         </span>
         <button
           type="button"

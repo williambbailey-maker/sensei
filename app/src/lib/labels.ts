@@ -1,4 +1,4 @@
-import type { Format, SortKey, Strain, Vibe } from './types'
+import type { Filters, Format, SortKey, Strain, Vibe } from './types'
 
 export const VIBES: { key: Vibe; label: string; emoji: string }[] = [
   { key: 'relax', label: 'Relax', emoji: '🛋️' },
@@ -155,4 +155,14 @@ export function cleanTitle(raw: string, brand?: string | null): string {
     .filter((x) => x.replace(/[^a-z0-9]/gi, '').length >= 2 && !STRAIN.test(x) && !CATEGORY_WORD.test(x))
   const out = kept.join(' · ')
   return out || stripNumbers(parts[0] ?? raw) || raw.trim() || raw
+}
+
+// What a journey step was set to, as a short trail label: the place, the
+// product type, the strain, the size or the budget, or "Any …" when skipped.
+export function stepValue(step: number, f: Filters): string {
+  if (step === 0) return f.neighborhood ?? f.borough ?? (f.userLoc ? 'Near me' : 'All of NYC')
+  if (step === 1) return FORMATS.find((x) => x.key === f.format)?.label ?? 'Any type'
+  if (step === 2) return f.strain ?? 'Any strain'
+  if (step === 3) return f.size ? sizeLabel(f.size).split(' · ')[0] : 'Any size'
+  return BUDGETS.find((b) => b.ceiling === f.priceCeiling)?.label ?? 'Any price'
 }

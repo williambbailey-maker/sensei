@@ -107,8 +107,23 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .ft .contact .ic{display:inline-flex}
 .ft b{color:var(--ink)}
 /* page heads */
-.crumb{font-size:13px;font-weight:400;color:var(--mist);margin:30px 0 0}
-.crumb a{color:var(--mist)}
+.trail{display:flex;align-items:flex-start;gap:12px;margin:26px 0 0}
+.trail-back{width:44px;height:44px;flex:none;border-radius:50%;background:var(--ink);color:var(--field);display:flex;align-items:center;justify-content:center}
+.trail-line{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.trail-line::-webkit-scrollbar{display:none}
+.trail-stops{position:relative;display:flex;justify-content:space-between;gap:10px;margin:0;padding:15px 0 0;list-style:none}
+.trail-stops::before{content:"";position:absolute;left:7px;right:7px;top:19px;height:6px;background:#00933C}
+.trail-stop{flex:0 1 auto;min-width:min-content}
+.trail-stop,.trail-stop>a{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:44px;font-size:11.5px;font-weight:400;line-height:1.25;color:rgba(255,255,255,.75);text-decoration:none}
+.trail-stop>a:hover{color:var(--ink)}
+.trail-stop:first-child,.trail-stop:first-child>a{align-items:flex-start}
+.trail-stop:last-child,.trail-stop:last-child>a{align-items:flex-end}
+.trail-stop span:last-child{text-align:center}
+.trail-stop:first-child span:last-child{text-align:left}
+.trail-stop:last-child span:last-child{text-align:right}
+.trail-dot{width:14px;height:14px;border-radius:50%;box-sizing:border-box;background:var(--ink);border:3px solid var(--ink)}
+.trail-stop.now{color:var(--ink);font-weight:700}
+.trail-stop.now .trail-dot{background:var(--field)}
 .kicker{font-size:13px;font-weight:700;margin:26px 0 0}
 .kicker+h1{margin-top:12px}
 .addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
@@ -256,12 +271,12 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 #menu .mbody{max-width:1160px;padding:0 48px 56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:48px;align-items:start}
 #menu .mbody>.top{grid-column:1/-1}
 }
-</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": "Tetra East Harlem", "url": "https://sensei.nyc/dispensaries/tetra-east-harlem/", "image": "https://imgix.dispenseapp.com/245e4aee1af46eb4_1781712069855-680420813-1906-NY-Drops-Pouch-Boost.png", "address": {"@type": "PostalAddress", "streetAddress": "2152 3rd Avenue", "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.799, "longitude": -73.94}, "hasMap": "https://www.google.com/maps/dir/?api=1&destination=Tetra%20East%20Harlem%2C%202152%203rd%20Avenue%2C%20New%20York%2C%20NY%2010035", "areaServed": "Manhattan, NY"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Sensei", "item": "https://sensei.nyc/"}, {"@type": "ListItem", "position": 2, "name": "Dispensaries", "item": "https://sensei.nyc/dispensaries/"}, {"@type": "ListItem", "position": 3, "name": "Tetra East Harlem", "item": "https://sensei.nyc/dispensaries/tetra-east-harlem/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does Tetra East Harlem carry most?", "acceptedAnswer": {"@type": "Answer", "text": "The menu is balanced: 80 edibles, 75 flower options, 75 pre-rolls and 70 vapes. MFNY and Dank are the biggest brands."}}, {"@type": "Question", "name": "What is the cheapest item at Tetra East Harlem?", "acceptedAnswer": {"@type": "Answer", "text": "At last check the menu started at $3.39, for a 1906 Boost two-pack, the lowest starting price in Harlem and Washington Heights. Other packs from 1906 came next. Prices on Sensei are menu prices before New York's cannabis tax."}}, {"@type": "Question", "name": "What other dispensaries are near Tetra East Harlem?", "acceptedAnswer": {"@type": "Answer", "text": "Uplift Royal at 1557 Lexington Avenue is the other East Harlem shop we track, and Gotham Buds is on West 125th Street. Midnight Moon at 1536 Amsterdam Avenue has a larger menu in West Harlem."}}]}</script></head><body>
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Store", "LocalBusiness"], "name": "Tetra East Harlem", "url": "https://sensei.nyc/dispensaries/tetra-east-harlem/", "image": "https://imgix.dispenseapp.com/245e4aee1af46eb4_1781712069855-680420813-1906-NY-Drops-Pouch-Boost.png", "address": {"@type": "PostalAddress", "streetAddress": "2152 3rd Avenue", "addressLocality": "New York", "addressRegion": "NY", "addressCountry": "US"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.799, "longitude": -73.94}, "hasMap": "https://www.google.com/maps/dir/?api=1&destination=Tetra%20East%20Harlem%2C%202152%203rd%20Avenue%2C%20New%20York%2C%20NY%2010035", "areaServed": "Manhattan, NY"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Sensei", "item": "https://sensei.nyc/"}, {"@type": "ListItem", "position": 2, "name": "Harlem & Washington Heights", "item": "https://sensei.nyc/neighborhoods/harlem-washington-heights/"}, {"@type": "ListItem", "position": 3, "name": "Tetra East Harlem", "item": "https://sensei.nyc/dispensaries/tetra-east-harlem/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does Tetra East Harlem carry most?", "acceptedAnswer": {"@type": "Answer", "text": "The menu is balanced: 80 edibles, 75 flower options, 75 pre-rolls and 70 vapes. MFNY and Dank are the biggest brands."}}, {"@type": "Question", "name": "What is the cheapest item at Tetra East Harlem?", "acceptedAnswer": {"@type": "Answer", "text": "At last check the menu started at $3.39, for a 1906 Boost two-pack, the lowest starting price in Harlem and Washington Heights. Other packs from 1906 came next. Prices on Sensei are menu prices before New York's cannabis tax."}}, {"@type": "Question", "name": "What other dispensaries are near Tetra East Harlem?", "acceptedAnswer": {"@type": "Answer", "text": "Uplift Royal at 1557 Lexington Avenue is the other East Harlem shop we track, and Gotham Buds is on West 125th Street. Midnight Moon at 1536 Amsterdam Avenue has a larger menu in West Harlem."}}]}</script></head><body>
 <div class="wrap">
 <div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>
 <div class="lay"><div class="lead">
-<p class="crumb"><a href="/">Sensei</a> › <a href="/neighborhoods/harlem-washington-heights/">Harlem &amp; Washington Heights</a> › Dispensary</p>
+<nav class="trail" aria-label="Breadcrumb"><a class="trail-back" href="/neighborhoods/harlem-washington-heights/" aria-label="Back"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg></a><div class="trail-line"><ol class="trail-stops"><li class="trail-stop"><a href="/"><span class="trail-dot"></span><span>Sensei</span></a></li><li class="trail-stop"><a href="/neighborhoods/harlem-washington-heights/"><span class="trail-dot"></span><span>Harlem &amp; Washington Heights</span></a></li><li class="trail-stop now" aria-current="page"><span class="trail-dot"></span><span>Tetra East Harlem</span></li></ol></div></nav>
 <p class="kicker">Harlem &amp; Washington Heights · Manhattan</p>
 <h1>Tetra East Harlem</h1>
 <p class="addr"><span>2152 3rd Avenue, New York, NY 10035</span><a class="dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Tetra%20East%20Harlem%2C%202152%203rd%20Avenue%2C%20New%20York%2C%20NY%2010035" target="_blank" rel="noopener" data-ev="directions" data-dispensary="Tetra East Harlem">Directions in Google Maps →</a></p>
@@ -325,7 +340,10 @@ window.addEventListener('popstate',close);document.addEventListener('keydown',fu
 <script>(function(){var K='sensei_age_ok';try{if(sessionStorage.getItem(K)==='1')document.documentElement.classList.add('ag-ok')}catch(e){}
 var y=document.getElementById('agy');if(y)y.onclick=function(){document.documentElement.classList.add('ag-ok');try{sessionStorage.setItem(K,'1')}catch(e){}}})();</script>
 <noscript><style>#ag{display:none}</style></noscript>
-<script>
+<script>(function(){var l=document.querySelector('.trail-line');if(l)l.scrollLeft=l.scrollWidth;
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a.trail-back');if(!a)return;
+try{if(document.referrer&&new URL(document.referrer).origin===location.origin&&history.length>1){e.preventDefault();history.back();}}catch(_){}});
+})();</script><script>
 (function(){var CFG={"key": "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX", "host": "https://us.i.posthog.com", "meta": "1429430855347256", "page_type": "dispensary", "sb_url": "https://dywrisybvcorpfhbwgtg.supabase.co", "sb_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw", "dispensary": "Tetra East Harlem", "neighborhood": "Harlem & Washington Heights"};
 function src(){try{var q=new URLSearchParams(location.search),s=(q.get('src')||'').toLowerCase();
 if(s.indexOf('qr')===0)return'qr';var m=(q.get('utm_medium')||'').toLowerCase(),u=(q.get('utm_source')||'').toLowerCase();

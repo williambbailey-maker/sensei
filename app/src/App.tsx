@@ -7,6 +7,8 @@ import { Menu, type MenuTarget } from './components/Menu'
 import { requestLocation } from './lib/geo'
 import { SmartSearch } from './components/SmartSearch'
 import { TapJourney } from './components/TapJourney'
+import { Trail } from './components/Trail'
+import { canGoBack, pushScreen, replaceScreen } from './lib/nav'
 import { Results } from './components/Results'
 import { Deals } from './components/Deals'
 import { Newsletter } from './components/Newsletter'
@@ -33,6 +35,8 @@ export default function App() {
   // Bumped on restart to force the journey to remount at step one, even when
   // we're already on the journey view (e.g. tapping the logo mid-flow).
   const [journeyKey, setJourneyKey] = useState(0)
+  // The journey step to open on: 0 from the home, a later one from a trail stop.
+  const [journeyStart, setJourneyStart] = useState(0)
   const [products, setProducts] = useState<Product[]>([])
   const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
@@ -204,15 +208,15 @@ export default function App() {
     if (prev.view === view && prev.way === way) return
     try {
       const s = history.state
-      if (!s || s.view === undefined) history.replaceState({ view, way }, '')
-      else if (s.view !== view || s.way !== way) history.pushState({ view, way }, '')
+      if (!s || s.view === undefined) replaceScreen({ view, way })
+      else if (s.view !== view || s.way !== way) pushScreen({ view, way })
     } catch {
       /* history unavailable */
     }
   }, [view, way])
   useEffect(() => {
     try {
-      if (!history.state || history.state.view === undefined) history.replaceState({ view: 'journey', way: null }, '')
+      if (!history.state || history.state.view === undefined) replaceScreen({ view: 'journey', way: null })
     } catch {
       /* ignore */
     }
@@ -256,9 +260,17 @@ export default function App() {
       return
     }
     setFilters(EMPTY_FILTERS)
+    setJourneyStart(0)
     setJourneyKey((k) => k + 1)
     setWay(w)
     go('journey')
+  }
+
+  // The trail's ←: the previous Sensei screen when there is one, else the
+  // fallback (the home, unless a screen names somewhere closer).
+  const back = (fallback?: () => void) => {
+    if (canGoBack()) history.back()
+    else (fallback ?? restart)()
   }
 
   // Back to the home.
@@ -266,6 +278,7 @@ export default function App() {
     setFilters(EMPTY_FILTERS)
     setWayError('')
     setWay(null)
+    setJourneyStart(0)
     setJourneyKey((k) => k + 1)
     go('journey')
   }
@@ -374,10 +387,8 @@ export default function App() {
       {view === 'journey' && way === 'search' && (
         <main>
           <div className="wrap wrap-mid" style={{ paddingTop: 28 }}>
-            <div className="flex items-center justify-between">
-              <button type="button" onClick={restart} className="ghost">
-                Home
-              </button>
+            <Trail stops={[{ label: 'Search' }]} onBack={() => back()} backLabel="Back to home" />
+            <div style={{ marginTop: 18 }}>
               <button type="button" onClick={() => pickWay('borough')} className="ghost">
                 Pick a borough instead
               </button>
@@ -402,6 +413,7 @@ export default function App() {
           <TapJourney
             key={journeyKey}
             initial={filters}
+            startStep={journeyStart}
             neighborhoodsByBorough={neighborhoodsByBorough}
             boroughCounts={boroughCounts}
             neighborhoodCounts={neighborhoodCounts}
@@ -421,8 +433,10 @@ export default function App() {
             filters={filters}
             neighborhoodsByBorough={neighborhoodsByBorough}
             onChange={setFilters}
-            onHome={restart}
-            onEdit={() => {
+            onBack={() => back()}
+            onEdit={(step) => {
+              setJourneyStart(step)
+              setJourneyKey((k) => k + 1)
               setWay('borough')
               go('journey')
             }}
@@ -442,7 +456,7 @@ export default function App() {
               clearCart()
               go('results')
             }}
-            onBack={() => go('results')}
+            onBack={() => back(() => go('results'))}
           />
         </main>
       )}

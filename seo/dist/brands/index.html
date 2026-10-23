@@ -107,8 +107,23 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .ft .contact .ic{display:inline-flex}
 .ft b{color:var(--ink)}
 /* page heads */
-.crumb{font-size:13px;font-weight:400;color:var(--mist);margin:30px 0 0}
-.crumb a{color:var(--mist)}
+.trail{display:flex;align-items:flex-start;gap:12px;margin:26px 0 0}
+.trail-back{width:44px;height:44px;flex:none;border-radius:50%;background:var(--ink);color:var(--field);display:flex;align-items:center;justify-content:center}
+.trail-line{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.trail-line::-webkit-scrollbar{display:none}
+.trail-stops{position:relative;display:flex;justify-content:space-between;gap:10px;margin:0;padding:15px 0 0;list-style:none}
+.trail-stops::before{content:"";position:absolute;left:7px;right:7px;top:19px;height:6px;background:#00933C}
+.trail-stop{flex:0 1 auto;min-width:min-content}
+.trail-stop,.trail-stop>a{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:44px;font-size:11.5px;font-weight:400;line-height:1.25;color:rgba(255,255,255,.75);text-decoration:none}
+.trail-stop>a:hover{color:var(--ink)}
+.trail-stop:first-child,.trail-stop:first-child>a{align-items:flex-start}
+.trail-stop:last-child,.trail-stop:last-child>a{align-items:flex-end}
+.trail-stop span:last-child{text-align:center}
+.trail-stop:first-child span:last-child{text-align:left}
+.trail-stop:last-child span:last-child{text-align:right}
+.trail-dot{width:14px;height:14px;border-radius:50%;box-sizing:border-box;background:var(--ink);border:3px solid var(--ink)}
+.trail-stop.now{color:var(--ink);font-weight:700}
+.trail-stop.now .trail-dot{background:var(--field)}
 .kicker{font-size:13px;font-weight:700;margin:26px 0 0}
 .kicker+h1{margin-top:12px}
 .addr{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:14px 0 0;font-size:14px;font-weight:400;color:var(--mist)}
@@ -260,7 +275,7 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 <div class="wrap">
 <div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>
 <main>
-<p class="crumb"><a href="/">Sensei</a> › Brands</p>
+<nav class="trail" aria-label="Breadcrumb"><a class="trail-back" href="/" aria-label="Back"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg></a><div class="trail-line"><ol class="trail-stops"><li class="trail-stop"><a href="/"><span class="trail-dot"></span><span>Sensei</span></a></li><li class="trail-stop now" aria-current="page"><span class="trail-dot"></span><span>Brands</span></li></ol></div></nav>
 <h1>Brands</h1>
 <p class="lede sm">The most widely stocked brands on New York's licensed menus, from Ayrloom at 106 of 126 shops to Dank By Definition at 62. Each page shows every store carrying the brand and where it is cheapest.</p>
 <div class="sh">15 brands</div><div class="shops"><a class="row" href="/brands/ayrloom/"><div class="l"><span class="mb s">A</span><div><div class="snm">ayrloom</div><div class="sd">106 stores stock it</div></div></div><div class="sn"><b>2306</b>in stock</div></a><a class="row" href="/brands/camino/"><div class="l"><span class="mb s">C</span><div><div class="snm">Camino</div><div class="sd">102 stores stock it</div></div></div><div class="sn"><b>1115</b>in stock</div></a><a class="row" href="/brands/mfny/"><div class="l"><span class="mb s">M</span><div><div class="snm">MFNY</div><div class="sd">102 stores stock it</div></div></div><div class="sn"><b>2021</b>in stock</div></a><a class="row" href="/brands/off-hours/"><div class="l"><span class="mb s">O</span><div><div class="snm">Off Hours</div><div class="sd">98 stores stock it</div></div></div><div class="sn"><b>1041</b>in stock</div></a><a class="row" href="/brands/wyld/"><div class="l"><span class="mb s">W</span><div><div class="snm">Wyld</div><div class="sd">86 stores stock it</div></div></div><div class="sn"><b>874</b>in stock</div></a><a class="row" href="/brands/ruby-farms/"><div class="l"><span class="mb s">R</span><div><div class="snm">Ruby Farms</div><div class="sd">85 stores stock it</div></div></div><div class="sn"><b>1631</b>in stock</div></a><a class="row" href="/brands/florist-farms/"><div class="l"><span class="mb s">F</span><div><div class="snm">Florist Farms</div><div class="sd">79 stores stock it</div></div></div><div class="sn"><b>1259</b>in stock</div></a><a class="row" href="/brands/fernway/"><div class="l"><span class="mb s">F</span><div><div class="snm">Fernway</div><div class="sd">77 stores stock it</div></div></div><div class="sn"><b>1079</b>in stock</div></a><a class="row" href="/brands/jaunty/"><div class="l"><span class="mb s">J</span><div><div class="snm">Jaunty</div><div class="sd">74 stores stock it</div></div></div><div class="sn"><b>1479</b>in stock</div></a><a class="row" href="/brands/gr-n/"><div class="l"><span class="mb s">G</span><div><div class="snm">Grön</div><div class="sd">69 stores stock it</div></div></div><div class="sn"><b>850</b>in stock</div></a><a class="row" href="/brands/good-tide/"><div class="l"><span class="mb s">G</span><div><div class="snm">Good Tide</div><div class="sd">68 stores stock it</div></div></div><div class="sn"><b>269</b>in stock</div></a><a class="row" href="/brands/cannabals/"><div class="l"><span class="mb s">C</span><div><div class="snm">Cannabals</div><div class="sd">67 stores stock it</div></div></div><div class="sn"><b>752</b>in stock</div></a><a class="row" href="/brands/eaton-botanicals/"><div class="l"><span class="mb s">E</span><div><div class="snm">Eaton Botanicals</div><div class="sd">66 stores stock it</div></div></div><div class="sn"><b>425</b>in stock</div></a><a class="row" href="/brands/jetty-extracts/"><div class="l"><span class="mb s">J</span><div><div class="snm">Jetty Extracts</div><div class="sd">64 stores stock it</div></div></div><div class="sn"><b>574</b>in stock</div></a><a class="row" href="/brands/dank-by-definition/"><div class="l"><span class="mb s">D</span><div><div class="snm">Dank By Definition.</div><div class="sd">62 stores stock it</div></div></div><div class="sn"><b>664</b>in stock</div></a></div>
@@ -311,7 +326,10 @@ window.addEventListener('popstate',close);document.addEventListener('keydown',fu
 <script>(function(){var K='sensei_age_ok';try{if(sessionStorage.getItem(K)==='1')document.documentElement.classList.add('ag-ok')}catch(e){}
 var y=document.getElementById('agy');if(y)y.onclick=function(){document.documentElement.classList.add('ag-ok');try{sessionStorage.setItem(K,'1')}catch(e){}}})();</script>
 <noscript><style>#ag{display:none}</style></noscript>
-<script>
+<script>(function(){var l=document.querySelector('.trail-line');if(l)l.scrollLeft=l.scrollWidth;
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a.trail-back');if(!a)return;
+try{if(document.referrer&&new URL(document.referrer).origin===location.origin&&history.length>1){e.preventDefault();history.back();}}catch(_){}});
+})();</script><script>
 (function(){var CFG={"key": "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX", "host": "https://us.i.posthog.com", "meta": "1429430855347256", "page_type": "index", "sb_url": "https://dywrisybvcorpfhbwgtg.supabase.co", "sb_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw"};
 function src(){try{var q=new URLSearchParams(location.search),s=(q.get('src')||'').toLowerCase();
 if(s.indexOf('qr')===0)return'qr';var m=(q.get('utm_medium')||'').toLowerCase(),u=(q.get('utm_source')||'').toLowerCase();
