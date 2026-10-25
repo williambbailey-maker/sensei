@@ -1,0 +1,71 @@
+name: Weekly drop
+
+# The newsletter. Every Wednesday morning it builds the issue from the live
+# data and emails a preview to the owner. Sending to subscribers is a manual
+# "Run workflow" with mode = send, once the preview looks right. The build
+# refuses a menu older than 4 days (force = true overrides).
+#
+# Secrets: RESEND_API_KEY, RESEND_AUDIENCE_ID, NEWSLETTER_PREVIEW_TO,
+# SUPABASE_SERVICE_ROLE_KEY (audience sync). Variables: NEWSLETTER_FROM,
+# NEWSLETTER_ADDRESS (the postal address in the footer).
+# With no Resend key the issue is still built and attached to the run.
+on:
+  schedule:
+    - cron: '37 13 * * 3' # Wednesdays 9:37 ET
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: preview (to you) or send (to subscribers)
+        required: true
+        default: preview
+        type: choice
+        options: [preview, send]
+      force:
+        description: build even if the menu is older than 4 days
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build the issue
+        id: build
+        env:
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NEWSLETTER_ADDRESS: ${{ vars.NEWSLETTER_ADDRESS }}
+          FORCE: ${{ github.event.inputs.force == 'true' && '1' || '' }}
+        run: |
+          # The anon key is public (it is in the site); fall back to the one in seo/build.py.
+          [ -n "$SUPABASE_ANON_KEY" ] || export SUPABASE_ANON_KEY=$(python3 -c "import re;print(re.search(r'\"(eyJ[^\"]+)\"',open('seo/build.py').read()).group(1))")
+          node newsletter/build.mjs
+          echo "stem=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Attach the issue to this run
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-drop-${{ steps.build.outputs.stem }}
+          path: newsletter/dist/
+
+      - name: Email a preview
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.mode == 'preview' }}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEWSLETTER_FROM: ${{ vars.NEWSLETTER_FROM }}
+          NEWSLETTER_PREVIEW_TO: ${{ secrets.NEWSLETTER_PREVIEW_TO }}
+        run: node newsletter/send.mjs preview "${{ steps.build.outputs.stem }}" || echo "::warning::Preview not sent (see above). The issue is attached to this run."
+
+      - name: Send to subscribers
+        if: ${{ github.event.inputs.mode == 'send' }}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+          NEWSLETTER_FROM: ${{ vars.NEWSLETTER_FROM }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node newsletter/send.mjs send "${{ steps.build.outputs.stem }}"
