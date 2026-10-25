@@ -283,15 +283,14 @@ export default function App() {
     go('journey')
   }
 
-  // The menu. Deals = results (all, cheapest first) scrolled to the deals
-  // section once the list has loaded; Cart = the cart, or home if empty.
+  // The menu. Deals = the home scrolled to the deals board once it has
+  // loaded; Cart = the cart, or home if empty.
   const [menuOpen, setMenuOpen] = useState(false)
   const [pendingScroll, setPendingScroll] = useState<string | null>(null)
   const goTo = (t: MenuTarget) => {
     if (t === 'deals') {
-      setFilters({ ...EMPTY_FILTERS, sort: 'price-asc' })
+      restart()
       setPendingScroll('deals')
-      go('results')
       return
     }
     if (t === 'cart') {
@@ -302,11 +301,14 @@ export default function App() {
     pickWay(t)
   }
   useEffect(() => {
-    if (!pendingScroll || view !== 'results' || loading) return
+    if (!pendingScroll) return
+    const ready =
+      pendingScroll === 'deals' ? view === 'journey' && way === null && deals.length > 0 : view === 'results' && !loading
+    if (!ready) return
     const id = pendingScroll
     setPendingScroll(null)
     scrollTo(id)
-  }, [pendingScroll, view, loading])
+  }, [pendingScroll, view, way, loading, deals])
   const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : view === 'journey' ? way : null
 
   // Headline numbers, one definition (a shop = an active store with at least
@@ -381,6 +383,7 @@ export default function App() {
         <main className="home-grid">
           <Masthead storeCount={storeCount} productCount={productCount} neighborhoods={hoodTotal} />
           <Ways onPick={goTo} busy={locating ? 'near' : null} error={wayError} />
+          <Deals deals={deals} />
         </main>
       )}
 
@@ -443,7 +446,6 @@ export default function App() {
             onAdd={addToCart}
             loading={loading}
           />
-          <Deals deals={deals} />
         </main>
       )}
 

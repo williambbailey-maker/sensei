@@ -1,4 +1,5 @@
-export type Variant = { weight: string | null; price: number | null; special_price?: number | null }
+// `was` is the regular price, present only when `price` is a sale price.
+export type Variant = { weight: string | null; price: number | null; was?: number | null; special_price?: number | null }
 
 export type StoreLite = {
   id?: string
@@ -29,6 +30,9 @@ export type Product = {
   cbd_pct: number | null
   variants: Variant[]
   price_min: number | null
+  // The cheapest size's regular price when it is marked down; on_sale when any size is.
+  price_was: number | null
+  on_sale: boolean
   url: string | null
   image_url: string | null
   vibes: string[] | null
@@ -44,6 +48,9 @@ export type Product = {
 export type CartItem = { product: Product; qty: number }
 export type Cart = { store: StoreLite; items: CartItem[] }
 
+// A row of the deals board (the live_deals view). kind 'sale' rows are
+// picked from sale prices after every scrape: title is the product, description
+// its brand, and the prices are today's. 'manual' rows are typed by hand.
 export type Deal = {
   id: string
   title: string
@@ -51,6 +58,12 @@ export type Deal = {
   url: string | null
   featured: boolean
   sort: number
+  kind: 'sale' | 'manual'
+  product_id: string | null
+  price: number | null
+  price_was: number | null
+  pct: number | null
+  image_url: string | null
   store: { name: string | null; borough: string | null } | null
 }
 
@@ -79,7 +92,7 @@ export type Strain = 'Indica' | 'Sativa' | 'Hybrid'
 
 // How the result list is ordered. 'match' = the vibe/relevance score;
 // the rest are objective, user-driven sorts.
-export type SortKey = 'match' | 'price-asc' | 'price-desc' | 'potency' | 'distance'
+export type SortKey = 'match' | 'price-asc' | 'price-desc' | 'potency' | 'distance' | 'discount'
 
 export type Filters = {
   vibes: Vibe[]
@@ -91,6 +104,8 @@ export type Filters = {
   // Minimum THC potency (percent). Products without a % potency are excluded
   // when this is set.
   thcMin: number | null
+  // Only items with a sale price.
+  onSale: boolean
   // "Quantity" — a pack-size bucket key (see SIZES in labels); matched against
   // a product's variant weights normalized to grams.
   size: string | null
@@ -118,6 +133,7 @@ export const EMPTY_FILTERS: Filters = {
   priceCeiling: null,
   priceBand: null,
   thcMin: null,
+  onSale: false,
   size: null,
   borough: null,
   neighborhood: null,
@@ -156,6 +172,7 @@ export function hasStructuredFilter(f: Filters): boolean {
     f.priceCeiling !== null ||
     f.priceBand !== null ||
     f.thcMin !== null ||
+    f.onSale ||
     f.size !== null ||
     f.borough !== null ||
     f.neighborhood !== null ||

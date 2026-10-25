@@ -5,7 +5,7 @@
 // come from api.iheartjane.com/v1/stores/<id>.
 //
 // Config (stores.config.json): { "menu_url": "https://menu.kushklub.com/nyc" }
-import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry, pickStoreMeta } from '../lib/browser.mjs'
 
 const PAGE = 100
@@ -52,10 +52,8 @@ export function mapProduct(p, storeId, menuUrl, drops) {
   for (const [key, label] of WEIGHTS) {
     const price = num(a[`price_${key}`])
     if (price == null || price <= 0) continue
-    const disc = num(a[`discounted_price_${key}`])
-    variants.push({ weight: key === 'each' ? a.amount || null : label, price: disc && disc > 0 && disc < price ? disc : price })
+    variants.push(variant(key === 'each' ? a.amount || null : label, price, num(a[`discounted_price_${key}`])))
   }
-  const prices = variants.map((v) => v.price).filter((p) => p > 0)
   const strain = a.category // Jane's "category" is the strain type (hybrid/indica/sativa/cbd)
   const pot = Array.isArray(a.inventory_potencies) ? a.inventory_potencies[0] : null
   return {
@@ -71,7 +69,7 @@ export function mapProduct(p, storeId, menuUrl, drops) {
     thc_pct: pct(a.percent_thc ?? pot?.thc_potency),
     cbd_pct: pct(a.percent_cbd ?? pot?.cbd_potency),
     variants,
-    price_min: prices.length ? Math.min(...prices) : null,
+    ...priceFields(variants),
     // Jane menus link products as <menu>/menu/products/<id>/<name-slug> (checked).
     url: `${menuUrl.replace(/\/$/, '')}/menu/products/${id}/${slugify(a.name)}`,
     image_url: Array.isArray(a.image_urls) && typeof a.image_urls[0] === 'string' ? a.image_urls[0] : null,

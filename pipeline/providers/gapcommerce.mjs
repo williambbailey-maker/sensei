@@ -9,7 +9,7 @@
 // not found stays null.
 //
 // Config (stores.config.json): { "menu_url": "https://blissandlex.com/shop" }
-import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry } from '../lib/browser.mjs'
 
 const PAGE = 100
@@ -46,10 +46,9 @@ export function mapProduct(hit, storeId, menuUrl, scale) {
   const sibs = (hit.inner_hits?.siblings?.hits?.hits ?? []).map((h) => h._source ?? h)
   const sizes = sibs.length ? sibs : [s]
   const variants = sizes
-    .map((v) => ({ weight: v.amount != null ? String(v.amount) : null, price: num(v.customSalePrice ?? v.customMinPrice ?? v.price) }))
+    .map((v) => variant(v.amount != null ? String(v.amount) : null, num(v.customMinPrice ?? v.price), num(v.customSalePrice)))
     .filter((v) => v.price != null)
-    .map((v) => ({ ...v, price: Math.round((v.price / scale) * 100) / 100 }))
-  const prices = variants.map((v) => v.price).filter((p) => p > 0)
+    .map((v) => ({ ...v, price: Math.round((v.price / scale) * 100) / 100, ...(v.was != null ? { was: Math.round((v.was / scale) * 100) / 100 } : {}) }))
   const strain = s.strainType ?? s.productData?.strainType ?? s.strain
   const img = s.imageUrl ?? s.image ?? s.images?.[0]?.url ?? s.images?.[0] ?? s.productData?.images?.[0]?.url
   return {
@@ -65,7 +64,7 @@ export function mapProduct(hit, storeId, menuUrl, scale) {
     thc_pct: lab(s, 'THC'),
     cbd_pct: lab(s, 'CBD'),
     variants,
-    price_min: prices.length ? Math.min(...prices) : null,
+    ...priceFields(variants),
     // Unconfirmed: product pages are usually <site>/product/<slug>.
     url: s.slug ? `${new URL(menuUrl).origin}/product/${s.slug}` : null,
     image_url: typeof img === 'string' && img.startsWith('http') ? img : null,

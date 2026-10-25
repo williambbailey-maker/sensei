@@ -10,7 +10,7 @@ export const WAYS: { key: WayKey; letter: string; title: string; desc: string; c
   { key: 'near', letter: 'N', title: 'Shops near me', desc: 'Share location · closest shops first', color: 'var(--y)', dark: true },
   { key: 'borough', letter: 'B', title: 'Pick a borough', desc: BOROUGHS.join(' · '), color: 'var(--o)' },
   { key: 'search', letter: 'S', title: 'Search in your words', desc: '"Sativa pre-rolls under $10"', color: 'var(--s)' },
-  { key: 'deals', letter: 'D', title: 'Deals', desc: 'Worth a look this week', color: 'var(--o)' },
+  { key: 'deals', letter: 'D', title: 'Deals', desc: 'Biggest markdowns on the menu now', color: 'var(--o)' },
 ]
 
 export function wayTitle(key: WayKey): string {
@@ -19,7 +19,7 @@ export function wayTitle(key: WayKey): string {
 
 export function Ways({ onPick, busy, error }: { onPick: (w: WayKey) => void; busy?: WayKey | null; error?: string }) {
   return (
-    <section className="wrap">
+    <section className="wrap ways-section">
       <div className="rule" />
       <h2 className="poster" style={{ marginTop: 30, textAlign: 'center' }}>
         Start here

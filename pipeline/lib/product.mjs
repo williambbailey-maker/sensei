@@ -109,3 +109,25 @@ export function dropCounter() {
     },
   }
 }
+
+// One priced size. `was` is the regular price, kept only when the menu shows
+// a lower sale price, so "was $40, now $30" and the deals board can use it.
+export function variant(weight, base, sale) {
+  const b = typeof base === 'number' && base > 0 ? base : null
+  const sp = typeof sale === 'number' && sale > 0 ? sale : null
+  if (sp != null && b != null && sp < b) return { weight, price: sp, was: b }
+  return { weight, price: sp ?? b }
+}
+
+// The row's price columns from its variants: the cheapest price, that size's
+// regular price when it is discounted, and whether any size is on sale.
+export function priceFields(variants) {
+  const priced = variants.filter((v) => typeof v.price === 'number' && v.price > 0)
+  if (!priced.length) return { price_min: null, price_was: null, on_sale: false }
+  const cheapest = priced.reduce((a, v) => (v.price < a.price ? v : a))
+  return {
+    price_min: cheapest.price,
+    price_was: typeof cheapest.was === 'number' ? cheapest.was : null,
+    on_sale: priced.some((v) => typeof v.was === 'number'),
+  }
+}

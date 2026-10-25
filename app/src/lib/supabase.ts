@@ -16,7 +16,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 })
 
 const PRODUCT_COLS =
-  'id,external_id,name,clean_name,brand,clean_brand,description,brand_description,effects,category,strain_type,thc_pct,cbd_pct,variants,price_min,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng,address)'
+  'id,external_id,name,clean_name,brand,clean_brand,description,brand_description,effects,category,strain_type,thc_pct,cbd_pct,variants,price_min,price_was,on_sale,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng,address)'
 
 // PostgREST caps each response at 1000 rows. We used to page through the whole
 // ~37k-row in-stock catalog (~26 MB) on load, and the results screen showed
@@ -43,6 +43,7 @@ export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise
       .select(PRODUCT_COLS, withCount ? { count: 'exact' as const } : undefined)
       .eq('in_stock', true)
     if (f.format) q = q.eq('category', f.format)
+    if (f.onSale || f.sort === 'discount') q = q.eq('on_sale', true)
     if (f.strain) q = q.eq('strain_type', f.strain)
     if (f.priceCeiling != null) q = q.lte('price_min', f.priceCeiling)
     if (f.priceBand) q = q.eq('price_band', f.priceBand)
@@ -128,12 +129,16 @@ export async function fetchStores(): Promise<StoreLite[]> {
 
 export async function fetchDeals(): Promise<Deal[]> {
   const { data, error } = await supabase
-    .from('deals')
-    .select('id,title,description,url,featured,sort,store:stores(name,borough)')
+    .from('live_deals')
+    .select('id,title,description,url,featured,sort,kind,product_id,price,price_was,pct,image_url,store_name,store_borough')
     .order('featured', { ascending: false })
     .order('sort', { ascending: true })
   if (error) throw error
-  return (data ?? []) as unknown as Deal[]
+  type Row = Omit<Deal, 'store'> & { store_name: string | null; store_borough: string | null }
+  return ((data ?? []) as unknown as Row[]).map(({ store_name, store_borough, ...d }) => ({
+    ...d,
+    store: store_name || store_borough ? { name: store_name, borough: store_borough } : null,
+  }))
 }
 
 export async function addSubscriber(email: string, source: string): Promise<void> {

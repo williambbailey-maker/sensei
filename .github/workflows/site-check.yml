@@ -53,6 +53,7 @@ jobs:
           echo "terms/privacy links in app:       $(cat index-*.js 2>/dev/null | grep -c 'Privacy Policy')"
           echo "product titles drop the brand:    $(cat index-*.js 2>/dev/null | grep -c 'half\[- \]ounce')"
           echo "route trail in app:               $(cat index-*.css 2>/dev/null | grep -c 'trail-back')"
+          echo "sale prices + deals board in app: $(cat index-*.js 2>/dev/null | grep -c 'price_was') $(cat index-*.js 2>/dev/null | grep -c 'live_deals')"
           echo "== crawlable home"
           echo "canonical: $(grep -oE '<link rel="canonical"[^>]*>' home.html)"
           echo "static block: $(grep -c 'class="seo-home"' home.html)  links in it: $(sed -n '/seo:home:start/,/seo:home:end/p' home.html | grep -o '<a href' | wc -l)"

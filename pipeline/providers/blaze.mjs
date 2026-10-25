@@ -8,7 +8,7 @@
 // and 404s today; kept in case it appears).
 //
 // Config (stores.config.json): { "menu_url": "https://altocanna.nyc/menu" }
-import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry, pickStoreMeta } from '../lib/browser.mjs'
 
 const PAGE = 50
@@ -64,10 +64,9 @@ export function mapProduct(item, storeId, included) {
     const price = cents(p.price)
     const disc = cents(p.discount_price)
     if (price == null && disc == null) continue
-    variants.push({ weight: p.display_name || p.weight || p.name || null, price: disc && disc > 0 && price && disc < price ? disc : price })
+    variants.push(variant(p.display_name || p.weight || p.name || null, price, disc))
   }
-  if (!variants.length && a.unit_price) variants.push({ weight: a.size?.display_text || null, price: cents(a.discount_price ?? a.unit_price) })
-  const prices = variants.map((v) => v.price).filter((p) => typeof p === 'number' && p > 0)
+  if (!variants.length && a.unit_price) variants.push(variant(a.size?.display_text || null, cents(a.unit_price), cents(a.discount_price)))
   const brand = related(item, 'brand', included)
   const effects = a.blaze_enrichment?.effects
   const strain = a.flower_type || a.strain
@@ -84,7 +83,7 @@ export function mapProduct(item, storeId, included) {
     thc_pct: pct(a, 'thc'),
     cbd_pct: pct(a, 'cbd'),
     variants,
-    price_min: prices.length ? Math.min(...prices) : null,
+    ...priceFields(variants),
     url: typeof a.store_url === 'string' ? a.store_url : null,
     image_url: typeof a.main_image === 'string' ? a.main_image : null,
     in_stock: true,

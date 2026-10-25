@@ -31,7 +31,7 @@ export function ProductDetail({
   onAdd?: (p: Product) => void
 }) {
   const evProps = eventProps(p)
-  const { name, brand, price, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
+  const { name, brand, price, was, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
   const address = shortAddress(p.store?.address)
   const maps = p.store ? directionsUrl(storeName, p.store.address, p.store.lat, p.store.lng) : null
 
@@ -164,7 +164,10 @@ export function ProductDetail({
         <div className="spec" style={{ marginTop: 18 }}>
           <div>
             <span className="spec-k">Price</span>
-            <span className="spec-v">{price}</span>
+            <span className="spec-v">
+              {price}
+              {was && <span className="was"> {was}</span>}
+            </span>
           </div>
           <div>
             <span className="spec-k">Size</span>

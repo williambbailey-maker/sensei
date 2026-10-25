@@ -139,6 +139,9 @@ export function parseQuery(
   // Pack size
   for (const [re, val] of SIZE_PATTERNS) if (take(re)) { out.size = val; break }
 
+  // "on sale", "deals", "discounted": only marked-down items.
+  if (take(/\b(?:on sale|sale|deals?|discounts?|discounted|markdowns?)\b/)) out.onSale = true
+
   // Sort intent
   let sort: SortKey | null = null
   if (/\bcheapest\b|\bcheap\b|\bbudget\b/.test(rem)) sort = 'price-asc'

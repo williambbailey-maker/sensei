@@ -12,7 +12,7 @@
 //
 // Config (stores.config.json):
 //   { "menu_url": "https://dazed.fun/stores/dazed-cannabis-dispensary-union-square-nyc-ny/" }
-import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry } from '../lib/browser.mjs'
 
 const PAGE = 100
@@ -58,16 +58,13 @@ export function mapProduct(hit, storeId, menuUrl, drops) {
   const variants = (Array.isArray(s.variants) ? s.variants : [])
     .filter((v) => !(typeof num(v.quantity) === 'number' && num(v.quantity) <= 0))
     .map((v) => {
-      const base = num(v.price)
-      const sale = num(v.specialPrice)
-      return { weight: v.option != null ? String(v.option) : null, price: sale && sale > 0 && base && sale < base ? sale : base }
+      return variant(v.option != null ? String(v.option) : null, num(v.price), num(v.specialPrice))
     })
     .filter((v) => v.price != null)
   if (!variants.length) {
     drops?.add('no priced size in stock')
     return null
   }
-  const prices = variants.map((v) => v.price).filter((p) => p > 0)
   const strain = s.strainType
   const img = s.primaryImage ?? (Array.isArray(s.images) ? s.images[0] : null)
   return {
@@ -83,7 +80,7 @@ export function mapProduct(hit, storeId, menuUrl, drops) {
     thc_pct: potency(s, 'THC'),
     cbd_pct: potency(s, 'CBD'),
     variants,
-    price_min: prices.length ? Math.min(...prices) : null,
+    ...priceFields(variants),
     // Unconfirmed: the store page plus /product/<urlFragment>.
     url: s.urlFragment ? `${menuUrl.replace(/\/$/, '')}/product/${s.urlFragment}` : null,
     image_url: typeof img === 'string' && img.startsWith('http') ? img : null,

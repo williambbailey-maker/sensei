@@ -36,6 +36,7 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     if (f.priceCeiling != null && (p.price_min ?? Infinity) > f.priceCeiling) return false
     if (f.priceBand && p.price_band !== f.priceBand) return false
     if (f.thcMin != null && (p.thc_pct == null || p.thc_pct < f.thcMin)) return false
+    if (f.onSale && !p.on_sale) return false
     if (f.size) {
       const bucket = SIZES.find((s) => s.key === f.size)
       // A product qualifies if any of its variants falls in the size bucket.
@@ -64,6 +65,8 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
     return [...kept].sort((a, b) => (b.price_min ?? -Infinity) - (a.price_min ?? -Infinity))
   if (f.sort === 'potency')
     return [...kept].sort((a, b) => potency(b) - potency(a))
+  if (f.sort === 'discount')
+    return [...kept].sort((a, b) => discount(b) - discount(a) || (a.price_min ?? 1e9) - (b.price_min ?? 1e9))
   if (f.sort === 'distance' && f.userLoc)
     return [...kept].sort(
       (a, b) => (productMiles(a, f) ?? Infinity) - (productMiles(b, f) ?? Infinity),
@@ -73,6 +76,9 @@ export function rankProducts(products: Product[], f: Filters): Product[] {
   scored.sort((a, b) => b.s - a.s || (a.p.price_min ?? 1e9) - (b.p.price_min ?? 1e9))
   return interleaveByStore(scored.map((x) => x.p))
 }
+
+// How far an item is marked down (0 when it isn't), for the discount sort.
+const discount = (p: Product) => (p.price_was && p.price_min && p.price_was > p.price_min ? 1 - p.price_min / p.price_was : 0)
 
 // A single potency number for sorting: THC% when we have it, else the tier.
 function potency(p: Product): number {

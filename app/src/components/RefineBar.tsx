@@ -71,6 +71,16 @@ export function RefineBar({
         active={f.priceCeiling != null}
       />
       <Select
+        label="Sale"
+        value={f.onSale ? '1' : ''}
+        onChange={(v) => onChange({ ...f, onSale: v === '1' })}
+        options={[
+          { value: '', label: 'Sale & full price' },
+          { value: '1', label: 'On sale' },
+        ]}
+        active={f.onSale}
+      />
+      <Select
         label="THC"
         value={f.thcMin == null ? '' : String(f.thcMin)}
         onChange={(v) => onChange({ ...f, thcMin: v ? Number(v) : null })}

@@ -664,6 +664,32 @@ select:focus {
   flex: none;
 }
 
+/* Sale prices: the regular price struck through beside the sale price. */
+.price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.was {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: line-through;
+}
+.deal-price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  flex: none;
+}
+.deal-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0b0b0b;
+  background: #fff;
+  padding: 1px 6px;
+}
+
 /* The exit bar above the footer. */
 .exit {
   @apply flex items-center justify-between;
@@ -1016,8 +1042,12 @@ select:focus {
     margin: 0;
     padding: 0;
   }
-  .home-grid > section:last-child {
+  .home-grid > section.ways-section {
     padding-top: 62px;
+  }
+  /* The deals board runs under both columns. */
+  .home-grid > #deals {
+    grid-column: 1 / -1;
   }
 
   /* Results: product rows in two columns. */

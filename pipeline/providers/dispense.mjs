@@ -8,7 +8,7 @@
 // browser and watching the first API request it makes (cached per site for
 // the run). To skip the browser, give them directly:
 //   { "menu_url": "...", "venue": "55e6bc0c93d44d8a", "api_key": "..." }
-import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 
 const API = process.env.DISPENSE_API || 'https://api.dispenseapp.com'
 const PAGE = 50 // products per request
@@ -125,11 +125,9 @@ export function mapProduct(prod, storeId, cfg = {}) {
   let variants = tiers
     .map((t) => ({ weight: t.weightFormatted || null, price: num(t.price) }))
     .filter((v) => v.price != null || v.weight)
-  if (!variants.length) variants = [{ weight: prod.weightFormatted || prod.size || null, price: num(prod.priceWithDiscounts ?? prod.price) }]
+  if (!variants.length) variants = [variant(prod.weightFormatted || prod.size || null, num(prod.price), num(prod.priceWithDiscounts))]
   // A product-level discount applies to a single-tier product.
-  const disc = num(prod.priceWithDiscounts)
-  if (variants.length === 1 && disc != null && disc > 0 && variants[0].price != null && disc < variants[0].price) variants[0].price = disc
-  const prices = variants.map((v) => v.price).filter((p) => typeof p === 'number' && p > 0)
+  if (variants.length === 1) variants = [variant(variants[0].weight, variants[0].price, num(prod.priceWithDiscounts))]
 
   const thc = labPct(prod, 'thc')
   const cbd = labPct(prod, 'cbd')
@@ -147,7 +145,7 @@ export function mapProduct(prod, storeId, cfg = {}) {
     thc_pct: thc,
     cbd_pct: cbd,
     variants,
-    price_min: prices.length ? Math.min(...prices) : null,
+    ...priceFields(variants),
     // A site whose product pages don't resolve (SOFACLUB) links to its menu.
     url: cfg.link === 'menu' ? cfg.menu_url : typeof prod.productUrl === 'string' ? prod.productUrl : null,
     image_url: firstImage(prod),

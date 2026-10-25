@@ -496,6 +496,16 @@ async function main() {
     notes.push(`normalize failed: ${e.message.slice(0, 80)}`)
   }
 
+  // --- deals board -----------------------------------------------------------
+  // Re-pick the deals board from the fresh sale prices (supabase/deals.sql;
+  // `npm run deals` does the same by hand).
+  try {
+    const n = await sb('rpc/refresh_deals', { method: 'POST', service: true, body: {} })
+    notes.push(`deals ${n ?? 0}`)
+  } catch (e) {
+    notes.push(`deals failed: ${e.message.slice(0, 80)}`)
+  }
+
   // --- match rate + stale stores -------------------------------------------
   // Match rate = in-stock rows with clean_brand (normalized), target ≥90%.
   let matched = 0

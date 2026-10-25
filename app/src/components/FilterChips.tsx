@@ -30,6 +30,7 @@ export function FilterChips({ f, onChange }: { f: Filters; onChange: (f: Filters
   if (f.experience) chips.push({ label: f.experience, clear: () => onChange({ ...f, experience: null }) })
   if (f.priceBand) chips.push({ label: f.priceBand, clear: () => onChange({ ...f, priceBand: null }) })
   if (f.thcMin != null) chips.push({ label: `${f.thcMin}%+ THC`, clear: () => onChange({ ...f, thcMin: null }) })
+  if (f.onSale) chips.push({ label: 'On sale', clear: () => onChange({ ...f, onSale: false }) })
   if (f.size) chips.push({ label: sizeLabel(f.size), clear: () => onChange({ ...f, size: null }) })
   if (f.text) chips.push({ label: `"${f.text}"`, clear: () => onChange({ ...f, text: '' }) })
 

@@ -36,6 +36,8 @@ export function productFacts(p: Product, userLoc?: LatLng | null) {
   const name = cleanTitle(p.clean_name ?? p.name ?? 'Unknown', p.clean_brand ?? p.brand)
   const brand = p.clean_brand ?? p.brand
   const price = p.price_min != null ? `$${formatPrice(p.price_min)}` : '—'
+  // The regular price when the cheapest size is marked down.
+  const was = p.price_was != null && p.price_min != null && p.price_was > p.price_min ? `$${formatPrice(p.price_was)}` : null
   const weights = ((p.variants?.map((v) => v.weight).filter(Boolean) as string[]) ?? [])
     .filter((w) => !/^n\/?a$/i.test(w.trim()))
     .map((w) => displayWeight(w, p.category))
@@ -46,7 +48,7 @@ export function productFacts(p: Product, userLoc?: LatLng | null) {
   const storeName = p.store?.name ?? (p.store?.slug ? prettyStore(p.store.slug) : 'Dispensary')
   const place = p.store?.neighborhood ?? p.store?.borough ?? null
   const thc = p.thc_pct != null && p.category !== 'edibles' ? `${p.thc_pct}% THC` : null
-  return { name, brand, price, weights, miles, storeName, place, thc }
+  return { name, brand, price, was, weights, miles, storeName, place, thc }
 }
 
 // A result row: thumb · name / brand · size · strain · THC / store · hood ·
@@ -62,7 +64,7 @@ export function ProductCard({
   onOpen: (p: Product) => void
 }) {
   const evProps = eventProps(p)
-  const { name, brand, price, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
+  const { name, brand, price, was, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
 
   // product_impression — fires once when the row first enters the viewport.
   const cardRef = useRef<HTMLDivElement | null>(null)
@@ -126,7 +128,10 @@ export function ProductCard({
           <span className="meta block truncate">{storeLine}</span>
         </span>
       </span>
-      <span className="label shrink-0">{price}</span>
+      <span className="price shrink-0">
+        {was && <span className="was">{was}</span>}
+        <span className="label">{price}</span>
+      </span>
     </div>
   )
 }

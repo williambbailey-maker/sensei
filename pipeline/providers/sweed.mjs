@@ -7,7 +7,7 @@
 // Product field names are read from the first dry run's raw sample.
 //
 // Config (stores.config.json): { "menu_url": "https://freshlybaked.nyc/stores/midtown/shop/menu" }
-import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, dropCounter, extractEffects, normCategory, num, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry } from '../lib/browser.mjs'
 
 const PAGE = 100
@@ -43,16 +43,13 @@ export function mapProduct(p, storeId, menuUrl, drops) {
     .map((v) => {
       const base = num(v.price ?? v.regularPrice)
       const sale = num(v.salePrice ?? v.promoPrice ?? v.discountPrice)
-      return { weight: nameOf(v.weight) ?? v.name ?? v.size ?? null, price: sale && sale > 0 && base && sale < base ? sale : base }
+      return variant(nameOf(v.weight) ?? v.name ?? v.size ?? null, base, sale)
     })
     .filter((v) => v.price != null)
   if (!variants.length) {
-    const base = num(p.price ?? p.regularPrice)
-    const sale = num(p.salePrice ?? p.promoPrice ?? p.discountPrice)
-    const price = sale && sale > 0 && base && sale < base ? sale : base
-    if (price != null) variants = [{ weight: nameOf(p.weight) ?? p.size ?? null, price }]
+    const v = variant(nameOf(p.weight) ?? p.size ?? null, num(p.price ?? p.regularPrice), num(p.salePrice ?? p.promoPrice ?? p.discountPrice))
+    if (v.price != null) variants = [v]
   }
-  const prices = variants.map((v) => v.price).filter((x) => x > 0)
   const strain = nameOf(p.strain?.type) ?? nameOf(p.strainType) ?? nameOf(p.strain?.category)
   const img = p.imageUrl ?? p.image ?? p.images?.[0]?.url ?? p.images?.[0]
   const brand = nameOf(p.brand) ?? p.brandName
@@ -69,7 +66,7 @@ export function mapProduct(p, storeId, menuUrl, drops) {
     thc_pct: pct(p.thc ?? p.thcPercent ?? p.strain?.thc ?? p.potency?.thc),
     cbd_pct: pct(p.cbd ?? p.cbdPercent ?? p.strain?.cbd ?? p.potency?.cbd),
     variants,
-    price_min: prices.length ? Math.min(...prices) : null,
+    ...priceFields(variants),
     // Unconfirmed: the menu plus /product/<slug-or-id>.
     url: `${menuUrl.replace(/\/$/, '')}/product/${p.slug ?? p.canonicalName ?? id}`,
     image_url: typeof img === 'string' && img.startsWith('http') ? img : null,

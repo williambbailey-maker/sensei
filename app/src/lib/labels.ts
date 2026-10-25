@@ -71,6 +71,7 @@ export const SORTS: { key: SortKey; label: string }[] = [
   { key: 'distance', label: 'Nearest first' },
   { key: 'price-asc', label: 'Price: low to high' },
   { key: 'price-desc', label: 'Price: high to low' },
+  { key: 'discount', label: 'Biggest discount' },
   { key: 'potency', label: 'Potency: high to low' },
 ]
 

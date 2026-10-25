@@ -5,7 +5,7 @@
 // is replayed page by page from inside that page.
 //
 // Config (stores.config.json): { "menu_url": "https://carnegiehillcannabis.com/store/manhattan" }
-import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, extractEffects, normCategory, num, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 import { captureRequest, pageFetchRetry, pickStoreMeta } from '../lib/browser.mjs'
 
 const PAGE = 100 // Typesense allows up to 250 per page
@@ -32,11 +32,11 @@ function variantsOf(d) {
     const weight = d[`option${i}Weight`] ?? d[`option${i}Name`] ?? d[`option${i}Label`] ?? d[`option${i}`] ?? null
     if (price == null && weight == null) continue
     const sale = num(d[`option${i}SalePrice`] ?? d[`option${i}DiscountPrice`])
-    out.push({ weight: weight != null ? String(weight) : null, price: sale && sale > 0 && price && sale < price ? sale : price })
+    out.push(variant(weight != null ? String(weight) : null, price, sale))
   }
   if (!out.length) {
-    const price = num(d.salePrice ?? d.price)
-    if (price != null) out.push({ weight: Array.isArray(d.weights) && d.weights.length === 1 ? String(d.weights[0]) : null, price })
+    const v = variant(Array.isArray(d.weights) && d.weights.length === 1 ? String(d.weights[0]) : null, num(d.price), num(d.salePrice))
+    if (v.price != null) out.push(v)
   }
   return out
 }
@@ -48,7 +48,6 @@ export function mapProduct(d, storeId, menuUrl) {
   const id = d.id ?? d.productId ?? d.slug
   if (!id) return null
   const variants = variantsOf(d)
-  const prices = variants.map((v) => v.price).filter((p) => typeof p === 'number' && p > 0)
   const strain = d.strain || d.strainType
   return {
     store_id: storeId,
@@ -63,7 +62,7 @@ export function mapProduct(d, storeId, menuUrl) {
     thc_pct: pct(d.thcPercent ?? d.thcPerc ?? d.thc ?? d.thcPercentage),
     cbd_pct: pct(d.cbdPercent ?? d.cbdPerc ?? d.cbd ?? d.cbdPercentage),
     variants,
-    price_min: prices.length ? Math.min(...prices) : null,
+    ...priceFields(variants),
     // Unconfirmed: Carrot storefronts link products as <menu>/product/<slug>.
     url: d.slug ? `${menuUrl.replace(/\/$/, '')}/product/${d.slug}` : null,
     image_url: firstImage(d),

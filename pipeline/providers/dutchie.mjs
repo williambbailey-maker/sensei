@@ -7,7 +7,7 @@
 // only shows its menu inside its own website can be read from Dutchie's
 // embedded menu instead: set {"menu": "embedded-menu"} for it in
 // stores.config.json. Nothing is tried automatically.
-import { cleanDescription, extractEffects, normCategory, num, potencyPct, PRODUCT_FIELDS } from '../lib/product.mjs'
+import { cleanDescription, extractEffects, normCategory, num, potencyPct, PRODUCT_FIELDS, variant, priceFields } from '../lib/product.mjs'
 
 const CATEGORIES = ['flower', 'edibles', 'pre-rolls', 'vaporizers', 'concentrates', 'tinctures', 'topicals']
 const SLOW = /^(1|true|yes)$/i.test(process.env.SLOW || '')
@@ -40,13 +40,9 @@ export function mapApiProduct(prod, storeId, slug, fallbackCat, menu = 'dispensa
   const variants = []
   const n = Math.max(options.length, rec.length)
   for (let i = 0; i < n; i++) {
-    const base = num(rec[i])
-    const sp = num(special[i])
-    const price = sp && sp > 0 ? sp : base
-    if (price != null || options[i] != null) variants.push({ weight: options[i] ?? null, price: price ?? null })
+    const v = variant(options[i] ?? null, num(rec[i]), num(special[i]))
+    if (v.price != null || options[i] != null) variants.push(v)
   }
-  const prices = variants.map((v) => v.price).filter((p) => typeof p === 'number' && p > 0)
-  const priceMin = prices.length ? Math.min(...prices) : null
 
   const cName = prod.cName || prod.id || prod._id
   const brandName = prod.brandName || prod.brand?.name || null
@@ -70,7 +66,7 @@ export function mapApiProduct(prod, storeId, slug, fallbackCat, menu = 'dispensa
     thc_pct: potencyPct(prod.THCContent) ?? num(prod.THC),
     cbd_pct: potencyPct(prod.CBDContent) ?? num(prod.CBD),
     variants,
-    price_min: priceMin,
+    ...priceFields(variants),
     url: cName ? `https://dutchie.com/${menu}/${slug}/product/${cName}` : null,
     image_url: image,
     in_stock: true,
