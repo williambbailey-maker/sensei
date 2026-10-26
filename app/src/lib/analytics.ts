@@ -118,6 +118,22 @@ async function loadGeo(): Promise<Geo> {
   }
 }
 
+// Client-side signals the connection IP cannot fake. A visitor's device
+// timezone and screen size come from the browser itself, so they tell us where
+// someone actually is even when a mobile carrier gateway geolocates the IP to
+// another state. Used only to sanity-check paid traffic; nothing identifying.
+function clientSignals(): { tz: string | null; sw: number | null; sh: number | null } {
+  try {
+    return {
+      tz: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
+      sw: typeof screen !== 'undefined' ? screen.width : null,
+      sh: typeof screen !== 'undefined' ? screen.height : null,
+    }
+  } catch {
+    return { tz: null, sw: null, sh: null }
+  }
+}
+
 // First-party pageview → Supabase. Deduped: one row per page per session per
 // 30 minutes, so reloads and service-worker refreshes don't count twice.
 async function beacon(): Promise<void> {
@@ -146,6 +162,7 @@ async function beacon(): Promise<void> {
         device: device(),
         internal,
         ...geo,
+        ...clientSignals(),
       })
       .then(
         () => undefined,
