@@ -10,6 +10,8 @@ export type StoreLite = {
   lat: number | null
   lng: number | null
   address?: string | null
+  // The shop's own menu page (the cart's "Order at" link).
+  menu_url?: string | null
 }
 
 export type LatLng = { lat: number; lng: number }

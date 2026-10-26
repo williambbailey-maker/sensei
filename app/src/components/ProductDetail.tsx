@@ -114,7 +114,7 @@ export function ProductDetail({
 
         <div className="mt-5 flex items-center gap-2" style={{ fontSize: 13, fontWeight: 500 }}>
           <span className="dot" />
-          <span>In stock · as of last refresh</span>
+          <span>In stock</span>
         </div>
 
         <div className="deck-nav mt-3">

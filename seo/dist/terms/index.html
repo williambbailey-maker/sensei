@@ -9,7 +9,8 @@
 <link rel="canonical" href="https://sensei.nyc/terms/">
 <meta property="og:type" content="website"><meta property="og:title" content="Terms of Use | Sensei">
 <meta property="og:description" content="Sensei's terms of use. Sensei is an independent guide to New York's licensed dispensaries for adults 21 and over."><meta property="og:url" content="https://sensei.nyc/terms/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://sensei.nyc/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://sensei.nyc/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -321,7 +322,7 @@ if(name==='brand_view')fbq('track','ViewContent',{content_type:'brand'},o);
 else if(name==='chip_tap')fbq('track','Search',{},o);
 else if(name==='menu_click'||name==='directions_click'){fbq('track','Lead',{content_category:name==='menu_click'?'menu':'directions'},o);eng();}
 else if(name==='signup')fbq('track','CompleteRegistration',{},o);}catch(e){}}
-function ev(name,p){p=p||{};fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
+var SEQ=0;function ev(name,p){p=p||{};p.seq=++SEQ;fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
 var df=document.getElementById('drop-form');var dop=document.getElementById('drop-open');function dopen(){if(!df||!dop)return;dop.parentNode.hidden=true;df.hidden=false;df.email.focus();}if(dop)dop.addEventListener('click',dopen);if(location.hash==='#drop')dopen();if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}

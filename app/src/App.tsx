@@ -484,7 +484,7 @@ export default function App() {
           <a href="mailto:hello@sensei.nyc" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc" className="ic">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg>
           </a>
-          <a href="#" aria-label="Instagram" className="ic" onClick={(e) => e.preventDefault()}>
+          <a href="https://www.instagram.com/sensei.nyc/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="ic">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>

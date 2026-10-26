@@ -132,6 +132,14 @@ function storePatch(store, meta) {
   if (!store.borough && meta.city && CITY_BOROUGH[meta.city.toLowerCase()]) {
     patch.borough = CITY_BOROUGH[meta.city.toLowerCase()]
   }
+  // The shop's own menu page, for the cart's "Order at" link: from
+  // stores.config.json for other platforms, the Dutchie pattern otherwise.
+  const menu =
+    store.config?.menu_url ||
+    (store.provider === 'dutchie'
+      ? `https://dutchie.com/${store.config?.menu === 'embedded-menu' ? 'embedded-menu' : 'dispensary'}/${store.slug}`
+      : null)
+  if (menu && menu !== store.menu_url) patch.menu_url = menu
   return patch
 }
 

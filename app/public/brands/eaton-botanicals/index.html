@@ -9,7 +9,8 @@
 <link rel="canonical" href="https://sensei.nyc/brands/eaton-botanicals/">
 <meta property="og:type" content="website"><meta property="og:title" content="Eaton Botanicals in NYC — 66 Dispensaries Stocking It | Sensei">
 <meta property="og:description" content="Find Eaton Botanicals at 66 NYC dispensaries: 425 products from $15. See every store stocking Eaton Botanicals and compare prices on Sensei."><meta property="og:url" content="https://sensei.nyc/brands/eaton-botanicals/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://sensei.nyc/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://sensei.nyc/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -296,7 +297,7 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 </main>
 <div class="rule"></div>
 <div class="end">
-<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="#" class="ic" aria-label="Instagram" onclick="return false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
+<footer class="ft"><div class="contact"><a href="mailto:hello@sensei.nyc" class="ic" aria-label="Email hello@sensei.nyc" title="hello@sensei.nyc"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></a><a href="https://www.instagram.com/sensei.nyc/" class="ic" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
 <div class="foot-mark" aria-label="Sensei NYC"><span class="wm">Sensei</span><div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div></div>
 <div class="foot-rule"></div>
 <nav class="legal-links" aria-label="Legal"><a href="/terms/">Terms</a><a href="/privacy/">Privacy Policy</a><a href="/about/">About</a></nav>
@@ -379,7 +380,7 @@ if(name==='brand_view')fbq('track','ViewContent',{content_type:'brand'},o);
 else if(name==='chip_tap')fbq('track','Search',{},o);
 else if(name==='menu_click'||name==='directions_click'){fbq('track','Lead',{content_category:name==='menu_click'?'menu':'directions'},o);eng();}
 else if(name==='signup')fbq('track','CompleteRegistration',{},o);}catch(e){}}
-function ev(name,p){p=p||{};fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
+var SEQ=0;function ev(name,p){p=p||{};p.seq=++SEQ;fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
 var df=document.getElementById('drop-form');var dop=document.getElementById('drop-open');function dopen(){if(!df||!dop)return;dop.parentNode.hidden=true;df.hidden=false;df.email.focus();}if(dop)dop.addEventListener('click',dopen);if(location.hash==='#drop')dopen();if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}

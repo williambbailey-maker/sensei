@@ -18,7 +18,8 @@ export function CartView({
   const storeName = cart.store.name ?? prettyStore(cart.store.slug)
   const count = cart.items.reduce((n, i) => n + i.qty, 0)
   const total = cart.items.reduce((s, i) => s + (i.product.price_min ?? 0) * i.qty, 0)
-  const menuUrl = `https://dutchie.com/dispensary/${cart.store.slug}`
+  // The shop's own menu; the Dutchie pattern only for a store row that predates menu_url.
+  const menuUrl = cart.store.menu_url ?? `https://dutchie.com/dispensary/${cart.store.slug}`
 
   return (
     <div className="wrap wrap-mid" style={{ paddingTop: 28 }}>
@@ -75,8 +76,8 @@ export function CartView({
         <span>Order at {storeName}</span>
       </a>
       <p className="meta" style={{ marginTop: 14 }}>
-        Dutchie doesn't accept carts filled from outside yet. Use this list on their menu; each item links
-        straight to its page. Prices shown are menu minimums; final pricing and sizes are confirmed at checkout.
+        Shop menus don't accept carts filled from outside yet. Use this list on {storeName}'s menu; each
+        item links straight to its page. Prices shown are menu minimums; final pricing and sizes are confirmed at checkout.
       </p>
     </div>
   )

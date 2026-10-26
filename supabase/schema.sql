@@ -17,7 +17,10 @@ create table if not exists public.stores (
   lat         double precision,
   lng         double precision,
   active      boolean not null default true,
-  created_at  timestamptz not null default now()
+  created_at  timestamptz not null default now(),
+  -- The shop's own menu page (the cart's "Order at" link). Dutchie shops:
+  -- dutchie.com/dispensary/<slug>; others from pipeline/stores.config.json.
+  menu_url    text
 );
 
 create table if not exists public.products (

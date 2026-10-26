@@ -95,10 +95,12 @@ export function TapJourney({
     setStep(p)
   }
 
-  // A selection writes its filter, then advances.
-  const pick = (patch: Partial<Filters>) => {
+  // A selection writes its filter, then advances. `note` goes to the event
+  // only (e.g. all: true for a whole-borough pick, so it reads as a choice,
+  // not a missing neighborhood).
+  const pick = (patch: Partial<Filters>, note: Record<string, unknown> = {}) => {
     const draft = { ...f, ...patch }
-    track('journey_step', { step: STEPS[step].toLowerCase(), ...patch })
+    track('journey_step', { step: STEPS[step].toLowerCase(), ...patch, ...note })
     setF(draft)
     advance(step, draft)
   }
@@ -177,7 +179,7 @@ export function TapJourney({
             const id = `hoods-${b.replace(/\W/g, '')}`
             return (
               <div key={b} className="boro">
-                <button type="button" onClick={() => pick({ borough: b, neighborhood: null })} className="boro-pick">
+                <button type="button" onClick={() => pick({ borough: b, neighborhood: null }, { all: true })} className="boro-pick">
                   <span className="row-l">
                     <span className={`disc ${f.borough === b && !f.neighborhood ? 'disc-on' : ''}`} />
                     <span className="min-w-0">

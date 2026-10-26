@@ -24,6 +24,20 @@ begin
   ) x
   where p.id = x.id and (full_refresh or p.clean_brand is null);
 
+  -- One spelling per brand. Shops type the same brand as Wyld, WYLD and
+  -- wyld; every row takes the spelling most listings use (ties: the first
+  -- alphabetically, which puts mixed case before ALL CAPS). Runs on every
+  -- call so a new shop's spelling never splits an existing brand.
+  with v as (
+    select clean_brand, lower(clean_brand) as k, count(*) as n
+    from products where clean_brand is not null group by 1, 2
+  ), canon as (
+    select distinct on (k) k, clean_brand from v order by k, n desc, clean_brand
+  )
+  update products p set clean_brand = c.clean_brand
+  from canon c
+  where lower(p.clean_brand) = c.k and p.clean_brand <> c.clean_brand;
+
   -- clean_name: light tidy (heavier display cleanup still happens in the app).
   update products
   set clean_name = nullif(trim(regexp_replace(name, '\s+', ' ', 'g')), '')

@@ -24,6 +24,9 @@ const KEY =
 const HOST = (import.meta.env.VITE_POSTHOG_HOST as string | undefined) || 'https://us.i.posthog.com'
 
 let on = false
+// Events sent in the same tap can reach the server out of order; this
+// per-page counter (props.seq) gives the true order.
+let seq = 0
 let source = 'direct'
 let internal = false
 
@@ -198,7 +201,7 @@ export function track(event: string, props: Props = {}): void {
           category: (category as string | null | undefined) ?? null,
           internal,
           ...geo,
-          props: rest,
+          props: { ...rest, seq: ++seq },
         })
         .then(
           () => undefined,

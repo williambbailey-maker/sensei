@@ -54,6 +54,9 @@ jobs:
           echo "product titles drop the brand:    $(cat index-*.js 2>/dev/null | grep -c 'half\[- \]ounce')"
           echo "route trail in app:               $(cat index-*.css 2>/dev/null | grep -c 'trail-back')"
           echo "sale prices + deals board in app: $(cat index-*.js 2>/dev/null | grep -c 'price_was') $(cat index-*.js 2>/dev/null | grep -c 'live_deals')"
+          echo "cart uses shop menu_url:          $(cat index-*.js 2>/dev/null | grep -c 'menu_url')"
+          echo "instagram link in app:            $(cat index-*.js 2>/dev/null | grep -c 'instagram.com/sensei.nyc')"
+          echo "og:image on home:                 $(grep -c 'og:image' home.html)  $(curl $C -o /dev/null -w '%{http_code} %{size_download}B' "$B/og.png") /og.png"
           echo "== crawlable home"
           echo "canonical: $(grep -oE '<link rel="canonical"[^>]*>' home.html)"
           echo "static block: $(grep -c 'class="seo-home"' home.html)  links in it: $(sed -n '/seo:home:start/,/seo:home:end/p' home.html | grep -o '<a href' | wc -l)"
@@ -75,6 +78,7 @@ jobs:
           echo "drop row in menu: $(sed -n '/id="menu"/,$p' seo.html | grep -ci 'weekly drop')"
           echo "legal links:      $(grep -c 'class="legal-links"' seo.html)"
           echo "route trail:      $(grep -c 'class="trail"' seo.html)  old crumb: $(grep -c 'class="crumb"' seo.html)"
+          echo "og:image + instagram: $(grep -c 'og:image' seo.html) $(grep -c 'instagram.com/sensei.nyc' seo.html)"
           echo "sign-up (want 0): $(grep -c 'id="drop-open"' seo.html)  old box: $(grep -c 'notice drop' seo.html)"
           for p in /terms/ /privacy/ /about/; do
             curl $C -o legal.html -w "%{http_code}  $p  " "$B$p"; echo "$(grep -oE '<h1>[^<]*</h1>' legal.html)  back bar: $(grep -c 'class="sh-bar"' legal.html)  exit pill: $(grep -c 'class="sf-pill"' legal.html)"
