@@ -85,3 +85,15 @@ Pageviews now also carry the link's raw tags (`src`, `utm_source`,
 `utm_medium`, `utm_campaign`, `utm_content`, `click_id`), and headless or
 automated browsers (`navigator.webdriver`, HeadlessChrome) are not recorded.
 Reporting: `analytics/README.md`.
+
+## Added Oct 26 (visit steps)
+
+Passive signals: recorded, but not counted as "did something" in reports.
+
+| Event | When | Props |
+|---|---|---|
+| `age_gate_shown` | the 21+ check appears (first visit on a device) | — |
+| `age_gate_yes` | "Yes, I'm 21 or older" | — |
+| `age_gate_no` | "I'm under 21" (sent before leaving for Google) | — |
+| `scroll_depth` | first pass of 25/50/75/100% of the home's scroll | `view` ("home"), `pct` |
+| `time_on_site` | 10, 30, 60 and 180 seconds with the tab on screen | `seconds` |

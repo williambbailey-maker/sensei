@@ -198,10 +198,48 @@ async function beacon(): Promise<void> {
   }
 }
 
+// How long a visit stays and how far it scrolls. Passive signals: recorded,
+// but not counted as "did something" (supabase/traffic.sql lists them).
+// Time counts only while the tab is on screen: one event at 10, 30, 60 and
+// 180 seconds.
+function watchTime(): void {
+  const marks = [10, 30, 60, 180]
+  let seen = 0
+  const t = setInterval(() => {
+    if (document.visibilityState !== 'visible') return
+    seen += 1
+    if (seen === marks[0]) {
+      marks.shift()
+      track('time_on_site', { seconds: seen })
+      if (!marks.length) clearInterval(t)
+    }
+  }, 1000)
+}
+
+// Scroll depth on one screen (the home): one event the first time the visitor
+// passes 25, 50, 75 and 100% of what can be scrolled. Returns the cleanup.
+export function watchScroll(view: string): () => void {
+  const hit = new Set<number>()
+  const on = () => {
+    const room = document.documentElement.scrollHeight - window.innerHeight
+    if (room <= 0) return
+    const pct = Math.round((window.scrollY / room) * 100)
+    for (const m of [25, 50, 75, 100]) {
+      if (pct >= m && !hit.has(m)) {
+        hit.add(m)
+        track('scroll_depth', { view, pct: m })
+      }
+    }
+  }
+  window.addEventListener('scroll', on, { passive: true })
+  return () => window.removeEventListener('scroll', on)
+}
+
 export function initAnalytics(): void {
   source = deriveSource()
   internal = internalFlag()
   void beacon()
+  if (!isBot()) watchTime()
   // Internal devices and bots are logged (flagged) in Supabase but kept out of
   // PostHog and Meta.
   if (!internal && !isBot()) initMetaPixel()

@@ -24,7 +24,11 @@ alter table public.pageviews
 --            untagged     no tag and no referring site: typed, bookmarked,
 --                         an in-app browser that hides the referrer, or a bot
 --            internal     a device marked with ?me=1 (excluded from totals)
---   engaged    the visit did anything after landing (any tracked event)
+--   engaged    the visit tapped anything after landing (passive signals excluded)
+--   saw_gate / said_yes / said_no   the 21+ check (from Oct 26; a returning
+--              visitor who passed it before doesn't see it again)
+--   home_scroll  deepest scroll on the home, 0/25/50/75/100 (%)
+--   seconds      time on site while on screen: 0/10/30/60/180
 --   suspect    looks automated: untagged, desktop, one page, no referrer,
 --              did nothing, and (if located) located at a data centre
 create or replace view public.traffic_sessions with (security_invoker = true) as
@@ -37,8 +41,16 @@ with pv as (
   select session_id, count(*) as pages, bool_or(internal) as any_internal
   from public.pageviews where session_id is not null group by 1
 ), ev as (
+  -- Passive signals (the 21+ check, time on site, scroll depth) are kept
+  -- out of `actions`, so "did something" still means a tap.
   select session_id,
          count(*) as events,
+         count(*) filter (where event not in ('age_gate_shown', 'age_gate_yes', 'age_gate_no', 'time_on_site', 'scroll_depth')) as actions,
+         bool_or(event = 'age_gate_shown') as saw_gate,
+         bool_or(event = 'age_gate_yes') as said_yes,
+         bool_or(event = 'age_gate_no') as said_no,
+         max((props->>'pct')::int) filter (where event = 'scroll_depth' and props->>'view' = 'home') as home_scroll,
+         max((props->>'seconds')::int) filter (where event = 'time_on_site') as seconds,
          count(*) filter (where event = 'menu_click') as menu_clicks,
          count(*) filter (where event = 'directions_click') as directions_clicks,
          count(*) filter (where event = 'order_click') as order_clicks,
@@ -69,7 +81,7 @@ select
     when f.source = 'qr' or f.src is not null or f.utm_source is not null then 'tagged_other'
     else 'untagged'
   end as channel,
-  coalesce(e.events, 0) > 0 as engaged,
+  coalesce(e.actions, 0) > 0 as engaged,
   case
     when f.region = 'NY' and f.city in ('New York City', 'New York', 'Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'The Bronx',
       'Staten Island', 'Long Island City', 'Astoria', 'Flushing', 'Jamaica') then 'nyc'
@@ -85,7 +97,12 @@ select
   (f.source = 'direct' and f.src is null and f.utm_source is null and f.referrer is null
     and coalesce(f.device, '') = 'desktop' and a.pages = 1 and coalesce(e.events, 0) = 0
     and (f.city is null or f.city in ('San Jose', 'Santa Clara', 'Ashburn', 'Boardman', 'Council Bluffs', 'The Dalles',
-      'Mountain View', 'Moses Lake', 'Quincy', 'Prineville', 'Forest City', 'Altoona'))) as suspect
+      'Mountain View', 'Moses Lake', 'Quincy', 'Prineville', 'Forest City', 'Altoona'))) as suspect,
+  coalesce(e.saw_gate, false) as saw_gate,
+  coalesce(e.said_yes, false) as said_yes,
+  coalesce(e.said_no, false) as said_no,
+  coalesce(e.home_scroll, 0) as home_scroll,
+  coalesce(e.seconds, 0) as seconds
 from first f
 join agg a using (session_id)
 left join ev e using (session_id);
@@ -159,11 +176,27 @@ as $$
              count(*) as visits, count(*) filter (where engaged) as engaged,
              sum(menu_clicks + directions_clicks + order_clicks + deal_clicks) as clicks
       from real where channel = 'meta_ad' group by 1, 2 order by 3 desc limit 15) x),
+    -- Step by step through the visit, for visits since the step tracking
+    -- started (the first age-check event).
+    'funnel', (select coalesce(json_agg(x order by x.arrived desc), '[]'::json) from (
+      select channel, count(*) as arrived,
+             count(*) filter (where saw_gate) as saw_age_check,
+             count(*) filter (where said_yes) as said_21_plus,
+             count(*) filter (where said_no) as said_under_21,
+             count(*) filter (where not saw_gate) as returning_past_check,
+             count(*) filter (where home_scroll >= 25) as scrolled_home,
+             count(*) filter (where seconds >= 10) as stayed_10s,
+             count(*) filter (where seconds >= 30) as stayed_30s,
+             count(*) filter (where engaged) as tapped_something
+      from real
+      where started_at >= (select min(ts) from public.events where event = 'age_gate_shown')
+      group by 1) x),
     'fields_since', json_build_object(
       'visits', (select min(ts)::date from public.pageviews),
       'location', (select min(ts)::date from public.pageviews where country is not null),
       'timezone', (select min(ts)::date from public.pageviews where tz is not null),
-      'link_tags', (select min(ts)::date from public.pageviews where src is not null or utm_source is not null)
+      'link_tags', (select min(ts)::date from public.pageviews where src is not null or utm_source is not null),
+      'visit_steps', (select min(ts)::date from public.events where event = 'age_gate_shown')
     )
   );
 $$;

@@ -15,7 +15,7 @@ import { Newsletter } from './components/Newsletter'
 import { fetchDeals, fetchProductsFor, fetchSiteStats, fetchStores, type SiteStats } from './lib/supabase'
 import snapshotStats from './lib/snapshotStats.json'
 import { prettyStore } from './lib/labels'
-import { track } from './lib/analytics'
+import { track, watchScroll } from './lib/analytics'
 import {
   EMPTY_FILTERS,
   filtersFromQuery,
@@ -190,6 +190,12 @@ export default function App() {
   // search screen; "See everything" opens results, all, cheapest first.
   // `way` is which of the two screens is showing; null is the home.
   const [way, setWay] = useState<'borough' | 'search' | null>(null)
+
+  // How far down the home people scroll, once they're past the 21+ check.
+  const onHome = view === 'journey' && way === null
+  useEffect(() => {
+    if (onHome && ageOk) return watchScroll('home')
+  }, [onHome, ageOk])
   const [locating, setLocating] = useState(false)
   const [wayError, setWayError] = useState('')
 
