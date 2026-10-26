@@ -56,6 +56,7 @@ jobs:
           echo "sale prices + deals board in app: $(cat index-*.js 2>/dev/null | grep -c 'price_was') $(cat index-*.js 2>/dev/null | grep -c 'live_deals')"
           echo "cart uses shop menu_url:          $(cat index-*.js 2>/dev/null | grep -c 'menu_url')"
           echo "instagram link in app:            $(cat index-*.js 2>/dev/null | grep -c 'instagram.com/sensei.nyc')"
+          echo "visit tags + bot filter in app:   $(cat index-*.js 2>/dev/null | grep -c 'utm_campaign') $(cat index-*.js 2>/dev/null | grep -c 'webdriver')"
           echo "og:image on home:                 $(grep -c 'og:image' home.html)  $(curl $C -o /dev/null -w '%{http_code} %{size_download}B' "$B/og.png") /og.png"
           echo "== crawlable home"
           echo "canonical: $(grep -oE '<link rel="canonical"[^>]*>' home.html)"

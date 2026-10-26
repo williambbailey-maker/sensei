@@ -66,7 +66,11 @@ export function productKey(brand?: string | null, name?: string | null): string 
   return s || 'unknown'
 }
 
-const isBot = () => /bot|crawl|spider|slurp|preview/i.test(navigator.userAgent)
+// Crawlers, link previews and automated browsers (headless Chrome, Playwright,
+// Lighthouse) are not visitors; navigator.webdriver is set by automation tools.
+const isBot = () =>
+  /bot|crawl|spider|slurp|preview|headless|lighthouse|phantomjs/i.test(navigator.userAgent) ||
+  (typeof navigator !== 'undefined' && navigator.webdriver === true)
 const device = () => (/Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop')
 
 function storedId(store: Storage, key: string): string {
@@ -134,6 +138,26 @@ function clientSignals(): { tz: string | null; sw: number | null; sh: number | n
   }
 }
 
+// The link's own tags, stored as typed: ?src=… and the utm_* set, plus whether
+// the click carried an ad-network click id. `source` above is only a coarse
+// guess; these let the report tell one ad, flyer or link from another.
+function linkTags(): Record<string, string | boolean | null> {
+  try {
+    const q = new URLSearchParams(location.search)
+    const v = (k: string) => (q.get(k) || '').trim().slice(0, 120) || null
+    return {
+      src: v('src'),
+      utm_source: v('utm_source'),
+      utm_medium: v('utm_medium'),
+      utm_campaign: v('utm_campaign'),
+      utm_content: v('utm_content'),
+      click_id: q.has('fbclid') || q.has('gclid') || q.has('ttclid'),
+    }
+  } catch {
+    return {}
+  }
+}
+
 // First-party pageview → Supabase. Deduped: one row per page per session per
 // 30 minutes, so reloads and service-worker refreshes don't count twice.
 async function beacon(): Promise<void> {
@@ -163,6 +187,7 @@ async function beacon(): Promise<void> {
         internal,
         ...geo,
         ...clientSignals(),
+        ...linkTags(),
       })
       .then(
         () => undefined,

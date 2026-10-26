@@ -1,6 +1,7 @@
 import { cleanTitle, prettyStore } from '../lib/labels'
 import type { Cart } from '../lib/types'
 import { Trail } from './Trail'
+import { track } from '../lib/analytics'
 
 // The dummy cart: one store, quantities, a running minimum total, and the
 // hand-off to Dutchie (which can't accept prefilled carts from outside).
@@ -72,7 +73,14 @@ export function CartView({
         ))}
       </div>
 
-      <a href={menuUrl} target="_blank" rel="noopener noreferrer" className="cta" style={{ marginTop: 28 }}>
+      <a
+        href={menuUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="cta"
+        style={{ marginTop: 28 }}
+        onClick={() => track('order_click', { dispensary: cart.store.slug, url: menuUrl, items: count })}
+      >
         <span>Order at {storeName}</span>
       </a>
       <p className="meta" style={{ marginTop: 14 }}>

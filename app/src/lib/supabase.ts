@@ -130,14 +130,14 @@ export async function fetchStores(): Promise<StoreLite[]> {
 export async function fetchDeals(): Promise<Deal[]> {
   const { data, error } = await supabase
     .from('live_deals')
-    .select('id,title,description,url,featured,sort,kind,product_id,price,price_was,pct,image_url,store_name,store_borough')
+    .select('id,title,description,url,featured,sort,kind,product_id,price,price_was,pct,image_url,store_name,store_borough,store_slug')
     .order('featured', { ascending: false })
     .order('sort', { ascending: true })
   if (error) throw error
-  type Row = Omit<Deal, 'store'> & { store_name: string | null; store_borough: string | null }
-  return ((data ?? []) as unknown as Row[]).map(({ store_name, store_borough, ...d }) => ({
+  type Row = Omit<Deal, 'store'> & { store_name: string | null; store_borough: string | null; store_slug: string | null }
+  return ((data ?? []) as unknown as Row[]).map(({ store_name, store_borough, store_slug, ...d }) => ({
     ...d,
-    store: store_name || store_borough ? { name: store_name, borough: store_borough } : null,
+    store: store_name || store_borough ? { name: store_name, borough: store_borough, slug: store_slug } : null,
   }))
 }
 

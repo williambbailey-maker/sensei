@@ -73,3 +73,15 @@ with all six properties populated:
 - tap a chip → `chip_tap`; tap the CTA → `menu_click`
 - in the app: open a product → `product_view`; add → `save`; subscribe →
   `signup`
+
+## Added Oct 27
+
+| Event | When | Props |
+|---|---|---|
+| `order_click` | "Order at <shop>" in the cart | `dispensary` (slug), `url`, `items` |
+| `deal_click` | a row of the home deals board | `dispensary` (slug), `brand`, `url`, `pct`, `rank` |
+
+Pageviews now also carry the link's raw tags (`src`, `utm_source`,
+`utm_medium`, `utm_campaign`, `utm_content`, `click_id`), and headless or
+automated browsers (`navigator.webdriver`, HeadlessChrome) are not recorded.
+Reporting: `analytics/README.md`.

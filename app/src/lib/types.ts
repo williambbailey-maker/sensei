@@ -66,7 +66,7 @@ export type Deal = {
   price_was: number | null
   pct: number | null
   image_url: string | null
-  store: { name: string | null; borough: string | null } | null
+  store: { name: string | null; borough: string | null; slug?: string | null } | null
 }
 
 export type Vibe =

@@ -1,4 +1,5 @@
 import { cleanTitle } from '../lib/labels'
+import { track } from '../lib/analytics'
 import type { Deal } from '../lib/types'
 
 const money = (n: number) => `$${Number.isInteger(n) ? n : n.toFixed(2)}`
@@ -26,6 +27,15 @@ export function Deals({ deals }: { deals: Deal[] }) {
               target={d.url ? '_blank' : undefined}
               rel="noopener noreferrer"
               className="board-row"
+              onClick={() =>
+                track('deal_click', {
+                  dispensary: d.store?.slug ?? null,
+                  brand: d.kind === 'sale' ? d.description : null,
+                  url: d.url,
+                  pct: d.pct,
+                  rank: d.sort,
+                })
+              }
             >
               <span className="min-w-0">
                 <span className="block truncate">{name}</span>

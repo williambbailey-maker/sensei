@@ -13,3 +13,6 @@ site/
 
 # Built newsletter issues
 newsletter/dist/
+
+# Built traffic reports
+analytics/dist/
