@@ -149,7 +149,7 @@ ${Object.keys(r.suspect_by_day).length ? `<p class="note">Automated, by day: ${O
 <h2>How to read this</h2>
 <ul class="def">
 <li><b>Visit</b>: one browser tab's time on the site. <b>People</b>: different devices.</li>
-<li><b>Did something</b>: tapped, searched, scrolled to products or opened anything after landing.</li>
+<li><b>Did something</b>: tapped anything after landing (a button, the menu, a search, a product, a filter). Scrolling and seeing products don't count.</li>
 <li><b>Clicks out</b>: a shop's menu, directions, "Order at" in the cart, or a deal.</li>
 <li><b>Meta ads</b>: links tagged as a Meta ad. <b>Search</b>: arrived from Google, Bing etc. <b>Social</b>: from Instagram or Facebook without an ad tag. <b>Untagged</b>: no tag and no referring site (typed in, a bookmark, or an app that hides where it came from).</li>
 <li><b>Probable automated</b>: untagged, on a computer, one page, no referring site, did nothing, and (when located) at a data centre. Headless browsers are no longer recorded at all.</li>

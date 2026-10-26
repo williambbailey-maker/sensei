@@ -48,8 +48,9 @@ its earlier visits. `?me=0` undoes it.
 | Untagged | none of the above |
 | Internal | your marked devices (left out) |
 
-A visit is one browser tab's session. **Did something** means any tracked
-action after landing. **Clicks out** are a shop's menu, directions, "Order
+A visit is one browser tab's session. **Did something** means a tap after
+landing (a button, the menu, a search, a product, a filter); scrolling,
+products coming into view and the 21+ check don't count. **Clicks out** are a shop's menu, directions, "Order
 at" in the cart, and deal taps. **Probable automated** visits (untagged,
 desktop, one page, no referring site, did nothing, located at a data centre
 if located at all) are counted separately; headless browsers aren't
