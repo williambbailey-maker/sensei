@@ -97,3 +97,11 @@ Passive signals: recorded, but not counted as "did something" in reports.
 | `age_gate_no` | "I'm under 21" (sent before leaving for Google) | — |
 | `scroll_depth` | first pass of 25/50/75/100% of the home's scroll | `view` ("home"), `pct` |
 | `time_on_site` | 10, 30, 60 and 180 seconds with the tab on screen | `seconds` |
+
+## Changed Oct 27: the 21+ check is a bottom sheet
+
+In the app the 21+ question is now a sheet pinned to the bottom of the screen,
+with the page visible (but inert) behind it. `age_gate_shown`, `age_gate_yes`
+and `age_gate_no` from the app carry `variant: "sheet"`; earlier rows (the
+full-screen gate) have no `variant`. The static SEO pages keep their own
+full-screen gate and don't send these events.

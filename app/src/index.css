@@ -209,6 +209,58 @@ select:focus {
   opacity: 0.6;
 }
 
+/* The 21+ question: a sheet pinned to the bottom (components/AgeGate.tsx).
+   The page behind shows at full strength; no dim, blur or shadow. Its
+   content sits in the .wrap column, capped at the phone column's width. */
+.agesheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: #1e1e1e;
+  border-top: 2px solid #fff;
+  padding-top: 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+.agesheet-in {
+  max-width: 464px;
+}
+.agesheet .lede {
+  margin-top: 12px;
+}
+.agesheet .cta {
+  margin-top: 18px;
+}
+/* Focus lands on Yes when the sheet opens. Its ring (square, not the
+   browser's rounded one) shows once the keyboard is used, not to every
+   phone visitor on arrival. */
+.agesheet .cta:focus-visible,
+.agesheet .ghost:focus-visible {
+  outline: none;
+}
+.agesheet[data-keys] .cta:focus-visible,
+.agesheet[data-keys] .ghost:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.agesheet .ghost {
+  display: inline-block;
+  margin-top: 14px;
+}
+/* Short screens (an in-app browser on a small iPhone is about 375×560):
+   tighter padding so the header and headline stay fully above the sheet. */
+@media (max-height: 600px) {
+  .agesheet {
+    padding-top: 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+  .agesheet .cta {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+}
+
 /* Line bullets. */
 .bullets {
   @apply flex;
