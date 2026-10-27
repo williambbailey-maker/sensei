@@ -5,9 +5,8 @@ name: Analytics check
 #   1. a phone visitor from a Meta-tagged link who taps a deal (app)
 #   2. a phone visitor on a static page from a ?src= link
 #   3. a bare headless browser, which must NOT be recorded
-#   4. a phone visitor who answers "I'm under 21" at the age check
-# Visit 1 also scrolls the home and stays 10+ seconds, so the age-check,
-# scroll and time-on-site events are exercised too.
+# Visit 1 also scrolls the home and stays 10+ seconds, so the scroll and
+# time-on-site events are exercised too. (No age check since Oct 27, 2026.)
 # Each carries this run's id; check the rows afterwards with
 #   select * from pageviews where utm_content like 'check-<run id>%' or src like 'check-<run id>%';
 on:
@@ -30,16 +29,13 @@ jobs:
           const { chromium } = require('playwright')
           const RUN = process.env.RUN
           const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
-          async function visit(b, url, person, act, gate = 'yes') {
+          async function visit(b, url, person, act) {
             const ctx = await b.newContext(person ? { userAgent: UA, viewport: { width: 390, height: 800 }, isMobile: true } : {})
             if (person) await ctx.addInitScript(() => Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false }))
             const p = await ctx.newPage()
             const sent = []
             p.on('request', (r) => { const m = r.url().match(/rest\/v1\/(pageviews|events)/); if (m && r.method() === 'POST') { const d = JSON.parse(r.postData() || '{}'); sent.push(m[1] + ':' + (d.event ? d.event + (d.props && d.props.pct ? '@' + d.props.pct : d.props && d.props.seconds ? '@' + d.props.seconds + 's' : '') : 'view')) } })
             await p.goto(url, { waitUntil: 'networkidle' })
-            // By role: the sheet's heading also reads "Are you 21 or older?".
-            const answer = gate === 'no' ? p.getByRole('link', { name: /under 21/ }).first() : p.getByRole('button', { name: /21 or older/ }).first()
-            if (await answer.isVisible().catch(() => false)) { await answer.click(); await p.waitForTimeout(800) }
             if (act) await act(p)
             await p.waitForTimeout(2500)
             console.log((person ? 'person  ' : 'headless') + '  ' + url + '\n          sent: ' + (sent.join(', ') || 'nothing'))
@@ -55,7 +51,6 @@ jobs:
             })
             await visit(b, `https://sensei.nyc/brands/wyld/?me=1&src=check-${RUN}`, true)
             await visit(b, `https://sensei.nyc/?me=1&utm_source=meta&utm_medium=paid&utm_campaign=analytics-check&utm_content=check-${RUN}-headless`, false)
-            await visit(b, `https://sensei.nyc/?me=1&utm_source=meta&utm_medium=paid&utm_campaign=analytics-check&utm_content=check-${RUN}-under21`, true, null, 'no')
             await b.close()
             console.log(`\nRun id: ${RUN}`)
           })()

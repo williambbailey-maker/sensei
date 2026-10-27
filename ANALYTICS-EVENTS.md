@@ -105,3 +105,11 @@ with the page visible (but inert) behind it. `age_gate_shown`, `age_gate_yes`
 and `age_gate_no` from the app carry `variant: "sheet"`; earlier rows (the
 full-screen gate) have no `variant`. The static SEO pages keep their own
 full-screen gate and don't send these events.
+
+## Removed Oct 27: no age check
+
+The 21+ check is gone from the app and the static pages. `age_gate_shown`,
+`age_gate_yes` and `age_gate_no` no longer fire; rows before this change stay
+in `events`. In `traffic_report`'s funnel, `saw_age_check`, `said_21_plus` and
+`said_under_21` read 0 for visits after it. The Terms page still states the
+site is for adults 21 and over.

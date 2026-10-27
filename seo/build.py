@@ -384,13 +384,6 @@ main>h1:first-child{font-size:clamp(64px,19vw,88px);letter-spacing:-.05em;line-h
 .xl .xk{font-size:11px;color:var(--mist)}
 .xl .xv{font-size:17px;font-weight:700;letter-spacing:-.02em;margin-top:4px}
 .xl .xd{font-size:13px;color:var(--mist);margin-top:2px}
-/* age gate */
-#ag{position:fixed;inset:0;z-index:90;background:var(--field);overflow:hidden;touch-action:none}
-#ag .box{max-width:520px;margin:0 auto;padding:0 28px 60px}
-#ag .cta{margin-top:34px}
-#ag .ghost{display:block;margin-top:22px}
-.ag-ok #ag{display:none}
-html:not(.ag-ok) body{overflow:hidden}
 /* menu: full-screen sheet, slides in from the left */
 #menu{position:fixed;inset:0;z-index:80;background:var(--field);overflow:auto;display:none}
 #menu .mbody{max-width:520px;margin:0 auto;padding:0 28px 40px}
@@ -483,18 +476,6 @@ window.addEventListener('popstate',close);document.addEventListener('keydown',fu
 
 MENU_COUNTS = (STATS["shops"], STATS["neighborhoods"], STATS["in_stock"])
 
-AGE_GATE = """
-<div id="ag" role="dialog" aria-label="Age check" aria-modal="true"><div class="box">
-<div class="top"><span class="tl"><span class="wm">Sensei</span></span></div>
-<h1 class="mark">Are you<br>21 or<br>older?</h1>
-<p class="lede">Cannabis products are for adults 21 and over in New York State.</p>
-<button class="cta" id="agy" type="button"><span>Yes, I'm 21 or older</span><span>→</span></button>
-<a class="ghost" href="https://www.google.com">I'm under 21</a></div></div>
-<script>(function(){var K='sensei_age_ok';try{if(sessionStorage.getItem(K)==='1')document.documentElement.classList.add('ag-ok')}catch(e){}
-var y=document.getElementById('agy');if(y)y.onclick=function(){document.documentElement.classList.add('ag-ok');try{sessionStorage.setItem(K,'1')}catch(e){}}})();</script>
-<noscript><style>#ag{display:none}</style></noscript>
-"""
-
 def pkey(brand, name):
     # Canonical product key — same slug the app uses (analytics.ts productKey).
     return slugify(f"{brand or ''} {name or ''}")
@@ -569,9 +550,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=No
     # pages; everything else is the city. Not an analytics property.
     ctx = dict(ctx or {})
     place = ctx.pop("borough", None) or "New York City"
-    # Secondary pages (terms, privacy, about) skip the 21+ check: they are
-    # marked cleared up front and carry no gate.
-    return f"""<!doctype html><html lang="en"{' class="ag-ok"' if secondary else ''}><head><meta charset="utf-8">
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -590,7 +569,7 @@ def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=No
 {_secondary_open(secondary) if secondary else ''}<div class="wrap">
 {'' if secondary else _TOP}
 <main>{body}</main>
-{_secondary_close(secondary) if secondary else _end(path) + menu_html(path, MENU_COUNTS)}{'' if secondary else AGE_GATE + TRAIL_JS}{analytics_js(page_type, ctx)}</body></html>
+{_secondary_close(secondary) if secondary else _end(path) + menu_html(path, MENU_COUNTS)}{'' if secondary else TRAIL_JS}{analytics_js(page_type, ctx)}</body></html>
 """
 
 _TOP = '<div class="top"><a class="wm" href="/">Sensei</a><button class="mnu" type="button" id="menu-open" aria-label="Menu"><span class="burger"></span>Menu</button></div>'
