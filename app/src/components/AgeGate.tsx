@@ -69,33 +69,35 @@ export function AgeGate({ onConfirm }: { onConfirm: () => void }) {
     <div ref={sheet} className="agesheet" role="dialog" aria-modal="true" aria-labelledby="agesheet-q" onKeyDown={trap}>
       <div className="wrap">
         <div className="agesheet-in">
-          <h2 id="agesheet-q" className="poster">
+          <h2 id="agesheet-q" className="agesheet-q">
             Are you 21 or older?
           </h2>
-          <p className="lede lede-sm">Cannabis products are for adults 21 and over in New York State.</p>
-          <button
-            ref={yes}
-            type="button"
-            onClick={() => {
-              track('age_gate_yes', { variant: 'sheet' })
-              onConfirm()
-            }}
-            className="cta"
-          >
-            <span>Yes, I'm 21 or older</span>
-          </button>
-          <a
-            href="https://www.google.com"
-            className="ghost"
-            onClick={(e) => {
-              // Leaving the site: give the event a moment to send first.
-              e.preventDefault()
-              track('age_gate_no', { variant: 'sheet' })
-              setTimeout(() => location.assign('https://www.google.com'), 250)
-            }}
-          >
-            I'm under 21
-          </a>
+          <p className="agesheet-note">Cannabis products are for adults 21 and over in New York State.</p>
+          <div className="agesheet-row">
+            <button
+              ref={yes}
+              type="button"
+              onClick={() => {
+                track('age_gate_yes', { variant: 'sheet' })
+                onConfirm()
+              }}
+              className="cta"
+            >
+              <span>Yes, I'm 21 or older</span>
+            </button>
+            <a
+              href="https://www.google.com"
+              className="ghost"
+              onClick={(e) => {
+                // Leaving the site: give the event a moment to send first.
+                e.preventDefault()
+                track('age_gate_no', { variant: 'sheet' })
+                setTimeout(() => location.assign('https://www.google.com'), 250)
+              }}
+            >
+              I'm under 21
+            </a>
+          </div>
         </div>
       </div>
     </div>
