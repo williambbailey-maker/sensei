@@ -53,15 +53,18 @@ export function productFacts(p: Product, userLoc?: LatLng | null) {
 
 // A result row: thumb · name / brand · size · strain · THC / store · hood ·
 // distance · price. Tapping it opens the detail panel, which Results owns so
-// the panel can step from product to product.
+// the panel can step from product to product. `showPct` adds the −N% badge
+// (the deals page).
 export function ProductCard({
   p,
   userLoc,
   onOpen,
+  showPct = false,
 }: {
   p: Product
   userLoc?: LatLng | null
   onOpen: (p: Product) => void
+  showPct?: boolean
 }) {
   const evProps = eventProps(p)
   const { name, brand, price, was, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
@@ -128,10 +131,20 @@ export function ProductCard({
           <span className="meta block truncate">{storeLine}</span>
         </span>
       </span>
-      <span className="price shrink-0">
-        {was && <span className="was">{was}</span>}
-        <span className="label">{price}</span>
-      </span>
+      {showPct && was && p.price_min != null && p.price_was != null ? (
+        <span className="price-col shrink-0">
+          <span className="label">{price}</span>
+          <span className="price-sub">
+            <span className="deal-pct">−{Math.round((1 - p.price_min / p.price_was) * 100)}%</span>
+            <span className="was">{was}</span>
+          </span>
+        </span>
+      ) : (
+        <span className="price shrink-0">
+          {was && <span className="was">{was}</span>}
+          <span className="label">{price}</span>
+        </span>
+      )}
     </div>
   )
 }

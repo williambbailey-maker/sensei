@@ -202,13 +202,14 @@ that still needs one (`needs neighborhood(...)`).
 
 ## Deals
 
-The deals board on the home page is picked, not typed. Every menu platform
+The deals (the `/deals` page, and the top five on the home) are picked, not
+typed. Every menu platform
 sends a regular price next to a sale price; the scraper keeps both (each
 variant carries `was` when discounted, the row gets `price_was` and
 `on_sale`). At the end of every scrape, `refresh_deals()` in Supabase
-(`supabase/deals.sql`) picks the board: in-stock items marked down 20–75%,
-$5 or more, with a photo; one per shop, spread across product types, best
-discount first; the top four are featured. `live_deals` hides a pick the
+(`supabase/deals.sql`) picks about 300: in-stock items marked down 20–75%,
+$5 or more, with a photo; spread round-robin across product type × borough,
+bigger discounts first, at most 10 per shop; the top four are featured. `live_deals` hides a pick the
 moment its item sells out or goes back to full price.
 
 To re-pick on demand without a scrape:
@@ -217,6 +218,6 @@ To re-pick on demand without a scrape:
 bash ~/Downloads/sensei-main/pipeline/refresh-deals.command
 ```
 
-or `npm run deals` here (`N=20 npm run deals` picks 20 instead of 12). Both
+or `npm run deals` here (`N=100 npm run deals` picks 100 instead of 300). Both
 print the board. Rows typed by hand into the `deals` table (`kind = 'manual'`)
 are never touched by the pick.

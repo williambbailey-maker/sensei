@@ -127,18 +127,47 @@ export async function fetchStores(): Promise<StoreLite[]> {
   return (data ?? []) as unknown as StoreLite[]
 }
 
-export async function fetchDeals(): Promise<Deal[]> {
+// The deals in pick order (refresh_deals' round-robin across type × borough).
+// The home only needs the first few.
+export async function fetchDeals(limit = 12): Promise<Deal[]> {
   const { data, error } = await supabase
     .from('live_deals')
     .select('id,title,description,url,featured,sort,kind,product_id,price,price_was,pct,image_url,store_name,store_borough,store_slug')
     .order('featured', { ascending: false })
     .order('sort', { ascending: true })
+    .limit(limit)
   if (error) throw error
   type Row = Omit<Deal, 'store'> & { store_name: string | null; store_borough: string | null; store_slug: string | null }
   return ((data ?? []) as unknown as Row[]).map(({ store_name, store_borough, store_slug, ...d }) => ({
     ...d,
     store: store_name || store_borough ? { name: store_name, borough: store_borough, slug: store_slug } : null,
   }))
+}
+
+// Every picked deal as a full product row (for the deals page and the product
+// detail), at today's prices, in pick order. Same rule as live_deals: still
+// in stock and still marked down.
+export async function fetchDealProducts(): Promise<Product[]> {
+  const { data, error } = await supabase
+    .from('products')
+    .select(`${PRODUCT_COLS},deals!inner(sort)`)
+    .eq('deals.kind', 'sale')
+    .eq('in_stock', true)
+    .eq('on_sale', true)
+  if (error) throw error
+  type Row = Product & { deals: { sort: number }[] }
+  return ((data ?? []) as unknown as Row[])
+    .filter((p) => p.price_was != null && p.price_min != null && p.price_was > p.price_min)
+    .map(({ deals, ...p }) => ({ ...p, deal_rank: deals[0]?.sort ?? 1e9 }))
+    .sort((a, b) => a.deal_rank - b.deal_rank)
+}
+
+// A handful of products by id (the home's top deals, so a tap opens the detail).
+export async function fetchProductsByIds(ids: string[]): Promise<Product[]> {
+  if (ids.length === 0) return []
+  const { data, error } = await supabase.from('products').select(PRODUCT_COLS).in('id', ids)
+  if (error) throw error
+  return (data ?? []) as unknown as Product[]
 }
 
 export async function addSubscriber(email: string, source: string): Promise<void> {

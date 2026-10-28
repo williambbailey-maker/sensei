@@ -100,7 +100,7 @@ export function RefineBar({
   )
 }
 
-function Select({
+export function Select({
   label,
   value,
   onChange,

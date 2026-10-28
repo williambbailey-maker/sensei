@@ -100,12 +100,32 @@ export function Menu({
     },
   ]
 
+  // Closing steps history back off the menu's entry, and that step lands
+  // after this render. Open the new screen once it has, or the step back
+  // would undo the screen and return to where the menu was opened.
   const pick = (it: Item) => {
     track('menu_pick', { item: it.title.toLowerCase() })
-    if (it.target) {
-      onClose()
-      if (it.target !== current) onGo(it.target)
+    if (!it.target) return
+    const to = it.target !== current ? it.target : null
+    let onMenuEntry = false
+    try {
+      onMenuEntry = !!history.state?.menu
+    } catch {
+      /* history unavailable */
     }
+    if (to && onMenuEntry) {
+      let done = false
+      const go = () => {
+        if (done) return
+        done = true
+        window.removeEventListener('popstate', go)
+        onGo(to)
+      }
+      window.addEventListener('popstate', go)
+      setTimeout(go, 500)
+    }
+    onClose()
+    if (to && !onMenuEntry) onGo(to)
   }
 
   return (

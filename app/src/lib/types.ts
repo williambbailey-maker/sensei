@@ -43,6 +43,8 @@ export type Product = {
   price_band: string | null
   in_stock: boolean
   store: StoreLite | null
+  // Position in the deals pick (deals page rows only).
+  deal_rank?: number
 }
 
 // A dummy cart: locked to one store; the end goal is handing this off to a

@@ -664,6 +664,28 @@ select:focus {
   flex: none;
 }
 
+/* "See all deals" under the home board. */
+.board-all {
+  @apply flex w-full items-center justify-between text-left;
+  padding: 14px 0;
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* The deals page: product-type tabs, each with its count. */
+.deal-types {
+  @apply flex flex-wrap items-center;
+  gap: 12px 20px;
+  margin-top: 24px;
+}
+.deal-n {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 /* Sale prices: the regular price struck through beside the sale price. */
 .price {
   display: inline-flex;
@@ -681,6 +703,18 @@ select:focus {
   align-items: baseline;
   gap: 8px;
   flex: none;
+}
+/* The deals page's price column: the sale price, then −% and the regular price. */
+.price-col {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+.price-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .deal-pct {
   font-size: 12px;

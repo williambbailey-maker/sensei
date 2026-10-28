@@ -9,9 +9,18 @@ import { TapJourney } from './components/TapJourney'
 import { Trail } from './components/Trail'
 import { canGoBack, pushScreen, replaceScreen } from './lib/nav'
 import { Results } from './components/Results'
-import { Deals } from './components/Deals'
+import { Deals, topFive } from './components/Deals'
+import { DealsPage } from './components/DealsPage'
 import { Newsletter } from './components/Newsletter'
-import { fetchDeals, fetchProductsFor, fetchSiteStats, fetchStores, type SiteStats } from './lib/supabase'
+import {
+  fetchDealProducts,
+  fetchDeals,
+  fetchProductsByIds,
+  fetchProductsFor,
+  fetchSiteStats,
+  fetchStores,
+  type SiteStats,
+} from './lib/supabase'
 import snapshotStats from './lib/snapshotStats.json'
 import { prettyStore } from './lib/labels'
 import { track, watchScroll } from './lib/analytics'
@@ -25,10 +34,13 @@ import {
   type StoreLite,
 } from './lib/types'
 
-type View = 'journey' | 'results' | 'cart'
+type View = 'journey' | 'results' | 'cart' | 'deals'
+
+// The deals page has its own address; every other screen lives at /.
+const onDealsPath = () => /^\/deals\/?$/.test(window.location.pathname)
 
 export default function App() {
-  const [view, setView] = useState<View>('journey')
+  const [view, setView] = useState<View>(() => (onDealsPath() ? 'deals' : 'journey'))
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
   // Bumped on restart to force the journey to remount at step one, even when
   // we're already on the journey view (e.g. tapping the logo mid-flow).
@@ -38,6 +50,11 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [stores, setStores] = useState<StoreLite[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
+  // The home board's products (so a tap opens the detail), and the deals
+  // page's full list, fetched the first time the page opens.
+  const [homeDealProducts, setHomeDealProducts] = useState<Product[]>([])
+  const [dealProducts, setDealProducts] = useState<Product[]>([])
+  const [dealsState, setDealsState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [siteStats, setSiteStats] = useState<SiteStats | null>(null)
   const [loadError, setLoadError] = useState(false)
   // True while the products for the current filter set are being fetched, so
@@ -63,7 +80,13 @@ export default function App() {
 
   useEffect(() => {
     fetchStores().then(setStores).catch(() => {})
-    fetchDeals().then(setDeals).catch(() => {})
+    fetchDeals()
+      .then((d) => {
+        setDeals(d)
+        return fetchProductsByIds(topFive(d).flatMap((x) => (x.product_id ? [x.product_id] : [])))
+      })
+      .then(setHomeDealProducts)
+      .catch(() => {})
     fetchSiteStats().then(setSiteStats).catch(() => {})
   }, [])
 
@@ -122,6 +145,27 @@ export default function App() {
     }
   }, [view, filters, stores])
 
+
+  useEffect(() => {
+    if (view !== 'deals' || dealsState !== 'idle') return
+    setDealsState('loading')
+    fetchDealProducts()
+      .then((rows) => {
+        setDealProducts(rows)
+        setDealsState('done')
+      })
+      .catch(() => setDealsState('error'))
+  }, [view, dealsState])
+
+  // The tab title follows the deals page.
+  useEffect(() => {
+    if (view !== 'deals') return
+    const prev = document.title
+    document.title = 'Deals — Sensei'
+    return () => {
+      document.title = prev
+    }
+  }, [view])
 
   // /#drop (older links to the sign-up) lands on the footer sign-up.
   useEffect(() => {
@@ -210,17 +254,22 @@ export default function App() {
     const prev = cur.current
     cur.current = { view, way }
     if (prev.view === view && prev.way === way) return
+    // The address bar shows /deals on the deals page and / everywhere else
+    // (leaving the query string of a deep link alone until then).
+    const url = view === 'deals' ? '/deals' : onDealsPath() ? '/' : undefined
     try {
       const s = history.state
-      if (!s || s.view === undefined) replaceScreen({ view, way })
-      else if (s.view !== view || s.way !== way) pushScreen({ view, way })
+      if (!s || s.view === undefined) replaceScreen({ view, way }, url)
+      else if (s.view !== view || s.way !== way) pushScreen({ view, way }, url)
     } catch {
       /* history unavailable */
     }
   }, [view, way])
   useEffect(() => {
     try {
-      if (!history.state || history.state.view === undefined) replaceScreen({ view: 'journey', way: null })
+      // /deals/ and /?entry=deals settle on /deals.
+      if (!history.state || history.state.view === undefined)
+        replaceScreen({ view: cur.current.view, way: null }, cur.current.view === 'deals' ? '/deals' : undefined)
     } catch {
       /* ignore */
     }
@@ -238,8 +287,6 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const scrollTo = (id: string) =>
-    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
   const pickWay = (w: Way) => {
     setWayError('')
     track('journey_step', { step: 'entry', entry: w })
@@ -287,14 +334,12 @@ export default function App() {
     go('journey')
   }
 
-  // The menu. Deals = the home scrolled to the deals board once it has
-  // loaded; Cart = the cart, or home if empty.
+  // The menu. Deals = the deals page; Cart = the cart, or home if empty.
   const [menuOpen, setMenuOpen] = useState(false)
-  const [pendingScroll, setPendingScroll] = useState<string | null>(null)
   const goTo = (t: MenuTarget) => {
     if (t === 'deals') {
-      restart()
-      setPendingScroll('deals')
+      setWay(null)
+      go('deals')
       return
     }
     if (t === 'cart') {
@@ -304,16 +349,7 @@ export default function App() {
     }
     pickWay(t)
   }
-  useEffect(() => {
-    if (!pendingScroll) return
-    const ready =
-      pendingScroll === 'deals' ? view === 'journey' && way === null && deals.length > 0 : view === 'results' && !loading
-    if (!ready) return
-    const id = pendingScroll
-    setPendingScroll(null)
-    scrollTo(id)
-  }, [pendingScroll, view, way, loading, deals])
-  const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : view === 'journey' ? way : null
+  const currentItem: MenuTarget | null = view === 'cart' ? 'cart' : view === 'deals' ? 'deals' : view === 'journey' ? way : null
 
   // Headline numbers, one definition (a shop = an active store with at least
   // one item in stock). Shops and neighborhoods come from the store list,
@@ -385,7 +421,7 @@ export default function App() {
         <main className="home-grid">
           <Masthead storeCount={storeCount} productCount={productCount} neighborhoods={hoodTotal} />
           <Ways onPick={goTo} busy={locating ? 'near' : null} error={wayError} />
-          <Deals deals={deals} />
+          <Deals deals={deals} products={homeDealProducts} onAll={() => goTo('deals')} onAdd={addToCart} />
         </main>
       )}
 
@@ -447,6 +483,18 @@ export default function App() {
             }}
             onAdd={addToCart}
             loading={loading}
+          />
+        </main>
+      )}
+
+      {view === 'deals' && (
+        <main>
+          <DealsPage
+            products={dealProducts}
+            loading={dealsState === 'loading' || dealsState === 'idle'}
+            error={dealsState === 'error'}
+            onBack={() => back()}
+            onAdd={addToCart}
           />
         </main>
       )}

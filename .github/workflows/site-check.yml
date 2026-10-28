@@ -54,6 +54,7 @@ jobs:
           echo "product titles drop the brand:    $(cat index-*.js 2>/dev/null | grep -c 'half\[- \]ounce')"
           echo "route trail in app:               $(cat index-*.css 2>/dev/null | grep -c 'trail-back')"
           echo "sale prices + deals board in app: $(cat index-*.js 2>/dev/null | grep -c 'price_was') $(cat index-*.js 2>/dev/null | grep -c 'live_deals')"
+          echo "deals page in app + /deals:       $(cat index-*.js 2>/dev/null | grep -c 'deals!inner')  $(curl $C -o /dev/null -w '%{http_code} %{content_type}' "$B/deals")  $(curl $C -o /dev/null -w '%{http_code}' "$B/deals/")"
           echo "cart uses shop menu_url:          $(cat index-*.js 2>/dev/null | grep -c 'menu_url')"
           echo "instagram link in app:            $(cat index-*.js 2>/dev/null | grep -c 'instagram.com/sensei.nyc')"
           echo "visit tags + bot filter in app:   $(cat index-*.js 2>/dev/null | grep -c 'utm_campaign') $(cat index-*.js 2>/dev/null | grep -c 'webdriver')"
@@ -130,3 +131,4 @@ jobs:
           echo "== rpc/site_stats"; curl -sS -X POST "$U/rpc/site_stats" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d '{}' -w "\nHTTP %{http_code} %{time_total}s\n"
           echo "== live_stores (count)"; curl -sS "$U/live_stores?select=slug" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -o ls.json -w "HTTP %{http_code} %{time_total}s\n"; python3 -c "import json;d=json.load(open('ls.json'));print(len(d) if isinstance(d,list) else d)"
           echo "== stores (count, old path)"; curl -sS "$U/stores?select=slug&active=eq.true" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -o st.json -w "HTTP %{http_code}\n"; python3 -c "import json;d=json.load(open('st.json'));print(len(d) if isinstance(d,list) else d)"
+          echo "== deal products (the /deals page query)"; curl -sS "$U/products?select=id,category,deals!inner(sort)&deals.kind=eq.sale&in_stock=eq.true&on_sale=eq.true" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -o dp.json -w "HTTP %{http_code} %{time_total}s\n"; python3 -c "import json,collections;d=json.load(open('dp.json'));print(len(d), dict(collections.Counter(x['category'] for x in d)) if isinstance(d,list) else d)"

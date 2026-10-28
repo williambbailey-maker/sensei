@@ -31,13 +31,18 @@ delete from public.deals
   where kind = 'manual'
     and title in ('20% Off All Flower', 'Buy 2 Pre-Rolls, Get 1 Free', 'First-Time Customer: $10 Off $50', 'Edibles Happy Hour 4-6pm');
 
--- Pick the board: in-stock items at live shops whose cheapest size is marked
+-- Pick the deals: in-stock items at live shops whose cheapest size is marked
 -- down 20–75% (less is not worth a row; more is almost always a feed error),
--- priced $5 or more, with a photo. One item per shop, then round-robin across
--- product types so the board is not twelve eighths of flower, best discount
--- first. The top four are featured. Replaces the previous pick; hand-typed
--- deals are left alone. Returns how many rows it wrote.
-create or replace function public.refresh_deals(n integer default 12)
+-- priced $5 or more, with a photo. The same item at several shops in one
+-- borough counts once. Then a round-robin across product type × borough, so
+-- the list is spread across what people buy and where they are, not 300
+-- Brooklyn pre-rolls: each round takes the next best item from every
+-- type/borough pair, a shop's best item in each type first, bigger
+-- discounts first within a round. No shop gets more than 10. `sort` is that
+-- order (the deals page's default and the home's top five); the top four are
+-- featured. Replaces the previous pick; hand-typed deals are left alone.
+-- Returns how many rows it wrote.
+create or replace function public.refresh_deals(n integer default 300)
 returns integer
 language plpgsql
 set statement_timeout = '60s'
@@ -47,7 +52,7 @@ declare
 begin
   delete from public.deals where kind = 'sale';
   with cand as (
-    select p.id, p.store_id, p.price_min, p.price_was, p.image_url, p.url, p.category,
+    select p.id, p.store_id, s.borough, p.price_min, p.price_was, p.image_url, p.url, p.category,
            coalesce(p.clean_brand, p.brand) as brand,
            coalesce(p.clean_name, p.name) as nm,
            round((1 - p.price_min / p.price_was) * 100)::int as pct,
@@ -59,16 +64,26 @@ begin
       and p.image_url is not null
       and p.category in ('flower', 'pre-rolls', 'vaporizers', 'edibles', 'concentrates', 'tinctures', 'topicals')
   ), good as (
-    select * from cand where pct between 20 and 75
-  ), per_store as (
-    select distinct on (store_id) * from good order by store_id, pct desc, saved desc
+    select distinct on (lower(brand), lower(nm), borough) *
+    from cand where pct between 20 and 75
+    order by lower(brand), lower(nm), borough, pct desc, saved desc
+  ), shop_type as (
+    select *, row_number() over (partition by store_id, category order by pct desc, saved desc) as rst
+    from good
   ), spread as (
-    select *, row_number() over (partition by category order by pct desc, saved desc) as rc
-    from per_store
-  ), pick as (
-    select *, row_number() over (order by rc, pct desc, saved desc) as rank
+    select *, row_number() over (partition by category, borough order by rst, pct desc, saved desc) as round
+    from shop_type
+  ), ordered as (
+    select *, row_number() over (order by round, pct desc, saved desc) as ord
     from spread
-    order by rc, pct desc, saved desc
+  ), capped as (
+    select *, row_number() over (partition by store_id order by ord) as per_shop
+    from ordered
+  ), pick as (
+    select *, row_number() over (order by ord) as rank
+    from capped
+    where per_shop <= 10
+    order by ord
     limit n
   )
   insert into public.deals (title, description, store_id, url, featured, sort, product_id, kind, price, price_was, pct, image_url)

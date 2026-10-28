@@ -1,10 +1,11 @@
 name: Analytics check
 
-# End-to-end check of visit tracking on the live site. Three visits, all
+# End-to-end check of visit tracking on the live site. Four visits, all
 # marked internal with ?me=1 so they never count in any report:
 #   1. a phone visitor from a Meta-tagged link who taps a deal (app)
-#   2. a phone visitor on a static page from a ?src= link
-#   3. a bare headless browser, which must NOT be recorded
+#   2. a phone visitor on /deals who picks a product type and opens a deal
+#   3. a phone visitor on a static page from a ?src= link
+#   4. a bare headless browser, which must NOT be recorded
 # Visit 1 also scrolls the home and stays 10+ seconds, so the scroll and
 # time-on-site events are exercised too. (No age check since Oct 27, 2026.)
 # Each carries this run's id; check the rows afterwards with
@@ -47,7 +48,15 @@ jobs:
               for (let i = 1; i <= 10; i++) { await p.evaluate((f) => window.scrollTo(0, (document.documentElement.scrollHeight - innerHeight) * f), i / 10); await p.waitForTimeout(200) }
               await p.waitForTimeout(10000)
               const row = p.locator('#deals .board-row').first()
-              if (await row.count()) { await row.click(); console.log('          tapped the first deal') } else console.log('          no deals board to tap')
+              if (await row.count()) { await row.click(); await p.waitForTimeout(800); console.log('          tapped the first deal; product detail open: ' + (await p.getByRole('dialog').isVisible().catch(() => false))) } else console.log('          no deals board to tap')
+            })
+            await visit(b, `https://sensei.nyc/deals?me=1&src=check-${RUN}`, true, async (p) => {
+              await p.locator('.results-list .row').first().waitFor({ timeout: 15000 }).catch(() => {})
+              console.log('          /deals: ' + (await p.locator('.meta').first().textContent()) + ' · tabs: ' + (await p.locator('.deal-types .tab').allTextContents()).join(' / '))
+              const tab = p.locator('.deal-types .tab').nth(1)
+              if (await tab.count()) { await tab.click(); await p.waitForTimeout(400) }
+              const row = p.locator('.results-list .row').first()
+              if (await row.count()) { await row.click(); await p.waitForTimeout(800); console.log('          tapped a deal; product detail open: ' + (await p.getByRole('dialog').isVisible().catch(() => false))) } else console.log('          no deals to tap')
             })
             await visit(b, `https://sensei.nyc/brands/wyld/?me=1&src=check-${RUN}`, true)
             await visit(b, `https://sensei.nyc/?me=1&utm_source=meta&utm_medium=paid&utm_campaign=analytics-check&utm_content=check-${RUN}-headless`, false)

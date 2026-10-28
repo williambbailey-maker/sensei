@@ -24,7 +24,9 @@ export function ProductDetail({
   index: number
   total: number
   userLoc?: LatLng | null
-  alsoAt: number
+  // null when the list isn't a whole result set (the deals page): those two
+  // cells show the regular price and the markdown instead.
+  alsoAt: number | null
   lowest: number | null
   onClose: () => void
   onStep: (delta: 1 | -1) => void
@@ -181,14 +183,31 @@ export function ProductDetail({
             <span className="spec-k">Type</span>
             <span className="spec-v">{p.strain_type ?? (p.category ? formatLabel(p.category) : '—')}</span>
           </div>
-          <div>
-            <span className="spec-k">Also at</span>
-            <span className="spec-v">{alsoAt > 1 ? `${alsoAt} shops` : 'This shop only'}</span>
-          </div>
-          <div>
-            <span className="spec-k">Lowest nearby</span>
-            <span className="spec-v">{lowest != null ? `$${formatPrice(lowest)}` : '—'}</span>
-          </div>
+          {alsoAt == null ? (
+            <>
+              <div>
+                <span className="spec-k">Regular price</span>
+                <span className="spec-v">{was ?? '—'}</span>
+              </div>
+              <div>
+                <span className="spec-k">Off</span>
+                <span className="spec-v">
+                  {was && p.price_min != null && p.price_was ? `${Math.round((1 - p.price_min / p.price_was) * 100)}%` : '—'}
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <span className="spec-k">Also at</span>
+                <span className="spec-v">{alsoAt > 1 ? `${alsoAt} shops` : 'This shop only'}</span>
+              </div>
+              <div>
+                <span className="spec-k">Lowest nearby</span>
+                <span className="spec-v">{lowest != null ? `$${formatPrice(lowest)}` : '—'}</span>
+              </div>
+            </>
+          )}
         </div>
 
         <div style={{ marginTop: 18 }}>

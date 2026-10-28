@@ -74,6 +74,21 @@ with all six properties populated:
 - in the app: open a product → `product_view`; add → `save`; subscribe →
   `signup`
 
+## Added Oct 28 (the deals page)
+
+Deals now open the product detail instead of the shop's menu, so a deal tap
+is no longer a click out; the click out is the detail's `menu_click` or
+`directions_click`. `deal_click` stays for hand-typed deals, which still
+link out.
+
+| Event | When | Props |
+|---|---|---|
+| `deal_open` | a deal row, on the home board or the `/deals` page | product props, `where` (`home` / `deals`), `rank`, `pct` |
+| `deals_all` | "See all deals" under the home board | `where` |
+| `deals_filter` | a type tab, the place select or the sort on `/deals` | `type`, `place` or `sort` |
+
+`load_more` on `/deals` carries `where: "deals"`.
+
 ## Added Oct 27
 
 | Event | When | Props |

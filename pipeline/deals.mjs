@@ -1,17 +1,17 @@
-// Refresh the deals board — triggers refresh_deals() in Supabase, which picks
-// the most noteworthy sale prices on the live menu (items marked down 20–75%,
-// one per shop, spread across product types, best discount first) and writes
+// Refresh the deals — triggers refresh_deals() in Supabase, which picks the
+// most noteworthy sale prices on the live menu (items marked down 20–75%,
+// spread across product type and borough, at most 10 per shop) and writes
 // them to the deals table. Every scrape runs this at the end; run it by hand
 // to re-pick on demand, or to pick a different number:
 //
-//   npm run deals           # pick 12
-//   N=20 npm run deals      # pick 20
+//   npm run deals           # pick 300
+//   N=100 npm run deals     # pick 100
 //
 // Logic lives in the database function (see supabase/deals.sql), so this is
 // just the trigger. Needs the same service_role key as the scraper.
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dywrisybvcorpfhbwgtg.supabase.co'
 const SERVICE = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim()
-const N = Number(process.env.N) > 0 ? Number(process.env.N) : 12
+const N = Number(process.env.N) > 0 ? Number(process.env.N) : 300
 
 if (!SERVICE) {
   console.error('ERROR: SUPABASE_SERVICE_ROLE_KEY is not set (see .env).')
@@ -32,8 +32,8 @@ const q = await fetch(
   { headers },
 )
 const rows = q.ok ? await q.json() : []
-console.log(`Deals board: ${wrote} picked from sale prices${rows.length !== wrote ? `, ${rows.length} showing` : ''}.`)
-for (const r of rows) {
+console.log(`Deals: ${wrote} picked from sale prices${rows.length !== wrote ? `, ${rows.length} showing` : ''}. The first 12:`)
+for (const r of rows.slice(0, 12)) {
   const price = r.price != null ? `$${r.price}` : ''
   const was = r.price_was != null ? ` (was $${r.price_was}, ${r.pct}% off)` : ''
   console.log(`  ${price}${was}  ${r.title}${r.description ? ` · ${r.description}` : ''}  — ${r.store_name ?? '?'}`)

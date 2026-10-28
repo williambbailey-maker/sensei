@@ -13,17 +13,18 @@ function depth(): number {
   }
 }
 
-export function pushScreen(s: Screen) {
+// `url` changes the address bar too (the deals page lives at /deals).
+export function pushScreen(s: Screen, url?: string) {
   try {
-    history.pushState({ ...s, i: depth() + 1 }, '')
+    history.pushState({ ...s, i: depth() + 1 }, '', url)
   } catch {
     /* history unavailable */
   }
 }
 
-export function replaceScreen(s: Screen) {
+export function replaceScreen(s: Screen, url?: string) {
   try {
-    history.replaceState({ ...s, i: depth() }, '')
+    history.replaceState({ ...s, i: depth() }, '', url)
   } catch {
     /* history unavailable */
   }
