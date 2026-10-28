@@ -216,6 +216,34 @@ function watchTime(): void {
   }, 1000)
 }
 
+// Seen: the page was actually on screen for 2 continuous seconds. Instagram
+// and Facebook preload ad landing pages in a hidden webview; those loads write
+// a pageview but never become visible, so they never send page_seen. This is
+// the event that defines a "visitor" in live_numbers().
+function watchSeen(): void {
+  let t: ReturnType<typeof setTimeout> | null = null
+  const doc = document as Document & { prerendering?: boolean }
+  const done = () => {
+    document.removeEventListener('visibilitychange', arm)
+    document.removeEventListener('prerenderingchange', arm)
+  }
+  function arm() {
+    if (document.visibilityState === 'visible' && !doc.prerendering) {
+      if (!t)
+        t = setTimeout(() => {
+          done()
+          track('page_seen', {})
+        }, 2000)
+    } else if (t) {
+      clearTimeout(t)
+      t = null
+    }
+  }
+  document.addEventListener('visibilitychange', arm)
+  document.addEventListener('prerenderingchange', arm)
+  arm()
+}
+
 // Scroll depth on one screen (the home): one event the first time the visitor
 // passes 25, 50, 75 and 100% of what can be scrolled. Returns the cleanup.
 export function watchScroll(view: string): () => void {
@@ -239,7 +267,10 @@ export function initAnalytics(): void {
   source = deriveSource()
   internal = internalFlag()
   void beacon()
-  if (!isBot()) watchTime()
+  if (!isBot()) {
+    watchTime()
+    watchSeen()
+  }
   // Internal devices and bots are logged (flagged) in Supabase but kept out of
   // PostHog and Meta.
   if (!internal && !isBot()) initMetaPixel()
