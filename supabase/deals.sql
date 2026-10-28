@@ -37,8 +37,9 @@ delete from public.deals
 -- borough counts once. Then a round-robin across product type × borough, so
 -- the list is spread across what people buy and where they are, not 300
 -- Brooklyn pre-rolls: each round takes the next best item from every
--- type/borough pair, a shop's best item in each type first, bigger
--- discounts first within a round. No shop gets more than 10. `sort` is that
+-- type/borough pair, a shop's best item in each type first; within a
+-- round, one item per shop before any shop's second, bigger discounts
+-- first. No shop gets more than 10. `sort` is that
 -- order (the deals page's default and the home's top five); the top four are
 -- featured. Replaces the previous pick; hand-typed deals are left alone.
 -- Returns how many rows it wrote.
@@ -73,9 +74,12 @@ begin
   ), spread as (
     select *, row_number() over (partition by category, borough order by rst, pct desc, saved desc) as round
     from shop_type
-  ), ordered as (
-    select *, row_number() over (order by round, pct desc, saved desc) as ord
+  ), shops_in_round as (
+    select *, row_number() over (partition by round, store_id order by pct desc, saved desc) as shop_turn
     from spread
+  ), ordered as (
+    select *, row_number() over (order by round, shop_turn, pct desc, saved desc) as ord
+    from shops_in_round
   ), capped as (
     select *, row_number() over (partition by store_id order by ord) as per_shop
     from ordered
