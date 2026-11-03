@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { AgeGate, useAgeGate } from './components/AgeGate'
 import { CartView } from './components/CartView'
 import { FooterMark, Masthead } from './components/Masthead'
 import { Ways, type Way } from './components/Ways'
@@ -40,6 +41,16 @@ type View = 'journey' | 'results' | 'cart' | 'deals'
 const onDealsPath = () => /^\/deals\/?$/.test(window.location.pathname)
 
 export default function App() {
+  const [ageOk, confirmAge] = useAgeGate()
+  // While the 21+ sheet is up, the page behind it can't be tapped, focused
+  // or typed into. Set before paint so there's no frame where it can.
+  const behindGate = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const el = behindGate.current
+    if (!el) return
+    if (ageOk) el.removeAttribute('inert')
+    else el.setAttribute('inert', '')
+  }, [ageOk])
   const [view, setView] = useState<View>(() => (onDealsPath() ? 'deals' : 'journey'))
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
   // Bumped on restart to force the journey to remount at step one, even when
@@ -233,11 +244,11 @@ export default function App() {
   // `way` is which of the two screens is showing; null is the home.
   const [way, setWay] = useState<'borough' | 'search' | null>(null)
 
-  // How far down the home people scroll.
+  // How far down the home people scroll, once they're past the 21+ check.
   const onHome = view === 'journey' && way === null
   useEffect(() => {
-    if (onHome) return watchScroll('home')
-  }, [onHome])
+    if (onHome && ageOk) return watchScroll('home')
+  }, [onHome, ageOk])
   const [locating, setLocating] = useState(false)
   const [wayError, setWayError] = useState('')
 
@@ -362,6 +373,10 @@ export default function App() {
 
   return (
     <div className="min-h-full">
+      {!ageOk && <AgeGate onConfirm={confirmAge} />}
+
+      {/* Everything but the 21+ sheet: visible behind it, inert until answered. */}
+      <div ref={behindGate}>
       <Menu
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
@@ -550,6 +565,7 @@ export default function App() {
           not affiliated with any dispensary, delivery service, cultivator, processor, brand, or menu platform.
         </p>
       </footer>
+      </div>
     </div>
   )
 }
