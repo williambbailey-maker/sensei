@@ -11,6 +11,10 @@
     {
       "source": "/deals/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/start",
+      "destination": "/start/index.html"
     }
   ],
   "redirects": [

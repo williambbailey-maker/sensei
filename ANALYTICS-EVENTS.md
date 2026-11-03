@@ -74,6 +74,17 @@ with all six properties populated:
 - in the app: open a product → `product_view`; add → `save`; subscribe →
   `signup`
 
+## Added Nov 3 (the /start ad page)
+
+`/start` is the page paid ads link to: the 21+ question on its own. It
+writes a `pageviews` row with `page_type: "start"` and the link's tags, then
+`age_gate_shown`, `age_gate_yes` or `age_gate_no` with `variant: "start"`
+(the app's sheet sends `variant: "sheet"`). "Yes" stores the app's own 21+
+answer and opens the app at `/` with the same query string, so the app's
+pageview keeps the attribution and the same visitor and session ids. A
+visitor who already answered is sent straight on and nothing is recorded
+for `/start`.
+
 ## Added Oct 28 (the deals page)
 
 Deals now open the product detail instead of the shop's menu, so a deal tap

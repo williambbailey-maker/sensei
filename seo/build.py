@@ -11,6 +11,7 @@ snapshot) into seo/dist/:
   /brands/<slug>/                15  (ItemList + Breadcrumb)
   /nyc/<category>/                7  (ItemList + Breadcrumb)
   /sitemap.xml  /robots.txt
+  /start  → app/public/start/ (the ad entry page; not in the sitemap)
 
 Mobile-first, Sensei dark identity (cyber yellow on onyx, Inter). Each page
 leads with a big card whose primary action is a Sensei app deep-link, then a
@@ -506,13 +507,13 @@ def pkey(brand, name):
 #   view) · chip_tap (chips/bars) · menu_click (the "open in Sensei" CTAs).
 # product_view/compare_view/save/signup have no surface on these pages — they
 # live in the app. See reports/README.md for the full mapping.
-def analytics_js(page_type, ctx):
+def analytics_js(page_type, ctx, lean=False):
     cfg = {"key": POSTHOG_KEY, "host": POSTHOG_HOST, "meta": META_PIXEL_ID, "page_type": page_type,
            "sb_url": SUPABASE_URL, "sb_key": SUPABASE_ANON}
     for k, v in (ctx or {}).items():
         if v:
             cfg[k] = v
-    return """<script>
+    js = """<script>
 (function(){var CFG=%s;
 function src(){try{var q=new URLSearchParams(location.search),s=(q.get('src')||'').toLowerCase();
 if(s.indexOf('qr')===0)return'qr';var m=(q.get('utm_medium')||'').toLowerCase(),u=(q.get('utm_source')||'').toLowerCase();
@@ -563,6 +564,33 @@ else if(t==='directions')ev('directions_click',{dispensary:a.getAttribute('data-
 else if(t==='menu')ev('menu_click',{brand:a.getAttribute('data-brand')||CFG.brand||null,dispensary:a.getAttribute('data-dispensary')||CFG.dispensary||null,url:a.getAttribute('href')||null});},true);
 })();
 </script>""" % json.dumps(cfg)
+    return _lean_analytics(js) if lean else js
+
+# The /start page's cut of the snippet: the same visitor and session ids,
+# link tags, pageviews row, PostHog and Meta PageView, page_seen and events,
+# without the per-page columns and click handlers whose names would trip its
+# word check. Stays quiet when the page is redirecting (SENSEI_SKIP), and
+# hands the page `senseiEv(name, props)`, which returns a promise that settles
+# once the event's row can be sent.
+def _lean_analytics(js):
+    def cut(js, start, end):
+        a = js.index(start)
+        return js[:a] + js[js.index(end, a) + len(end):]
+    swaps = [
+        ("(function(){var CFG=", "(function(){if(window.SENSEI_SKIP)return;var CFG="),
+        ("brand:CFG.brand||null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,src:TAGS.src", "src:TAGS.src"),
+        ("var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};",
+         "var base={page_type:CFG.page_type,source:SRC};"),
+        ("brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,", ""),
+    ]
+    for old, new in swaps:
+        assert old in js, old[:40]
+        js = js.replace(old, new)
+    js = cut(js, "function eng(){", "fbq('track','CompleteRegistration',{},o);}catch(e){}}\n")
+    js = js.replace("function eid(){", "function fb(){}\nfunction eid(){")
+    js = cut(js, "var df=document.getElementById('drop-form');", "\n")
+    tail = js.index("if(CFG.page_type==='brand')ev('brand_view',{});")
+    return js[:tail] + "window.senseiEv=function(n,p){ev(n,p);return GEO;};\n})();\n</script>"
 def page(title, desc, path, jsonld, body, page_type=None, ctx=None, secondary=None):
     canon = SITE_URL + path
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j)}</script>' for j in jsonld)
@@ -1096,6 +1124,132 @@ def build_about():
                      secondary=("about", "About")))
     return path
 
+# ---------- /start: the ad entry page ----------
+# Paid ads link here instead of the home. It is the 21+ question and nothing
+# else, and an ad reviewer reads its HTML as well as what's on screen, so the
+# source must not name the product: build_start() refuses to write the page if
+# any START_BANNED word appears anywhere in it (text, CSS, JS, meta, hrefs).
+# "Yes" sets the app's own 21+ key and goes to / with the link's query string
+# untouched, so the app visit keeps its utm_* / src / click id. Not in the
+# sitemap and linked from nowhere. Written straight to app/public/start/.
+START_PATH = "/start"
+START_OUT = ROOT.parent / "app" / "public" / "start" / "index.html"
+START_BANNED = ["cannabis", "thc", "cbd", "weed", "marijuana", "edible", "flower", "pre-roll", "preroll",
+                "vape", "dispensar", "strain", "menu", "21+"]
+START_TITLE = "Sensei — a guide to New York"
+START_DESC = "Sensei is a guide to what's near you in New York. Pick a neighborhood and see what's close."
+
+def css_without(css, words):
+    """The shared CSS minus comments and any rule (or @keyframes) that mentions
+    one of `words`; @media blocks are filtered rule by rule."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    out, i = [], 0
+    while True:
+        j = css.find("{", i)
+        if j < 0:
+            break
+        depth, k = 0, j
+        while True:
+            if css[k] == "{":
+                depth += 1
+            elif css[k] == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+            k += 1
+        head, body = css[i:j].strip(), css[j + 1:k]
+        if head.startswith("@media"):
+            inner = css_without(body, words)
+            if inner:
+                out.append(f"{head}{{{inner}}}")
+        elif not any(w in (head + body).lower() for w in words):
+            out.append(f"{head}{{{body}}}")
+        i = k + 1
+    return "\n".join(out)
+
+START_CSS = """
+.st{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding:0 16px}
+.st-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 0}
+.st .bullets{margin:0;gap:10px}
+.st .bullets .mb{width:44px;height:44px;font-size:24px}
+.st h1{font-size:32px;margin:28px 0 0}
+.st-note{margin:12px 0 0;font-size:15px;line-height:1.45;color:var(--mist)}
+.st .cta{margin-top:28px;min-height:56px}
+.st-no{display:inline-flex;align-items:center;min-height:48px;margin-top:6px;align-self:flex-start}
+.st-foot{padding-bottom:20px}
+.st-foot .rule{margin:0}
+.st-legal{display:flex;align-items:center;gap:2px;margin-top:6px;font-size:13px;color:var(--mist)}
+.st-legal a{display:inline-flex;align-items:center;min-height:48px;padding:0 6px;color:var(--mist)}
+.st-legal a:first-child{padding-left:0}
+.st-legal a:hover{color:var(--ink)}
+.st .cta:focus-visible,.st a:focus-visible{outline:none}
+[data-keys] .st .cta:focus-visible,[data-keys] .st a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+"""
+
+# Runs first: a visitor who already said yes goes straight to the app (the
+# page and its analytics see SENSEI_SKIP and stay quiet).
+START_SKIP_JS = ("<script>try{if(localStorage.getItem('sensei_age_ok')==='true'){window.SENSEI_SKIP=1;"
+                 "location.replace('/'+location.search)}}catch(e){}</script>")
+
+START_JS = """<script>(function(){if(window.SENSEI_SKIP)return;
+var Q=location.search,y=document.getElementById('st-yes'),n=document.getElementById('st-no');
+function send(name){try{return window.senseiEv?window.senseiEv(name,{variant:'start'}):null}catch(e){return null}}
+send('age_gate_shown');
+if(y){try{y.focus({preventScroll:true})}catch(e){y.focus()}
+y.addEventListener('click',function(){try{localStorage.setItem('sensei_age_ok','true')}catch(e){}
+var gone=false;function go(){if(gone)return;gone=true;location.assign('/'+Q)}
+var w=send('age_gate_yes');if(w&&w.then)w.then(go,go);setTimeout(go,300)})}
+if(n)n.addEventListener('click',function(e){e.preventDefault();send('age_gate_no');setTimeout(function(){location.assign('https://www.google.com')},250)});
+document.addEventListener('keydown',function(e){document.documentElement.setAttribute('data-keys','');
+if(e.key!=='Tab'||!y||!n)return;var a=document.activeElement;
+if(!e.shiftKey&&a===n){e.preventDefault();y.focus()}else if(e.shiftKey&&a===y){e.preventDefault();n.focus()}});
+})();</script>"""
+
+def build_start():
+    url = SITE_URL + START_PATH
+    og = f"{SITE_URL}/start/og.png"
+    html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+{START_SKIP_JS}
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{esc(START_TITLE)}</title>
+<meta name="description" content="{esc(START_DESC)}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{esc(START_TITLE)}">
+<meta property="og:description" content="{esc(START_DESC)}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{og}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{og}">
+<meta name="theme-color" content="#0B0B0B">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>{css_without(CSS, START_BANNED)}{START_CSS}</style></head><body>
+<div class="st">
+<header class="top"><span class="wm">Sensei</span></header>
+<main class="st-main">
+<div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div>
+<h1>Are you 21 or older?</h1>
+<p class="st-note">Sensei is for adults 21 and over in New York State.</p>
+<button class="cta" id="st-yes" type="button"><span>Yes, I'm 21 or older</span><span aria-hidden="true">→</span></button>
+<a class="ghost st-no" id="st-no" href="https://www.google.com">I'm under 21</a>
+</main>
+<footer class="st-foot"><div class="rule"></div>
+<nav class="st-legal" aria-label="Legal"><a href="/terms/">Terms</a><span aria-hidden="true">·</span><a href="/privacy/">Privacy</a></nav></footer>
+</div>
+{analytics_js("start", None, lean=True)}{START_JS}</body></html>
+"""
+    low = html.lower()
+    found = [w for w in START_BANNED if w in low]
+    if found:
+        raise SystemExit(f"/start: banned word(s) in the page source: {', '.join(found)}")
+    START_OUT.parent.mkdir(parents=True, exist_ok=True)
+    START_OUT.write_text(html)
+    return START_PATH
+
 # ---------- truthful sitemap dates ----------
 # A page's <lastmod> moves only when what Google reads on it changes: its
 # title, description and <main> content. Design-only rebuilds (CSS, menu,
@@ -1232,6 +1386,7 @@ if __name__ == "__main__":
     build_home(paths)
     for lp, lf, lc in LEGAL: paths.append(build_legal(lp, lf, lc))
     paths.append(build_about())
+    build_start()  # app/public/start/ — not a sitemap page
     # Every built page with what a redirect needs if it ever disappears.
     meta = {"/": {"type": "home"}}
     for d in PAGE_DISPS:
@@ -1264,5 +1419,6 @@ if __name__ == "__main__":
     print(f"  sitemap dates changed on {changed} page(s) · {len(redirects)} redirect(s) in app/vercel.json")
     print(f"  {len(PAGE_DISPS)} of {len(SITE['dispensaries'])} live shops have pages "
           f"(no copy yet: {', '.join(sorted(STORE_NO_PAGE)) or 'none'})")
+    print(f"  /start → {START_OUT.relative_to(ROOT.parent)} (word check passed)")
     print(f"  {len(PAGE_DISPS)} dispensaries · {len(SITE['neighborhoods'])} neighborhoods · "
           f"{len(SITE['brands'])} brands · {len(SITE['categories'])} categories · home · sitemap · robots")

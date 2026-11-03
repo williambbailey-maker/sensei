@@ -32,6 +32,7 @@ export default defineConfig({
           '**/terms/**',
           '**/privacy/**',
           '**/about/**',
+          '**/start/**',
           'sitemap.xml',
           'robots.txt',
         ],
@@ -43,6 +44,8 @@ export default defineConfig({
           /^\/terms\//,
           /^\/privacy\//,
           /^\/about\//,
+          // The ad entry page, with or without the trailing slash.
+          /^\/start(\/|$)/,
           /^\/sitemap\.xml$/,
           /^\/robots\.txt$/,
         ],

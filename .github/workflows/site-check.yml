@@ -55,6 +55,7 @@ jobs:
           echo "route trail in app:               $(cat index-*.css 2>/dev/null | grep -c 'trail-back')"
           echo "sale prices + deals board in app: $(cat index-*.js 2>/dev/null | grep -c 'price_was') $(cat index-*.js 2>/dev/null | grep -c 'live_deals')"
           echo "deals page in app + /deals:       $(cat index-*.js 2>/dev/null | grep -c 'deals!inner')  $(curl $C -o /dev/null -w '%{http_code} %{content_type}' "$B/deals")  $(curl $C -o /dev/null -w '%{http_code}' "$B/deals/")"
+          curl $C -o start.html "$B/start"; echo "/start ad page:                   $(curl $C -o /dev/null -w '%{http_code}' "$B/start")  $(grep -oE '<title>[^<]*' start.html)  word-rule hits (want 0): $(grep -oiE 'cannabis|thc|cbd|weed|marijuana|edible|flower|pre-?roll|vape|dispensar|strain|menu|21[+]' start.html | wc -l)  og: $(curl $C -o /dev/null -w '%{http_code} %{content_type}' "$B/start/og.png")  in sitemap (want 0): $(curl $C "$B/sitemap.xml" | grep -c '/start')"
           echo "cart uses shop menu_url:          $(cat index-*.js 2>/dev/null | grep -c 'menu_url')"
           echo "instagram link in app:            $(cat index-*.js 2>/dev/null | grep -c 'instagram.com/sensei.nyc')"
           echo "visit tags + bot filter in app:   $(cat index-*.js 2>/dev/null | grep -c 'utm_campaign') $(cat index-*.js 2>/dev/null | grep -c 'webdriver')"

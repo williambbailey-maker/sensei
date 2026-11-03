@@ -1,12 +1,15 @@
 name: Analytics check
 
-# End-to-end check of visit tracking on the live site. Five visits, all
+# End-to-end check of visit tracking on the live site. Six visits, all
 # marked internal with ?me=1 so they never count in any report:
 #   1. a phone visitor from a Meta-tagged link who taps a deal (app)
 #   2. a phone visitor on /deals who picks a product type and opens a deal
 #   3. a phone visitor on a static page from a ?src= link
 #   4. a bare headless browser, which must NOT be recorded
 #   5. a phone visitor who answers "I'm under 21" at the age check
+#   6. a phone visitor from an ad link to /start who answers Yes there and
+#      must land in the app at / with the same query string and no sheet
+#      (the step fails the run if not)
 # Visit 1 also scrolls the home and stays 10+ seconds, so the age-check,
 # scroll and time-on-site events are exercised too.
 # Each carries this run's id; check the rows afterwards with
@@ -40,7 +43,7 @@ jobs:
             await p.goto(url, { waitUntil: 'networkidle' })
             // By role: the sheet's heading also reads "Are you 21 or older?".
             const answer = gate === 'no' ? p.getByRole('link', { name: /under 21/ }).first() : p.getByRole('button', { name: /21 or older/ }).first()
-            if (await answer.isVisible().catch(() => false)) { await answer.click(); await p.waitForTimeout(800) }
+            if (gate !== 'none' && (await answer.isVisible().catch(() => false))) { await answer.click(); await p.waitForTimeout(800) }
             if (act) await act(p)
             await p.waitForTimeout(2500)
             console.log((person ? 'person  ' : 'headless') + '  ' + url + '\n          sent: ' + (sent.join(', ') || 'nothing'))
@@ -65,6 +68,18 @@ jobs:
             await visit(b, `https://sensei.nyc/brands/wyld/?me=1&src=check-${RUN}`, true)
             await visit(b, `https://sensei.nyc/?me=1&utm_source=meta&utm_medium=paid&utm_campaign=analytics-check&utm_content=check-${RUN}-headless`, false)
             await visit(b, `https://sensei.nyc/?me=1&utm_source=meta&utm_medium=paid&utm_campaign=analytics-check&utm_content=check-${RUN}-under21`, true, null, 'no')
+            // The ad entry page: answer Yes there; the app must open at / with the
+            // query string untouched and must not ask again.
+            await visit(b, `https://sensei.nyc/start?me=1&utm_source=meta&utm_medium=paid&utm_campaign=analytics-check&utm_content=check-${RUN}-start&fbclid=check`, true, async (p) => {
+              const q = new URL(p.url()).search
+              console.log('          /start: ' + (await p.title()))
+              await Promise.all([p.waitForURL((u) => u.pathname === '/', { timeout: 15000 }), p.getByRole('button', { name: /21 or older/ }).click()])
+              await p.waitForLoadState('networkidle')
+              const u = new URL(p.url()), sheet = await p.locator('.agesheet').isVisible().catch(() => false)
+              const good = u.pathname === '/' && u.search === q && !sheet
+              console.log('          after Yes: ' + u.pathname + u.search + ' · query kept: ' + (u.search === q) + ' · sheet shown: ' + sheet)
+              if (!good) { console.log('          FAIL: /start did not hand over cleanly'); process.exitCode = 1 }
+            }, 'none')
             await b.close()
             console.log(`\nRun id: ${RUN}`)
           })()
