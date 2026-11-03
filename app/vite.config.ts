@@ -44,8 +44,10 @@ export default defineConfig({
           /^\/terms\//,
           /^\/privacy\//,
           /^\/about\//,
-          // The ad entry page, with or without the trailing slash.
-          /^\/start(\/|$)/,
+          // The ad entry page, with or without the trailing slash. Workbox
+          // tests the denylist against pathname + search, so the ad link's
+          // ?utm_… query must match too or the app shell is served instead.
+          /^\/start(\/|\?|$)/,
           /^\/sitemap\.xml$/,
           /^\/robots\.txt$/,
         ],
