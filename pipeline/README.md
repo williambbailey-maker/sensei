@@ -31,8 +31,9 @@ npm install
 
 That installs Playwright and downloads a Chromium browser automatically.
 
-Then create your `.env` and paste your Supabase **service_role** key
-(Supabase dashboard → Project Settings → API → `service_role` — the secret one):
+Then create your `.env` and paste your Supabase **secret** key
+(Supabase dashboard → Project Settings → API Keys → Secret keys, starts
+`sb_secret_`; the legacy `service_role` key works too):
 
 ```bash
 cp .env.example .env

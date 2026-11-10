@@ -12,6 +12,7 @@
 //
 // Options: DEBUG_DISCOVER=1 dump a sample raw dispensary object.
 import { readFileSync } from 'node:fs'
+import { keyHeaders } from './lib/keys.mjs'
 
 // Self-contained .env loader so this works with plain `node discover.mjs`.
 try {
@@ -41,8 +42,7 @@ async function sb(path, { method = 'GET', body, headers = {} } = {}) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     method,
     headers: {
-      apikey: SERVICE,
-      Authorization: `Bearer ${SERVICE}`,
+      ...keyHeaders(SERVICE),
       'Content-Type': 'application/json',
       ...headers,
     },

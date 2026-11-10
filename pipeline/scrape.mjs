@@ -26,6 +26,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { PROVIDERS } from './providers/index.mjs'
 import { fieldCoverage, PRODUCT_FIELDS } from './lib/product.mjs'
+import { keyHeaders } from './lib/keys.mjs'
 export { mapApiProduct } from './providers/dutchie.mjs'
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dywrisybvcorpfhbwgtg.supabase.co'
@@ -61,7 +62,7 @@ async function sb(path, { method = 'GET', headers = {}, body, service = false } 
   const key = service ? SERVICE : ANON
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     method,
-    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', ...headers },
+    headers: { ...keyHeaders(key), 'Content-Type': 'application/json', ...headers },
     body: body ? JSON.stringify(body) : undefined,
   })
   // Writes come back with an empty body — parse only when there's text.
@@ -75,7 +76,7 @@ async function sbCount(path) {
   const sep = path.includes('?') ? '&' : '?'
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}${sep}select=id`, {
     method: 'HEAD',
-    headers: { apikey: SERVICE, Authorization: `Bearer ${SERVICE}`, Prefer: 'count=exact', Range: '0-0' },
+    headers: { ...keyHeaders(SERVICE), Prefer: 'count=exact', Range: '0-0' },
   })
   const total = (res.headers.get('content-range') || '').split('/')[1]
   return total && total !== '*' ? parseInt(total, 10) : 0
@@ -278,7 +279,7 @@ async function main() {
   if (!SERVICE && !DRY_RUN) {
     console.error(
       '\nERROR: SUPABASE_SERVICE_ROLE_KEY is not set.\n' +
-        'Get it from Supabase dashboard -> Project Settings -> API -> service_role,\n' +
+        'Get it from Supabase dashboard -> Project Settings -> API Keys -> Secret keys (sb_secret_…),\n' +
         'then put it in a .env file (cp .env.example .env) and re-run.\n',
     )
     process.exit(1)
@@ -291,8 +292,9 @@ async function main() {
     } catch (e) {
       console.error(
         `\nERROR: your SUPABASE_SERVICE_ROLE_KEY was rejected by Supabase.\n${e.message.slice(0, 140)}\n\n` +
-          'Open .env and make sure the value is the *service_role* key (not anon),\n' +
-          'copied whole from Supabase -> Project Settings -> API -> service_role.\n',
+          'Open .env and make sure the value is a *secret* key (sb_secret_…, or the legacy\n' +
+          'service_role key), not the publishable/anon one, copied whole from\n' +
+          'Supabase -> Project Settings -> API Keys.\n',
       )
       process.exit(1)
     }

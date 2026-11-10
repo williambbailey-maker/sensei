@@ -40,13 +40,13 @@ if [ "$TASK" != "app" ]; then
     cp .env.example .env
     echo
     echo "ERROR: no key yet. A .env file was just created — paste your Supabase"
-    echo "service_role key after SUPABASE_SERVICE_ROLE_KEY= , save, close, re-run."
+    echo "secret key (sb_secret_…) after SUPABASE_SERVICE_ROLE_KEY= , save, close, re-run."
     open -e .env 2>/dev/null || true
     exit 1
   fi
   if grep -q "your-service-role-key" .env; then
     echo
-    echo "ERROR: .env still has the placeholder. Paste your real service_role key,"
+    echo "ERROR: .env still has the placeholder. Paste your real secret key (sb_secret_…),"
     echo "save, close, and re-run this same command."
     open -e .env 2>/dev/null || true
     exit 1

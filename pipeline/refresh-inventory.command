@@ -55,16 +55,16 @@ if ! has_key .env; then
       echo "Found your Supabase key in your old copy: $OLD"
     else
       echo "Couldn't find your Supabase key on this Mac."
-      echo "Copy the service_role (secret) key from Supabase → Project Settings → API (opening it now),"
+      echo "Copy the secret key (starts sb_secret_) from Supabase → Project Settings → API Keys (opening it now),"
       echo "then paste it here and press Return. It won't show on screen as you paste."
-      open "https://supabase.com/dashboard/project/dywrisybvcorpfhbwgtg/settings/api"
+      open "https://supabase.com/dashboard/project/dywrisybvcorpfhbwgtg/settings/api-keys"
       read -r -s KEY; echo
       printf 'SUPABASE_SERVICE_ROLE_KEY=%s\n' "$(printf '%s' "$KEY" | tr -d '[:space:]')" > .env
     fi
   fi
 fi
 if ! has_key .env; then
-  echo "That doesn't look like a key. Run this again and paste the service_role key."
+  echo "That doesn't look like a key. Run this again and paste the secret key (sb_secret_…)."
   rm -f .env
   pause; exit 1
 fi

@@ -8,6 +8,7 @@
 //
 // Logic lives in the database function (see supabase/normalize_products.sql),
 // so this is just the trigger. Needs the same service_role key as the scraper.
+import { keyHeaders } from './lib/keys.mjs'
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dywrisybvcorpfhbwgtg.supabase.co'
 const SERVICE = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim()
 const FULL = /^(1|true|yes)$/i.test(process.env.FULL || '')
@@ -19,7 +20,7 @@ if (!SERVICE) {
 
 const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/normalize_products`, {
   method: 'POST',
-  headers: { apikey: SERVICE, Authorization: `Bearer ${SERVICE}`, 'Content-Type': 'application/json' },
+  headers: { ...keyHeaders(SERVICE), 'Content-Type': 'application/json' },
   body: JSON.stringify({ full_refresh: FULL }),
 })
 if (!res.ok) {
@@ -30,7 +31,7 @@ if (!res.ok) {
 // Report the resulting match rate.
 const q = await fetch(
   `${SUPABASE_URL}/rest/v1/products?in_stock=eq.true&clean_brand=not.is.null&select=id`,
-  { method: 'HEAD', headers: { apikey: SERVICE, Authorization: `Bearer ${SERVICE}`, Prefer: 'count=exact', Range: '0-0' } },
+  { method: 'HEAD', headers: { ...keyHeaders(SERVICE), Prefer: 'count=exact', Range: '0-0' } },
 )
 const matched = (q.headers.get('content-range') || '').split('/')[1] || '?'
 console.log(`Normalized (${FULL ? 'full' : 'incremental'}). In-stock rows with clean_brand: ${matched}.`)

@@ -9,6 +9,7 @@
 //
 // Logic lives in the database function (see supabase/deals.sql), so this is
 // just the trigger. Needs the same service_role key as the scraper.
+import { keyHeaders } from './lib/keys.mjs'
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dywrisybvcorpfhbwgtg.supabase.co'
 const SERVICE = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim()
 const N = Number(process.env.N) > 0 ? Number(process.env.N) : 300
@@ -17,7 +18,7 @@ if (!SERVICE) {
   console.error('ERROR: SUPABASE_SERVICE_ROLE_KEY is not set (see .env).')
   process.exit(1)
 }
-const headers = { apikey: SERVICE, Authorization: `Bearer ${SERVICE}`, 'Content-Type': 'application/json' }
+const headers = { ...keyHeaders(SERVICE), 'Content-Type': 'application/json' }
 
 const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/refresh_deals`, { method: 'POST', headers, body: JSON.stringify({ n: N }) })
 if (!res.ok) {
