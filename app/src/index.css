@@ -69,14 +69,14 @@ select:focus {
   padding: 22px 0 16px;
   font-size: 14px;
   font-weight: 700;
-  border-bottom: 1px solid rgba(244, 237, 220, 0.16);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.16);
 }
 .mnu {
   @apply inline-flex items-center;
   gap: 10px;
   font-size: 14px;
   font-weight: 700;
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .wm {
   font-size: 42px;
@@ -86,7 +86,7 @@ select:focus {
 }
 .top .dim {
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 
 /* ---------- type roles ---------- */
@@ -124,16 +124,16 @@ select:focus {
 .meta {
   font-size: 13px;
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 .ghost {
   font-size: 14px;
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   transition: color 0.12s;
 }
 .ghost:hover {
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .k {
   font-size: 13px;
@@ -141,7 +141,7 @@ select:focus {
 }
 .k small {
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   margin-left: 10px;
   font-size: 12px;
 }
@@ -165,18 +165,18 @@ select:focus {
 .stat-k {
   display: block;
   font-size: 13px;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   margin-top: 6px;
 }
 
 .rule {
   height: 2px;
-  background: #f4eddc;
+  background: #f8f4e9;
   margin-top: 40px;
 }
 .hair {
   height: 1px;
-  background: rgba(244, 237, 220, 0.16);
+  background: rgba(248, 244, 233, 0.16);
 }
 
 /* ---------- devices ---------- */
@@ -184,7 +184,7 @@ select:focus {
 /* The one white CTA per screen. */
 .cta {
   @apply flex w-full items-center justify-between;
-  background: #f4eddc;
+  background: #f8f4e9;
   color: #0b0b0b;
   padding: 18px 20px;
   font-size: 19px;
@@ -200,8 +200,8 @@ select:focus {
 }
 .cta.ghost {
   background: transparent;
-  color: #f4eddc;
-  border: 2px solid #f4eddc;
+  color: #f8f4e9;
+  border: 2px solid #f8f4e9;
   font-size: 19px;
   font-weight: 700;
 }
@@ -219,7 +219,7 @@ select:focus {
   bottom: 0;
   z-index: 50;
   background: #1e1e1e;
-  border-top: 2px solid #f4eddc;
+  border-top: 2px solid #f8f4e9;
   padding-top: 16px;
   padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
 }
@@ -236,7 +236,7 @@ select:focus {
   margin-top: 6px;
   font-size: 13px;
   line-height: 1.35;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 /* Yes and "I'm under 21" share one row to keep the sheet short. */
 .agesheet-row {
@@ -283,7 +283,7 @@ select:focus {
 }
 .agesheet[data-keys] .cta:focus-visible,
 .agesheet[data-keys] .ghost:focus-visible {
-  outline: 2px solid #f4eddc;
+  outline: 2px solid #f8f4e9;
   outline-offset: 3px;
 }
 
@@ -336,7 +336,7 @@ select:focus {
 
 /* The notice box. */
 .notice {
-  border: 2px solid #f4eddc;
+  border: 2px solid #f8f4e9;
   padding: 18px 20px;
 }
 
@@ -345,7 +345,7 @@ select:focus {
   @apply flex w-full items-center justify-between text-left;
   gap: 14px;
   padding: 18px 0;
-  border-bottom: 1px solid rgba(244, 237, 220, 0.16);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.16);
 }
 .row-l {
   @apply flex min-w-0 items-center;
@@ -364,7 +364,7 @@ select:focus {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #f4eddc;
+  background: #f8f4e9;
   color: #0b0b0b;
 }
 .trail-line {
@@ -405,7 +405,7 @@ select:focus {
   min-height: 44px;
   font-size: 11.5px;
   line-height: 1.25;
-  color: rgba(244, 237, 220, 0.75);
+  color: rgba(248, 244, 233, 0.75);
 }
 /* Stops shrink and long names wrap so the whole trail fits; only a trail
    of unbreakable names wider than the screen scrolls. */
@@ -423,7 +423,7 @@ select:focus {
   text-align: right;
 }
 .trail-stop > button:hover {
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .trail-stop:first-child,
 .trail-stop:first-child > button {
@@ -441,11 +441,11 @@ select:focus {
   height: 14px;
   border-radius: 50%;
   box-sizing: border-box;
-  background: #f4eddc;
-  border: 3px solid #f4eddc;
+  background: #f8f4e9;
+  border: 3px solid #f8f4e9;
 }
 .trail-stop.now {
-  color: #f4eddc;
+  color: #f8f4e9;
   font-weight: 700;
 }
 .trail-stop.now .trail-dot {
@@ -456,7 +456,7 @@ select:focus {
    the smaller "Or pick a neighborhood" line under it opens its neighborhoods,
    indented. */
 .boro {
-  border-bottom: 1px solid rgba(244, 237, 220, 0.16);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.16);
 }
 .boro-pick {
   @apply flex w-full items-center justify-between text-left;
@@ -484,11 +484,11 @@ select:focus {
   gap: 6px;
   padding: 0 0 18px 24px;
   font-size: 13px;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   transition: color 0.12s;
 }
 .boro-tog:hover {
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .boro-tog svg {
   transition: transform 0.15s;
@@ -498,7 +498,7 @@ select:focus {
 }
 .boro-hoods {
   margin-left: 24px;
-  border-top: 1px solid rgba(244, 237, 220, 0.16);
+  border-top: 1px solid rgba(248, 244, 233, 0.16);
 }
 .boro-hoods .label {
   font-size: 15px;
@@ -521,12 +521,12 @@ select:focus {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 1.5px solid rgba(244, 237, 220, 0.4);
+  border: 1.5px solid rgba(248, 244, 233, 0.4);
   flex: none;
 }
 .disc-on {
-  background: #f4eddc;
-  border-color: #f4eddc;
+  background: #f8f4e9;
+  border-color: #f8f4e9;
 }
 
 /* Product thumb: 44px circle, untreated image. */
@@ -536,7 +536,7 @@ select:focus {
   flex: none;
   overflow: hidden;
   border-radius: 50%;
-  border: 1px solid rgba(244, 237, 220, 0.16);
+  border: 1px solid rgba(248, 244, 233, 0.16);
   background: #1e1e1e;
 }
 .thumb img {
@@ -557,8 +557,8 @@ select:focus {
   font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #f4eddc;
-  border-bottom: 2px solid #f4eddc;
+  color: #f8f4e9;
+  border-bottom: 2px solid #f8f4e9;
   padding-bottom: 3px;
 }
 .signup-link span {
@@ -568,12 +568,12 @@ select:focus {
   flex: none;
   font-size: 14px;
   font-weight: 700;
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .signup-msg {
   margin-top: 10px;
   font-size: 13px;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   text-align: center;
 }
 
@@ -581,11 +581,11 @@ select:focus {
 .inp {
   @apply flex items-center;
   gap: 14px;
-  border-bottom: 2px solid rgba(244, 237, 220, 0.4);
+  border-bottom: 2px solid rgba(248, 244, 233, 0.4);
   padding-bottom: 10px;
 }
 .inp:focus-within {
-  border-bottom-color: #f4eddc;
+  border-bottom-color: #f8f4e9;
 }
 .inp input {
   @apply w-full min-w-0 bg-transparent text-ink;
@@ -593,7 +593,7 @@ select:focus {
   font-weight: 400;
 }
 .inp input::placeholder {
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 
 /* Select: text with an underline and a small chevron. */
@@ -602,31 +602,31 @@ select:focus {
 }
 .sel select {
   @apply appearance-none bg-transparent;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   font-size: 14px;
   font-weight: 400;
   padding: 0 16px 4px 0;
-  border-bottom: 1px solid rgba(244, 237, 220, 0.4);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.4);
 }
 .sel-on select {
-  color: #f4eddc;
+  color: #f8f4e9;
   font-weight: 700;
-  border-bottom: 2px solid #f4eddc;
+  border-bottom: 2px solid #f8f4e9;
 }
 .sel svg {
   @apply pointer-events-none absolute right-0;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   top: 50%;
   width: 10px;
   height: 10px;
   transform: translateY(-60%);
 }
 .sel-on svg {
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .sel option {
   background: #1e1e1e;
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 
 /* Chip / tab: underlined text. */
@@ -635,15 +635,15 @@ select:focus {
   gap: 6px;
   font-size: 13px;
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   padding-bottom: 3px;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
 }
 .tab-on {
-  color: #f4eddc;
+  color: #f8f4e9;
   font-weight: 700;
-  border-bottom-color: #f4eddc;
+  border-bottom-color: #f8f4e9;
 }
 
 /* Hamburger: three white bars. */
@@ -661,11 +661,11 @@ select:focus {
   left: 0;
   width: 18px;
   height: 2px;
-  background: #f4eddc;
+  background: #f8f4e9;
 }
 .burger::before {
   top: 0;
-  box-shadow: 0 6px 0 #f4eddc;
+  box-shadow: 0 6px 0 #f8f4e9;
 }
 .burger::after {
   top: 12px;
@@ -673,13 +673,13 @@ select:focus {
 
 /* "Start here": numbered line bullets in hairline rows. */
 .ways {
-  border-top: 2px solid #f4eddc;
+  border-top: 2px solid #f8f4e9;
 }
 .way {
   @apply flex w-full items-center justify-between text-left text-ink;
   gap: 14px;
   padding: 15px 0;
-  border-bottom: 1px solid rgba(244, 237, 220, 0.16);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.16);
 }
 .way:disabled {
   opacity: 0.6;
@@ -697,7 +697,7 @@ select:focus {
 /* The home's Start here block: bigger rows, 2px rules between. */
 .ways-big .way {
   padding: 20px 0;
-  border-bottom: 2px solid #f4eddc;
+  border-bottom: 2px solid #f8f4e9;
 }
 .ways-big .way-t {
   font-size: 21px;
@@ -714,7 +714,7 @@ select:focus {
   display: block;
   margin-top: 2px;
   font-size: 13px;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 .way-a {
   font-size: 22px;
@@ -724,20 +724,20 @@ select:focus {
 
 /* The deal board. */
 .board {
-  border-top: 2px solid #f4eddc;
+  border-top: 2px solid #f8f4e9;
 }
 .board-row {
   @apply flex w-full items-center justify-between text-left text-ink;
   gap: 14px;
   padding: 13px 0;
-  border-bottom: 1px solid rgba(244, 237, 220, 0.16);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.16);
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 .board-row .dim {
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   font-size: 13px;
   flex: none;
 }
@@ -746,8 +746,8 @@ select:focus {
 .board-all {
   @apply flex w-full items-center justify-between text-left;
   padding: 14px 0;
-  border-bottom: 2px solid #f4eddc;
-  color: #f4eddc;
+  border-bottom: 2px solid #f8f4e9;
+  color: #f8f4e9;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -761,7 +761,7 @@ select:focus {
 }
 .deal-n {
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 
 /* Sale prices: the regular price struck through beside the sale price. */
@@ -773,7 +773,7 @@ select:focus {
 .was {
   font-size: 13px;
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   text-decoration: line-through;
 }
 .deal-price {
@@ -798,7 +798,7 @@ select:focus {
   font-size: 12px;
   font-weight: 700;
   color: #0b0b0b;
-  background: #f4eddc;
+  background: #f8f4e9;
   padding: 1px 6px;
 }
 
@@ -807,14 +807,14 @@ select:focus {
   @apply flex items-center justify-between;
   margin-top: 40px;
   padding: 16px 0;
-  border-top: 2px solid #f4eddc;
-  border-bottom: 2px solid #f4eddc;
+  border-top: 2px solid #f8f4e9;
+  border-bottom: 2px solid #f8f4e9;
   font-size: 15px;
   font-weight: 700;
 }
 .exit .dim {
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 /* The disclosure: the last line of the page, centered under the sign-off. */
 /* A hairline between the Sensei NYC sign-off and the disclaimer. */
@@ -823,7 +823,7 @@ select:focus {
   max-width: 720px;
   height: 1px;
   margin: 32px auto 0;
-  background: rgba(244, 237, 220, 0.16);
+  background: rgba(248, 244, 233, 0.16);
 }
 /* Terms and Privacy Policy: small links between the rule and the disclaimer,
    the disclaimer's size and grey. */
@@ -836,10 +836,10 @@ select:focus {
   line-height: 1.6;
 }
 .foot-links a {
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 .foot-links a:hover {
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .foot-links + .foot {
   margin-top: 12px;
@@ -847,23 +847,23 @@ select:focus {
 .foot {
   margin-top: 24px;
   font-size: 12px;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   line-height: 1.6;
   text-align: center;
 }
 .foot b {
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 /* Footer contact: an envelope (mailto) and Instagram, side by side. */
 .contact {
   @apply flex items-center justify-center;
   gap: 24px;
   margin-top: 34px;
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 .contact .ic {
   display: inline-flex;
-  color: #f4eddc;
+  color: #f8f4e9;
 }
 
 /* Results: "Load more" under the list (25 at a time). */
@@ -876,7 +876,7 @@ select:focus {
 .dir {
   font-size: 14px;
   font-weight: 700;
-  color: #f4eddc;
+  color: #f8f4e9;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -901,7 +901,7 @@ select:focus {
   @apply flex w-full items-center justify-between text-left text-ink;
   gap: 14px;
   padding: 14px 0;
-  border-bottom: 1px solid rgba(244, 237, 220, 0.16);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.16);
 }
 .mi-l {
   @apply flex min-w-0 items-center;
@@ -910,7 +910,7 @@ select:focus {
 .mi-n {
   font-size: 13px;
   font-weight: 400;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
   width: 26px;
   flex: none;
 }
@@ -929,7 +929,7 @@ select:focus {
   display: block;
   margin-top: 2px;
   font-size: 13px;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 .mi-a {
   font-size: 22px;
@@ -1020,8 +1020,8 @@ select:focus {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #f4eddc;
-  color: #f4eddc;
+  border: 2px solid #f8f4e9;
+  color: #f8f4e9;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1059,12 +1059,12 @@ select:focus {
 }
 .spec > div {
   padding: 10px 0;
-  border-bottom: 1px solid rgba(244, 237, 220, 0.16);
+  border-bottom: 1px solid rgba(248, 244, 233, 0.16);
 }
 .spec-k {
   display: block;
   font-size: 11px;
-  color: rgba(244, 237, 220, 0.6);
+  color: rgba(248, 244, 233, 0.6);
 }
 .spec-v {
   display: block;
@@ -1107,7 +1107,7 @@ select:focus {
 }
 
 ::selection {
-  background: #f4eddc;
+  background: #f8f4e9;
   color: #0b0b0b;
 }
 

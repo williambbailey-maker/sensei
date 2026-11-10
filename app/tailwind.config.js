@@ -9,10 +9,10 @@ export default {
       current: 'currentColor',
       field: '#0B0B0B', // page background
       deep: '#1E1E1E', // image placeholders, option backgrounds, scrim
-      ink: '#F4EDDC', // all type, rules, CTA bar, marker
-      mist: 'rgba(244,237,220,.6)', // secondary type
-      line: 'rgba(244,237,220,.16)', // 1px hairlines
-      'line-strong': 'rgba(244,237,220,.4)', // input underlines
+      ink: '#f8f4e9', // all type, rules, CTA bar, marker
+      mist: 'rgba(248,244,233,.6)', // secondary type
+      line: 'rgba(248,244,233,.16)', // 1px hairlines
+      'line-strong': 'rgba(248,244,233,.4)', // input underlines
     },
     extend: {
       fontFamily: {
