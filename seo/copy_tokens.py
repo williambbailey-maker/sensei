@@ -14,7 +14,11 @@ Rankings are text tokens, never hand-written names, because who leads changes
 between refreshes: on a shop page {top_brands} ("Ayrloom (25), Florist Farms
 (20) and Jaunty (19)"), {top_brand}, {top_brand_n} and {more_brands} (the
 next three by name); on brand and product-type pages {top_shops}, {top_shop},
-{low_shop}, {top_hoods}. A token for a named brand, shop or category that has
+{low_shop}, {top_hoods}. A shop's sections and standing are text tokens too:
+{cats_ranked} ("pre-rolls (181), edibles (159), flower (117) and vapes (99)"),
+{top_cat}, {top_cat_n}, {second_cat}, {second_cat_n}, {small_cats},
+{hood_place} and {city_place} ("the largest", "the second-largest", "the
+smallest"). A token for a named brand, shop or category that has
 dropped out of the page's data stops the build.
 
 Filters
@@ -23,6 +27,7 @@ Filters
             under 1,000 to the nearest 10, else to the nearest 50
             (prices round to the dollar)
     word    one..twelve spelled out, larger numbers as digits
+    cap     text tokens only: first letter capitalised, to start a sentence
 
 The guard (violations) rejects hand-typed data numbers left in copy: any $
 price, any percentage, and any number or number word (two..twelve) followed
@@ -71,6 +76,21 @@ def brand_name(b):
     if b.endswith(".") and not b.endswith("Co."):
         b = b[:-1]
     return b[0].upper() + b[1:] if b.islower() else b
+
+
+CAT_NOUN = {"flower": "flower", "pre-rolls": "pre-rolls", "vaporizers": "vapes", "edibles": "edibles",
+            "concentrates": "concentrates", "tinctures": "tinctures", "topicals": "topicals"}
+_ORD = ["", "", "second-", "third-", "fourth-", "fifth-", "sixth-", "seventh-", "eighth-", "ninth-", "tenth-"]
+
+
+def _place(rank, of):
+    """'the largest', 'the second-largest', ..., 'the 14th-largest', 'the smallest'."""
+    if rank == of and of > 1:
+        return "the smallest"
+    if rank < len(_ORD):
+        return f"the {_ORD[rank]}largest"
+    suf = "th" if 10 <= rank % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(rank % 10, "th")
+    return f"the {rank}{suf}-largest"
 
 
 def _names(names):
@@ -125,10 +145,26 @@ def page_vars(kind, key):
             v["top_brand"], v["top_brand_n"] = brand_name(tb[0]["brand"]), tb[0]["n"]
         if len(tb) > 3:
             v["more_brands"] = _names([brand_name(b["brand"]) for b in tb[3:6]])
+        # The sections of the menu by size, written from data for the same
+        # reason: cats_ranked is the four biggest with counts, top_cat and
+        # second_cat the leaders by name, small_cats whatever is left.
+        cs = sorted((r.get("categories") or {}).items(), key=lambda x: (-x[1], x[0]))
+        if cs:
+            v["cats_ranked"] = _series([(CAT_NOUN[c], n) for c, n in cs[:4]])
+            v["top_cat"], v["top_cat_n"] = CAT_NOUN[cs[0][0]], cs[0][1]
+        if len(cs) > 1:
+            v["second_cat"], v["second_cat_n"] = CAT_NOUN[cs[1][0]], cs[1][1]
+        if len(cs) > 4:
+            v["small_cats"] = _names([CAT_NOUN[c] for c, _ in cs[4:]])
         hood = [d for d in SITE["dispensaries"] if d.get("neighborhood") == r.get("neighborhood")]
         v["hood_shops"] = len(hood)
         v["hood_rank"] = sorted(hood, key=lambda d: -d["in_stock"]).index(r) + 1
         v["city_rank"] = sorted(SITE["dispensaries"], key=lambda d: -d["in_stock"]).index(r) + 1
+        # Where the menu stands by size: "the largest", "the second-largest",
+        # "the smallest". hood_place needs at least two shops to compare.
+        if len(hood) > 1:
+            v["hood_place"] = _place(v["hood_rank"], len(hood))
+        v["city_place"] = _place(v["city_rank"], len(SITE["dispensaries"]))
     elif kind == "neighborhood":
         v.update(shops=r["stores"], in_stock=r["in_stock"], categories=len(r.get("categories") or {}))
         for c, n in (r.get("categories") or {}).items():
@@ -210,12 +246,14 @@ def render(text, v, where=""):
         name, flt = m.group(1), m.group(2)
         if name not in v:
             raise SystemExit(f"unknown copy token {{{name}}} in {where}")
-        if flt not in (None, "about", "word"):
+        if flt not in (None, "about", "word", "cap"):
             raise SystemExit(f"unknown filter |{flt} in {where}")
         if isinstance(v[name], str):
-            if flt:
+            if flt not in (None, "cap"):
                 raise SystemExit(f"filter |{flt} on text token {{{name}}} in {where}")
-            return v[name]
+            return v[name][0].upper() + v[name][1:] if flt == "cap" else v[name]
+        if flt == "cap":
+            raise SystemExit(f"filter |cap on number token {{{name}}} in {where}")
         return _fmt(name, v[name], flt)
     out = TOKEN_RE.sub(sub, text)
     # Numbers change, so "a" vs "an" can't be written by hand: "an 81-item",
