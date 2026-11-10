@@ -2,12 +2,12 @@
   "oc-dispensary": {
     "intro": [
       "OC Dispensary is at 769 Franklin Avenue in Crown Heights, Brooklyn, and with about {in_stock|about} products from {brands} brands it carries the second-largest menu of any licensed dispensary we track in New York City, behind only Qube in Midtown. That makes it the largest shop in Brooklyn by a wide margin and the bigger of the {hood_shops|word} licensed dispensaries we track in Crown Heights; The Plug on Rogers Avenue is the other.",
-      "Pre-rolls are the biggest section, at about {cat.pre-rolls|about} listings, followed by roughly {cat.flower|about} flower options, {cat.vaporizers|about} vapes and {cat.edibles|about} edibles. Flower, pre-rolls and edibles are each the deepest of any shop in our data, and the {cat.concentrates}-item concentrate case and {cat.tinctures} tinctures are well above what most shops carry. STIIIZY ({brand.STIIIZY}) and Florist Farms ({brand.Florist Farms}) are the biggest brands, with Ayrloom, Jetpacks, Rove and Grön close behind; no shop we track lists more Florist Farms or Ayrloom products. The menu starts at {min_price}, and the cheapest items are Ayrloom's 10 mg THC, 5 mg CBD Half + Half drinks."
+      "Pre-rolls are the biggest section, at about {cat.pre-rolls|about} listings, followed by roughly {cat.flower|about} flower options, {cat.vaporizers|about} vapes and {cat.edibles|about} edibles. Flower, pre-rolls and edibles are each the deepest of any shop in our data, and the {cat.concentrates}-item concentrate case and {cat.tinctures} tinctures are well above what most shops carry. The biggest brands on the menu are {top_brands}, followed by {more_brands}. The menu starts at {min_price}, and the cheapest items are Ayrloom's 10 mg THC, 5 mg CBD Half + Half drinks."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands, the second-largest menu in our NYC data and the largest in Brooklyn.",
       "Deepest flower, pre-roll and edible selections of any shop we track: {cat.flower}, {cat.pre-rolls} and {cat.edibles}.",
-      "STIIIZY and Florist Farms lead, at {brand.STIIIZY} and {brand.Florist Farms} products; more Florist Farms and Ayrloom than any other shop.",
+      "{top_brand} is the biggest brand, at {top_brand_n} products.",
       "Entry price is {min_price} before tax, for Ayrloom's single-serve drinks."
     ],
     "faq": [
@@ -17,7 +17,7 @@
       },
       {
         "q": "What does OC Dispensary carry most?",
-        "a": "Pre-rolls, at about {cat.pre-rolls|about} listings, then flower ({cat.flower|about}), vapes ({cat.vaporizers|about}) and edibles ({cat.edibles|about}). STIIIZY and Florist Farms are the biggest brands on the menu."
+        "a": "Pre-rolls, at about {cat.pre-rolls|about} listings, then flower ({cat.flower|about}), vapes ({cat.vaporizers|about}) and edibles ({cat.edibles|about}). The brands with the most listings are {top_brands}."
       },
       {
         "q": "What other dispensaries are near OC Dispensary?",
@@ -28,12 +28,12 @@
   "the-plug-brooklyn-ny": {
     "intro": [
       "The Plug is at 428 Rogers Avenue in Crown Heights, Brooklyn, with about {in_stock|about} products from {brands} brands at our last check. It is one of the {hood_shops|word} licensed dispensaries we track in Crown Heights, and the smaller of the pair: OC Dispensary on Franklin Avenue carries one of the largest menus in the city. On its own terms The Plug is a solid mid-size shop, with a menu bigger than most in Brooklyn and enough range across categories to cover a typical shopping list.",
-      "The menu is evenly spread, with edibles ({cat.edibles}) slightly ahead of vapes ({cat.vaporizers}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}), plus a small concentrate shelf of {cat.concentrates} items. Ayrloom ({brand.ayrloom}) and MFNY ({brand.MFNY}) are the biggest brands, followed by Revert Cannabis, Smoke, Puff, Boutiq and Grön. The entry price is low for the city: the menu starts at {min_price} for an Ayrloom Black Cherry 1:1 drink, and LEVEL 5 tablet two-packs sit just above it."
+      "The menu is evenly spread, with edibles ({cat.edibles}) slightly ahead of vapes ({cat.vaporizers}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}), plus a small concentrate shelf of {cat.concentrates} items. {top_brands} are the biggest brands, followed by {more_brands}. The entry price is low for the city: the menu starts at {min_price} for an Ayrloom Black Cherry 1:1 drink, and LEVEL 5 tablet two-packs sit just above it."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; the smaller of the {hood_shops|word} Crown Heights shops we track.",
       "Edibles ({cat.edibles}), vapes ({cat.vaporizers}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) are close in size.",
-      "Ayrloom and MFNY lead the shelf, at {brand.ayrloom} and {brand.MFNY} products.",
+      "{top_brand} leads the shelf, at {top_brand_n} products.",
       "Low entry price: {min_price} before tax for an Ayrloom single-serve drink."
     ],
     "faq": [
@@ -43,7 +43,7 @@
       },
       {
         "q": "What does The Plug carry most?",
-        "a": "Edibles, at {cat.edibles} listings, with vapes ({cat.vaporizers}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) close behind. Ayrloom and MFNY are the biggest brands."
+        "a": "Edibles, at {cat.edibles} listings, with vapes ({cat.vaporizers}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) close behind. The biggest brands are {top_brands}."
       },
       {
         "q": "What other dispensaries are near The Plug?",
@@ -54,18 +54,18 @@
   "oet-inc": {
     "intro": [
       "Q Dispensary is at 733 Flatbush Avenue in Flatbush, Brooklyn, with about {in_stock|about} products from {brands} brands at our last check. It is one of the {hood_shops|word} licensed dispensaries we track in Flatbush and the smaller of the pair; Brooklyn Bourne on Church Avenue carries a much larger menu. Q Dispensary is a compact neighborhood shop rather than a destination, but it covers the main categories and is easy to shop if you already know what you are after.",
-      "Edibles are the biggest section, at {cat.edibles} listings, followed by vapes ({cat.vaporizers}), flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}), with a handful of concentrates. Cannabals ({brand.Cannabals}) is the top brand, and few shops we track carry as many Cannabals products; STIIIZY ({brand.STIIIZY}) is close behind, with Ayrloom, Dragon Fly, Smokiez and Budcracker Blvd rounding out the top of the menu. Drinks are a theme at the low end: the menu starts at {min_price}, and the cheapest items are LAYUP lemonades and Weed Water sparkling drinks, with High Peaks beverages just above."
+      "Edibles are the biggest section, at {cat.edibles} listings, followed by vapes ({cat.vaporizers}), flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}), with a handful of concentrates. The top brands are {top_brands}, with {more_brands} rounding out the top of the menu. Drinks are a theme at the low end: the menu starts at {min_price}, and the cheapest items are LAYUP lemonades and Weed Water sparkling drinks, with High Peaks beverages just above."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; the smaller of the {hood_shops|word} Flatbush shops we track.",
       "Edibles lead the menu ({cat.edibles}), ahead of vapes ({cat.vaporizers}) and flower ({cat.flower}).",
-      "Cannabals and STIIIZY are the biggest brands, at {brand.Cannabals} and {brand.STIIIZY} products.",
+      "{top_brand} is the biggest brand on the menu, with {top_brand_n} products.",
       "Cheapest buys are 10 mg drinks from LAYUP and Weed Water, from {min_price} before tax."
     ],
     "faq": [
       {
         "q": "What does Q Dispensary carry most?",
-        "a": "Edibles, at {cat.edibles} listings, with Cannabals the biggest brand on the menu. Vapes ({cat.vaporizers}) are the next-largest section, led by STIIIZY."
+        "a": "Edibles, at {cat.edibles} listings. Vapes ({cat.vaporizers}) are the next-largest section. The biggest brands are {top_brands}."
       },
       {
         "q": "What is the cheapest item at Q Dispensary?",
@@ -80,12 +80,12 @@
   "hudson-haze-dispensary": {
     "intro": [
       "Hudson Haze is at 3043 Fulton Street in East New York, Brooklyn, with about {in_stock|about} products from {brands} brands at our last check. It is the larger of the {hood_shops|word} licensed dispensaries we track in East New York, and by a long way: Bud City, a few blocks east on Fulton Street, lists only a handful of products online. For this part of eastern Brooklyn, that makes Hudson Haze the shop with the fuller menu, covering every main category from flower to tinctures and topicals.",
-      "Pre-rolls are the biggest section, at {cat.pre-rolls} listings, followed by flower ({cat.flower}), then vapes ({cat.vaporizers}) and edibles ({cat.edibles}), with {cat.concentrates} concentrates and a few tinctures and topicals. Ayrloom ({brand.ayrloom}) is the top brand, ahead of MFNY ({brand.MFNY}), Cannabals, Off Hours, STIIIZY and Nanticoke. The menu starts at {min_price}, and the cheapest item is an MFNY three-pack of Mango x Honey Banana live resin gummies, with Ayrloom's single-serve drinks just above it."
+      "Pre-rolls are the biggest section, at {cat.pre-rolls} listings, followed by flower ({cat.flower}), then vapes ({cat.vaporizers}) and edibles ({cat.edibles}), with {cat.concentrates} concentrates and a few tinctures and topicals. The brands with the most products are {top_brands}, ahead of {more_brands}. The menu starts at {min_price}, and the cheapest item is an MFNY three-pack of Mango x Honey Banana live resin gummies, with Ayrloom's single-serve drinks just above it."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; the larger of the {hood_shops|word} East New York shops we track.",
       "Pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) make up the biggest share of the menu.",
-      "Ayrloom and MFNY lead, at {brand.ayrloom} and {brand.MFNY} products.",
+      "{top_brand} leads the brand list, at {top_brand_n} products.",
       "Entry price is {min_price} before tax, for an MFNY live resin gummy three-pack."
     ],
     "faq": [
@@ -95,7 +95,7 @@
       },
       {
         "q": "What does Hudson Haze carry most?",
-        "a": "Pre-rolls, at {cat.pre-rolls} listings, then flower ({cat.flower}), vapes ({cat.vaporizers}) and edibles ({cat.edibles}). Ayrloom and MFNY are the biggest brands."
+        "a": "Pre-rolls, at {cat.pre-rolls} listings, then flower ({cat.flower}), vapes ({cat.vaporizers}) and edibles ({cat.edibles}). {top_brand} is the biggest brand on the menu."
       },
       {
         "q": "What is the cheapest item at Hudson Haze?",
@@ -106,12 +106,12 @@
   "fireleaf": {
     "intro": [
       "Fireleaf is at 2102 Ralph Avenue in Bergen Beach, Brooklyn, with about {in_stock|about} products from {brands} brands at our last check. It is the only licensed dispensary we track in Bergen Beach, so for this corner of southeast Brooklyn it is the local option rather than one of several. The menu is mid-size for the city, smaller than the big Sheepshead Bay and Flatbush shops but broad enough to cover flower, pre-rolls, vapes and edibles in one stop.",
-      "Edibles are the largest section, at {cat.edibles} listings, followed closely by pre-rolls ({cat.pre-rolls}), then flower ({cat.flower}) and vapes ({cat.vaporizers}), with {cat.concentrates} concentrates and a few tinctures. Jaunty ({brand.Jaunty}) is the biggest brand, ahead of Ayrloom ({brand.ayrloom}) and Ruby Farms, with Jetpacks, Heady Tree and Camino rounding out the top six. The menu starts at {min_price}, and the cheapest items are Ayrloom's 10 mg drinks, including Cran Apple, Lemonade, Orange Creamsicle and a Half & Half iced tea lemonade."
+      "Edibles are the largest section, at {cat.edibles} listings, followed closely by pre-rolls ({cat.pre-rolls}), then flower ({cat.flower}) and vapes ({cat.vaporizers}), with {cat.concentrates} concentrates and a few tinctures. The biggest brands are {top_brands}, with {more_brands} next. The menu starts at {min_price}, and the cheapest items are Ayrloom's 10 mg drinks, including Cran Apple, Lemonade, Orange Creamsicle and a Half & Half iced tea lemonade."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; the only licensed shop we track in Bergen Beach.",
       "Edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) are the biggest sections.",
-      "Jaunty and Ayrloom lead, at {brand.Jaunty} and {brand.ayrloom} products, with Ruby Farms close behind.",
+      "The biggest brand is {top_brand}, at {top_brand_n} products.",
       "Entry price is {min_price} before tax, for Ayrloom's 10 mg drinks."
     ],
     "faq": [
@@ -121,7 +121,7 @@
       },
       {
         "q": "What does Fireleaf carry most?",
-        "a": "Edibles, at {cat.edibles} listings, with pre-rolls ({cat.pre-rolls}) close behind and then flower ({cat.flower}) and vapes ({cat.vaporizers}). Jaunty is the biggest brand on the menu."
+        "a": "Edibles, at {cat.edibles} listings, with pre-rolls ({cat.pre-rolls}) close behind and then flower ({cat.flower}) and vapes ({cat.vaporizers}). {top_brand} has the most products of any brand on the menu."
       },
       {
         "q": "What is the cheapest item at Fireleaf?",
@@ -132,12 +132,12 @@
   "cannabis-kingdom": {
     "intro": [
       "Grass Station is at 8415 18th Avenue in Bensonhurst, Brooklyn, with about {in_stock|about} products from {brands} brands at our last check. It is the larger of the {hood_shops|word} licensed dispensaries we track in Bensonhurst; The THC Shop on 86th Street is the other. That puts Grass Station in the middle of the pack citywide, with a menu that is solid across the main categories without trying to be a superstore.",
-      "Pre-rolls are the biggest section, at {cat.pre-rolls} listings, followed by vapes ({cat.vaporizers}) and flower ({cat.flower}), with {cat.edibles} edibles, {cat.concentrates} concentrates and a few tinctures. Ayrloom ({brand.ayrloom}) and Jaunty ({brand.Jaunty}) are the biggest brands, with Bodega Boyz, STIIIZY, LEVEL and Florist Farms behind them. The entry price is among the lower ones in Brooklyn: the menu starts at {min_price} for LEVEL 5 Energy and Slumber tablet two-packs, and 1906 two-pack pouches sit just above. The THC Shop's menu is built around flower, so shoppers after pre-rolls or vapes will find more choice here."
+      "Pre-rolls are the biggest section, at {cat.pre-rolls} listings, followed by vapes ({cat.vaporizers}) and flower ({cat.flower}), with {cat.edibles} edibles, {cat.concentrates} concentrates and a few tinctures. {top_brands} are the biggest brands, with {more_brands} behind them. The entry price is among the lower ones in Brooklyn: the menu starts at {min_price} for LEVEL 5 Energy and Slumber tablet two-packs, and 1906 two-pack pouches sit just above. The THC Shop's menu is built around flower, so shoppers after pre-rolls or vapes will find more choice here."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; the larger of the {hood_shops|word} Bensonhurst shops we track.",
       "Pre-rolls lead ({cat.pre-rolls}), ahead of vapes ({cat.vaporizers}) and flower ({cat.flower}).",
-      "Ayrloom and Jaunty are the biggest brands, at {brand.ayrloom} and {brand.Jaunty} products.",
+      "The biggest brands are {top_brands}.",
       "Low entry price: {min_price} before tax for LEVEL 5 tablet two-packs."
     ],
     "faq": [
@@ -147,7 +147,7 @@
       },
       {
         "q": "What does Grass Station carry most?",
-        "a": "Pre-rolls, at {cat.pre-rolls} listings, then vapes ({cat.vaporizers}) and flower ({cat.flower}). Ayrloom and Jaunty are the biggest brands."
+        "a": "Pre-rolls, at {cat.pre-rolls} listings, then vapes ({cat.vaporizers}) and flower ({cat.flower}). {top_brand} tops the brand list, with {top_brand_n} products."
       },
       {
         "q": "What other dispensaries are near Grass Station?",
@@ -158,18 +158,18 @@
   "the-thc-shop-ny-86th-st": {
     "intro": [
       "The THC Shop is at 1981 86th Street in Bensonhurst, Brooklyn, with about {in_stock|about} products from {brands} brands at our last check. It is one of the {hood_shops|word} licensed dispensaries we track in Bensonhurst and the smaller of the pair; Grass Station on 18th Avenue carries a bigger menu. Where Grass Station leans toward pre-rolls and vapes, The THC Shop is more of a flower shop, which makes the two a useful contrast for anyone shopping in this part of southern Brooklyn.",
-      "Flower is by far the biggest section, at {cat.flower} listings, followed by edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}), with {cat.concentrates} concentrates and a few tinctures and topicals. ElectraLeaf ({brand.ElectraLeaf}) is the top brand, ahead of Ayrloom ({brand.ayrloom}), LEAL, Claybourne Co., Flav and MFNY. The menu starts at {min_price}, for a Weed Water Yuzu Peach Deez sparkling drink, and 1906 two-packs such as Chill and Go sit just above it."
+      "Flower is by far the biggest section, at {cat.flower} listings, followed by edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}), with {cat.concentrates} concentrates and a few tinctures and topicals. The top brands are {top_brands}, ahead of {more_brands}. The menu starts at {min_price}, for a Weed Water Yuzu Peach Deez sparkling drink, and 1906 two-packs such as Chill and Go sit just above it."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; the smaller of the {hood_shops|word} Bensonhurst shops we track.",
       "Flower-first menu: {cat.flower} flower listings, well ahead of edibles ({cat.edibles}).",
-      "ElectraLeaf and Ayrloom lead, at {brand.ElectraLeaf} and {brand.ayrloom} products.",
+      "{top_brand} leads, at {top_brand_n} products.",
       "Entry price is {min_price} before tax, for a Weed Water sparkling drink."
     ],
     "faq": [
       {
         "q": "What does The THC Shop carry most?",
-        "a": "Flower, at {cat.flower} listings, with ElectraLeaf the biggest brand on the menu. Edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) are the next-largest sections."
+        "a": "Flower, at {cat.flower} listings, with {top_brand} the biggest brand on the menu. Edibles ({cat.edibles}) and pre-rolls ({cat.pre-rolls}) are the next-largest sections."
       },
       {
         "q": "What is the cheapest item at The THC Shop?",
@@ -184,12 +184,12 @@
   "hii-3rd-ave": {
     "intro": [
       "Hii Bay Ridge is at 9206 3rd Avenue in Bay Ridge, Brooklyn, with about {in_stock|about} products from {brands} brands at our last check. It is one of the {hood_shops|word} licensed dispensaries we track in Bay Ridge, and the smaller of the pair: Kaya Bliss, a few blocks north on 3rd Avenue, carries one of the largest menus in the city. Hii is still a well-stocked shop in its own right, bigger than most in Brooklyn, and it is the closer option for the southern end of the neighborhood.",
-      "Edibles are the largest section, at {cat.edibles} listings, with flower ({cat.flower}) close behind, then pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}). The {cat.concentrates}-item concentrate shelf is deeper than most shops of this size carry. MFNY ({brand.MFNY}) is the top brand by a clear margin, ahead of Jaunty ({brand.Jaunty}), Heady Tree, Ayrloom, Runtz and Camino. The entry price is among the lowest in the city: the menu starts at {min_price} for a 1906 Boost two-pack of drops, with an Ayrloom Black Cherry drink and MFNY live resin gummy three-packs just above."
+      "Edibles are the largest section, at {cat.edibles} listings, with flower ({cat.flower}) close behind, then pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}). The {cat.concentrates}-item concentrate shelf is deeper than most shops of this size carry. The biggest brands on the shelf are {top_brands}, ahead of {more_brands}. The entry price is among the lowest in the city: the menu starts at {min_price} for a 1906 Boost two-pack of drops, with an Ayrloom Black Cherry drink and MFNY live resin gummy three-packs just above."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; the smaller of the {hood_shops|word} Bay Ridge shops we track.",
       "Edibles ({cat.edibles}) and flower ({cat.flower}) lead, with a deeper-than-usual concentrate shelf ({cat.concentrates}).",
-      "MFNY is the biggest brand at {brand.MFNY} products, ahead of Jaunty at {brand.Jaunty}.",
+      "{top_brand} is the biggest brand at {top_brand_n} products.",
       "One of the lowest entry prices in NYC: {min_price} before tax for 1906 Boost drops."
     ],
     "faq": [
@@ -199,7 +199,7 @@
       },
       {
         "q": "What does Hii Bay Ridge carry most?",
-        "a": "Edibles, at {cat.edibles} listings, with flower ({cat.flower}) close behind. MFNY is the biggest brand on the menu."
+        "a": "Edibles, at {cat.edibles} listings, with flower ({cat.flower}) close behind. {top_brand} is the biggest brand on the menu."
       },
       {
         "q": "What other dispensaries are near Hii Bay Ridge?",
@@ -210,12 +210,12 @@
   "kayabliss-bayridge": {
     "intro": [
       "Kaya Bliss is at 8412 3rd Avenue in Bay Ridge, Brooklyn, and with about {in_stock|about} products from {brands} brands it carries the third-largest menu of any licensed dispensary we track in New York City, after Qube in Midtown and OC Dispensary in Crown Heights. It is the larger of the {hood_shops|word} licensed shops we track in Bay Ridge; Hii Bay Ridge, a few blocks south on 3rd Avenue, is the other.",
-      "The menu is broad in every direction. Vapes ({cat.vaporizers|about}), pre-rolls ({cat.pre-rolls|about}) and flower ({cat.flower|about}) are all deep, edibles add about {cat.edibles|about} more, and the {cat.concentrates}-item concentrate case is one of the biggest in the city. The {cat.tinctures} tinctures are the most of any shop we track. Jaunty ({brand.Jaunty}) is the top brand, and no shop in our data lists more Jaunty products; Ruby Farms ({brand.Ruby Farms}) is next, followed by Ayrloom, MFNY, Grön and STIIIZY. The menu starts at {min_price}, and the cheapest items are Ayrloom's 10 mg single-serve drinks, such as Black Cherry, Cran Apple and Lemonade."
+      "The menu is broad in every direction. Vapes ({cat.vaporizers|about}), pre-rolls ({cat.pre-rolls|about}) and flower ({cat.flower|about}) are all deep, edibles add about {cat.edibles|about} more, and the {cat.concentrates}-item concentrate case is one of the biggest in the city. The {cat.tinctures} tinctures are the most of any shop we track. The top brands are {top_brands}, followed by {more_brands}. The menu starts at {min_price}, and the cheapest items are Ayrloom's 10 mg single-serve drinks, such as Black Cherry, Cran Apple and Lemonade."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands, the third-largest menu in our NYC data.",
       "More tinctures ({cat.tinctures}) than any other shop we track, plus a {cat.concentrates}-item concentrate case.",
-      "Jaunty leads at {brand.Jaunty} products, the most of any shop, with Ruby Farms at {brand.Ruby Farms}.",
+      "{top_brand} leads at {top_brand_n} products.",
       "Entry price is {min_price} before tax, for Ayrloom single-serve drinks."
     ],
     "faq": [
@@ -225,7 +225,7 @@
       },
       {
         "q": "What does Kaya Bliss carry most?",
-        "a": "Vapes, pre-rolls and flower are the biggest sections, at about {cat.vaporizers|about}, {cat.pre-rolls|about} and {cat.flower|about} listings. Jaunty and Ruby Farms are the biggest brands."
+        "a": "Vapes, pre-rolls and flower are the biggest sections, at about {cat.vaporizers|about}, {cat.pre-rolls|about} and {cat.flower|about} listings. The biggest brands are {top_brands}."
       },
       {
         "q": "What other dispensaries are near Kaya Bliss?",
@@ -236,12 +236,12 @@
   "green-room-dispensary": {
     "intro": [
       "Green Room is at 2253 Emmons Avenue in Sheepshead Bay, Brooklyn, on the street that runs along the bay itself. It stocks about {in_stock|about} products from {brands} brands at our last check, making it the third-largest of the {hood_shops|word} licensed dispensaries we track in Sheepshead Bay, one of the busiest dispensary neighborhoods in the city. Twenty8gramz and Quality Control NY are bigger; Greene Street on Nostrand Avenue is smaller.",
-      "The menu is evenly balanced, with edibles ({cat.edibles}) slightly ahead of pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}), plus {cat.concentrates} concentrates, {cat.tinctures} tinctures and a few topicals, so most shopping lists can be filled in one visit. Ayrloom ({brand.ayrloom}) and Jaunty ({brand.Jaunty}) share the top spot, with MFNY, STIIIZY, Drops and Camino behind them. The menu starts at {min_price}, which is higher than most shops' cheapest item; the lowest-priced products are Ayrloom single-serve drinks such as Black Cherry, Half + Half, Lemonade and Orange Creamsicle."
+      "The menu is evenly balanced, with edibles ({cat.edibles}) slightly ahead of pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}), plus {cat.concentrates} concentrates, {cat.tinctures} tinctures and a few topicals, so most shopping lists can be filled in one visit. The biggest brands are {top_brands}, with {more_brands} behind them. The menu starts at {min_price}, which is higher than most shops' cheapest item; the lowest-priced products are Ayrloom single-serve drinks such as Black Cherry, Half + Half, Lemonade and Orange Creamsicle."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands; third-largest of the {hood_shops|word} Sheepshead Bay shops we track.",
       "Balanced menu: edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}).",
-      "Ayrloom and Jaunty lead, at {brand.ayrloom} and {brand.Jaunty} products.",
+      "The brands with the most products are {top_brands}.",
       "Entry price is {min_price} before tax, for Ayrloom single-serve drinks."
     ],
     "faq": [
@@ -251,7 +251,7 @@
       },
       {
         "q": "What does Green Room carry most?",
-        "a": "Edibles, at {cat.edibles} listings, with pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}) close behind. Ayrloom and Jaunty are the biggest brands."
+        "a": "Edibles, at {cat.edibles} listings, with pre-rolls ({cat.pre-rolls}), flower ({cat.flower}) and vapes ({cat.vaporizers}) close behind. {top_brand} tops the brand list, with {top_brand_n} products."
       },
       {
         "q": "What other dispensaries are near Green Room?",
@@ -262,11 +262,11 @@
   "mzdz-corp": {
     "intro": [
       "Coney Island Cannabis is at 875 Neptune Avenue in Coney Island, Brooklyn. It is one of the {hood_shops|word} licensed dispensaries we track in the Coney Island area, and at our last menu pull it listed just {in_stock|word} products from {brands|word} brands, the second-smallest licensed menu in our data. Flower accounts for {cat.flower|word} of those, edibles {cat.edibles|word}, vapes {cat.vaporizers|word}, pre-rolls {cat.pre-rolls|word} and topicals {cat.topicals|word}. A menu this small usually means the shop is newly opened or publishes only part of its stock online.",
-      "Hashtag Honey supplies {brand.Hashtag Honey|word} of the {in_stock|word} listed products, including its pre-rolls and Hashables hash rosin gummies, with Ayrloom, Alter Rainbow and Rec Roots making up the rest. The entry price is {min_price}, for Hashtag Honey pre-rolls such as Maui Wowie and Unicorn Piss. Because the online menu was so small at last check, it is worth checking the store's own menu or calling before a trip for a specific product. High Tidez on Surf Avenue and Grow Together on Coney Island Avenue carry much larger menus nearby."
+      "The brands with the most listings are {top_brands}, and the menu includes Hashtag Honey pre-rolls and Hashables hash rosin gummies. The entry price is {min_price}, for Hashtag Honey pre-rolls such as Maui Wowie and Unicorn Piss. Because the online menu was so small at last check, it is worth checking the store's own menu or calling before a trip for a specific product. High Tidez on Surf Avenue and Grow Together on Coney Island Avenue carry much larger menus nearby."
     ],
     "know": [
       "Just {in_stock|word} products from {brands|word} brands at our last pull, one of the smallest licensed menus we track.",
-      "Hashtag Honey makes up most of the menu, at {brand.Hashtag Honey|word} products.",
+      "{top_brand} is the biggest brand, at {top_brand_n} products.",
       "Entry price is {min_price} before tax, for Hashtag Honey pre-rolls.",
       "High Tidez and Grow Together, also in the Coney Island area, carry much larger menus."
     ],
@@ -277,7 +277,7 @@
       },
       {
         "q": "What does Coney Island Cannabis carry?",
-        "a": "Mostly Hashtag Honey: flower, pre-rolls and Hashables hash rosin gummies, plus a few products from Ayrloom, Alter Rainbow and Rec Roots. The cheapest listing was a Hashtag Honey pre-roll at {min_price}, before New York's cannabis tax."
+        "a": "{top_brand} has the most listings, and the menu includes Hashtag Honey flower, pre-rolls and Hashables hash rosin gummies. The cheapest listing was a Hashtag Honey pre-roll at {min_price}, before New York's cannabis tax."
       },
       {
         "q": "What other dispensaries are near Coney Island Cannabis?",

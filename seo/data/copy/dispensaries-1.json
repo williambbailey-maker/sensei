@@ -2,7 +2,7 @@
   "qube-manhattan": {
     "intro": [
       "Qube sits at 1412 Broadway, at the corner of 39th Street where the Garment District meets the Times Square crowds, and it carries the biggest menu of any licensed dispensary we track in New York City: about {in_stock|about} products from {brands} brands at last count. That breadth is the whole point of the place. Vapes (around {cat.vaporizers|about} listings) and pre-rolls (another {cat.pre-rolls|about}) make up the bulk of the shelf, backed by roughly {cat.flower|about} flower options, {cat.edibles|about} edibles and a {cat.concentrates}-item concentrate case that is deeper than most Manhattan shops bother with.",
-      "Because the selection is so wide, Qube is the shop to use when you already know the brand you want and need to find it in Midtown. Jeeter, STIIIZY, Botanist, Boukét, MFNY and Jaunty all have dozens of SKUs here, so you can compare sizes and strains of the same line side by side instead of settling for whatever a smaller shop has in stock. The entry price is low too: the menu starts at {min_price}, and the cheapest items are single-serve edibles and tablets from 1906 and LEVEL, with Cycling Frog seltzers close behind."
+      "Because the selection is so wide, Qube is the shop to use when you already know the brand you want and need to find it in Midtown. The brands with the most products here are {top_brands}, followed by {more_brands}, so you can compare sizes and strains of the same line side by side instead of settling for whatever a smaller shop has in stock. The entry price is low too: the menu starts at {min_price}, and the cheapest items are single-serve edibles and tablets from 1906 and LEVEL, with Cycling Frog seltzers close behind."
     ],
     "know": [
       "Largest menu in our NYC data: {in_stock} in-stock products and {brands} brands, far ahead of the next-biggest Midtown shop.",
@@ -28,10 +28,10 @@
   "twenty8gramz": {
     "intro": [
       "Twenty8gramz is on Avenue U in Sheepshead Bay, a stretch of southern Brooklyn that has quietly become one of the city's densest dispensary clusters. It is one of the {hood_shops|word} licensed shops we track in the neighborhood, with about {in_stock|about} products from {brands} brands, and its shelf leans hard toward vapes: roughly {cat.vaporizers|about} vape listings, by far its largest category, followed by {cat.flower} flower options and {cat.pre-rolls|about} pre-rolls.",
-      "If you vape, this is the Sheepshead Bay shop to start with. STIIIZY alone has {brand.STIIIZY} listings here, and Claybourne Co., Ayrloom, Off Hours, Cannabals and Boutiq round out a vape and edible selection that is unusually deep for a shop outside Manhattan. Flower shoppers get a solid {cat.flower} options but should also look at Quality Control NY a few blocks away on Coney Island Avenue. The cheapest items on the menu are infused drinks from High Peaks and Ayrloom."
+      "If you vape, this is the Sheepshead Bay shop to start with. The biggest brands on the menu are {top_brands}, with {more_brands} behind them, and the vape and edible selection is unusually deep for a shop outside Manhattan. Flower shoppers get a solid {cat.flower} options but should also look at Quality Control NY a few blocks away on Coney Island Avenue. The cheapest items on the menu are infused drinks from High Peaks and Ayrloom."
     ],
     "know": [
-      "Vape-first: about {cat.vaporizers|about} vape listings, the largest slice of the whole menu, with STIIIZY and Claybourne Co. the deepest lines.",
+      "Vape-first: about {cat.vaporizers|about} vape listings, the largest slice of the whole menu, with {top_brand} the biggest brand at {top_brand_n} listings.",
       "One of {hood_shops|word} licensed shops in Sheepshead Bay; together they make one of the largest combined menus in Brooklyn.",
       "Concentrates run to about {cat.concentrates|about} items, a bigger case than most Brooklyn shops carry.",
       "Lowest prices are 10 mg infused beverages; flower and vape prices sit in the normal NYC range."
@@ -54,18 +54,18 @@
   "brooklyn-bourne": {
     "intro": [
       "Brooklyn Bourne Dispensary is on Church Avenue in Flatbush, and it is one of the few large licensed shops in central Brooklyn where flower is the biggest category rather than vapes. Of its roughly {in_stock|about} products, about {cat.flower|about} are flower, with {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes and {cat.edibles} edibles behind it. That makes it the natural first stop for anyone in Flatbush, Prospect Lefferts Gardens or Ditmas Park who buys by the eighth.",
-      "The brand mix reflects that focus. Beyond STIIIZY, the shop goes deep on New York flower and pre-roll growers: Revert Cannabis, Zips and Hepworth each have dozens of listings, alongside Grön edibles and RYTHM. With {brands} brands total it is also broad enough to cover edibles and vapes without a second trip. The cheapest items are 10 mg infused beverages from LayUp and Ayrloom, and the menu runs up through full ounces."
+      "By product count the biggest brands are {top_brands}, then {more_brands}. With {brands} brands total it is also broad enough to cover edibles and vapes without a second trip. The cheapest items are 10 mg infused beverages from LayUp and Ayrloom, and the menu runs up through full ounces."
     ],
     "know": [
       "Flower-first shelf: about {cat.flower|about} flower listings, the largest flower section of any shop we track in Flatbush or Sheepshead Bay.",
       "Roughly {in_stock|about} products and {brands} brands, one of the largest menus in Brooklyn in our data.",
-      "Strong on New York growers: Revert Cannabis, Zips and Hepworth are all stocked in depth.",
+      "Biggest brand on the menu: {top_brand}, with {top_brand_n} products.",
       "Entry prices start at {min_price} for infused drinks; concentrates (about {cat.concentrates|about} items) are a smaller section here."
     ],
     "faq": [
       {
         "q": "Is Brooklyn Bourne a good place to buy flower?",
-        "a": "Yes. With about {cat.flower|about} flower products it has the largest flower selection of any licensed shop we track in Flatbush or the surrounding neighborhoods, and it carries several New York cultivators in depth, including Revert, Zips and Hepworth."
+        "a": "Yes. With about {cat.flower|about} flower products it has the largest flower selection of any licensed shop we track in Flatbush or the surrounding neighborhoods."
       },
       {
         "q": "What is the closest licensed alternative to Brooklyn Bourne?",
@@ -80,7 +80,7 @@
   "stash-master": {
     "intro": [
       "Stash Master is on Broadway in Bushwick, under the elevated J, M and Z line, and it is the largest of the {hood_shops|word} licensed dispensaries we track in the neighborhood by a wide margin: about {in_stock|about} products from {brands} brands, well ahead of RNR Dispensary near Morgan Avenue. The menu is unusually even, with pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) out front, followed by {cat.vaporizers} vapes and {cat.edibles} edibles, so it does not force you toward one format.",
-      "The brand list reads like a cross-section of the New York market: Heavy Hitters and Hashtag Honey for vapes and pre-rolls, Ayrloom for drinks and gummies, Jaunty for all-in-one vapes, MFNY for live resin, and Dank By Definition for flower, each stocked in depth. It also keeps a {cat.concentrates}-item concentrate case. The entry price is among the lowest in Brooklyn: the menu starts at {min_price}, and the cheapest items are Ayrloom 1:1 drinks and Jaunty two-pack gummies."
+      "{top_brands} are the biggest brands on the menu, and {more_brands} come next. It also keeps a {cat.concentrates}-item concentrate case. The entry price is among the lowest in Brooklyn: the menu starts at {min_price}, and the cheapest items are Ayrloom 1:1 drinks and Jaunty two-pack gummies."
     ],
     "know": [
       "The largest menu in Bushwick: about {in_stock|about} products and {brands} brands, far ahead of RNR Dispensary nearby.",
@@ -95,7 +95,7 @@
       },
       {
         "q": "What brands does Stash Master carry the most of?",
-        "a": "Heavy Hitters, Hashtag Honey, Ayrloom and Jaunty each have dozens of listings, alongside MFNY and Dank By Definition. Between them they cover vapes, pre-rolls, edibles, drinks and flower, which is why the shop works for most shopping lists."
+        "a": "By product count the biggest are {top_brands}, out of {brands} brands on the menu."
       },
       {
         "q": "How do I get there?",
@@ -105,12 +105,12 @@
   },
   "twenty-one-thirty": {
     "intro": [
-      "The Flowery's Upper West Side store is at 2465 Broadway, near 91st Street, and it is the largest licensed dispensary we track on the Upper West Side with about {in_stock|about} products from {brands} brands. The Flowery runs several Manhattan and Brooklyn locations, and this is one of its biggest, with vapes ({cat.vaporizers}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) all well represented and about {cat.edibles|about} edibles alongside them.",
-      "What stands out is how much of the shelf is New York-grown. Jaunty, Ayrloom, Florist Farms and Ruby Farms are among the deepest brands here, with dozens of listings between them, which gives the store a distinctly local flavor compared with vape-heavy Midtown menus. STIIIZY and RYTHM are stocked for people who want national names. The cheapest items are Ayrloom 2:1 THC:CBD drinks at {min_price}, and the full menu runs from single pre-rolls up through ounces."
+      "The Flowery's Upper West Side store is at 2465 Broadway, near 91st Street, and it is the largest licensed dispensary we track on the Upper West Side with about {in_stock|about} products from {brands} brands. The Flowery runs several Manhattan and Brooklyn locations, and this is one of its biggest, with vapes ({cat.vaporizers}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) all well represented and about {cat.edibles|about} edibles alongside them. By menu size it ranks {city_rank} among the {city.shops} licensed shops Sensei tracks across the city.",
+      "The brands with the most listings here are {top_brands}, followed by {more_brands}. The cheapest items are Ayrloom 2:1 THC:CBD drinks at {min_price}, and the full menu runs from single pre-rolls up through ounces."
     ],
     "know": [
       "Biggest menu on the Upper West Side: about {in_stock|about} products, ahead of Superfly on 86th Street.",
-      "Local-leaning brand list: Ruby Farms ({brand.Ruby Farms} listings), Ayrloom ({brand.ayrloom}) and Florist Farms ({brand.Florist Farms}) lead, alongside Jaunty.",
+      "{top_brand} leads the brand list with {top_brand_n} listings.",
       "Balanced across vapes, pre-rolls and flower, with nearly {cat.flower|about} flower options.",
       "The Flowery also has stores in the East Village, West Village, SoHo and Williamsburg; this is one of the largest."
     ],
@@ -121,7 +121,7 @@
       },
       {
         "q": "Does The Flowery Upper West Side carry New York-grown flower?",
-        "a": "Yes, that is one of its strengths. Florist Farms and Ruby Farms, both New York cultivators, are among its deepest brands, and Dank By Definition and other local growers appear across its roughly {cat.flower|about} flower listings."
+        "a": "Yes. Dank By Definition and other local growers appear across its roughly {cat.flower|about} flower listings; check the live menu for what is in stock today."
       },
       {
         "q": "Is there another licensed dispensary nearby?",
@@ -132,18 +132,18 @@
   "case-management": {
     "intro": [
       "Quality Control NY is on Coney Island Avenue in Sheepshead Bay, one of the neighborhood's {hood_shops|word} licensed dispensaries, with about {in_stock|about} products from {brands} brands. Like its neighbor Twenty8gramz it is vape-led, with about {cat.vaporizers|about} vape listings, but it keeps a strong pre-roll section ({cat.pre-rolls}) and a meaningful {cat.concentrates}-item concentrate case, with edibles ({cat.edibles}) and flower ({cat.flower}) filling out the shelf.",
-      "The vape wall is where the shop earns its name: STIIIZY has {brand.STIIIZY} listings here, more than almost any other shop in our data, backed by Heavy Hitters, MFNY live resin, Grön edibles and Doobie Labs. Ayrloom supplies the drinks, which are also the cheapest items on the menu at {min_price} for a 10 mg can, alongside LayUp beverages at the same price. For flower, the selection is adequate rather than deep; Twenty8gramz on Avenue U is worth comparing."
+      "The biggest brands on the menu are {top_brands}, followed by {more_brands}. Ayrloom supplies the drinks, which are also the cheapest items on the menu at {min_price} for a 10 mg can, alongside LayUp beverages at the same price. For flower, the selection is adequate rather than deep; Twenty8gramz on Avenue U is worth comparing."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands; one of the biggest menus in Sheepshead Bay.",
-      "Vape-led, with STIIIZY ({brand.STIIIZY} listings) the single deepest brand, plus Heavy Hitters and MFNY.",
+      "Vape-led, with {top_brand} ({top_brand_n} listings) the single deepest brand.",
       "A {cat.concentrates}-item concentrate case is larger than most Brooklyn shops keep.",
       "Cheapest items are 10 mg drinks from Ayrloom and LayUp at {min_price}."
     ],
     "faq": [
       {
         "q": "Is Quality Control NY better for vapes or flower?",
-        "a": "Vapes. Roughly {cat.vaporizers|about} of its {in_stock|about} products are vapes, and it has one of the deepest STIIIZY selections in the city. Flower is covered at about {cat.flower|about} listings; for more flower choice, Twenty8gramz on Avenue U is the nearby alternative."
+        "a": "Vapes. Roughly {cat.vaporizers|about} of its {in_stock|about} products are vapes. Flower is covered at about {cat.flower|about} listings; for more flower choice, Twenty8gramz on Avenue U is the nearby alternative."
       },
       {
         "q": "What is the cheapest item at Quality Control NY?",
@@ -157,19 +157,19 @@
   },
   "sweet-life-nyc": {
     "intro": [
-      "Sweetlife is at 1662 First Avenue on the Upper East Side, near 86th Street, and with about {in_stock|about} products from {brands} brands it is the largest of the {hood_shops|word} licensed dispensaries we track in the neighborhood. Pre-rolls are its biggest category at around {cat.pre-rolls|about} listings, with vapes close behind at {cat.vaporizers}, then {cat.edibles} edibles and {cat.flower} flower options, plus a {cat.concentrates}-item concentrate shelf.",
-      "The brand depth is unusual for the Upper East Side. EUREKA, a vape maker, has {brand.EUREKA} listings here, the most of any brand at the shop, and Rove adds another {brand.Rove}, so between them Sweetlife has one of the strongest vape walls east of Central Park. Jeeter and STIIIZY cover pre-rolls and all-in-ones, Ruby Farms supplies New York-grown pre-rolls, and Smokiez handles gummies. The cheapest items are Ayrloom drinks at {min_price}."
+      "Sweetlife is at 1662 First Avenue on the Upper East Side, near 86th Street, and with about {in_stock|about} products from {brands} brands it is the largest of the {hood_shops|word} licensed dispensaries we track in the neighborhood. Pre-rolls are its biggest category at around {cat.pre-rolls|about} listings, with vapes close behind at {cat.vaporizers}, then {cat.edibles} edibles and {cat.flower} flower options, plus a {cat.concentrates}-item concentrate shelf. By menu size it ranks {city_rank} among the {city.shops} licensed shops Sensei tracks across the city. Prices on Sensei are menu prices before New York's cannabis tax.",
+      "The brands with the most products at the shop are {top_brands}, and {more_brands} come after them. The cheapest items are Ayrloom drinks at {min_price}."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands, the biggest menu on the Upper East Side.",
-      "EUREKA ({brand.EUREKA} listings) and Rove ({brand.Rove}) make this one of the deepest vape selections in Manhattan.",
-      "Pre-rolls lead the shelf at about {cat.pre-rolls|about}, with Jeeter and Ruby Farms the main lines.",
+      "{top_brand} is the biggest brand on the menu, with {top_brand_n} listings.",
+      "Pre-rolls lead the shelf at about {cat.pre-rolls|about}.",
       "The Emerald Dispensary and The Herbal Care, both on Lexington Avenue, are the other licensed UES options, each with a smaller menu."
     ],
     "faq": [
       {
         "q": "What is Sweetlife known for?",
-        "a": "Depth in vapes. EUREKA and Rove have {brand.EUREKA} and {brand.Rove} listings respectively, which is unusual for a single shop, and Jeeter and STIIIZY add more. It is the Upper East Side shop to visit if you want to compare vape brands side by side."
+        "a": "Its biggest brands at last count are {top_brands}, and the live menu shows what each has in stock today."
       },
       {
         "q": "How does it compare to The Emerald Dispensary?",
@@ -184,12 +184,12 @@
   "terp-bros-astoria": {
     "intro": [
       "Terp Bros is on Ditmars Boulevard in Astoria, near the end of the N and W line, and it is the largest licensed dispensary we track in Queens' most dispensary-dense neighborhood, with about {in_stock|about} products from {brands} brands. The menu is evenly split: roughly {cat.vaporizers|about} vapes, {cat.pre-rolls|about} pre-rolls, {cat.flower|about} flower options and {cat.edibles|about} edibles, with a small concentrate shelf and a handful of tinctures and topicals.",
-      "That balance makes it the easiest Astoria shop to use for a mixed basket. Ayrloom drinks and gummies, MFNY live resin, STIIIZY vapes, Jetty Extracts cartridges, Dank By Definition flower and Jaunty all-in-ones are each stocked in depth. It also has one of the lowest entry prices in the borough: Ayrloom Honeycrisp cider at {min_price}, with TUNE seltzers close behind. Cannavita on Steinway Street, a few minutes away, is the other big Astoria option."
+      "That balance makes it the easiest Astoria shop to use for a mixed basket. The biggest brands by product count are {top_brands}, with {more_brands} behind them. It also has one of the lowest entry prices in the borough: Ayrloom Honeycrisp cider at {min_price}, with TUNE seltzers close behind. Cannavita on Steinway Street, a few minutes away, is the other big Astoria option."
     ],
     "know": [
       "Largest menu in Astoria: about {in_stock|about} products and {brands} brands, with Cannavita close behind.",
       "Evenly split across vapes, pre-rolls and flower at roughly {cat.vaporizers|about}, {cat.pre-rolls|about} and {cat.flower|about}.",
-      "Jetty Extracts and MFNY give it a solid live resin and cartridge selection.",
+      "{top_brand} is the biggest single brand, with {top_brand_n} products.",
       "Among the cheapest starting prices in Queens: infused drinks from {min_price}."
     ],
     "faq": [
@@ -199,7 +199,7 @@
       },
       {
         "q": "Does Terp Bros carry live resin?",
-        "a": "Yes. MFNY, which specializes in live resin vapes, tinctures and concentrates, has {brand.MFNY} listings here, and Jetty Extracts adds a cartridge line. The concentrate shelf itself is small at around {cat.concentrates|about} items."
+        "a": "Yes. MFNY, which specializes in live resin vapes, tinctures and concentrates, is stocked here, and Jetty Extracts adds a cartridge line. Check the live menu for what is in stock today. The concentrate shelf itself is small at around {cat.concentrates|about} items."
       },
       {
         "q": "What is the nearest subway?",
@@ -210,18 +210,18 @@
   "afny": {
     "intro": [
       "Superfly Dispensary is at 57 West 86th Street, just off Central Park West on the Upper West Side, with about {in_stock|about} products from {brands} brands. It is a pre-roll shop first: nearly {cat.pre-rolls|about} of its listings are pre-rolls, well ahead of edibles ({cat.edibles}), flower ({cat.flower}) and vapes ({cat.vaporizers}). If you want a joint rather than a cartridge, this is a strong Upper West Side pick for it.",
-      "Zips, a New York brand known for value pre-rolls and flower, is one of the deepest lines here with {brand.Zips} listings, alongside Cannabals, Dank By Definition, Ayrloom, MFNY and Heavy Hitters. The cheapest items are LEVEL tablets at {min_price}, with MFNY live resin gummies and Ayrloom drinks close behind. For a bigger vape wall, The Flowery on Broadway at 91st Street carries more vape listings than Superfly's {cat.vaporizers}."
+      "The biggest brands on the menu are {top_brands}, followed by {more_brands}. The cheapest items are LEVEL tablets at {min_price}, with MFNY live resin gummies and Ayrloom drinks close behind. For a bigger vape wall, The Flowery on Broadway at 91st Street carries more vape listings than Superfly's {cat.vaporizers}."
     ],
     "know": [
       "Pre-roll first: about {cat.pre-rolls|about} of {in_stock|about} products are pre-rolls, the shop's biggest section by far.",
-      "Zips ({brand.Zips} listings) is one of the main lines, alongside Cannabals, Dank By Definition and Ayrloom.",
+      "{top_brand} ({top_brand_n} listings) is the biggest line on the menu.",
       "Vapes are a smaller section here ({cat.vaporizers}); The Flowery nearby is the better vape stop.",
       "Entry prices from {min_price} for 10 mg tablets, with three-packs of live resin gummies close behind."
     ],
     "faq": [
       {
         "q": "Is Superfly good for pre-rolls?",
-        "a": "It is one of the best pre-roll stops on the Upper West Side in our data, with nearly {cat.pre-rolls|about} pre-roll listings. Zips and Dank By Definition provide the depth, and Cannabals and MFNY add infused options."
+        "a": "It is one of the best pre-roll stops on the Upper West Side in our data, with nearly {cat.pre-rolls|about} pre-roll listings."
       },
       {
         "q": "Superfly or The Flowery — which should I pick?",
@@ -236,18 +236,18 @@
   "grow-together-brooklyn": {
     "intro": [
       "Grow Together is on Coney Island Avenue in southern Brooklyn, one of {hood_shops|word} licensed dispensaries we track in the Coney Island area, with about {in_stock|about} products from {brands} brands. Vapes ({cat.vaporizers}), flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}) are close to a three-way tie, which gives the menu a balance that is rare for a shop this size. Edibles are a smaller section at {cat.edibles}, and it carries only a handful of concentrates with no tinctures or topicals listed.",
-      "STIIIZY and Rove dominate the vape wall, with {brand.STIIIZY} and {brand.Rove} listings respectively, making this one of the deepest STIIIZY and Rove selections in Brooklyn. Ruby Farms pre-rolls, Revert and Hashtag Honey flower, and MFNY round it out. The cheapest items are 1906's pill packs at {min_price}, with Weed Water sparkling cans close behind. High Tidez on Surf Avenue, closer to the boardwalk, is the other licensed shop in the area, with a stronger pre-roll focus."
+      "{top_brands} have the most listings here, followed by {more_brands}. The cheapest items are 1906's pill packs at {min_price}, with Weed Water sparkling cans close behind. High Tidez on Surf Avenue, closer to the boardwalk, is the other licensed shop in the area, with a stronger pre-roll focus."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands, evenly spread across vapes, flower and pre-rolls (roughly {cat.vaporizers|about}, {cat.flower|about} and {cat.pre-rolls|about}).",
-      "STIIIZY ({brand.STIIIZY}) and Rove ({brand.Rove}) make up a large share of the vape selection.",
+      "The biggest brand is {top_brand}, with {top_brand_n} listings.",
       "No tinctures or topicals listed, and only about {cat.concentrates|about} concentrates; this is a flower, pre-roll and vape shop.",
       "High Tidez on Surf Avenue is the nearby alternative, with more pre-rolls and edibles."
     ],
     "faq": [
       {
         "q": "What is Grow Together strongest in?",
-        "a": "Vapes, specifically STIIIZY and Rove, with {brand.STIIIZY} and {brand.Rove} listings respectively. Flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}) are both deep too, so it is a good general-purpose shop for inhalable products."
+        "a": "Vapes. Flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}) are both deep too, so it is a good general-purpose shop for inhalable products."
       },
       {
         "q": "Does it carry tinctures or topicals?",
@@ -261,19 +261,19 @@
   },
   "ny-canna-co-5th-ave": {
     "intro": [
-      "NY Canna Co is at 381 Fifth Avenue, a few blocks south of the Empire State Building in Midtown, with about {in_stock|about} products from {brands} brands. It is one of the larger licensed dispensaries we track in Midtown behind Qube, and its shelf is split almost evenly between vapes ({cat.vaporizers}) and pre-rolls ({cat.pre-rolls}), with {cat.edibles} edibles and {cat.flower} flower options behind them and a modest {cat.concentrates}-item concentrate case.",
-      "Ayrloom is a headline brand here, with {brand.ayrloom} listings covering its drinks, gummies, vapes and tinctures, so it is a good place to see that New York label's full range. Rove and Cannabals carry the vape wall, PUFF Pre-Rolls and Brass Knuckles add pre-roll and cartridge options, and Flav supplies edibles. The cheapest items are Ayrloom 1:1 drinks at {min_price} and LEVEL tablet two-packs. If you need a wider flower choice, Qube at 39th and Broadway carries far more."
+      "NY Canna Co is at 381 Fifth Avenue, a few blocks south of the Empire State Building in Midtown, with about {in_stock|about} products from {brands} brands. It is one of the larger licensed dispensaries we track in Midtown behind Qube, and its shelf is split almost evenly between vapes ({cat.vaporizers}) and pre-rolls ({cat.pre-rolls}), with {cat.edibles} edibles and {cat.flower} flower options behind them and a modest {cat.concentrates}-item concentrate case. By menu size it ranks {city_rank} among the {city.shops} licensed shops Sensei tracks across the city.",
+      "The biggest brands here are {top_brands}, then {more_brands}. The cheapest items are Ayrloom 1:1 drinks at {min_price} and LEVEL tablet two-packs. If you need a wider flower choice, Qube at 39th and Broadway carries far more."
     ],
     "know": [
       "One of Midtown's larger menus: about {in_stock|about} products and {brands} brands, behind Qube.",
-      "Ayrloom's full range is here, with {brand.ayrloom} listings, one of the deepest Ayrloom selections in Midtown.",
+      "{top_brand} is the biggest brand on the menu, with {top_brand_n} listings.",
       "Vapes and pre-rolls are the core of the shelf at about {cat.vaporizers|about} and {cat.pre-rolls|about}; flower is lighter at {cat.flower}.",
       "A few blocks from Herald Square and the Empire State Building, near the 34th Street stations."
     ],
     "faq": [
       {
         "q": "What makes NY Canna Co different from Qube?",
-        "a": "Qube is far bigger overall, but NY Canna Co has a more curated feel and one of the deepest Ayrloom selections in the area, with {brand.ayrloom} Ayrloom listings. If you want Ayrloom drinks, gummies or tinctures specifically, this is the Midtown stop."
+        "a": "Qube is far bigger overall, but NY Canna Co has a more curated feel. Its biggest brands are {top_brands}."
       },
       {
         "q": "Is flower a strength here?",
@@ -288,12 +288,12 @@
   "highest-standards-fidi": {
     "intro": [
       "Highest Standards is at 2 Coenties Slip in the Financial District, a short walk from the Seaport and Stone Street, and it is the second-largest of the {hood_shops|word} licensed dispensaries we track in FiDi, after Dankley, with about {in_stock|about} products from {brands} brands. Pre-rolls, edibles and vapes share the top of the menu at around {cat.pre-rolls|about}, {cat.edibles|about} and {cat.vaporizers|about} listings, with about {cat.flower|about} flower options plus a small concentrate shelf.",
-      "Jaunty is one of the deepest brands here with {brand.Jaunty} listings, mostly all-in-one vapes and gummies, and Ayrloom, Claybourne Co., STIIIZY and Select fill out the vape and edible sections. Harney Brothers, a New York maker of infused seltzers and coffee drinks, has {brand.Harney Brother's} listings, one of its strongest showings anywhere. The entry price is {min_price} for 1906 capsule pouches in Sleep, Boost and Bliss formulas. Green Klub on South Street is the other FiDi option, smaller and edible-leaning."
+      "The brands with the most listings are {top_brands}, followed by {more_brands}. The entry price is {min_price} for 1906 capsule pouches in Sleep, Boost and Bliss formulas. Green Klub on South Street is the other FiDi option, smaller and edible-leaning."
     ],
     "know": [
       "Second-largest FiDi menu after Dankley: about {in_stock|about} products and {brands} brands; Green Klub on South Street has far fewer.",
       "Pre-rolls ({cat.pre-rolls}), edibles ({cat.edibles}) and vapes ({cat.vaporizers}) make up most of the menu.",
-      "Harney Brothers drinks ({brand.Harney Brother's} listings) and 1906 capsule pouches from {min_price} make it a strong stop for low-dose products.",
+      "Harney Brothers drinks and 1906 capsule pouches from {min_price} make it a strong stop for low-dose products.",
       "Steps from the Seaport, Stone Street and the Wall Street and South Ferry stations."
     ],
     "faq": [

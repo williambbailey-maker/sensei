@@ -190,7 +190,7 @@
       "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
       "{cat.edibles} gummies and {cat.pre-rolls} pre-rolls; Apple A Day 20-packs are the signature product.",
       "Prices start at {min_price}; the average listing is about {avg_price} before tax.",
-      "Deep runs: ENFLOR ({shop.enflor}), Highest Standards, Happy Buds ({shop.happy-buds-brooklyn-dispensary}) and CONBUD."
+      "Deepest runs: {top_shops}."
     ],
     "faq": [
       {
@@ -314,7 +314,7 @@
   "florist-farms": {
     "intro": [
       "Florist Farms is a New York grower from Cortland, carried at {shops} of the {city.shops} licensed dispensaries we track with about {in_stock|about} products. It is one of the broadest home-grown lines: {cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower listings, with the pre-rolls including live resin infused singles and five-packs. It is one of the most stocked pre-roll brands in the city.",
-      "Prices start at {min_price}, with infused pre-roll singles, five-packs and eighths of flower each a step up before tax. The brand's depth is concentrated at a few shops: Grams in Williamsburg lists {shop.gram-cannabis-dispensary} products, the most anywhere, ENFLOR in Jackson Heights {shop.enflor} and The Flowery Upper West Side {shop.twenty-one-thirty}, and Stoops in Chelsea, Urban Leaf in Midtown and The Flowery West Village also carry it. ENFLOR, Stoops and Urban Leaf list low entry prices for the brand, with ENFLOR from {shop_min.enflor}."
+      "Prices start at {min_price}, with infused pre-roll singles, five-packs and eighths of flower each a step up before tax. The brand's depth is concentrated at a few shops: {top_shops} list the most. The lowest entry price for the brand is at {low_shop}, from {low_shop_min}."
     ],
     "know": [
       "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
@@ -346,7 +346,7 @@
       "Carried at {shops} of {city.shops} licensed shops; about {in_stock|about} products.",
       "{cat.edibles} edibles and {cat.vaporizers} vapes, both built on liquid diamond extract; {cat.pre-rolls} pre-rolls.",
       "Prices start at {min_price} for gummies; two-gram disposables sit at the top of the range.",
-      "Deep runs: NY Canna Co ({shop.ny-canna-co-5th-ave}), Superfly ({shop.afny}), Twenty8gramz, Quality Control ({shop.case-management})."
+      "Deepest runs: {top_shops}."
     ],
     "faq": [
       {

@@ -2,12 +2,12 @@
   "green-jungle": {
     "intro": [
       "Cannavita is on Steinway Street in Astoria, the neighborhood's main shopping strip, and with about {in_stock|about} products from {brands} brands it is the second-largest licensed dispensary we track in Queens' busiest cannabis neighborhood. Pre-rolls ({cat.pre-rolls}), flower ({cat.flower}), vapes ({cat.vaporizers}) and edibles ({cat.edibles}) are all well stocked, with a {cat.concentrates}-item concentrate shelf that is respectable for a shop this size.",
-      "Rove ({brand.Rove}) leads the shelf, and Dank By Definition ({brand.Dank By Definition.}) gives the flower and pre-roll sections real weight, with Ayrloom, Grön, Fernway and Grassroots rounding things out. The entry price is among the lowest in the borough: 1906 Boost drops at {min_price}, with LEVEL Energy tablets and High Peaks drinks close behind. Terp Bros on Ditmars Boulevard is the other big Astoria shop, slightly larger and more vape-leaning."
+      "The biggest brands on the shelf are {top_brands}, with {more_brands} rounding things out. The entry price is among the lowest in the borough: 1906 Boost drops at {min_price}, with LEVEL Energy tablets and High Peaks drinks close behind. Terp Bros on Ditmars Boulevard is the other big Astoria shop, slightly larger and more vape-leaning."
     ],
     "know": [
       "About {in_stock|about} products and {brands} brands; Astoria's second-largest menu after Terp Bros.",
-      "Pre-rolls and flower are deep ({cat.pre-rolls} and {cat.flower}), with Dank By Definition and Zips OG the main growers.",
-      "Rove and Dank By Definition are the biggest brands here, at {brand.Rove} and {brand.Dank By Definition.} products.",
+      "Pre-rolls and flower are deep ({cat.pre-rolls} and {cat.flower}).",
+      "{top_brand} is the biggest brand here, with {top_brand_n} products.",
       "Among the lowest entry prices in Astoria: micro-dose edibles from {min_price}, with drinks close behind."
     ],
     "faq": [
@@ -28,7 +28,7 @@
   "cbj-retail": {
     "intro": [
       "High Tidez is at 1029 Surf Avenue in Coney Island, a few blocks from the boardwalk, with about {in_stock|about} products from {brands} brands. It is a pre-roll shop at heart: about {cat.pre-rolls|about} of its listings are pre-rolls, well ahead of edibles ({cat.edibles}), flower ({cat.flower}) and vapes ({cat.vaporizers}). That makes it the better Coney Island option for joints, while Grow Together on Coney Island Avenue is the stronger vape stop.",
-      "The brand list is more varied than most shops its size. Honey King leads with {brand.Honey King} listings, followed by STIIIZY, PICC, MFNY, Jaunty and Back Home Cannabis Co., a New York grower. With {brands} brands overall it carries more labels than several larger Brooklyn shops. The cheapest items are MFNY live resin gummies at {min_price}, with LayUp drinks and High Peaks sparkling lemonade close behind."
+      "The brand list is more varied than most shops its size. {top_brands} are the largest lines, and {more_brands} come next. With {brands} brands overall it carries more labels than several larger Brooklyn shops. The cheapest items are MFNY live resin gummies at {min_price}, with LayUp drinks and High Peaks sparkling lemonade close behind."
     ],
     "know": [
       "Pre-roll led: about {cat.pre-rolls|about} of {in_stock|about} products are pre-rolls, far ahead of any other category.",
@@ -54,11 +54,11 @@
   "sunset-cannabis-club": {
     "intro": [
       "Sunset Cannabis Co is on 55th Street in Sunset Park, the only licensed dispensary we track in the neighborhood, with about {in_stock|about} products from {brands} brands. Pre-rolls are the largest section at about {cat.pre-rolls|about} listings, with flower ({cat.flower}) and vapes ({cat.vaporizers}) close together and {cat.edibles} edibles behind them. For a mid-sized shop it keeps a reasonable {cat.concentrates}-item concentrate case.",
-      "Hashtag Honey, a New York brand known for infused pre-rolls and flower, is one of the deepest lines here at {brand.Hashtag Honey} listings, alongside Ayrloom, Ruby Farms, STIIIZY, Runtz and Revert. The menu's lowest-priced listing is a STIIIZY battery, an accessory rather than a product; the real entry price for cannabis is Ayrloom 2:1 drinks. Because there is no other licensed shop in Sunset Park, the nearest comparison points are Park Slope to the north and the Coney Island shops to the south."
+      "The deepest lines here are {top_brands}, with {more_brands} behind them. The menu's lowest-priced listing is a STIIIZY battery, an accessory rather than a product; the real entry price for cannabis is Ayrloom 2:1 drinks. Because there is no other licensed shop in Sunset Park, the nearest comparison points are Park Slope to the north and the Coney Island shops to the south."
     ],
     "know": [
       "The only licensed dispensary we list in Sunset Park, with about {in_stock|about} products and {brands} brands.",
-      "Pre-rolls lead at about {cat.pre-rolls|about}, with Hashtag Honey ({brand.Hashtag Honey} listings) the standout brand.",
+      "Pre-rolls lead at about {cat.pre-rolls|about}; the biggest brand is {top_brand}, with {top_brand_n} listings.",
       "Flower and vapes are evenly matched at roughly {cat.flower|about} and {cat.vaporizers|about}.",
       "The lowest-priced listing is a vape battery; actual cannabis products start higher."
     ],
@@ -69,7 +69,7 @@
       },
       {
         "q": "What does Hashtag Honey make?",
-        "a": "Hashtag Honey is a New York brand focused on infused pre-rolls and flower. With {brand.Hashtag Honey} listings it is one of the deepest lines at Sunset Cannabis Co, so this is a good place to see most of its range."
+        "a": "Hashtag Honey is a New York brand focused on infused pre-rolls and flower. Check the live menu for what Sunset Cannabis Co has in stock today."
       },
       {
         "q": "Why is the cheapest item so cheap?",
@@ -80,12 +80,12 @@
   "stoop": {
     "intro": [
       "Stoops NYC is at 182 Fifth Avenue in the Flatiron District, a block from Madison Square Park, and it is the second-largest of the {hood_shops|word} licensed dispensaries we track across Chelsea and Flatiron, after Chelsea Cannabis Co., with about {in_stock|about} products from {brands} brands. Pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) are the two big sections, with {cat.edibles} edibles and a smaller {cat.flower}-item flower selection, plus {cat.concentrates} concentrates.",
-      "Jaunty and Florist Farms are stocked in depth here, covering all-in-one vapes and New York-grown pre-rolls respectively, and Select, Cannabals, Bonanza Cannabis and PAX fill in the vape and pod options. Stoops also has one of the lowest entry prices in Manhattan: Ayrloom 1:1 drinks at {min_price}, with Jaunty hash-infused gummy two-packs close behind. For flower, The Alchemy on 8th Avenue and Gotham on 10th Avenue are the nearby alternatives, though none of the Chelsea shops goes especially deep on it."
+      "{top_brands} are stocked in depth here, and {more_brands} are the next largest lines. Stoops also has one of the lowest entry prices in Manhattan: Ayrloom 1:1 drinks at {min_price}, with Jaunty hash-infused gummy two-packs close behind. For flower, The Alchemy on 8th Avenue and Gotham on 10th Avenue are the nearby alternatives, though none of the Chelsea shops goes especially deep on it."
     ],
     "know": [
       "Second-largest menu in Chelsea and Flatiron, after Chelsea Cannabis Co.: about {in_stock|about} products and {brands} brands.",
       "Pre-rolls and vapes lead at {cat.pre-rolls} and {cat.vaporizers}; flower is lighter at about {cat.flower|about}.",
-      "Jaunty ({brand.Jaunty} listings) and Florist Farms are among the main lines; PAX pods are stocked.",
+      "{top_brand} is the main line, with {top_brand_n} listings.",
       "Among the lowest entry prices in Manhattan, with infused drinks from {min_price}."
     ],
     "faq": [
@@ -106,18 +106,18 @@
   "tango-hotel-charlie-ventures": {
     "intro": [
       "The Travel Agency's SoHo store is at 598 Broadway, just below Houston Street, and it is the largest of the {hood_shops|word} licensed dispensaries we track in SoHo with about {in_stock|about} products from {brands} brands. Unusually for a Manhattan shop, edibles rival vapes as the biggest category, at {cat.edibles} and {cat.vaporizers} listings, followed by flower ({cat.flower}) and pre-rolls ({cat.pre-rolls}). It also carries one of the larger topical selections in the city at {cat.topicals} items, plus {cat.tinctures} tinctures.",
-      "RYTHM, a multi-state flower and vape brand, has {brand.RYTHM} listings here, more than at almost any other shop in our data, and Select, Heavy Hitters, Ruby Farms, Grassroots and Find. complete a brand list that skews toward established names. The Travel Agency also runs stores at Union Square and in Downtown Brooklyn with a similar mix. The cheapest items are TUNE infused seltzers and Ayrloom drinks at {min_price}."
+      "{top_brands} are the biggest brands here, and {more_brands} follow in a brand list that skews toward established names. The Travel Agency also runs stores at Union Square and in Downtown Brooklyn with a similar mix. The cheapest items are TUNE infused seltzers and Ayrloom drinks at {min_price}."
     ],
     "know": [
       "Largest SoHo menu: about {in_stock|about} products and {brands} brands; Lighthouse and Alta are the next largest.",
-      "Edible-heavy ({cat.edibles}), with one of the deepest RYTHM selections in our data ({brand.RYTHM} listings).",
+      "Edible-heavy ({cat.edibles}); {top_brand} is the biggest brand, at {top_brand_n} listings.",
       "Better than most shops for topicals ({cat.topicals}) and tinctures ({cat.tinctures}).",
       "Part of The Travel Agency group, which also has Union Square and Downtown Brooklyn locations."
     ],
     "faq": [
       {
         "q": "What sets The Travel Agency SoHo apart from the other SoHo shops?",
-        "a": "Selection size and an edibles-heavy shelf. It has about {in_stock|about} products, more than Alta, and one of the largest RYTHM lineups we track. Alta leans toward edibles and topicals as well, while The Flowery SoHo and Dagmar on West Broadway are smaller and more pre-roll focused."
+        "a": "Selection size and an edibles-heavy shelf. It has about {in_stock|about} products, more than Alta. Alta leans toward edibles and topicals as well, while The Flowery SoHo and Dagmar on West Broadway are smaller and more pre-roll focused."
       },
       {
         "q": "Does it carry topicals and tinctures?",
@@ -131,19 +131,19 @@
   },
   "kiki-buddz": {
     "intro": [
-      "Weedside is at 50-50 72nd Street in Woodside, Queens, the only licensed dispensary we track in the neighborhood, with about {in_stock|about} products from {brands} brands. Pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) are the two main sections, with {cat.flower} flower options and {cat.edibles} edibles behind them and a {cat.concentrates}-item concentrate shelf.",
-      "Hashtag Honey is far and away the deepest brand here at {brand.Hashtag Honey} listings, one of the biggest showings of that label in our data, so Weedside is the place to see its full infused pre-roll and flower range. MFNY ({brand.MFNY}), Ayrloom, Ruby Farms, Jaunty and Rove cover vapes, drinks and more pre-rolls. Ignore the lowest-priced listing on the menu, which is bottled water; cannabis products start with 1906 Sleep drops and TUNE seltzers. The Jackson Heights shops, Purple Buds and ENFLOR, are the nearest alternatives along the 7 train."
+      "Weedside is at 50-50 72nd Street in Woodside, Queens, the only licensed dispensary we track in the neighborhood, with about {in_stock|about} products from {brands} brands. Pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) are the two main sections, with {cat.flower} flower options and {cat.edibles} edibles behind them and a {cat.concentrates}-item concentrate shelf. By menu size it ranks {city_rank} among the {city.shops} licensed shops Sensei tracks across the city.",
+      "{top_brands} lead the menu, and {more_brands} make up the next tier. Ignore the lowest-priced listing on the menu, which is bottled water; cannabis products start with 1906 Sleep drops and TUNE seltzers. The Jackson Heights shops, Purple Buds and ENFLOR, are the nearest alternatives along the 7 train."
     ],
     "know": [
       "Woodside's only licensed dispensary in our data, with about {in_stock|about} products and {brands} brands.",
-      "One of the deepest Hashtag Honey selections we track, at {brand.Hashtag Honey} listings.",
+      "{top_brand} is the deepest brand on the menu, at {top_brand_n} listings.",
       "Pre-rolls and vapes lead at around {cat.pre-rolls|about} and {cat.vaporizers|about}; flower is about {cat.flower|about}.",
       "Near the 69th and 74th Street stops on the 7 train; Jackson Heights shops are two stops east."
     ],
     "faq": [
       {
         "q": "What is Weedside known for?",
-        "a": "Hashtag Honey. With {brand.Hashtag Honey} listings it carries as much of that New York brand's infused pre-rolls and flower as almost any shop we track, backed by a strong MFNY selection for live resin vapes and gummies."
+        "a": "Going by its menu, {top_brands} are the brands it stocks most. The live menu shows what is in stock today."
       },
       {
         "q": "Is there a dispensary closer to Woodside than Jackson Heights?",
@@ -158,11 +158,11 @@
   "conbud-les": {
     "intro": [
       "CONBUD is at 85 Delancey Street on the Lower East Side, with about {in_stock|about} products from {brands} brands, the largest of the {hood_shops|word} licensed dispensaries we track in the Chinatown and LES area. Pre-rolls are its biggest section by a wide margin at around {cat.pre-rolls|about} listings, ahead of edibles ({cat.edibles}), vapes ({cat.vaporizers}) and flower ({cat.flower}). It also lists {cat.topicals|word} topicals, more than most downtown shops.",
-      "Ruby Farms, a New York pre-roll and flower grower, is one of the deepest lines with {brand.Ruby Farms} listings, and Claybourne Co., Ayrloom, Mfused, Zips and Wizard Trees cover pre-rolls, drinks, edibles and flower. The lowest-priced listing is a lighter; the entry price for cannabis is LEVEL tablet two-packs. Mighty Lucky on the Bowery is the other licensed shop nearby, with a more edible-heavy menu."
+      "The largest brands on the menu are {top_brands}, and {more_brands} come after them. The lowest-priced listing is a lighter; the entry price for cannabis is LEVEL tablet two-packs. Mighty Lucky on the Bowery is the other licensed shop nearby, with a more edible-heavy menu."
     ],
     "know": [
       "Largest menu in Chinatown and the LES: about {in_stock|about} products and {brands} brands, ahead of Mighty Lucky.",
-      "Pre-roll led, with about {cat.pre-rolls|about} listings and Ruby Farms one of the deepest lines.",
+      "Pre-roll led, with about {cat.pre-rolls|about} listings; {top_brand} is the biggest brand, with {top_brand_n} products.",
       "Topicals number {cat.topicals|word}, a better selection than most downtown shops.",
       "Cannabis prices start with LEVEL tablets; the cheapest listing overall is a lighter."
     ],
@@ -172,8 +172,8 @@
         "a": "CONBUD for pre-rolls and flower; it has about {cat.pre-rolls|about} pre-rolls, more than Mighty Lucky, and about {cat.flower|about} flower options. Mighty Lucky is the stronger edible and tincture stop. They are a few blocks apart on Delancey and the Bowery, so visiting both is easy."
       },
       {
-        "q": "Which New York brands does CONBUD carry?",
-        "a": "Ruby Farms is among the deepest at {brand.Ruby Farms} listings, and Claybourne Co., Ayrloom, Zips and Wizard Trees are all stocked. That gives the shop a strong local pre-roll and flower selection."
+        "q": "Which brands does CONBUD carry?",
+        "a": "{top_brands} are the biggest by number of listings. The live menu shows every brand in stock today."
       },
       {
         "q": "How do I get there?",
@@ -183,13 +183,13 @@
   },
   "brooklyn-greenpoint-ny": {
     "intro": [
-      "Milligrams is on Greenpoint Avenue in Greenpoint, one of the {hood_shops|word} licensed dispensaries we track in the neighborhood, with about {in_stock|about} products from {brands} brands. Pre-rolls lead at around {cat.pre-rolls|about} listings, with vapes ({cat.vaporizers}), edibles ({cat.edibles}) and flower ({cat.flower}) close behind, plus {cat.concentrates|word} concentrates and a handful of tinctures and topicals.",
-      "Ruby Farms is one of the deepest brands at {brand.Ruby Farms} listings, giving the shop a strong New York pre-roll section, and Heavy Hitters, MFNY, Ayrloom, Fernway and Camino cover vapes, live resin, drinks and gummies. The cheapest item is an Ayrloom 1:1 Honeycrisp drink, with other Ayrloom beverages close behind. The licensed shops in Williamsburg are the nearest alternatives, a short ride south on the G or a walk down Manhattan Avenue."
+      "Milligrams is on Greenpoint Avenue in Greenpoint, one of the {hood_shops|word} licensed dispensaries we track in the neighborhood, with about {in_stock|about} products from {brands} brands. Pre-rolls lead at around {cat.pre-rolls|about} listings, with vapes ({cat.vaporizers}), edibles ({cat.edibles}) and flower ({cat.flower}) close behind, plus {cat.concentrates|word} concentrates and a handful of tinctures and topicals. By menu size it ranks {city_rank} among the {city.shops} licensed shops Sensei tracks across the city.",
+      "The menu's largest brands are {top_brands}, and {more_brands} are next in line. The cheapest item is an Ayrloom 1:1 Honeycrisp drink, with other Ayrloom beverages close behind. The licensed shops in Williamsburg are the nearest alternatives, a short ride south on the G or a walk down Manhattan Avenue."
     ],
     "know": [
       "One of Greenpoint's {hood_shops|word} licensed dispensaries in our data, with about {in_stock|about} products and {brands} brands.",
       "Evenly spread across pre-rolls, vapes, edibles and flower ({cat.pre-rolls}, {cat.vaporizers}, {cat.edibles} and {cat.flower}).",
-      "Ruby Farms ({brand.Ruby Farms} listings) is the main pre-roll line; Fernway and Camino add vapes and gummies.",
+      "{top_brand} has the most listings of any brand, at {top_brand_n}.",
       "Entry price of {min_price}, with 5 mg infused drinks among the cheapest items; Williamsburg's shops are within a short trip."
     ],
     "faq": [
@@ -199,7 +199,7 @@
       },
       {
         "q": "What is Milligrams good for?",
-        "a": "A balanced basket. Its four main categories are all well stocked ({cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower), so it covers each without a glaring gap, and Ruby Farms gives it a solid New York pre-roll selection."
+        "a": "A balanced basket. Its four main categories are all well stocked ({cat.pre-rolls} pre-rolls, {cat.vaporizers} vapes, {cat.edibles} edibles and {cat.flower} flower), so it covers each without a glaring gap."
       },
       {
         "q": "What is the nearest subway?",
@@ -210,22 +210,22 @@
   "the-doe-store": {
     "intro": [
       "The Travel Agency's Union Square store is at 835 Broadway near 13th Street, with about {in_stock|about} products from {brands} brands, one of {hood_shops|word} licensed dispensaries we track around Gramercy and Union Square. The menu is built around vapes ({cat.vaporizers}) and edibles ({cat.edibles}), with {cat.pre-rolls} pre-rolls, about {cat.flower|about} flower options and a {cat.concentrates}-item concentrate shelf.",
-      "RYTHM is the deepest brand here at {brand.RYTHM} listings, with Select, Heavy Hitters, Ruby Farms, Grassroots and MFNY behind it, the same established-brand mix found at the group's SoHo and Downtown Brooklyn stores. The cheapest items are Harney Brothers coffee shots, Ayrloom drinks and TUNE seltzers at {min_price}. Green Genius on 3rd Avenue, a few blocks east, carries more brands and a deeper vape wall; Smiley Exotics on East 30th Street is the smaller third option."
+      "The biggest brands here are {top_brands}, followed by {more_brands}, the same established-brand mix found at the group's SoHo and Downtown Brooklyn stores. The cheapest items are Harney Brothers coffee shots, Ayrloom drinks and TUNE seltzers at {min_price}. Green Genius on 3rd Avenue, a few blocks east, carries more brands and a deeper vape wall; Smiley Exotics on East 30th Street is the smaller third option."
     ],
     "know": [
       "One of {hood_shops|word} licensed shops in the Gramercy and Union Square area: about {in_stock|about} products and {brands} brands.",
       "Vapes ({cat.vaporizers}) and edibles ({cat.edibles}) lead, with pre-rolls at {cat.pre-rolls}.",
-      "RYTHM ({brand.RYTHM} listings) leads, with Select and Heavy Hitters also stocked.",
+      "{top_brand} leads the brand list with {top_brand_n} listings.",
       "Part of The Travel Agency group with SoHo and Downtown Brooklyn stores; steps from Union Square station."
     ],
     "faq": [
       {
         "q": "How does this compare to Green Genius nearby?",
-        "a": "Green Genius lists more brands than the {brands} here and has a deeper vape wall. The Travel Agency Union Square is the pick for its RYTHM-led, established-brand mix; Green Genius for vape variety."
+        "a": "Green Genius lists more brands than the {brands} here and has a deeper vape wall. The Travel Agency Union Square is the pick for its established-brand mix; Green Genius for vape variety."
       },
       {
         "q": "What brands does it carry the most of?",
-        "a": "RYTHM with {brand.RYTHM} listings, followed by Ruby Farms ({brand.Ruby Farms}) and Select ({brand.Select}), with Heavy Hitters, Grassroots and MFNY also stocked. It is a good stop for comparing several national flower and vape brands in one place."
+        "a": "{top_brands}, going by number of listings."
       },
       {
         "q": "Can I order ahead for pickup?",
@@ -236,12 +236,12 @@
   "gmdss-llc": {
     "intro": [
       "The Travel Agency's Downtown Brooklyn store is at 122 Flatbush Avenue, near the Barclays Center and the Atlantic Avenue transit hub, with about {in_stock|about} products from {brands} brands. It is the largest of the {hood_shops|word} licensed dispensaries we track in the Brooklyn Heights and Downtown area, and like its SoHo sibling it is edible-heavy: {cat.edibles} edible listings, alongside {cat.vaporizers} vapes, {cat.pre-rolls} pre-rolls and {cat.flower} flower options, plus a better-than-average {cat.topicals} topicals and {cat.tinctures} tinctures.",
-      "RYTHM ({brand.RYTHM} listings), Heavy Hitters ({brand.Heavy Hitters}), Ruby Farms ({brand.Ruby Farms}) and Select ({brand.Select}) make up the top tier, which makes this a good place to compare those brands directly, with Grassroots and Camino behind them. The cheapest items are Ayrloom drinks, TUNE seltzers and Minny Grown cocktail-style drinks at {min_price}. Buzzy NY on Court Street and The Garden Club on Smith Street are the nearby alternatives, both smaller."
+      "{top_brands} make up the top tier, which makes this a good place to compare those brands directly, with {more_brands} behind them. The cheapest items are Ayrloom drinks, TUNE seltzers and Minny Grown cocktail-style drinks at {min_price}. Buzzy NY on Court Street and The Garden Club on Smith Street are the nearby alternatives, both smaller."
     ],
     "know": [
       "Largest menu in Brooklyn Heights and Downtown Brooklyn: about {in_stock|about} products and {brands} brands.",
       "Edible-heavy ({cat.edibles}), with topicals ({cat.topicals}) and tinctures ({cat.tinctures}) better stocked than most Brooklyn shops.",
-      "RYTHM leads with {brand.RYTHM} listings, ahead of Heavy Hitters, Ruby Farms and Select.",
+      "{top_brand} leads with {top_brand_n} listings.",
       "Steps from Atlantic Avenue-Barclays Center, the busiest subway hub in Brooklyn."
     ],
     "faq": [

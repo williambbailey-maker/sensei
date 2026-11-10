@@ -8,7 +8,14 @@ fills from the page's own record in seo/data/site.json on every rebuild:
     -> "about 2,000 products from 245 brands, from $4"
 
 Token syntax: {name} or {name|filter}. Dotted names reach into maps:
-{cat.flower}, {brand.Jeeter}, {shop.qube-manhattan}, {hood.Midtown}.
+{cat.flower}, {shop.qube-manhattan}, {hood.Midtown}.
+
+Rankings are text tokens, never hand-written names, because who leads changes
+between refreshes: on a shop page {top_brands} ("Ayrloom (25), Florist Farms
+(20) and Jaunty (19)"), {top_brand}, {top_brand_n} and {more_brands} (the
+next three by name); on brand and product-type pages {top_shops}, {top_shop},
+{low_shop}, {top_hoods}. A token for a named brand, shop or category that has
+dropped out of the page's data stops the build.
 
 Filters
     (none)  1,999 · prices as $4 or $4.50
@@ -57,6 +64,20 @@ def shop_name(n):
     return f"{m.group(1)} ({m.group(2)})" if m else n
 
 
+def brand_name(b):
+    """A menu's brand string as prose: "ayrloom" -> "Ayrloom", "dompen™" ->
+    "Dompen", "Dank By Definition." -> "Dank By Definition"."""
+    b = (b or "").replace("™", "").strip()
+    if b.endswith(".") and not b.endswith("Co."):
+        b = b[:-1]
+    return b[0].upper() + b[1:] if b.islower() else b
+
+
+def _names(names):
+    """'A, B and C' from a list of names."""
+    return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
+
+
 def _series(items):
     """'A (12), B (9) and C (7)' from (label, n) pairs."""
     parts = [f"{a} ({n:,})" for a, n in items]
@@ -94,6 +115,16 @@ def page_vars(kind, key):
             v[f"cat.{c}"] = n
         for b in r.get("top_brands") or []:
             v[f"brand.{b['brand']}"] = b["n"]
+        # The shop's biggest brands, written from data: which brands lead a
+        # menu changes from one refresh to the next, so copy must not name
+        # them by hand. top_brands is the first three with counts, more_brands
+        # the next ones by name (absent when the shop lists three or fewer).
+        tb = r.get("top_brands") or []
+        if tb:
+            v["top_brands"] = _series([(brand_name(b["brand"]), b["n"]) for b in tb[:3]])
+            v["top_brand"], v["top_brand_n"] = brand_name(tb[0]["brand"]), tb[0]["n"]
+        if len(tb) > 3:
+            v["more_brands"] = _names([brand_name(b["brand"]) for b in tb[3:6]])
         hood = [d for d in SITE["dispensaries"] if d.get("neighborhood") == r.get("neighborhood")]
         v["hood_shops"] = len(hood)
         v["hood_rank"] = sorted(hood, key=lambda d: -d["in_stock"]).index(r) + 1
@@ -191,6 +222,8 @@ def render(text, v, where=""):
     # "an 8", "an 11", "an 18,000" (spoken with a vowel sound).
     out = re.sub(r"\b([Aa]) (?=(?:8[\d,]*|11|18|11,\d{3}|18,\d{3})\b)",
                  lambda m: ("An" if m.group(1) == "A" else "an") + " ", out)
+    # A name ending in "Co." at the end of a sentence must not print "Co..".
+    out = re.sub(r"(?<!\.)\.\.(?!\.)", ".", out)
     if re.search(r"\{[^{}]*\}", out):
         raise SystemExit(f"malformed token left in {where}: {out[:120]}")
     return out
@@ -264,7 +297,10 @@ if __name__ == "__main__":
         if v is None:
             raise SystemExit("no such page")
         for k, x in sorted(v.items()):
-            print(f"{{{k}}} = {_fmt(k, x, None)}   |about = {_fmt(k, x, 'about')}")
+            if isinstance(x, str):
+                print(f"{{{k}}} = {x}")
+            else:
+                print(f"{{{k}}} = {_fmt(k, x, None)}   |about = {_fmt(k, x, 'about')}")
     elif len(sys.argv) >= 2 and sys.argv[1] == "check":
         files = sys.argv[2:] or sorted(str(p) for p in (ROOT / "data" / "copy").glob("*.json"))
         n = check_files(files)
