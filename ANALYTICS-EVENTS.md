@@ -94,8 +94,8 @@ link out.
 
 | Event | When | Props |
 |---|---|---|
-| `deal_open` | a deal row, on the home board or the `/deals` page | product props, `where` (`home` / `deals`), `rank`, `pct` |
-| `deals_all` | "See all deals" under the home board | `where` |
+| `deal_open` | a deal row on the `/deals` page (the home board was removed Nov 10, 2026) | product props, `where` (`home` / `deals`), `rank`, `pct` |
+| `deals_all` | "See all deals" under the home board (removed Nov 10, 2026; no longer fires) | `where` |
 | `deals_filter` | a type tab, the place select or the sort on `/deals` | `type`, `place` or `sort` |
 
 `load_more` on `/deals` carries `where: "deals"`.
@@ -105,7 +105,7 @@ link out.
 | Event | When | Props |
 |---|---|---|
 | `order_click` | "Order at <shop>" in the cart | `dispensary` (slug), `url`, `items` |
-| `deal_click` | a row of the home deals board | `dispensary` (slug), `brand`, `url`, `pct`, `rank` |
+| `deal_click` | a row of the home deals board (removed Nov 10, 2026; no longer fires) | `dispensary` (slug), `brand`, `url`, `pct`, `rank` |
 
 Pageviews now also carry the link's raw tags (`src`, `utm_source`,
 `utm_medium`, `utm_campaign`, `utm_content`, `click_id`), and headless or

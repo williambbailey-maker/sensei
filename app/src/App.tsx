@@ -10,13 +10,10 @@ import { TapJourney } from './components/TapJourney'
 import { Trail } from './components/Trail'
 import { canGoBack, pushScreen, replaceScreen } from './lib/nav'
 import { Results } from './components/Results'
-import { Deals, topFive } from './components/Deals'
 import { DealsPage } from './components/DealsPage'
 import { Newsletter } from './components/Newsletter'
 import {
   fetchDealProducts,
-  fetchDeals,
-  fetchProductsByIds,
   fetchProductsFor,
   fetchSiteStats,
   fetchStores,
@@ -29,7 +26,6 @@ import {
   EMPTY_FILTERS,
   filtersFromQuery,
   type Cart,
-  type Deal,
   type Filters,
   type Product,
   type StoreLite,
@@ -60,10 +56,7 @@ export default function App() {
   const [journeyStart, setJourneyStart] = useState(0)
   const [products, setProducts] = useState<Product[]>([])
   const [stores, setStores] = useState<StoreLite[]>([])
-  const [deals, setDeals] = useState<Deal[]>([])
-  // The home board's products (so a tap opens the detail), and the deals
-  // page's full list, fetched the first time the page opens.
-  const [homeDealProducts, setHomeDealProducts] = useState<Product[]>([])
+  // The deals page's full list, fetched the first time the page opens.
   const [dealProducts, setDealProducts] = useState<Product[]>([])
   const [dealsState, setDealsState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [siteStats, setSiteStats] = useState<SiteStats | null>(null)
@@ -91,13 +84,6 @@ export default function App() {
 
   useEffect(() => {
     fetchStores().then(setStores).catch(() => {})
-    fetchDeals()
-      .then((d) => {
-        setDeals(d)
-        return fetchProductsByIds(topFive(d).flatMap((x) => (x.product_id ? [x.product_id] : [])))
-      })
-      .then(setHomeDealProducts)
-      .catch(() => {})
     fetchSiteStats().then(setSiteStats).catch(() => {})
   }, [])
 
@@ -436,7 +422,6 @@ export default function App() {
         <main className="home-grid">
           <Masthead storeCount={storeCount} productCount={productCount} neighborhoods={hoodTotal} />
           <Ways onPick={goTo} busy={locating ? 'near' : null} error={wayError} />
-          <Deals deals={deals} products={homeDealProducts} onAll={() => goTo('deals')} onAdd={addToCart} />
         </main>
       )}
 
