@@ -2,22 +2,22 @@
   "cannabis-on-lex": {
     "intro": [
       "Cannabis on Lex is at 459 Lexington Avenue in East Midtown, Manhattan. At our last menu check it listed about {in_stock|about} products from {brands} brands, which puts it in the smaller half of the {hood_shops|word} licensed dispensaries we track in Midtown, a neighborhood where Qube on Broadway carries by far the biggest menu. It is one of a handful of Midtown shops east of Fifth Avenue: Torches on East 42nd Street and Urban Leaf on Second Avenue are the nearest alternatives, and Herbwell on Madison Avenue is the largest menu on this side of Midtown.",
-      "Vapes lead the menu at {cat.vaporizers} listings, followed by pre-rolls ({cat.pre-rolls}), edibles ({cat.edibles}) and a smaller flower shelf ({cat.flower}). There were no concentrates on the online menu at last check, and tinctures and topicals are only a few listings each. The biggest brands on the menu are {top_brands}, with {more_brands} behind them. Prices start at {min_price}, the highest entry point among the Midtown shops we track: the cheapest items are a three-pack of 1906 Boost+ 30mg pills and a Golden Garden No Cap 1g pre-roll."
+      "By size, the main sections are {cats_ranked}. There were no concentrates on the online menu at last check, and tinctures and topicals are only a few listings each. The biggest brands on the menu are {top_brands}, with {more_brands} behind them. Prices start at {min_price}, one of the highest entry points among the Midtown shops we track: the cheapest item is a three-pack of 1906 Boost+ 30mg pills, with Golden Garden 1g pre-rolls next."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands, in the smaller half of Midtown's licensed shops.",
-      "Vapes ({cat.vaporizers}) and pre-rolls ({cat.pre-rolls}) make up most of the shelf; no concentrates were listed at last check.",
+      "The biggest section is {top_cat} ({top_cat_n}), then {second_cat} ({second_cat_n}); no concentrates were listed at last check.",
       "{top_brand} is the top brand, with {top_brand_n} products.",
-      "Entry price is {min_price} before tax, higher than at any other Midtown shop we track."
+      "Entry price is {min_price} before tax, among the highest of the Midtown shops we track."
     ],
     "faq": [
       {
         "q": "What does Cannabis on Lex carry most?",
-        "a": "Vapes, with {cat.vaporizers} listings at last check, followed by {cat.pre-rolls} pre-rolls and {cat.edibles} edibles. The largest brands at last check were {top_brands}."
+        "a": "At last check the biggest section was {top_cat}, with {top_cat_n} listings, followed by {second_cat} ({second_cat_n}). The largest brands at last check were {top_brands}."
       },
       {
         "q": "What is the cheapest item at Cannabis on Lex?",
-        "a": "At last check the menu started at {min_price}, for a three-pack of 1906 Boost+ 30mg pills or a Golden Garden No Cap 1g pre-roll. Prices on Sensei are menu prices before New York's cannabis tax."
+        "a": "At last check the menu started at {min_price}, for a three-pack of 1906 Boost+ 30mg pills. Golden Garden 1g pre-rolls were the next cheapest. Prices on Sensei are menu prices before New York's cannabis tax."
       },
       {
         "q": "What other dispensaries are near Cannabis on Lex?",
@@ -27,14 +27,14 @@
   },
   "cannadreams": {
     "intro": [
-      "Cannadreams is at 862 9th Avenue in Hell's Kitchen, on the west side of Midtown Manhattan. With about {in_stock|about} products from {brands} brands at our last menu check, it is the second-largest of the {hood_shops|word} licensed dispensaries we track in Midtown, behind only Qube on Broadway, and one of the bigger menus anywhere in the city. NY Cannabis Co., farther down Ninth Avenue at 743 9th Avenue, is close behind it in size, so the two are an easy pair for comparing prices and stock on the west side.",
-      "Vapes are the core of the shelf at around {cat.vaporizers|about} listings, with edibles ({cat.edibles}), pre-rolls ({cat.pre-rolls}) and flower ({cat.flower}) all well stocked, a {cat.concentrates}-item concentrate case and {cat.tinctures} tinctures, the most of any Midtown shop. {top_brands} are the biggest brands, and {more_brands} round out the top of the menu. Prices start at {min_price}, for MFNY 30mg live resin gummy three-packs such as Pina Colada x Strawpaya."
+      "Cannadreams is at 862 9th Avenue in Hell's Kitchen, on the west side of Midtown Manhattan. With about {in_stock|about} products from {brands} brands at our last menu check, it is {hood_place} of the {hood_shops|word} licensed dispensaries we track in Midtown, where Qube on Broadway has the biggest menu, and one of the bigger menus anywhere in the city. NY Cannabis Co., farther down Ninth Avenue at 743 9th Avenue, is close to it in size, so the two are an easy pair for comparing prices and stock on the west side.",
+      "The main sections, biggest first, are {cats_ranked}, all well stocked, and {small_cats} make up the rest. No Midtown shop we track lists more tinctures. {top_brands} are the biggest brands, and {more_brands} round out the top of the menu. Prices start at {min_price}. Across the city, it is {city_place} of the {city.shops} shops Sensei tracks."
     ],
     "know": [
-      "Second-largest menu in Midtown after Qube: about {in_stock|about} products from {brands} brands.",
+      "{hood_place|cap} menu in Midtown: about {in_stock|about} products from {brands} brands.",
       "{top_brand} is the biggest brand on the menu, at {top_brand_n} products.",
-      "Vapes lead at around {cat.vaporizers|about} listings; the {cat.tinctures} tinctures are the most of any Midtown shop.",
-      "Entry price {min_price} before tax, for MFNY live resin gummy three-packs."
+      "The biggest section is {top_cat}, at {top_cat_n} listings; the tincture shelf is the deepest of any Midtown shop.",
+      "Entry price {min_price} before tax."
     ],
     "faq": [
       {
@@ -47,7 +47,7 @@
       },
       {
         "q": "What is the cheapest item at Cannadreams?",
-        "a": "At last check the menu started at {min_price}, for MFNY 30mg live resin gummy three-packs. Field of Dreams pre-rolls and High Falls sleep gummies were among the next cheapest. Prices on Sensei are menu prices before New York's cannabis tax."
+        "a": "At last check the menu started at {min_price}. Prices on Sensei are menu prices before New York's cannabis tax."
       }
     ]
   },

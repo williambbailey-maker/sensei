@@ -1,19 +1,19 @@
 {
   "robin-hood-cannabis-west-broadway": {
     "intro": [
-      "Dagmar Cannabis' West Broadway store is at 412 West Broadway in SoHo, between Prince and Spring, in the heart of the gallery and boutique blocks. It is the smallest of the {hood_shops|word} licensed dispensaries we track in SoHo, with about {in_stock|about} products from {brands} brands. Pre-rolls are the clear focus at {cat.pre-rolls} listings, followed by {cat.edibles} edibles, {cat.vaporizers} vapes and {cat.flower} flower options, with {cat.concentrates|word} concentrates.",
-      "The biggest brands on the menu are {top_brands}, followed by {more_brands}. The entry price is {min_price} for Ayrloom's 2:1 drinks in yuzu citrus, cranberry apple, black cherry and half-and-half. Dagmar also runs stores in the West Village and Williamsburg. For vapes or flower, Alta on Kenmare and The Travel Agency on Broadway both list far more; this is the stop for a quick pre-roll or gummy on West Broadway."
+      "Dagmar Cannabis' West Broadway store is at 412 West Broadway in SoHo, between Prince and Spring, in the heart of the gallery and boutique blocks. It is {hood_place} of the {hood_shops|word} licensed dispensaries we track in SoHo, with about {in_stock|about} products from {brands} brands. By size, the main sections are {cats_ranked}, with {small_cats} filling out the rest of the menu.",
+      "The biggest brands on the menu are {top_brands}, followed by {more_brands}. The entry price is {min_price}, with Ayrloom's drinks in cranberry apple, black cherry and half-and-half among the cheapest items. Dagmar also runs stores in the West Village and Williamsburg. For vapes or flower, Alta on Kenmare and The Travel Agency on Broadway both list far more; this is the stop for a quick pre-roll or gummy on West Broadway."
     ],
     "know": [
-      "About {in_stock|about} products from {brands} brands; pre-rolls ({cat.pre-rolls}) make up the biggest share of the menu.",
+      "About {in_stock|about} products from {brands} brands; the biggest section is {top_cat}, at {top_cat_n} listings.",
       "{top_brand} is the biggest brand with {top_brand_n} products.",
-      "Entry price is {min_price} for Ayrloom 2:1 drinks.",
+      "Entry price is {min_price}, with Ayrloom drinks the cheapest items on the menu.",
       "Part of the Dagmar group; Alta and The Travel Agency are larger SoHo alternatives."
     ],
     "faq": [
       {
         "q": "What does Dagmar West Broadway specialize in?",
-        "a": "Pre-rolls. With {cat.pre-rolls} of its {in_stock} listings being joints, it has more pre-roll variety than its size suggests. Vapes and flower are thinner at {cat.vaporizers} and {cat.flower}."
+        "a": "Going by the menu, {top_cat}. That section has {top_cat_n} of the shop's {in_stock} listings, with {second_cat} next at {second_cat_n}."
       },
       {
         "q": "Is this the same as Dagmar in the West Village?",
@@ -27,13 +27,13 @@
   },
   "baiked": {
     "intro": [
-      "Nicklz is at 797 8th Avenue in Midtown, near 48th Street on the west side of the Theater District, a few blocks from Times Square and the 50th Street C and E station. It is one of the smallest of the {hood_shops|word} licensed dispensaries we track in Midtown, with about {in_stock|about} products from {brands} brands. Edibles dominate at {cat.edibles} listings, followed by {cat.pre-rolls} pre-rolls, {cat.flower} flower options and {cat.vaporizers} vapes, plus a concentrate case of {cat.concentrates} items.",
-      "{top_brands} are the deepest brands, with {more_brands} behind them. The entry price is {min_price} for 1906's drop pouches in Genius, Boost, Go and Bliss, each a one- or two-dose sampler. For theatergoers and anyone staying in the hotel blocks west of Broadway, Nicklz is the closest licensed shop; for a full selection, Qube on Broadway at 39th Street lists far more products about a ten-minute walk south."
+      "Nicklz is at 797 8th Avenue in Midtown, near 48th Street on the west side of the Theater District, a few blocks from Times Square and the 50th Street C and E station. It is {hood_place} of the {hood_shops|word} licensed dispensaries we track in Midtown, with about {in_stock|about} products from {brands} brands. Its sections, largest first, are {cats_ranked}, and the menu also carries {small_cats} in smaller numbers.",
+      "{top_brands} are the deepest brands, with {more_brands} behind them. The entry price is {min_price} for 1906's drop pouches in Genius, Boost, Bliss and other formulas, each a one- or two-dose sampler. For theatergoers and anyone staying in the hotel blocks west of Broadway, Nicklz is the closest licensed shop; for a full selection, Qube on Broadway at 39th Street lists far more products about a ten-minute walk south."
     ],
     "know": [
-      "About {in_stock|about} products from {brands} brands; edibles ({cat.edibles}) are the biggest share of the menu.",
-      "The brand list is led by {top_brand} at {top_brand_n} products;{cat.concentrates} concentrates is a solid case for the size.",
-      "Entry price is {min_price} for 1906 drop pouches in four formulas.",
+      "About {in_stock|about} products from {brands} brands, with {top_cat} the biggest section at {top_cat_n} listings.",
+      "The brand list is led by {top_brand} at {top_brand_n} products; the concentrate case is solid for a shop this size.",
+      "Entry price is {min_price} for 1906 drop pouches.",
       "One of the closer licensed shops to the Theater District's west side; Qube is the larger Midtown option."
     ],
     "faq": [
@@ -43,11 +43,11 @@
       },
       {
         "q": "What is the cheapest thing at Nicklz?",
-        "a": "1906 drop pouches at {min_price} before tax, in Genius, Boost, Go and Bliss. They are low-dose swallowable drops, between 2.5 and five milligrams per piece, so a pouch is a gentle introduction."
+        "a": "1906 drop pouches at {min_price} before tax, in Genius, Boost, Bliss and other formulas. They are low-dose swallowable drops, between 2.5 and five milligrams per piece, so a pouch is a gentle introduction."
       },
       {
         "q": "Does Nicklz have a good concentrate selection?",
-        "a": "For its size, yes: {cat.concentrates} listings, with MFNY supplying live resin. Qube and Culture House carry larger cases if you want more choice."
+        "a": "For its size, yes, with MFNY supplying live resin. Qube and Culture House carry larger cases if you want more choice."
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "1106-rebecca-street-llc": {
     "intro": [
-      "Herbology is at 304 Ellery Street in Bushwick, Brooklyn. It is the smallest of the {hood_shops|word} licensed dispensaries we track in Bushwick, with about {in_stock|about} products from {brands} brands at last count. Stash Master on Broadway, RNR Dispensary on Harrison Place and The Emerald Dispensary on Suydam Street all list more, but Herbology still carries a full menu across the main formats, and its tighter brand list means each of its main brands is stocked in some depth.",
-      "Flower is the biggest section here at {cat.flower} listings, followed by {cat.pre-rolls} pre-rolls and {cat.vaporizers} vapes, which makes the shop a better fit for smokers than for edible shoppers. Edibles are a smaller {cat.edibles}, and the concentrate shelf is close to empty at {cat.concentrates}. The biggest brands on the menu are {top_brands}, followed by {more_brands}. The entry price is {min_price}, set by Layup 10 mg drinks in flavors like Futbol Punch, Lemonade, Limeade and Raspberry Tea."
+      "Herbology is at 304 Ellery Street in Bushwick, Brooklyn. It is {hood_place} of the {hood_shops|word} licensed dispensaries we track in Bushwick, with about {in_stock|about} products from {brands} brands at last count. Stash Master on Broadway, RNR Dispensary on Harrison Place and The Emerald Dispensary on Suydam Street all list more, but Herbology still carries a full menu across the main formats, and its tighter brand list means each of its main brands is stocked in some depth.",
+      "By size, the main sections are {cats_ranked}, and the menu also lists {small_cats} in smaller numbers. The biggest brands on the menu are {top_brands}, followed by {more_brands}. The entry price is {min_price}, set by Layup 10 mg drinks in flavors like Lemonade. Across the city, it is {city_place} of the {city.shops} shops Sensei tracks."
     ],
     "know": [
-      "About {in_stock|about} products from {brands} brands, the smallest of the Bushwick shops we track.",
-      "Flower leads at {cat.flower} listings, with pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}) behind it.",
+      "About {in_stock|about} products from {brands} brands, {hood_place} of the Bushwick shops we track.",
+      "The biggest section is {top_cat}, with {top_cat_n} listings, followed by {second_cat} ({second_cat_n}).",
       "{top_brand} is the biggest brand with {top_brand_n} products.",
       "Cheapest items are Layup 10 mg drinks at {min_price} before tax."
     ],
@@ -17,7 +17,7 @@
       },
       {
         "q": "What does Herbology carry most?",
-        "a": "Flower, with {cat.flower} listings, then pre-rolls ({cat.pre-rolls}) and vapes ({cat.vaporizers}). Edibles number {cat.edibles} and concentrates only {cat.concentrates}. The brands with the most products on the menu are {top_brands}."
+        "a": "{top_cat|cap}, with {top_cat_n} listings, then {second_cat} ({second_cat_n}). The brands with the most products on the menu are {top_brands}."
       },
       {
         "q": "What is the cheapest item at Herbology?",
@@ -27,12 +27,12 @@
   },
   "tedg": {
     "intro": [
-      "The Emerald Dispensary is at 85 Suydam Street in Bushwick, Brooklyn. This is the Bushwick store, a separate shop from The Emerald Dispensary in Manhattan and from Emerald Dispensary in Carroll Gardens. With about {in_stock|about} products it ranks third among the {hood_shops|word} licensed dispensaries we track in Bushwick, behind Stash Master and RNR Dispensary, but its {brands} brands are the second-widest brand list in the neighborhood. That works out to only a few items per brand, so the menu favors trying many labels over going deep on any one of them.",
-      "Pre-rolls dominate the shelf at {cat.pre-rolls} listings, well ahead of {cat.edibles} edibles and {cat.flower} flower options. Vapes are a smaller section at {cat.vaporizers}, the fewest of the Bushwick shops we track, and there are {cat.concentrates} concentrates plus a few tinctures. The brands with the most products are {top_brands}, with {more_brands} next. The entry price is {min_price}, shared by 1906 Sleep tablet two-packs and single Ayrloom 2:1 drinks in flavors like Cranberry Apple and Pineapple Mango."
+      "The Emerald Dispensary is at 85 Suydam Street in Bushwick, Brooklyn. This is the Bushwick store, a separate shop from The Emerald Dispensary in Manhattan and from Emerald Dispensary in Carroll Gardens. With about {in_stock|about} products it is {hood_place} of the {hood_shops|word} licensed dispensaries we track in Bushwick, where Stash Master and RNR Dispensary both list far more, but its {brands} brands are a wide list for a menu of that size. That works out to only a few items per brand, so the menu favors trying many labels over going deep on any one of them.",
+      "By listing count, the main sections are {cats_ranked}, and a few {small_cats} fill out the rest of the shelf. The brands with the most products are {top_brands}, with {more_brands} next. The entry price is {min_price}, for single Ayrloom 2:1 drinks in flavors like Cranberry Apple and Pineapple Mango."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands, a wide brand list for a menu this size.",
-      "Pre-rolls lead by a wide margin at {cat.pre-rolls}; vapes are a smaller {cat.vaporizers}.",
+      "The largest section is {top_cat} ({top_cat_n}), ahead of {second_cat} ({second_cat_n}).",
       "The biggest brands are {top_brands}.",
       "Not the same shop as The Emerald Dispensary in Manhattan or Emerald Dispensary in Carroll Gardens."
     ],
@@ -43,7 +43,7 @@
       },
       {
         "q": "What does The Emerald Dispensary in Bushwick carry most?",
-        "a": "Pre-rolls, with {cat.pre-rolls} listings, followed by {cat.edibles} edibles and {cat.flower} flower options. {top_brand} has the most products of any brand on the menu, at {top_brand_n}."
+        "a": "{top_cat|cap}, with {top_cat_n} listings, followed by {second_cat} at {second_cat_n}. {top_brand} has the most products of any brand on the menu, at {top_brand_n}."
       },
       {
         "q": "What other dispensaries are near The Emerald Dispensary in Bushwick?",
@@ -53,14 +53,14 @@
   },
   "altitude-ny": {
     "intro": [
-      "Culture House Greenpoint is at 807 Manhattan Avenue, on Greenpoint's main shopping street in north Brooklyn. It is one of {hood_shops|word} licensed dispensaries we track in Greenpoint, with about {in_stock|about} products from {brands} brands at last count. Milligrams, a short walk away on Greenpoint Avenue, and Green Apple Distributors farther south on Manhattan Avenue both list somewhat more, but the three are close enough in size that the real difference between them is what each one stocks rather than how much.",
-      "Culture House leans hard toward edibles: {cat.edibles} listings, the most of any Greenpoint shop we track, followed by {cat.vaporizers} vapes and {cat.pre-rolls} pre-rolls. Flower is the thinnest section in the neighborhood at {cat.flower} options, so flower shoppers may do better at Green Apple. The largest brands on the shelf are {top_brands}, then {more_brands}. The entry price is {min_price}, shared by 1906 Chill and Go tablet two-packs, Jaunty Sour Watermelon 2:1 CBD:THC gummies and a LayUp Black Cherry Lemonade drink."
+      "Culture House Greenpoint is at 807 Manhattan Avenue, on Greenpoint's main shopping street in north Brooklyn. It is {hood_place} of the {hood_shops|word} licensed dispensaries we track in Greenpoint, with about {in_stock|about} products from {brands} brands at last count. Milligrams, a short walk away on Greenpoint Avenue, and Green Apple Distributors farther south on Manhattan Avenue are the others, and the three are close enough in size that the real difference between them is what each one stocks rather than how much.",
+      "By size, the main sections at Culture House are {cats_ranked}. Its edibles count is the highest of any Greenpoint shop we track, while flower shoppers may do better at Green Apple, which lists the most flower in the neighborhood. The largest brands on the shelf are {top_brands}, then {more_brands}. The entry price is {min_price}, for 1906 Chill and Go tablet two-packs."
     ],
     "know": [
       "About {in_stock|about} products from {brands} brands on Manhattan Avenue in Greenpoint.",
-      "Edibles lead at {cat.edibles}, the most in Greenpoint; flower is a small {cat.flower}.",
+      "More edibles ({cat.edibles}) than any other Greenpoint shop we track.",
       "The biggest brands by product count are {top_brands}.",
-      "Cheapest items are low-dose tablets, gummies and drinks at {min_price} before tax."
+      "Cheapest items are low-dose tablet two-packs at {min_price} before tax."
     ],
     "faq": [
       {
@@ -69,11 +69,11 @@
       },
       {
         "q": "What does Culture House Greenpoint carry most?",
-        "a": "Edibles, with {cat.edibles} listings, then vapes ({cat.vaporizers}) and pre-rolls ({cat.pre-rolls}). No brand on the menu has more products than {top_brand}, which has {top_brand_n}."
+        "a": "{top_cat|cap}, with {top_cat_n} listings, and {second_cat} come next at {second_cat_n}. No brand on the menu has more products than {top_brand}, which has {top_brand_n}."
       },
       {
         "q": "What is the cheapest item at Culture House Greenpoint?",
-        "a": "At last check the menu started at {min_price}, a price shared by 1906 tablet two-packs, Jaunty gummy two-packs and a LayUp drink. Prices on Sensei are menu prices before New York's cannabis tax."
+        "a": "At last check the menu started at {min_price}, the price of 1906 tablet two-packs. Prices on Sensei are menu prices before New York's cannabis tax."
       }
     ]
   },
