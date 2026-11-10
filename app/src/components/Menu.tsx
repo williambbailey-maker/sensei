@@ -144,7 +144,7 @@ export function Menu({
             <p className="k" style={{ marginTop: 30 }}>
               {g.title}
             </p>
-            <div className="mt-2" style={{ borderTop: '2px solid #fff' }}>
+            <div className="mt-2" style={{ borderTop: '2px solid #F4EDDC' }}>
               {g.items.map((it) => {
                 const inner = (
                   <>
@@ -185,7 +185,7 @@ export function Menu({
             <p className="k" style={{ marginTop: 30 }}>
               About
             </p>
-            <p className="copy mt-2" style={{ color: 'rgba(255,255,255,.6)' }}>
+            <p className="copy mt-2" style={{ color: 'rgba(244,237,220,.6)' }}>
               Sensei is an independent guide to New York's licensed dispensaries. Prices and stock come from each
               shop's live menu and refresh nightly. We don't sell anything (<u>including your personal information</u>); you
               order on the dispensary's own site.

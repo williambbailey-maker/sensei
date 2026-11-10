@@ -1,0 +1,87 @@
+name: Cream preview screenshots
+
+# Builds the app from this branch (cream text, not deployed), serves it
+# locally, and takes full-size screenshots against live Supabase data. Also
+# shoots the live site (white text) for comparison. The images are committed
+# back to this branch under cream-shots/. Never touches main or production.
+
+on:
+  push:
+    branches: [cream-preview]
+    paths: ['app/**', '.github/workflows/cream-shots.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  shots:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build app
+        run: |
+          npm --prefix app ci
+          npm --prefix app run build
+      - name: Install Playwright
+        run: |
+          mkdir -p /tmp/pw && cd /tmp/pw && npm init -y >/dev/null && npm i playwright@1.48.2 >/dev/null
+          cd /tmp/pw && npx playwright install --with-deps chromium
+      - name: Serve and shoot
+        run: |
+          (cd app && npx vite preview --port 4173 --strictPort >/tmp/preview.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf http://localhost:4173/ >/dev/null && break; sleep 1; done
+          mkdir -p cream-shots
+          cat > /tmp/pw/shoot.cjs <<'JS'
+          const { chromium } = require('playwright')
+          const OUT = process.env.GITHUB_WORKSPACE + '/cream-shots/'
+          const LOCAL = 'http://localhost:4173'
+          const LIVE = 'https://sensei.nyc'
+          const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+          ;(async () => {
+            const b = await chromium.launch()
+            async function shot(name, base, path, { w = 390, h = 844, scale = 2, gate = false, act } = {}) {
+              const ctx = await b.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: scale })
+              if (!gate) await ctx.addInitScript(() => localStorage.setItem('sensei_age_ok', 'true'))
+              await ctx.route(/posthog|facebook|google-analytics|googletagmanager/, (r) => r.abort())
+              const p = await ctx.newPage()
+              try {
+                await p.goto(base + path, { waitUntil: 'networkidle', timeout: 45000 })
+              } catch (e) { console.log(name, 'goto', e.message) }
+              await sleep(2500)
+              if (act) { try { await act(p) } catch (e) { console.log(name, 'act', e.message) } await sleep(2500) }
+              await p.screenshot({ path: OUT + name + '.jpg', type: 'jpeg', quality: 86, fullPage: !gate && !(act && name.includes('menu')) })
+              console.log('ok', name)
+              await ctx.close()
+            }
+            const openFirst = async (p) => { await p.locator('.row').first().click(); }
+            const openMenu = async (p) => { await p.getByRole('button', { name: /menu/i }).first().click() }
+            for (const [base, tag] of [[LOCAL, 'cream'], [LIVE, 'white']]) {
+              await shot(`${tag}-home-phone`, base, '/')
+              await shot(`${tag}-deals-phone`, base, '/deals')
+              await shot(`${tag}-home-desktop`, base, '/', { w: 1440, h: 900, scale: 1 })
+              if (tag === 'white') continue
+              await shot(`${tag}-deals-desktop`, base, '/deals', { w: 1440, h: 900, scale: 1 })
+              await shot(`${tag}-results-phone`, base, '/?store=stoop')
+              await shot(`${tag}-results-desktop`, base, '/?store=stoop', { w: 1440, h: 900, scale: 1 })
+              await shot(`${tag}-product-phone`, base, '/?store=stoop', { act: openFirst })
+              await shot(`${tag}-menu-phone`, base, '/', { act: openMenu })
+              await shot(`${tag}-borough-phone`, base, '/?entry=borough')
+              await shot(`${tag}-agegate-phone`, base, '/', { gate: true })
+            }
+            await b.close()
+          })()
+          JS
+          node /tmp/pw/shoot.cjs
+          ls -la cream-shots
+      - name: Commit screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cream-shots
+          git commit -m "Cream preview screenshots [skip ci]" || exit 0
+          git push origin HEAD:${GITHUB_REF_NAME}
