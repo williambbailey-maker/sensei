@@ -240,7 +240,17 @@ export default function App() {
 
   // Every screen change starts at the top; the home's "Start here" block is
   // a long way down, and the next screen must not open at that offset.
-  useEffect(() => {
+  // Runs before paint so the new screen never flashes at the old offset, and
+  // the browser's own scroll restoration is off so the back gesture doesn't
+  // put it back.
+  useLayoutEffect(() => {
+    try {
+      history.scrollRestoration = 'manual'
+    } catch {
+      /* unsupported */
+    }
+  }, [])
+  useLayoutEffect(() => {
     window.scrollTo({ top: 0 })
   }, [view, way])
 

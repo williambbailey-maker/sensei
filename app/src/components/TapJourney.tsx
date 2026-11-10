@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { requestLocation } from '../lib/geo'
 import { BOROUGHS, BUDGETS, FORMATS, SIZES, STRAINS, stepValue } from '../lib/labels'
 import { canGoBack, pushScreen } from '../lib/nav'
@@ -54,6 +54,12 @@ export function TapJourney({
     pushScreen({ view: 'journey', way: 'borough', step: n })
     setStep(n)
   }
+  // Each step opens at the top. The borough step's neighborhood lists run
+  // long, and a pick near the bottom must not leave the next step scrolled
+  // down there (before paint, so it never flashes).
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0 })
+  }, [step])
   useEffect(() => {
     const onPop = (e: PopStateEvent) => {
       const s = e.state
