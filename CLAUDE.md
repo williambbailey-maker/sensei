@@ -50,6 +50,9 @@ can always be restored cleanly.
   effect pills). Hairline `.row` lists, 44px untreated circle `.thumb`s,
   underlined inputs/selects/tabs. No radius except circles, no shadows, blur or
   gradients. Same system on the SEO pages via `seo/build.py`.
+  Since Nov 10, 2026 `main` sets the ink in cream `#F8F4E9` instead of white
+  (mist/line/line-strong follow it; bullet letters stay `#FFFFFF`, text on
+  cream fills is `#0B0B0B`). The `subway-sign` branch keeps the white version.
 
 ### How to revert to a checkpoint
 
