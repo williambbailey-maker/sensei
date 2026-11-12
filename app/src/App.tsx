@@ -92,6 +92,17 @@ export default function App() {
   // those filters set. Resolved once the stores list is in, since store and
   // neighborhood hints are matched against it.
   const [deepLinked, setDeepLinked] = useState(false)
+  // Entries that need no store data (the /start ad page sends people to
+  // ?entry=borough) open at once instead of after the stores list arrives,
+  // so the home never flashes first.
+  useEffect(() => {
+    const entry = new URLSearchParams(window.location.search).get('entry')
+    if (entry === 'borough' || entry === 'search') {
+      setDeepLinked(true)
+      goTo(entry)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   useEffect(() => {
     if (deepLinked || stores.length === 0) return
     setDeepLinked(true)

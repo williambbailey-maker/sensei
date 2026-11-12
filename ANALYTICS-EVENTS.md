@@ -74,6 +74,17 @@ with all six properties populated:
 - in the app: open a product → `product_view`; add → `save`; subscribe →
   `signup`
 
+## Changed Nov 12 (the /start ad page: pitch first)
+
+`/start` now opens on the pitch (what Sensei does, the shop, neighborhood
+and item counts) with one button, "Pick your neighborhood". Tapping it sends
+`start_cta` and then `age_gate_shown` (both `variant: "start"`) and opens the
+21+ question in a bottom sheet. So on `/start`, `age_gate_shown` now means
+"tapped the button", not "the page loaded". "Yes" opens the finder's first
+step, `/?entry=borough` plus the ad's query string, instead of the home. A
+visitor who already answered goes straight there too. Before Nov 12 compare
+by pageviews, not by `age_gate_shown`.
+
 ## Added Nov 3 (the /start ad page)
 
 `/start` is the page paid ads link to: the 21+ question on its own. It

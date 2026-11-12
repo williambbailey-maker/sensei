@@ -1169,43 +1169,68 @@ def css_without(css, words):
 
 START_CSS = """
 .st{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding:0 16px}
-.st-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 0}
+.st-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 0 40px}
 .st .bullets{margin:0;gap:10px}
 .st .bullets .mb{width:44px;height:44px;font-size:24px}
-.st h1{font-size:32px;margin:28px 0 0}
-.st-note{margin:12px 0 0;font-size:15px;line-height:1.45;color:var(--mist)}
-.st .cta{margin-top:28px;min-height:56px}
-.st-no{display:inline-flex;align-items:center;min-height:48px;margin-top:6px;align-self:flex-start}
+.st h1{font-size:44px;line-height:1;letter-spacing:-.045em;margin:26px 0 0;text-wrap:balance}
+.st-lede{margin:16px 0 0;font-size:18px;line-height:1.4;letter-spacing:-.015em;max-width:30ch}
+.st-stats{display:flex;gap:22px;margin:22px 0 0}
+.st-stats b{display:block;font-size:26px;letter-spacing:-.04em;line-height:1}
+.st-stats span{display:block;margin-top:4px;font-size:13px;color:var(--mist)}
+.st .cta{margin-top:30px;min-height:58px}
+.st-small{margin:10px 0 0;font-size:13px;color:var(--mist)}
 .st-foot{padding-bottom:20px}
 .st-foot .rule{margin:0}
 .st-legal{display:flex;align-items:center;gap:2px;margin-top:6px;font-size:13px;color:var(--mist)}
 .st-legal a{display:inline-flex;align-items:center;min-height:48px;padding:0 6px;color:var(--mist)}
 .st-legal a:first-child{padding-left:0}
 .st-legal a:hover{color:var(--ink)}
-.st .cta:focus-visible,.st a:focus-visible{outline:none}
-[data-keys] .st .cta:focus-visible,[data-keys] .st a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.st-scrim{position:fixed;inset:0;z-index:40;background:rgba(11,11,11,.6)}
+.st-sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--deep);border-top:2px solid var(--ink);padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.st-sheet-in{max-width:528px;margin:0 auto}
+.st-sheet h2{margin:0;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.st-sheet p{margin:6px 0 0;font-size:14px;line-height:1.35;color:var(--mist)}
+.st-sheet .cta{margin-top:16px}
+.st-no{display:inline-flex;align-items:center;min-height:48px;margin-top:4px}
+.st .cta:focus-visible,.st a:focus-visible,.st-sheet .cta:focus-visible,.st-sheet a:focus-visible{outline:none}
+[data-keys] .st .cta:focus-visible,[data-keys] .st a:focus-visible,[data-keys] .st-sheet .cta:focus-visible,[data-keys] .st-sheet a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (max-width:370px){.st h1{font-size:38px}}
 """
 
 # Runs first: a visitor who already said yes goes straight to the app (the
 # page and its analytics see SENSEI_SKIP and stay quiet).
-START_SKIP_JS = ("<script>try{if(localStorage.getItem('sensei_age_ok')==='true'){window.SENSEI_SKIP=1;"
-                 "location.replace('/'+location.search)}}catch(e){}</script>")
+# Where a yes leads: straight into the finder's first step (pick a borough),
+# keeping the ad's tags for the app's own analytics.
+START_NEXT_JS = "function next(){var q=location.search.replace(/^\\?/,'');return '/?entry=borough'+(q?'&'+q:'')}"
 
+# Runs first: a visitor who already said yes goes straight into the finder
+# (the page and its analytics see SENSEI_SKIP and stay quiet).
+START_SKIP_JS = ("<script>try{if(localStorage.getItem('sensei_age_ok')==='true'){window.SENSEI_SKIP=1;"
+                 + START_NEXT_JS + ";location.replace(next())}}catch(e){}</script>")
+
+# The pitch shows first. The one button asks the 21+ question in a bottom
+# sheet (as the app's home does); yes goes into the finder.
 START_JS = """<script>(function(){if(window.SENSEI_SKIP)return;
-var Q=location.search,y=document.getElementById('st-yes'),n=document.getElementById('st-no');
-function send(name){try{return window.senseiEv?window.senseiEv(name,{variant:'start'}):null}catch(e){return null}}
-send('age_gate_shown');
-if(y){try{y.focus({preventScroll:true})}catch(e){y.focus()}
+""" + START_NEXT_JS + """
+var go=document.getElementById('st-go'),sh=document.getElementById('st-sheet'),sc=document.getElementById('st-scrim'),
+y=document.getElementById('st-yes'),n=document.getElementById('st-no'),main=document.querySelector('.st');
+function send(name,p){try{var o={variant:'start'};for(var k in p)o[k]=p[k];return window.senseiEv?window.senseiEv(name,o):null}catch(e){return null}}
+function open(){if(!sh.hidden)return;send('start_cta');send('age_gate_shown');sh.hidden=false;sc.hidden=false;
+if(main)main.setAttribute('aria-hidden','true');try{y.focus({preventScroll:true})}catch(e){y.focus()}}
+function close(){sh.hidden=true;sc.hidden=true;if(main)main.removeAttribute('aria-hidden');try{go.focus({preventScroll:true})}catch(e){}}
+go.addEventListener('click',open);sc.addEventListener('click',close);
 y.addEventListener('click',function(){try{localStorage.setItem('sensei_age_ok','true')}catch(e){}
-var gone=false;function go(){if(gone)return;gone=true;location.assign('/'+Q)}
-var w=send('age_gate_yes');if(w&&w.then)w.then(go,go);setTimeout(go,300)})}
-if(n)n.addEventListener('click',function(e){e.preventDefault();send('age_gate_no');setTimeout(function(){location.assign('https://www.google.com')},250)});
+var gone=false;function g(){if(gone)return;gone=true;location.assign(next())}
+var w=send('age_gate_yes');if(w&&w.then)w.then(g,g);setTimeout(g,300)});
+n.addEventListener('click',function(e){e.preventDefault();send('age_gate_no');setTimeout(function(){location.assign('https://www.google.com')},250)});
 document.addEventListener('keydown',function(e){document.documentElement.setAttribute('data-keys','');
-if(e.key!=='Tab'||!y||!n)return;var a=document.activeElement;
+if(sh.hidden)return;if(e.key==='Escape'){close();return}
+if(e.key!=='Tab')return;var a=document.activeElement;
 if(!e.shiftKey&&a===n){e.preventDefault();y.focus()}else if(e.shiftKey&&a===y){e.preventDefault();n.focus()}});
 })();</script>"""
 
 def build_start():
+    START_STATS = (STATS['shops'], STATS['neighborhoods'], f"{STATS['in_stock'] // 1000}k+")
     url = SITE_URL + START_PATH
     og = f"{SITE_URL}/start/og.png"
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -1232,14 +1257,22 @@ def build_start():
 <header class="top"><span class="wm">Sensei</span></header>
 <main class="st-main">
 <div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div>
-<h1>Are you 21 or older?</h1>
-<p class="st-note">Sensei is for adults 21 and over in New York State.</p>
-<button class="cta" id="st-yes" type="button"><span>Yes, I'm 21 or older</span><span aria-hidden="true">→</span></button>
-<a class="ghost st-no" id="st-no" href="https://www.google.com">I'm under 21</a>
+<h1>Every licensed shop in New York. One search.</h1>
+<p class="st-lede">See what's in stock near you, what it costs and how far it is, before you go.</p>
+<div class="st-stats"><div><b>{START_STATS[0]}</b><span>licensed shops</span></div><div><b>{START_STATS[1]}</b><span>neighborhoods</span></div><div><b>{START_STATS[2]}</b><span>items in stock</span></div></div>
+<button class="cta" id="st-go" type="button"><span>Pick your neighborhood</span><span aria-hidden="true">→</span></button>
+<p class="st-small">For adults 21 and over. Free, no sign-up.</p>
 </main>
 <footer class="st-foot"><div class="rule"></div>
 <nav class="st-legal" aria-label="Legal"><a href="/terms/">Terms</a><span aria-hidden="true">·</span><a href="/privacy/">Privacy</a></nav></footer>
 </div>
+<div class="st-scrim" id="st-scrim" hidden></div>
+<div class="st-sheet" id="st-sheet" role="dialog" aria-modal="true" aria-labelledby="st-q" hidden><div class="st-sheet-in">
+<h2 id="st-q">Are you 21 or older?</h2>
+<p>Sensei is for adults 21 and over in New York State.</p>
+<button class="cta" id="st-yes" type="button"><span>Yes, I'm 21 or older</span><span aria-hidden="true">→</span></button>
+<a class="ghost st-no" id="st-no" href="https://www.google.com">I'm under 21</a>
+</div></div>
 {analytics_js("start", None, lean=True)}{START_JS}</body></html>
 """
     low = html.lower()
