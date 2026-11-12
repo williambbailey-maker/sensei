@@ -23,8 +23,8 @@ export type Product = {
   clean_name: string | null
   brand: string | null
   clean_brand: string | null
-  description: string | null
-  brand_description: string | null
+  description?: string | null // not in list queries; ProductDetail fetches it
+  brand_description?: string | null
   effects: string[] | null
   category: string | null
   strain_type: string | null

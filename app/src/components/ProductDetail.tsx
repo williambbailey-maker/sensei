@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { directionsUrl, formatMiles, shortAddress } from '../lib/geo'
 import { formatLabel } from '../lib/labels'
 import { track } from '../lib/analytics'
+import { fetchProductText } from '../lib/supabase'
 import { eventProps, formatPrice, productFacts } from './ProductCard'
 import type { LatLng, Product } from '../lib/types'
 
@@ -33,6 +34,23 @@ export function ProductDetail({
   onAdd?: (p: Product) => void
 }) {
   const evProps = eventProps(p)
+  // Lists come without the long text; fetch it for the product on screen.
+  const [text, setText] = useState<{ id: string; description: string | null; brand_description: string | null } | null>(null)
+  useEffect(() => {
+    if (p.description !== undefined || p.brand_description !== undefined) return
+    let live = true
+    fetchProductText(p.id)
+      .then((t) => {
+        if (live) setText({ id: p.id, ...t })
+      })
+      .catch(() => {})
+    return () => {
+      live = false
+    }
+  }, [p.id, p.description, p.brand_description])
+  const loaded = text?.id === p.id ? text : null
+  const description = p.description ?? loaded?.description ?? null
+  const brandDescription = p.brand_description ?? loaded?.brand_description ?? null
   const { name, brand, price, was, weights, miles, storeName, place, thc } = productFacts(p, userLoc)
   const address = shortAddress(p.store?.address)
   const maps = p.store ? directionsUrl(storeName, p.store.address, p.store.lat, p.store.lng) : null
@@ -232,14 +250,14 @@ export function ProductDetail({
 
         {/* Product-level description if we have it, else the brand blurb; with
             neither, no description section at all. */}
-        {p.description ? (
+        {description ? (
           <p className="copy" style={{ marginTop: 18 }}>
-            {p.description}
+            {description}
           </p>
-        ) : p.brand_description ? (
+        ) : brandDescription ? (
           <div style={{ marginTop: 18 }}>
             <p className="meta">About {brand ?? 'the brand'}</p>
-            <p className="copy mt-1">{p.brand_description}</p>
+            <p className="copy mt-1">{brandDescription}</p>
           </div>
         ) : null}
 

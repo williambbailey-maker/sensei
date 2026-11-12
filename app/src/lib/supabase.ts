@@ -15,8 +15,11 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { persistSession: false },
 })
 
+// List columns. The long text (description, brand_description) is left out —
+// about a quarter of each row — and fetched by fetchProductText when a
+// product's detail opens.
 const PRODUCT_COLS =
-  'id,external_id,name,clean_name,brand,clean_brand,description,brand_description,effects,category,strain_type,thc_pct,cbd_pct,variants,price_min,price_was,on_sale,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng,address,menu_url)'
+  'id,external_id,name,clean_name,brand,clean_brand,effects,category,strain_type,thc_pct,cbd_pct,variants,price_min,price_was,on_sale,url,image_url,vibes,experience_level,potency_tier,price_band,in_stock,store:stores(name,borough,neighborhood,slug,lat,lng,address,menu_url)'
 
 // PostgREST caps each response at 1000 rows. We used to page through the whole
 // ~37k-row in-stock catalog (~26 MB) on load, and the results screen showed
@@ -37,11 +40,8 @@ export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise
   const storeIds = scopeStores(f, stores)
   if (storeIds && storeIds.length === 0) return []
 
-  const build = (from: number, withCount: boolean) => {
-    let q = supabase
-      .from('products')
-      .select(PRODUCT_COLS, withCount ? { count: 'exact' as const } : undefined)
-      .eq('in_stock', true)
+  const build = (from: number) => {
+    let q = supabase.from('products').select(PRODUCT_COLS).eq('in_stock', true)
     if (f.format) q = q.eq('category', f.format)
     if (f.onSale || f.sort === 'discount') q = q.eq('on_sale', true)
     if (f.strain) q = q.eq('strain_type', f.strain)
@@ -65,22 +65,35 @@ export async function fetchProductsFor(f: Filters, stores: StoreLite[]): Promise
     return q.range(from, from + PRODUCT_PAGE - 1)
   }
 
-  const first = await build(0, true)
-  if (first.error) throw first.error
-  const rows = (first.data ?? []) as unknown as Product[]
-  const total = Math.min(first.count ?? rows.length, MAX_ROWS)
-  const pages = Math.ceil(total / PRODUCT_PAGE)
-  if (pages <= 1) return rows
-
+  // No separate count: a short first page means that's everything; a full
+  // one means there may be more, so the rest of the cap comes in parallel.
+  const page = (from: number) =>
+    build(from).then((r) => {
+      if (r.error) throw r.error
+      return (r.data ?? []) as unknown as Product[]
+    })
+  const rows = await page(0)
+  if (rows.length < PRODUCT_PAGE) return rows
   const rest = await Promise.all(
-    Array.from({ length: pages - 1 }, (_, i) =>
-      build((i + 1) * PRODUCT_PAGE, false).then((r) => {
-        if (r.error) throw r.error
-        return (r.data ?? []) as unknown as Product[]
-      }),
-    ),
+    Array.from({ length: MAX_ROWS / PRODUCT_PAGE - 1 }, (_, i) => page((i + 1) * PRODUCT_PAGE)),
   )
   return rows.concat(...rest)
+}
+
+// The long text for one product's detail view.
+export async function fetchProductText(
+  id: string,
+): Promise<{ description: string | null; brand_description: string | null }> {
+  const { data, error } = await supabase
+    .from('products')
+    .select('description,brand_description')
+    .eq('id', id)
+    .maybeSingle()
+  if (error) throw error
+  return (data as { description: string | null; brand_description: string | null } | null) ?? {
+    description: null,
+    brand_description: null,
+  }
 }
 
 // The site's headline numbers, computed in the database (site_stats) from
