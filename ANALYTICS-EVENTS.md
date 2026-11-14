@@ -74,6 +74,16 @@ with all six properties populated:
 - in the app: open a product → `product_view`; add → `save`; subscribe →
   `signup`
 
+## Changed Nov 14 (/start: yes goes to the deals page)
+
+"Yes" on /start now opens `/deals` plus the ad's query string, not the
+finder (`/?entry=borough`): in the first two days nobody from the ads got
+through the finder to a product. The button reads "See today's deals" and its
+`cta_tap` target is `see_deals` (was `pick_neighborhood`). A visitor who
+already answered is sent to `/deals` too. The app's pageview is then
+`path: "/deals"` with the same tags, visitor and session ids; what to watch
+is `deal_open` / `product_view` and the click-out events after it.
+
 ## Added Nov 14 (/start tracking)
 
 - `page_seen` (every static page) now also fires on the visitor's first

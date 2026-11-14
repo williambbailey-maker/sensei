@@ -1,12 +1,12 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<script>try{if(localStorage.getItem('sensei_age_ok')==='true'){window.SENSEI_SKIP=1;function next(){var q=location.search.replace(/^\?/,'');return '/?entry=borough'+(q?'&'+q:'')};location.replace(next())}}catch(e){}</script>
+<script>try{if(localStorage.getItem('sensei_age_ok')==='true'){window.SENSEI_SKIP=1;function next(){return '/deals'+location.search};location.replace(next())}}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sensei — a guide to New York</title>
-<meta name="description" content="Sensei is a guide to what's near you in New York. Pick a neighborhood and see what's close.">
+<meta name="description" content="Sensei is a guide to what's near you in New York. See today's deals and what's close.">
 <link rel="canonical" href="https://sensei.nyc/start">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sensei — a guide to New York">
-<meta property="og:description" content="Sensei is a guide to what's near you in New York. Pick a neighborhood and see what's close.">
+<meta property="og:description" content="Sensei is a guide to what's near you in New York. See today's deals and what's close.">
 <meta property="og:url" content="https://sensei.nyc/start">
 <meta property="og:image" content="https://sensei.nyc/start/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://sensei.nyc/start/og.png">
@@ -284,7 +284,7 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 <h1 data-tap="headline">Every licensed shop in New York. One search.</h1>
 <p class="st-lede" data-tap="lede">See what's in stock near you, what it costs and how far it is, before you go.</p>
 <div class="st-stats" data-tap="stats"><div><b>126</b><span>licensed shops</span></div><div><b>33</b><span>neighborhoods</span></div><div><b>65k+</b><span>items in stock</span></div></div>
-<button class="cta" id="st-go" type="button" data-tap="pick_neighborhood"><span>Pick your neighborhood</span><span aria-hidden="true">→</span></button>
+<button class="cta" id="st-go" type="button" data-tap="see_deals"><span>See today&#39;s deals</span><span aria-hidden="true">→</span></button>
 <p class="st-small" data-tap="small_print">For adults 21 and over. Free, no sign-up.</p>
 </main>
 <footer class="st-foot"><div class="rule"></div>
@@ -338,7 +338,7 @@ document.addEventListener('visibilitychange',arm);document.addEventListener('pre
 window.senseiEv=function(n,p){ev(n,p);return GEO;};
 })();
 </script><script>(function(){if(window.SENSEI_SKIP)return;
-function next(){var q=location.search.replace(/^\?/,'');return '/?entry=borough'+(q?'&'+q:'')}
+function next(){return '/deals'+location.search}
 var go=document.getElementById('st-go'),sh=document.getElementById('st-sheet'),sc=document.getElementById('st-scrim'),
 y=document.getElementById('st-yes'),n=document.getElementById('st-no'),main=document.querySelector('.st');
 function send(name,p){try{var o={variant:'start'};for(var k in p)o[k]=p[k];return window.senseiEv?window.senseiEv(name,o):null}catch(e){return null}}

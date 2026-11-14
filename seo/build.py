@@ -1155,7 +1155,7 @@ START_OUT = ROOT.parent / "app" / "public" / "start" / "index.html"
 START_BANNED = ["cannabis", "thc", "cbd", "weed", "marijuana", "edible", "flower", "pre-roll", "preroll",
                 "vape", "dispensar", "strain", "menu", "21+"]
 START_TITLE = "Sensei — a guide to New York"
-START_DESC = "Sensei is a guide to what's near you in New York. Pick a neighborhood and see what's close."
+START_DESC = "Sensei is a guide to what's near you in New York. See today's deals and what's close."
 
 def css_without(css, words):
     """The shared CSS minus comments and any rule (or @keyframes) that mentions
@@ -1217,17 +1217,19 @@ START_CSS = """
 
 # Runs first: a visitor who already said yes goes straight to the app (the
 # page and its analytics see SENSEI_SKIP and stay quiet).
-# Where a yes leads: straight into the finder's first step (pick a borough),
-# keeping the ad's tags for the app's own analytics.
-START_NEXT_JS = "function next(){var q=location.search.replace(/^\\?/,'');return '/?entry=borough'+(q?'&'+q:'')}"
+# Where a yes leads: the deals page, so the first thing a paid visitor sees
+# is products with prices (the finder asked 4-5 questions first and nobody
+# from the ads got through it). The ad's tags ride along for the app's own
+# analytics.
+START_NEXT_JS = "function next(){return '/deals'+location.search}"
 
-# Runs first: a visitor who already said yes goes straight into the finder
+# Runs first: a visitor who already said yes goes straight to the deals
 # (the page and its analytics see SENSEI_SKIP and stay quiet).
 START_SKIP_JS = ("<script>try{if(localStorage.getItem('sensei_age_ok')==='true'){window.SENSEI_SKIP=1;"
                  + START_NEXT_JS + ";location.replace(next())}}catch(e){}</script>")
 
 # The pitch shows first. The one button asks the 21+ question in a bottom
-# sheet (as the app's home does); yes goes into the finder.
+# sheet (as the app's home does); yes goes to the deals page.
 START_JS = """<script>(function(){if(window.SENSEI_SKIP)return;
 """ + START_NEXT_JS + """
 var go=document.getElementById('st-go'),sh=document.getElementById('st-sheet'),sc=document.getElementById('st-scrim'),
@@ -1282,7 +1284,7 @@ def build_start():
 <h1 data-tap="headline">Every licensed shop in New York. One search.</h1>
 <p class="st-lede" data-tap="lede">See what's in stock near you, what it costs and how far it is, before you go.</p>
 <div class="st-stats" data-tap="stats"><div><b>{START_STATS[0]}</b><span>licensed shops</span></div><div><b>{START_STATS[1]}</b><span>neighborhoods</span></div><div><b>{START_STATS[2]}</b><span>items in stock</span></div></div>
-<button class="cta" id="st-go" type="button" data-tap="pick_neighborhood"><span>Pick your neighborhood</span><span aria-hidden="true">→</span></button>
+<button class="cta" id="st-go" type="button" data-tap="see_deals"><span>See today&#39;s deals</span><span aria-hidden="true">→</span></button>
 <p class="st-small" data-tap="small_print">For adults 21 and over. Free, no sign-up.</p>
 </main>
 <footer class="st-foot"><div class="rule"></div>
