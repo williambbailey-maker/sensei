@@ -56,7 +56,7 @@ jobs:
           echo "sale prices + deals board in app: $(cat index-*.js 2>/dev/null | grep -c 'price_was') $(cat index-*.js 2>/dev/null | grep -c 'live_deals')"
           echo "deals page in app + /deals:       $(cat index-*.js 2>/dev/null | grep -c 'deals!inner')  $(curl $C -o /dev/null -w '%{http_code} %{content_type}' "$B/deals")  $(curl $C -o /dev/null -w '%{http_code}' "$B/deals/")"
           curl $C -o start.html "$B/start"; echo "/start ad page:                   $(curl $C -o /dev/null -w '%{http_code}' "$B/start")  $(grep -oE '<title>[^<]*' start.html)  word-rule hits (want 0): $(grep -oiE 'cannabis|thc|cbd|weed|marijuana|edible|flower|pre-?roll|vape|dispensar|strain|menu|21[+]' start.html | wc -l)  og: $(curl $C -o /dev/null -w '%{http_code} %{content_type}' "$B/start/og.png")  in sitemap (want 0): $(curl $C "$B/sitemap.xml" | grep -c '/start')"
-          echo "/start yes -> /deals (want 1 0):  $(grep -c "return '/deals'+location.search" start.html) $(grep -c 'entry=borough' start.html)  button: $(grep -oE "See today[^<]*deals" start.html | head -1)"
+          echo "/start yes -> /deals (want 2 0):  $(grep -c "return '/deals'+location.search" start.html) $(grep -c 'entry=borough' start.html)  button: $(grep -oE "See today[^<]*deals" start.html | head -1)"
           echo "cart uses shop menu_url:          $(cat index-*.js 2>/dev/null | grep -c 'menu_url')"
           echo "cream ink (#F8F4E9) app css/guide: $(cat index-*.css 2>/dev/null | grep -oi 'f8f4e9' | wc -l) $(curl $C "$B/nyc/flower/" | grep -oi 'f8f4e9' | wc -l)"
           echo "instagram link in app:            $(cat index-*.js 2>/dev/null | grep -c 'instagram.com/sensei.nyc')"
