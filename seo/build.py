@@ -553,7 +553,10 @@ else if(name==='menu_click'||name==='directions_click'){fbq('track','Lead',{cont
 else if(name==='signup')fbq('track','CompleteRegistration',{},o);}catch(e){}}
 var SEQ=0;function ev(name,p){p=p||{};p.seq=++SEQ;fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
 var df=document.getElementById('drop-form');var dop=document.getElementById('drop-open');function dopen(){if(!df||!dop)return;dop.parentNode.hidden=true;df.hidden=false;df.email.focus();}if(dop)dop.addEventListener('click',dopen);if(location.hash==='#drop')dopen();if(df)df.addEventListener('submit',function(e){e.preventDefault();var em=(df.email.value||'').trim();if(em.indexOf('@')<0)return;sb('subscribers',{email:em,source:'seo'});ev('signup',{placement:'seo'});df.hidden=true;var ok=document.getElementById('drop-ok');if(ok)ok.hidden=false;});
-if(!BOT){(function(){var t=null;function done(){document.removeEventListener('visibilitychange',arm);document.removeEventListener('prerenderingchange',arm);}function arm(){if(document.visibilityState==='visible'&&!document.prerendering){if(!t)t=setTimeout(function(){done();ev('page_seen',{});},2000);}else if(t){clearTimeout(t);t=null;}}document.addEventListener('visibilitychange',arm);document.addEventListener('prerenderingchange',arm);arm();})();}
+if(!BOT){(function(){var t=null,sent=false,IN=['pointerdown','touchstart','keydown','scroll'];function tap(){fire('interaction');}
+function fire(via){if(sent)return;sent=true;if(t)clearTimeout(t);document.removeEventListener('visibilitychange',arm);document.removeEventListener('prerenderingchange',arm);IN.forEach(function(x){removeEventListener(x,tap,true);});ev('page_seen',{via:via});}
+function arm(){if(document.visibilityState==='visible'&&!document.prerendering){if(!t)t=setTimeout(function(){fire('timer');},2000);}else if(t){clearTimeout(t);t=null;}}
+document.addEventListener('visibilitychange',arm);document.addEventListener('prerenderingchange',arm);IN.forEach(function(x){addEventListener(x,tap,{capture:true,passive:true});});arm();})();}
 if(CFG.page_type==='brand')ev('brand_view',{});
 function cp(el){return{brand:el.getAttribute('data-brand')||CFG.brand||null,product_key:el.getAttribute('data-product-key')||null,category:el.getAttribute('data-category')||CFG.category||null};}
 try{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){ev('product_impression',cp(x.target));io.unobserve(x.target);}});},{threshold:0.5});
@@ -582,6 +585,21 @@ def _lean_analytics(js):
         ("var base={brand:CFG.brand||null,product_key:null,dispensary:CFG.dispensary||null,neighborhood:CFG.neighborhood||null,page_type:CFG.page_type,source:SRC};",
          "var base={page_type:CFG.page_type,source:SRC};"),
         ("brand:p.brand||CFG.brand||null,product_key:p.product_key||null,dispensary:p.dispensary||CFG.dispensary||null,neighborhood:p.neighborhood||CFG.neighborhood||null,category:p.category||CFG.category||null,", ""),
+        # Which browser the visit is in (Instagram's and Facebook's in-app
+        # browsers name themselves in the user agent) and whether the page
+        # was on screen when it loaded: the apps preload ad links in the
+        # background, and those loads never become page_seen.
+        ("var TAGS=(function(){",
+         "var UA=navigator.userAgent||'',IAB=/Instagram/.test(UA)?'instagram':/FBAN|FBAV|FB_IAB|FBIOS/.test(UA)?'facebook':'none',"
+         "VIS0=document.visibilityState||null,PRE0=!!document.prerendering;var TAGS=(function(){"),
+        ("var base={page_type:CFG.page_type,source:SRC};",
+         "var base={page_type:CFG.page_type,source:SRC,in_app_browser:IAB,is_instagram_app:IAB==='instagram',visibility_at_load:VIS0,prerendering_at_load:PRE0};"),
+        # The pageview is sent by hand after register(), so it carries those
+        # properties too; pageleave stays on.
+        ("posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,person_profiles:'identified_only'});",
+         "posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:false,capture_pageleave:true,autocapture:false,person_profiles:'identified_only'});"),
+        ("posthog.register(base);PH=true;", "posthog.register(base);posthog.capture('$pageview');PH=true;"),
+        ("function ev(name,p){p=p||{};p.seq=++SEQ;", "function ev(name,p){p=p||{};p.seq=++SEQ;p.in_app_browser=IAB;"),
     ]
     for old, new in swaps:
         assert old in js, old[:40]
@@ -1217,14 +1235,18 @@ y=document.getElementById('st-yes'),n=document.getElementById('st-no'),main=docu
 function send(name,p){try{var o={variant:'start'};for(var k in p)o[k]=p[k];return window.senseiEv?window.senseiEv(name,o):null}catch(e){return null}}
 function open(){if(!sh.hidden)return;send('start_cta');send('age_gate_shown');sh.hidden=false;sc.hidden=false;
 if(main)main.setAttribute('aria-hidden','true');try{y.focus({preventScroll:true})}catch(e){y.focus()}}
-function close(){sh.hidden=true;sc.hidden=true;if(main)main.removeAttribute('aria-hidden');try{go.focus({preventScroll:true})}catch(e){}}
-go.addEventListener('click',open);sc.addEventListener('click',close);
-y.addEventListener('click',function(){try{localStorage.setItem('sensei_age_ok','true')}catch(e){}
+var done=false;
+function close(how){sh.hidden=true;sc.hidden=true;if(main)main.removeAttribute('aria-hidden');send('age_gate_dismissed',{how:how});try{go.focus({preventScroll:true})}catch(e){}}
+function left(){if(done||sh.hidden)return;done=true;send('age_gate_dismissed',{how:'left'})}
+addEventListener('pagehide',left);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')left()});
+document.addEventListener('click',function(e){var el=e.target&&e.target.closest?e.target.closest('[data-tap]'):null;send('cta_tap',{target:el?el.getAttribute('data-tap'):'page'})},true);
+go.addEventListener('click',open);sc.addEventListener('click',function(){close('outside')});
+y.addEventListener('click',function(){done=true;try{localStorage.setItem('sensei_age_ok','true')}catch(e){}
 var gone=false;function g(){if(gone)return;gone=true;location.assign(next())}
 var w=send('age_gate_yes');if(w&&w.then)w.then(g,g);setTimeout(g,300)});
-n.addEventListener('click',function(e){e.preventDefault();send('age_gate_no');setTimeout(function(){location.assign('https://www.google.com')},250)});
+n.addEventListener('click',function(e){e.preventDefault();done=true;send('age_gate_no');setTimeout(function(){location.assign('https://www.google.com')},250)});
 document.addEventListener('keydown',function(e){document.documentElement.setAttribute('data-keys','');
-if(sh.hidden)return;if(e.key==='Escape'){close();return}
+if(sh.hidden)return;if(e.key==='Escape'){close('escape');return}
 if(e.key!=='Tab')return;var a=document.activeElement;
 if(!e.shiftKey&&a===n){e.preventDefault();y.focus()}else if(e.shiftKey&&a===y){e.preventDefault();n.focus()}});
 })();</script>"""
@@ -1254,24 +1276,24 @@ def build_start():
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>{css_without(CSS, START_BANNED)}{START_CSS}</style></head><body>
 <div class="st">
-<header class="top"><span class="wm">Sensei</span></header>
+<header class="top" data-tap="wordmark"><span class="wm">Sensei</span></header>
 <main class="st-main">
-<div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div>
-<h1>Every licensed shop in New York. One search.</h1>
-<p class="st-lede">See what's in stock near you, what it costs and how far it is, before you go.</p>
-<div class="st-stats"><div><b>{START_STATS[0]}</b><span>licensed shops</span></div><div><b>{START_STATS[1]}</b><span>neighborhoods</span></div><div><b>{START_STATS[2]}</b><span>items in stock</span></div></div>
-<button class="cta" id="st-go" type="button"><span>Pick your neighborhood</span><span aria-hidden="true">→</span></button>
-<p class="st-small">For adults 21 and over. Free, no sign-up.</p>
+<div class="bullets" aria-hidden="true" data-tap="bullets"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div>
+<h1 data-tap="headline">Every licensed shop in New York. One search.</h1>
+<p class="st-lede" data-tap="lede">See what's in stock near you, what it costs and how far it is, before you go.</p>
+<div class="st-stats" data-tap="stats"><div><b>{START_STATS[0]}</b><span>licensed shops</span></div><div><b>{START_STATS[1]}</b><span>neighborhoods</span></div><div><b>{START_STATS[2]}</b><span>items in stock</span></div></div>
+<button class="cta" id="st-go" type="button" data-tap="pick_neighborhood"><span>Pick your neighborhood</span><span aria-hidden="true">→</span></button>
+<p class="st-small" data-tap="small_print">For adults 21 and over. Free, no sign-up.</p>
 </main>
 <footer class="st-foot"><div class="rule"></div>
-<nav class="st-legal" aria-label="Legal"><a href="/terms/">Terms</a><span aria-hidden="true">·</span><a href="/privacy/">Privacy</a></nav></footer>
+<nav class="st-legal" aria-label="Legal"><a href="/terms/" data-tap="terms">Terms</a><span aria-hidden="true">·</span><a href="/privacy/" data-tap="privacy">Privacy</a></nav></footer>
 </div>
-<div class="st-scrim" id="st-scrim" hidden></div>
-<div class="st-sheet" id="st-sheet" role="dialog" aria-modal="true" aria-labelledby="st-q" hidden><div class="st-sheet-in">
+<div class="st-scrim" id="st-scrim" data-tap="outside_sheet" hidden></div>
+<div class="st-sheet" id="st-sheet" data-tap="sheet" role="dialog" aria-modal="true" aria-labelledby="st-q" hidden><div class="st-sheet-in">
 <h2 id="st-q">Are you 21 or older?</h2>
 <p>Sensei is for adults 21 and over in New York State.</p>
-<button class="cta" id="st-yes" type="button"><span>Yes, I'm 21 or older</span><span aria-hidden="true">→</span></button>
-<a class="ghost st-no" id="st-no" href="https://www.google.com">I'm under 21</a>
+<button class="cta" id="st-yes" type="button" data-tap="yes_21"><span>Yes, I'm 21 or older</span><span aria-hidden="true">→</span></button>
+<a class="ghost st-no" id="st-no" href="https://www.google.com" data-tap="under_21">I'm under 21</a>
 </div></div>
 {analytics_js("start", None, lean=True)}{START_JS}</body></html>
 """

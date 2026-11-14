@@ -278,24 +278,24 @@ main>h1:first-child,.mark{font-size:clamp(84px,7.2vw,108px)}
 @media (max-width:370px){.st h1{font-size:38px}}
 </style></head><body>
 <div class="st">
-<header class="top"><span class="wm">Sensei</span></header>
+<header class="top" data-tap="wordmark"><span class="wm">Sensei</span></header>
 <main class="st-main">
-<div class="bullets" aria-hidden="true"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div>
-<h1>Every licensed shop in New York. One search.</h1>
-<p class="st-lede">See what's in stock near you, what it costs and how far it is, before you go.</p>
-<div class="st-stats"><div><b>126</b><span>licensed shops</span></div><div><b>33</b><span>neighborhoods</span></div><div><b>65k+</b><span>items in stock</span></div></div>
-<button class="cta" id="st-go" type="button"><span>Pick your neighborhood</span><span aria-hidden="true">→</span></button>
-<p class="st-small">For adults 21 and over. Free, no sign-up.</p>
+<div class="bullets" aria-hidden="true" data-tap="bullets"><span class="mb" style="background:#00933C">N</span><span class="mb" style="background:#6CBE45">Y</span><span class="mb" style="background:#1B5E3A">C</span></div>
+<h1 data-tap="headline">Every licensed shop in New York. One search.</h1>
+<p class="st-lede" data-tap="lede">See what's in stock near you, what it costs and how far it is, before you go.</p>
+<div class="st-stats" data-tap="stats"><div><b>126</b><span>licensed shops</span></div><div><b>33</b><span>neighborhoods</span></div><div><b>65k+</b><span>items in stock</span></div></div>
+<button class="cta" id="st-go" type="button" data-tap="pick_neighborhood"><span>Pick your neighborhood</span><span aria-hidden="true">→</span></button>
+<p class="st-small" data-tap="small_print">For adults 21 and over. Free, no sign-up.</p>
 </main>
 <footer class="st-foot"><div class="rule"></div>
-<nav class="st-legal" aria-label="Legal"><a href="/terms/">Terms</a><span aria-hidden="true">·</span><a href="/privacy/">Privacy</a></nav></footer>
+<nav class="st-legal" aria-label="Legal"><a href="/terms/" data-tap="terms">Terms</a><span aria-hidden="true">·</span><a href="/privacy/" data-tap="privacy">Privacy</a></nav></footer>
 </div>
-<div class="st-scrim" id="st-scrim" hidden></div>
-<div class="st-sheet" id="st-sheet" role="dialog" aria-modal="true" aria-labelledby="st-q" hidden><div class="st-sheet-in">
+<div class="st-scrim" id="st-scrim" data-tap="outside_sheet" hidden></div>
+<div class="st-sheet" id="st-sheet" data-tap="sheet" role="dialog" aria-modal="true" aria-labelledby="st-q" hidden><div class="st-sheet-in">
 <h2 id="st-q">Are you 21 or older?</h2>
 <p>Sensei is for adults 21 and over in New York State.</p>
-<button class="cta" id="st-yes" type="button"><span>Yes, I'm 21 or older</span><span aria-hidden="true">→</span></button>
-<a class="ghost st-no" id="st-no" href="https://www.google.com">I'm under 21</a>
+<button class="cta" id="st-yes" type="button" data-tap="yes_21"><span>Yes, I'm 21 or older</span><span aria-hidden="true">→</span></button>
+<a class="ghost st-no" id="st-no" href="https://www.google.com" data-tap="under_21">I'm under 21</a>
 </div></div>
 <script>
 (function(){if(window.SENSEI_SKIP)return;var CFG={"key": "phc_rqqTjemCGcjixkB3oiNQgB2L9w4yRGyZcYK3iP4mEcXX", "host": "https://us.i.posthog.com", "meta": "1429430855347256", "page_type": "start", "sb_url": "https://dywrisybvcorpfhbwgtg.supabase.co", "sb_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d3Jpc3lidmNvcnBmaGJ3Z3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMDEyMzcsImV4cCI6MjA5NTg3NzIzN30.FgI4VqSYuInl2RDOzeNB4BLVTkYI-PaB7up0JTXmcnw"};
@@ -308,7 +308,7 @@ if(/(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./.test(h)||h.indexOf('sea
 if(/(instagram|facebook|t\.co|twitter|x\.com|reddit|tiktok|linkedin|youtube|pinterest|threads)/.test(h))return'social';
 return'direct';}catch(e){return'direct';}}
 var SRC=src(),BOT=/bot|crawl|spider|slurp|preview|headless|lighthouse|phantomjs/i.test(navigator.userAgent)||navigator.webdriver===true;
-var TAGS=(function(){try{var q=new URLSearchParams(location.search);function v(k){var x=(q.get(k)||'').trim().slice(0,120);return x||null;}return{src:v('src'),utm_source:v('utm_source'),utm_medium:v('utm_medium'),utm_campaign:v('utm_campaign'),utm_content:v('utm_content'),click_id:q.has('fbclid')||q.has('gclid')||q.has('ttclid')};}catch(e){return{};}})();
+var UA=navigator.userAgent||'',IAB=/Instagram/.test(UA)?'instagram':/FBAN|FBAV|FB_IAB|FBIOS/.test(UA)?'facebook':'none',VIS0=document.visibilityState||null,PRE0=!!document.prerendering;var TAGS=(function(){try{var q=new URLSearchParams(location.search);function v(k){var x=(q.get(k)||'').trim().slice(0,120);return x||null;}return{src:v('src'),utm_source:v('utm_source'),utm_medium:v('utm_medium'),utm_campaign:v('utm_campaign'),utm_content:v('utm_content'),click_id:q.has('fbclid')||q.has('gclid')||q.has('ttclid')};}catch(e){return{};}})();
 function id(store,k){try{var v=store.getItem(k);if(!v){v=Math.random().toString(36).slice(2)+Date.now().toString(36);store.setItem(k,v);}return v;}catch(e){return'na';}}
 var SID=id(sessionStorage,'sensei_sid'),VID=id(localStorage,'sensei_vid');
 var DEV=/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop';
@@ -322,16 +322,19 @@ sb('pageviews',{path:location.pathname,page_type:CFG.page_type,source:SRC,referr
 var PH=false;
 if(!INT&&CFG.key&&CFG.key.indexOf('__')!==0){try{
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister getFeatureFlag isFeatureEnabled".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:true,autocapture:false,person_profiles:'identified_only'});
-var base={page_type:CFG.page_type,source:SRC};
-if(CFG.category)base.category=CFG.category;posthog.register(base);PH=true;}catch(e){}}
+posthog.init(CFG.key,{api_host:CFG.host,capture_pageview:false,capture_pageleave:true,autocapture:false,person_profiles:'identified_only'});
+var base={page_type:CFG.page_type,source:SRC,in_app_browser:IAB,is_instagram_app:IAB==='instagram',visibility_at_load:VIS0,prerendering_at_load:PRE0};
+if(CFG.category)base.category=CFG.category;posthog.register(base);posthog.capture('$pageview');PH=true;}catch(e){}}
 var FB=false;if(!INT&&!BOT&&CFG.meta){try{
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('set','autoConfig',false,CFG.meta);fbq('init',CFG.meta);FB=true;fbq('track','PageView',{},{eventID:Math.random().toString(36).slice(2)+Date.now().toString(36)});}catch(e){}}
 function fb(){}
 function eid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
-var SEQ=0;function ev(name,p){p=p||{};p.seq=++SEQ;fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
-if(!BOT){(function(){var t=null;function done(){document.removeEventListener('visibilitychange',arm);document.removeEventListener('prerenderingchange',arm);}function arm(){if(document.visibilityState==='visible'&&!document.prerendering){if(!t)t=setTimeout(function(){done();ev('page_seen',{});},2000);}else if(t){clearTimeout(t);t=null;}}document.addEventListener('visibilitychange',arm);document.addEventListener('prerenderingchange',arm);arm();})();}
+var SEQ=0;function ev(name,p){p=p||{};p.seq=++SEQ;p.in_app_browser=IAB;fb(name);sb('events',{event:name,path:location.pathname,page_type:CFG.page_type,source:SRC,session_id:SID,visitor_id:VID,internal:INT,props:p});if(PH){try{posthog.capture(name,p);}catch(e){}}}
+if(!BOT){(function(){var t=null,sent=false,IN=['pointerdown','touchstart','keydown','scroll'];function tap(){fire('interaction');}
+function fire(via){if(sent)return;sent=true;if(t)clearTimeout(t);document.removeEventListener('visibilitychange',arm);document.removeEventListener('prerenderingchange',arm);IN.forEach(function(x){removeEventListener(x,tap,true);});ev('page_seen',{via:via});}
+function arm(){if(document.visibilityState==='visible'&&!document.prerendering){if(!t)t=setTimeout(function(){fire('timer');},2000);}else if(t){clearTimeout(t);t=null;}}
+document.addEventListener('visibilitychange',arm);document.addEventListener('prerenderingchange',arm);IN.forEach(function(x){addEventListener(x,tap,{capture:true,passive:true});});arm();})();}
 window.senseiEv=function(n,p){ev(n,p);return GEO;};
 })();
 </script><script>(function(){if(window.SENSEI_SKIP)return;
@@ -341,14 +344,18 @@ y=document.getElementById('st-yes'),n=document.getElementById('st-no'),main=docu
 function send(name,p){try{var o={variant:'start'};for(var k in p)o[k]=p[k];return window.senseiEv?window.senseiEv(name,o):null}catch(e){return null}}
 function open(){if(!sh.hidden)return;send('start_cta');send('age_gate_shown');sh.hidden=false;sc.hidden=false;
 if(main)main.setAttribute('aria-hidden','true');try{y.focus({preventScroll:true})}catch(e){y.focus()}}
-function close(){sh.hidden=true;sc.hidden=true;if(main)main.removeAttribute('aria-hidden');try{go.focus({preventScroll:true})}catch(e){}}
-go.addEventListener('click',open);sc.addEventListener('click',close);
-y.addEventListener('click',function(){try{localStorage.setItem('sensei_age_ok','true')}catch(e){}
+var done=false;
+function close(how){sh.hidden=true;sc.hidden=true;if(main)main.removeAttribute('aria-hidden');send('age_gate_dismissed',{how:how});try{go.focus({preventScroll:true})}catch(e){}}
+function left(){if(done||sh.hidden)return;done=true;send('age_gate_dismissed',{how:'left'})}
+addEventListener('pagehide',left);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')left()});
+document.addEventListener('click',function(e){var el=e.target&&e.target.closest?e.target.closest('[data-tap]'):null;send('cta_tap',{target:el?el.getAttribute('data-tap'):'page'})},true);
+go.addEventListener('click',open);sc.addEventListener('click',function(){close('outside')});
+y.addEventListener('click',function(){done=true;try{localStorage.setItem('sensei_age_ok','true')}catch(e){}
 var gone=false;function g(){if(gone)return;gone=true;location.assign(next())}
 var w=send('age_gate_yes');if(w&&w.then)w.then(g,g);setTimeout(g,300)});
-n.addEventListener('click',function(e){e.preventDefault();send('age_gate_no');setTimeout(function(){location.assign('https://www.google.com')},250)});
+n.addEventListener('click',function(e){e.preventDefault();done=true;send('age_gate_no');setTimeout(function(){location.assign('https://www.google.com')},250)});
 document.addEventListener('keydown',function(e){document.documentElement.setAttribute('data-keys','');
-if(sh.hidden)return;if(e.key==='Escape'){close();return}
+if(sh.hidden)return;if(e.key==='Escape'){close('escape');return}
 if(e.key!=='Tab')return;var a=document.activeElement;
 if(!e.shiftKey&&a===n){e.preventDefault();y.focus()}else if(e.shiftKey&&a===y){e.preventDefault();n.focus()}});
 })();</script></body></html>

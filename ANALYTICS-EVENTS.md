@@ -74,6 +74,27 @@ with all six properties populated:
 - in the app: open a product → `product_view`; add → `save`; subscribe →
   `signup`
 
+## Added Nov 14 (/start tracking)
+
+- `page_seen` (every static page) now also fires on the visitor's first
+  touch, key press or scroll, not only after 2 seconds on screen. Its props
+  say which: `via: "timer"` or `via: "interaction"`. It still never fires for
+  a load that was never on screen: Instagram preloads ad links in the
+  background, and those loads have a `$pageview` but no `page_seen`.
+- `/start` registers `in_app_browser` (`instagram` / `facebook` / `none`),
+  `is_instagram_app`, `visibility_at_load` and `prerendering_at_load` in
+  PostHog, so they ride on the `$pageview` and every event. The Supabase
+  events rows carry `in_app_browser` in `props`.
+- `cta_tap` (`variant: "start"`, `target`): every tap on /start, named by the
+  spot tapped (`pick_neighborhood`, `yes_21`, `under_21`, `outside_sheet`,
+  `sheet`, `stats`, `headline`, `lede`, `bullets`, `wordmark`, `small_print`,
+  `terms`, `privacy`, or `page` for anywhere else). PostHog autocapture stays
+  off on purpose (curated events only).
+- `age_gate_dismissed` (`variant: "start"`, `how`): the 21+ sheet closed
+  without an answer: `outside` (tapped outside it), `escape`, or `left` (the
+  page was hidden or closed while it was open). `age_gate_no` was already
+  sent on "I'm under 21".
+
 ## Changed Nov 12 (the /start ad page: pitch first)
 
 `/start` now opens on the pitch (what Sensei does, the shop, neighborhood

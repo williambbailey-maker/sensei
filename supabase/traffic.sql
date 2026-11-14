@@ -44,11 +44,13 @@ with pv as (
   from public.pageviews where session_id is not null group by 1
 ), ev as (
   -- Passive signals are kept out of `actions`, so "did something" means a
-  -- tap: the 21+ check, time on site, scroll depth, and two events that fire
+  -- tap: the 21+ check (including a dismissed one), time on site, scroll
+  -- depth, page_seen (the page was on screen), and two events that fire
   -- without one (product cards coming into view, a brand page's own view).
   select session_id,
          count(*) as events,
-         count(*) filter (where event not in ('age_gate_shown', 'age_gate_yes', 'age_gate_no', 'time_on_site', 'scroll_depth',
+         count(*) filter (where event not in ('age_gate_shown', 'age_gate_yes', 'age_gate_no', 'age_gate_dismissed',
+                                              'time_on_site', 'scroll_depth', 'page_seen',
                                               'product_impression', 'brand_view')) as actions,
          bool_or(event = 'age_gate_shown') as saw_gate,
          bool_or(event = 'age_gate_yes') as said_yes,
