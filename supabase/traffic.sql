@@ -30,7 +30,9 @@ alter table public.pageviews
 --   home_scroll  deepest scroll on the home, 0/25/50/75/100 (%)
 --   seconds      time on site while on screen: 0/10/30/60/180
 --   suspect    looks automated: untagged, desktop, one page, no referrer,
---              did nothing, and (if located) located at a data centre
+--              did nothing, and (if located) located at a data centre; or no
+--              human signal at all with a clock outside Eastern time (from
+--              Oct 26); or Meta's ad review (facebook.com, 2000x2000 screen)
 create or replace view public.traffic_sessions with (security_invoker = true) as
 with pv as (
   select p.*, row_number() over (partition by p.session_id order by p.ts) as rn
@@ -96,10 +98,20 @@ select
     when f.tz = 'America/New_York' then 'eastern'
     else 'other'
   end as place_by_timezone,
-  (f.source = 'direct' and f.src is null and f.utm_source is null and f.referrer is null
+  coalesce((f.source = 'direct' and f.src is null and f.utm_source is null and f.referrer is null
     and coalesce(f.device, '') = 'desktop' and a.pages = 1 and coalesce(e.events, 0) = 0
     and (f.city is null or f.city in ('San Jose', 'Santa Clara', 'Ashburn', 'Boardman', 'Council Bluffs', 'The Dalles',
-      'Mountain View', 'Moses Lake', 'Quincy', 'Prineville', 'Forest City', 'Altoona'))) as suspect,
+      'Mountain View', 'Moses Lake', 'Quincy', 'Prineville', 'Forest City', 'Altoona')))
+  -- Since Oct 27 crawlers run the page script, so "zero events" no longer
+  -- catches them. No human signal at all (no time on screen, no scroll, no
+  -- 21+ answer, no tap) from a browser clock outside Eastern time. Eastern
+  -- visits with no signal stay counted: those are real ad clicks that left
+  -- at the 21+ check.
+  or (f.ts >= '2026-10-26 20:00+00' and coalesce(e.seconds, 0) = 0 and coalesce(e.home_scroll, 0) = 0
+    and not coalesce(e.said_yes, false) and not coalesce(e.said_no, false) and coalesce(e.actions, 0) = 0
+    and coalesce(f.tz, '') <> 'America/New_York')
+  -- Meta's ad review: a facebook.com referrer on a 2000x2000 screen.
+  or (f.referrer ~* 'facebook\.com' and f.sw = 2000 and f.sh = 2000), false) as suspect,
   coalesce(e.saw_gate, false) as saw_gate,
   coalesce(e.said_yes, false) as said_yes,
   coalesce(e.said_no, false) as said_no,
